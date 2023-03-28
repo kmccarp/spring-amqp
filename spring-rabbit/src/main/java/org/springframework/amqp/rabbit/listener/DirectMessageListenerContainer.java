@@ -267,7 +267,7 @@ public class DirectMessageListenerContainer extends AbstractMessageListenerConta
 		Assert.noNullElements(queues, "'queues' cannot contain null elements");
 		try {
 			Arrays.stream(queues)
-				.map(q -> q.getActualName())
+				.map(Queue::getActualName)
 				.forEach(this.removedQueues::remove);
 			addQueues(Arrays.stream(queues).map(Queue::getName));
 		}
@@ -334,7 +334,7 @@ public class DirectMessageListenerContainer extends AbstractMessageListenerConta
 					if (cBQ != null) {
 						// find a gap or set the index to the end
 						List<Integer> indices = cBQ.stream()
-								.map(cons -> cons.getIndex())
+								.map(DirectMessageListenerContainer.SimpleConsumer::getIndex)
 								.sorted()
 								.collect(Collectors.toList());
 						for (index = 0; index < indices.size(); index++) {
@@ -486,7 +486,7 @@ public class DirectMessageListenerContainer extends AbstractMessageListenerConta
 					if (this.started) {
 						List<SimpleConsumer> restartableConsumers = new ArrayList<>(this.consumersToRestart);
 						this.consumersToRestart.clear();
-						if (restartableConsumers.size() > 0) {
+						if (!restartableConsumers.isEmpty()) {
 							doRedeclareElementsIfNecessary();
 						}
 						Iterator<SimpleConsumer> iterator = restartableConsumers.iterator();

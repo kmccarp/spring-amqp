@@ -128,6 +128,8 @@ public class EnableRabbitCglibProxyTests {
 	@SuppressWarnings("serial")
 	static class Foo implements Serializable {
 
+		private static final long serialVersionUID = 1;
+
 		public String field;
 
 	}

@@ -228,12 +228,12 @@ public class StreamListenerContainer implements MessageListenerContainer, BeanNa
 
 	@Override
 	public synchronized boolean isRunning() {
-		return this.consumers.size() > 0;
+		return !this.consumers.isEmpty();
 	}
 
 	@Override
 	public synchronized void start() {
-		if (this.consumers.size() == 0) {
+		if (this.consumers.isEmpty()) {
 			this.consumerCustomizer.accept(getListenerId(), this.builder);
 			if (this.simpleStream) {
 				this.consumers.add(this.builder.build());

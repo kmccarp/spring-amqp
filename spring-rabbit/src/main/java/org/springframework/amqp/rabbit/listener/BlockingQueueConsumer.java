@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.OptionalLong;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
@@ -129,17 +130,17 @@ public class BlockingQueueConsumer {
 
 	private final ActiveObjectCounter<BlockingQueueConsumer> activeObjectCounter;
 
-	private final Map<String, Object> consumerArgs = new HashMap<String, Object>();
+	private final Map<String, Object> consumerArgs = new HashMap<>();
 
 	private final boolean noLocal;
 
 	private final boolean exclusive;
 
-	private final Set<Long> deliveryTags = new LinkedHashSet<Long>();
+	private final Set<Long> deliveryTags = new LinkedHashSet<>();
 
 	private final boolean defaultRequeueRejected;
 
-	private final Set<String> missingQueues = Collections.synchronizedSet(new HashSet<String>());
+	private final Set<String> missingQueues = Collections.synchronizedSet(new HashSet<>());
 
 	private long retryDeclarationInterval = DEFAULT_RETRY_DECLARATION_INTERVAL;
 
@@ -300,7 +301,7 @@ public class BlockingQueueConsumer {
 		this.noLocal = noLocal;
 		this.exclusive = exclusive;
 		this.queues = Arrays.copyOf(queues, queues.length);
-		this.queue = new LinkedBlockingQueue<Delivery>(queues.length == 0 ? prefetchCount : prefetchCount * queues.length);
+		this.queue = new LinkedBlockingQueue<>(queues.length == 0 ? prefetchCount : prefetchCount * queues.length);
 	}
 
 	public Channel getChannel() {
@@ -309,8 +310,8 @@ public class BlockingQueueConsumer {
 
 	public Collection<String> getConsumerTags() {
 		return this.consumers.values().stream()
-				.map(c -> c.getConsumerTag())
-				.filter(tag -> tag != null)
+				.map(DefaultConsumer::getConsumerTag)
+				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
 	}
 
@@ -545,7 +546,7 @@ public class BlockingQueueConsumer {
 			logger.trace("Retrieving delivery for " + this);
 		}
 		checkShutdown();
-		if (this.missingQueues.size() > 0) {
+		if (!this.missingQueues.isEmpty()) {
 			checkMissingQueues();
 		}
 		Message message = handle(this.queue.poll(timeout, TimeUnit.MILLISECONDS));
@@ -684,7 +685,7 @@ public class BlockingQueueConsumer {
 	private void handleDeclarationException(int passiveDeclareRetries, DeclarationException e) {
 		if (passiveDeclareRetries > 0 && this.channel.isOpen()) {
 			if (logger.isWarnEnabled()) {
-				logger.warn("Queue declaration failed; retries left=" + (passiveDeclareRetries), e);
+				logger.warn("Queue declaration failed; retries left=" + passiveDeclareRetries, e);
 			}
 			try {
 				Thread.sleep(this.failedDeclarationRetryInterval);
@@ -1047,7 +1048,7 @@ public class BlockingQueueConsumer {
 			super("Failed to declare queue(s):", t);
 		}
 
-		private final List<String> failedQueues = new ArrayList<String>();
+		private final List<String> failedQueues = new ArrayList<>();
 
 		private void addFailedQueue(String queue) {
 			this.failedQueues.add(queue);

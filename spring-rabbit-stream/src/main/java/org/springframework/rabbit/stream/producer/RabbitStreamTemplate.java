@@ -94,7 +94,7 @@ public class RabbitStreamTemplate implements RabbitStreamOperations, BeanNameAwa
 			this.producer = builder.build();
 			if (!this.streamConverterSet) {
 				((DefaultStreamMessageConverter) this.streamConverter).setBuilderSupplier(
-						() ->  this.producer.messageBuilder());
+						this.producer::messageBuilder);
 			}
 		}
 		return this.producer;

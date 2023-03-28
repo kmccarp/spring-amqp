@@ -31,6 +31,8 @@ import org.springframework.amqp.event.AmqpEvent;
 @SuppressWarnings("serial")
 public class ConnectionBlockedEvent extends AmqpEvent {
 
+	private static final long serialVersionUID = 1;
+
 	private final String reason;
 
 	public ConnectionBlockedEvent(Connection source, String reason) {
