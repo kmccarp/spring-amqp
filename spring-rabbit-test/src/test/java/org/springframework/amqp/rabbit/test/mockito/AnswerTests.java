@@ -37,12 +37,12 @@ public class AnswerTests {
 	public void testLambda() {
 		Foo delegate = new Foo();
 		Foo foo = spy(delegate);
-		willAnswer(new LambdaAnswer<String>(true, (i, r) -> r + r, delegate)).given(foo).foo(anyString());
+		willAnswer(new LambdaAnswer<>(true, (i, r) -> r + r, delegate)).given(foo).foo(anyString());
 		assertThat(foo.foo("foo")).isEqualTo("FOOFOO");
-		willAnswer(new LambdaAnswer<String>(true, (i, r) -> r + i.getArguments()[0], delegate))
+		willAnswer(new LambdaAnswer<>(true, (i, r) -> r + i.getArguments()[0], delegate))
 				.given(foo).foo(anyString());
 		assertThat(foo.foo("foo")).isEqualTo("FOOfoo");
-		willAnswer(new LambdaAnswer<String>(false, (i, r) ->
+		willAnswer(new LambdaAnswer<>(false, (i, r) ->
 			"" + i.getArguments()[0] + i.getArguments()[0], delegate)).given(foo).foo(anyString());
 		assertThat(foo.foo("foo")).isEqualTo("foofoo");
 		LambdaAnswer<String> answer = new LambdaAnswer<>(true, (inv, result) -> result, delegate);
@@ -59,7 +59,7 @@ public class AnswerTests {
 		}
 
 		public String foo(String foo) {
-			if (foo.equals("fail")) {
+			if ("fail".equals(foo)) {
 				throw new IllegalArgumentException("fail");
 			}
 			return foo.toUpperCase();

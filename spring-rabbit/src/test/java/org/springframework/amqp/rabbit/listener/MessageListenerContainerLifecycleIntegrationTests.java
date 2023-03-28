@@ -363,7 +363,7 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 		Set<BlockingQueueConsumer> consumers = (Set<BlockingQueueConsumer>) TestUtils
 				.getPropertyValue(container, "consumers");
 		await().until(() -> {
-			if (consumers.size() > 0
+			if (!consumers.isEmpty()
 				&& TestUtils.getPropertyValue(consumers.iterator().next(), "queue", BlockingQueue.class).size() > 3) {
 				prefetched.countDown();
 				return true;
@@ -372,7 +372,7 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 				return false;
 			}
 		});
-		Executors.newSingleThreadExecutor().execute(() -> container.stop());
+		Executors.newSingleThreadExecutor().execute(container::stop);
 		await().until(() -> !container.isActive());
 		awaitStop.countDown();
 

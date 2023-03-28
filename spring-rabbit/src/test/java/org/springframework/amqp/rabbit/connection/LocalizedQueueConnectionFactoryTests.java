@@ -63,11 +63,11 @@ import reactor.core.publisher.Mono;
  */
 public class LocalizedQueueConnectionFactoryTests {
 
-	private final Map<String, Channel> channels = new HashMap<String, Channel>();
+	private final Map<String, Channel> channels = new HashMap<>();
 
-	private final Map<String, Consumer> consumers = new HashMap<String, Consumer>();
+	private final Map<String, Consumer> consumers = new HashMap<>();
 
-	private final Map<String, String> consumerTags = new HashMap<String, String>();
+	private final Map<String, String> consumerTags = new HashMap<>();
 
 	@Test
 	public void testFailOver() throws Exception {
@@ -83,7 +83,7 @@ public class LocalizedQueueConnectionFactoryTests {
 		final AtomicBoolean firstServer = new AtomicBoolean(true);
 		final WebClient client1 = doCreateClient(adminUris[0], username, password, nodes[0]);
 		final WebClient client2 = doCreateClient(adminUris[1], username, password, nodes[1]);
-		final Map<String, ConnectionFactory> mockCFs = new HashMap<String, ConnectionFactory>();
+		final Map<String, ConnectionFactory> mockCFs = new HashMap<>();
 		CountDownLatch latch1 = new CountDownLatch(1);
 		CountDownLatch latch2 = new CountDownLatch(1);
 		mockCFs.put(rabbit1, mockCF(rabbit1, latch1));

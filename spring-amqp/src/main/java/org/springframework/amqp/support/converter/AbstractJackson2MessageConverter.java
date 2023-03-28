@@ -77,7 +77,7 @@ public abstract class AbstractJackson2MessageConverter extends AbstractMessageCo
 	private String supportedCTCharset;
 
 	@Nullable
-	private ClassMapper classMapper = null;
+	private ClassMapper classMapper;
 
 	private Charset defaultCharset = DEFAULT_CHARSET;
 

@@ -86,7 +86,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests3 {
 			returnCalledFirst.set(returnLatch.getCount() == 0);
 			confirmLatch.countDown();
 		});
-		template.setReturnsCallback((returned) -> {
+		template.setReturnsCallback(returned -> {
 			returnLatch.countDown();
 		});
 		template.setMandatory(true);

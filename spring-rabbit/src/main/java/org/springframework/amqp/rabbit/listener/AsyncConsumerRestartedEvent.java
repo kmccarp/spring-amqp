@@ -28,6 +28,8 @@ import org.springframework.amqp.event.AmqpEvent;
 @SuppressWarnings("serial")
 public class AsyncConsumerRestartedEvent extends AmqpEvent {
 
+	private static final long serialVersionUID = 1;
+
 	private final Object oldConsumer;
 
 	private final Object newConsumer;
