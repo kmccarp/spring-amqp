@@ -27,8 +27,7 @@ public class LocallyTransactedSMLCTests extends LocallyTransactedTests {
 
 	@Override
 	protected AbstractMessageListenerContainer createContainer(AbstractConnectionFactory connectionFactory) {
-		AbstractMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
-		return container;
+		return new SimpleMessageListenerContainer(connectionFactory);
 	}
 
 }

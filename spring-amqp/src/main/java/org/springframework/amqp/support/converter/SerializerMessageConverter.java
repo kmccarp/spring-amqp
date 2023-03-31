@@ -60,7 +60,7 @@ public class SerializerMessageConverter extends AllowedListDeserializingMessageC
 
 	private volatile Deserializer<Object> deserializer = new DefaultDeserializer();
 
-	private volatile boolean ignoreContentType = false;
+	private volatile boolean ignoreContentType;
 
 	private volatile ClassLoader defaultDeserializerClassLoader;
 

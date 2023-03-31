@@ -63,8 +63,7 @@ public class AnnotationDrivenNamespaceTests extends AbstractRabbitAnnotationDriv
 	@Override
 	public void noRabbitAdminConfiguration() {
 		assertThatThrownBy(
-				() -> new ClassPathXmlApplicationContext("annotation-driven-no-rabbit-admin-config.xml", getClass())
-					.close())
+					new ClassPathXmlApplicationContext("annotation-driven-no-rabbit-admin-config.xml", getClass())::close)
 			.isExactlyInstanceOf(BeanCreationException.class)
 			.withFailMessage("'rabbitAdmin'");
 	}
