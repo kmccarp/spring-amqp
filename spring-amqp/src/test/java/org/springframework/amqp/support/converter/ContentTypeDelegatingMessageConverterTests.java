@@ -71,6 +71,8 @@ public class ContentTypeDelegatingMessageConverterTests {
 	@SuppressWarnings("serial")
 	public static class Foo implements Serializable {
 
+		private static final long serialVersionUID = 1;
+
 		private String foo;
 
 		public String getFoo() {

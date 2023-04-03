@@ -94,23 +94,23 @@ public class RabbitStreamTemplateTests {
 			CompletableFuture<Boolean> future = template.convertAndSend("foo");
 			assertThat(future.get()).isTrue();
 			CompletableFuture<Boolean> future1 = template.convertAndSend("foo");
-			assertThatExceptionOfType(ExecutionException.class).isThrownBy(() -> future1.get())
+			assertThatExceptionOfType(ExecutionException.class).isThrownBy(future1::get)
 					.withCauseExactlyInstanceOf(StreamSendException.class)
 					.withStackTraceContaining("Message Enqueueing Failed");
 			CompletableFuture<Boolean> future2 = template.convertAndSend("foo");
-			assertThatExceptionOfType(ExecutionException.class).isThrownBy(() -> future2.get())
+			assertThatExceptionOfType(ExecutionException.class).isThrownBy(future2::get)
 					.withCauseExactlyInstanceOf(StreamSendException.class)
 					.withStackTraceContaining("Producer Closed");
 			CompletableFuture<Boolean> future3 = template.convertAndSend("foo");
-			assertThatExceptionOfType(ExecutionException.class).isThrownBy(() -> future3.get())
+			assertThatExceptionOfType(ExecutionException.class).isThrownBy(future3::get)
 					.withCauseExactlyInstanceOf(StreamSendException.class)
 					.withStackTraceContaining("Producer Not Available");
 			CompletableFuture<Boolean> future4 = template.convertAndSend("foo");
-			assertThatExceptionOfType(ExecutionException.class).isThrownBy(() -> future4.get())
+			assertThatExceptionOfType(ExecutionException.class).isThrownBy(future4::get)
 					.withCauseExactlyInstanceOf(StreamSendException.class)
 					.withStackTraceContaining("Publish Confirm Timeout");
 			CompletableFuture<Boolean> future5 = template.convertAndSend("foo");
-			assertThatExceptionOfType(ExecutionException.class).isThrownBy(() -> future5.get())
+			assertThatExceptionOfType(ExecutionException.class).isThrownBy(future5::get)
 					.withCauseExactlyInstanceOf(StreamSendException.class)
 					.withStackTraceContaining("Unknown code: " + -1);
 		}

@@ -31,6 +31,8 @@ import org.springframework.amqp.event.AmqpEvent;
 @SuppressWarnings("serial")
 public class ConsumeOkEvent extends AmqpEvent {
 
+	private static final long serialVersionUID = 1;
+
 	private final String queue;
 
 	private final String consumerTag;
