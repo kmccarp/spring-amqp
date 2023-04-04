@@ -91,11 +91,11 @@ public abstract class ExternalTxManagerTests {
 		given(mockConnectionFactory.newConnection(any(ExecutorService.class), anyString())).willReturn(mockConnection);
 		given(mockConnection.isOpen()).willReturn(true);
 
-		final AtomicReference<Exception> tooManyChannels = new AtomicReference<Exception>();
+		final AtomicReference<Exception> tooManyChannels = new AtomicReference<>();
 
 		willAnswer(ensureOneChannelAnswer(onlyChannel, tooManyChannels)).given(mockConnection).createChannel();
 
-		final AtomicReference<Consumer> consumer = new AtomicReference<Consumer>();
+		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch consumerLatch = new CountDownLatch(1);
 
 		willAnswer(invocation -> {
@@ -116,9 +116,7 @@ public abstract class ExternalTxManagerTests {
 			rollbackLatch.get().countDown();
 			return null;
 		}).given(onlyChannel).txRollback();
-		willAnswer(invocation -> {
-			return null;
-		}).given(onlyChannel).basicAck(anyLong(), anyBoolean());
+		willAnswer(invocation -> null).given(onlyChannel).basicAck(anyLong(), anyBoolean());
 
 		final CountDownLatch latch = new CountDownLatch(1);
 		AbstractMessageListenerContainer container = createContainer(cachingConnectionFactory);
@@ -264,12 +262,12 @@ public abstract class ExternalTxManagerTests {
 		given(mockConnectionFactory.newConnection(any(ExecutorService.class), anyString())).willReturn(mockConnection);
 		given(mockConnection.isOpen()).willReturn(true);
 
-		final AtomicReference<Exception> tooManyChannels = new AtomicReference<Exception>();
+		final AtomicReference<Exception> tooManyChannels = new AtomicReference<>();
 		willAnswer(ensureOneChannelAnswer(channel, tooManyChannels)).given(mockConnection).createChannel();
 
 		willAnswer(invocation -> channel).given(mockConnection).createChannel();
 
-		final AtomicReference<Consumer> consumer = new AtomicReference<Consumer>();
+		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch consumerLatch = new CountDownLatch(1);
 
 		willAnswer(invocation -> {
@@ -362,12 +360,12 @@ public abstract class ExternalTxManagerTests {
 		given(mockConnectionFactory.newConnection(any(ExecutorService.class), anyString())).willReturn(mockConnection);
 		given(mockConnection.isOpen()).willReturn(true);
 
-		final AtomicReference<Exception> tooManyChannels = new AtomicReference<Exception>();
+		final AtomicReference<Exception> tooManyChannels = new AtomicReference<>();
 		willAnswer(ensureOneChannelAnswer(channel, tooManyChannels)).given(mockConnection).createChannel();
 
 		willAnswer(invocation -> channel).given(mockConnection).createChannel();
 
-		final AtomicReference<Consumer> consumer = new AtomicReference<Consumer>();
+		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch consumerLatch = new CountDownLatch(1);
 
 		willAnswer(invocation -> {
@@ -452,11 +450,11 @@ public abstract class ExternalTxManagerTests {
 		given(templateConnection.isOpen()).willReturn(true);
 		given(templateConnection.createChannel()).willReturn(templateChannel);
 
-		final AtomicReference<Exception> tooManyChannels = new AtomicReference<Exception>();
+		final AtomicReference<Exception> tooManyChannels = new AtomicReference<>();
 
 		willAnswer(ensureOneChannelAnswer(listenerChannel, tooManyChannels)).given(listenerConnection).createChannel();
 
-		final AtomicReference<Consumer> consumer = new AtomicReference<Consumer>();
+		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch consumerLatch = new CountDownLatch(1);
 
 		willAnswer(invocation -> {
@@ -536,11 +534,11 @@ public abstract class ExternalTxManagerTests {
 		given(mockConnectionFactory.newConnection(any(ExecutorService.class), anyString())).willReturn(mockConnection);
 		given(mockConnection.isOpen()).willReturn(true);
 
-		final AtomicReference<Exception> tooManyChannels = new AtomicReference<Exception>();
+		final AtomicReference<Exception> tooManyChannels = new AtomicReference<>();
 
 		willAnswer(ensureOneChannelAnswer(onlyChannel, tooManyChannels)).given(mockConnection).createChannel();
 
-		final AtomicReference<Consumer> consumer = new AtomicReference<Consumer>();
+		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch consumerLatch = new CountDownLatch(1);
 
 		willAnswer(invocation -> {
@@ -557,7 +555,7 @@ public abstract class ExternalTxManagerTests {
 		}).given(onlyChannel).txCommit();
 
 		final CountDownLatch latch = new CountDownLatch(1);
-		final AtomicReference<Channel> exposed = new AtomicReference<Channel>();
+		final AtomicReference<Channel> exposed = new AtomicReference<>();
 		AbstractMessageListenerContainer container = createContainer(singleConnectionFactory);
 		container.setMessageListener((ChannelAwareMessageListener) (message, channel) -> {
 			exposed.set(channel);
@@ -616,11 +614,11 @@ public abstract class ExternalTxManagerTests {
 		given(mockConnectionFactory.newConnection(any(ExecutorService.class), anyString())).willReturn(mockConnection);
 		given(mockConnection.isOpen()).willReturn(true);
 
-		final AtomicReference<Exception> tooManyChannels = new AtomicReference<Exception>();
+		final AtomicReference<Exception> tooManyChannels = new AtomicReference<>();
 
 		willAnswer(ensureOneChannelAnswer(onlyChannel, tooManyChannels)).given(mockConnection).createChannel();
 
-		final AtomicReference<Consumer> consumer = new AtomicReference<Consumer>();
+		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch consumerLatch = new CountDownLatch(1);
 
 		willAnswer(invocation -> {
@@ -637,7 +635,7 @@ public abstract class ExternalTxManagerTests {
 		}).given(onlyChannel).txCommit();
 
 		final CountDownLatch latch = new CountDownLatch(1);
-		final AtomicReference<Channel> exposed = new AtomicReference<Channel>();
+		final AtomicReference<Channel> exposed = new AtomicReference<>();
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(singleConnectionFactory);
 		container.setMessageListener((ChannelAwareMessageListener) (message, channel) -> {
 			exposed.set(channel);
@@ -697,11 +695,11 @@ public abstract class ExternalTxManagerTests {
 		given(mockConnectionFactory.newConnection(any(ExecutorService.class), anyString())).willReturn(mockConnection);
 		given(mockConnection.isOpen()).willReturn(true);
 
-		final AtomicReference<Exception> tooManyChannels = new AtomicReference<Exception>();
+		final AtomicReference<Exception> tooManyChannels = new AtomicReference<>();
 
 		willAnswer(ensureOneChannelAnswer(onlyChannel, tooManyChannels)).given(mockConnection).createChannel();
 
-		final AtomicReference<Consumer> consumer = new AtomicReference<Consumer>();
+		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch consumerLatch = new CountDownLatch(1);
 
 		willAnswer(invocation -> {
@@ -777,6 +775,8 @@ public abstract class ExternalTxManagerTests {
 
 	@SuppressWarnings("serial")
 	private static class DummyTxManager extends AbstractPlatformTransactionManager {
+
+		private static final long serialVersionUID = 1;
 
 		private volatile boolean committed;
 

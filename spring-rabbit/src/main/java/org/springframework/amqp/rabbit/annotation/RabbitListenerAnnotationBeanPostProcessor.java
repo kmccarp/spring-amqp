@@ -324,12 +324,12 @@ public class RabbitListenerAnnotationBeanPostProcessor
 
 	private TypeMetadata buildMetadata(Class<?> targetClass) {
 		List<RabbitListener> classLevelListeners = findListenerAnnotations(targetClass);
-		final boolean hasClassLevelListeners = classLevelListeners.size() > 0;
+		final boolean hasClassLevelListeners = !classLevelListeners.isEmpty();
 		final List<ListenerMethod> methods = new ArrayList<>();
 		final List<Method> multiMethods = new ArrayList<>();
 		ReflectionUtils.doWithMethods(targetClass, method -> {
 			List<RabbitListener> listenerAnnotations = findListenerAnnotations(method);
-			if (listenerAnnotations.size() > 0) {
+			if (!listenerAnnotations.isEmpty()) {
 				methods.add(new ListenerMethod(method,
 						listenerAnnotations.toArray(new RabbitListener[listenerAnnotations.size()])));
 			}
@@ -352,14 +352,14 @@ public class RabbitListenerAnnotationBeanPostProcessor
 	private List<RabbitListener> findListenerAnnotations(AnnotatedElement element) {
 		return MergedAnnotations.from(element, SearchStrategy.TYPE_HIERARCHY)
 				.stream(RabbitListener.class)
-				.map(ann -> ann.synthesize())
+				.map(MergedAnnotation::synthesize)
 				.collect(Collectors.toList());
 	}
 
 	private void processMultiMethodListeners(RabbitListener[] classLevelListeners, Method[] multiMethods,
 			Object bean, String beanName) {
 
-		List<Method> checkedMethods = new ArrayList<Method>();
+		List<Method> checkedMethods = new ArrayList<>();
 		Method defaultMethod = null;
 		for (Method method : multiMethods) {
 			Method checked = checkProxy(method, bean);
@@ -429,12 +429,12 @@ public class RabbitListenerAnnotationBeanPostProcessor
 		if (!resolvedQueues.isEmpty()) {
 			if (resolvedQueues.get(0) instanceof String) {
 				endpoint.setQueueNames(resolvedQueues.stream()
-						.map(o -> (String) o)
+						.map(String.class::cast)
 						.collect(Collectors.toList()).toArray(new String[0]));
 			}
 			else {
 				endpoint.setQueues(resolvedQueues.stream()
-						.map(o -> (Queue) o)
+						.map(Queue.class::cast)
 						.collect(Collectors.toList()).toArray(new Queue[0]));
 			}
 		}
@@ -655,8 +655,8 @@ public class RabbitListenerAnnotationBeanPostProcessor
 		String[] queues = rabbitListener.queues();
 		QueueBinding[] bindings = rabbitListener.bindings();
 		org.springframework.amqp.rabbit.annotation.Queue[] queuesToDeclare = rabbitListener.queuesToDeclare();
-		List<String> queueNames = new ArrayList<String>();
-		List<Queue> queueBeans = new ArrayList<Queue>();
+		List<String> queueNames = new ArrayList<>();
+		List<Queue> queueBeans = new ArrayList<>();
 		if (queues.length > 0) {
 			for (int i = 0; i < queues.length; i++) {
 				resolveQueues(queues[i], queueNames, queueBeans);
@@ -682,15 +682,15 @@ public class RabbitListenerAnnotationBeanPostProcessor
 						"@RabbitListener can have only one of 'queues', 'queuesToDeclare', or 'bindings'");
 			}
 			return Arrays.stream(registerBeansForDeclaration(rabbitListener, declarables))
-					.map(s -> (Object) s)
+					.map(Object.class::cast)
 					.collect(Collectors.toList());
 		}
 		return queueNames.isEmpty()
 				? queueBeans.stream()
-						.map(s -> (Object) s)
+						.map(Object.class::cast)
 						.collect(Collectors.toList())
 				: queueNames.stream()
-						.map(s -> (Object) s)
+						.map(Object.class::cast)
 						.collect(Collectors.toList());
 
 	}
@@ -735,7 +735,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 	}
 
 	private String[] registerBeansForDeclaration(RabbitListener rabbitListener, Collection<Declarable> declarables) {
-		List<String> queues = new ArrayList<String>();
+		List<String> queues = new ArrayList<>();
 		if (this.beanFactory instanceof ConfigurableBeanFactory) {
 			for (QueueBinding binding : rabbitListener.bindings()) {
 				String queueName = declareQueue(binding.value(), declarables);
@@ -850,7 +850,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 	}
 
 	private Map<String, Object> resolveArguments(Argument[] arguments) {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		for (Argument arg : arguments) {
 			String key = resolveExpressionAsString(arg.name(), "@Argument.name");
 			if (StringUtils.hasText(key)) {
@@ -1074,7 +1074,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 			 * Replace Optional.empty() list elements with null.
 			 */
 			if (resolved instanceof List) {
-				List<?> list = ((List<?>) resolved);
+				List<?> list = (List<?>) resolved;
 				for (int i = 0; i < list.size(); i++) {
 					if (list.get(i).equals(Optional.empty())) {
 						list.set(i, null);

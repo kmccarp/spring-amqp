@@ -157,7 +157,7 @@ public class ThreadChannelConnectionFactory extends AbstractConnectionFactory im
 			this.logger.warn("Unclaimed context switches from threads:" +
 					this.switchesInProgress.values()
 							.stream()
-							.map(t -> t.getName())
+							.map(Thread::getName)
 							.collect(Collectors.toList()));
 		}
 		this.contextSwitches.clear();

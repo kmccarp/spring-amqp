@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
@@ -270,7 +271,7 @@ public class RabbitTemplateIntegrationTests {
 	@Test
 	public void testReceiveNonBlocking() throws Exception {
 		this.template.convertAndSend(ROUTE, "nonblock");
-		String out = await().until(() -> (String) this.template.receiveAndConvert(ROUTE), str -> str != null);
+		String out = await().until(() -> (String) this.template.receiveAndConvert(ROUTE), Objects::nonNull);
 		assertThat(out).isEqualTo("nonblock");
 		assertThat(this.template.receive(ROUTE)).isNull();
 	}
@@ -755,7 +756,7 @@ public class RabbitTemplateIntegrationTests {
 		ReflectionUtils.doWithFields(RabbitTemplate.class, field -> {
 			field.setAccessible(true);
 			fields[0] = field;
-		}, field -> field.getName().equals("logger"));
+		}, field -> "logger".equals(field.getName()));
 		Log logger = Mockito.mock(Log.class);
 		given(logger.isTraceEnabled()).willReturn(true);
 
@@ -1096,7 +1097,7 @@ public class RabbitTemplateIntegrationTests {
 		this.template.convertAndSend(ROUTE, "test");
 		template.setReceiveTimeout(timeout);
 
-		boolean received = await().until(() -> receiveAndReply(), b -> b);
+		boolean received = await().until(this::receiveAndReply, b -> b);
 
 		Message receive = this.template.receive();
 		assertThat(receive).isNotNull();
@@ -1163,7 +1164,7 @@ public class RabbitTemplateIntegrationTests {
 		this.template.convertAndSend(ROUTE, "TEST");
 		this.template.setReceiveTimeout(timeout);
 		result = new TransactionTemplate(new TestTransactionManager()).execute(status -> {
-			final AtomicReference<String> payloadReference = new AtomicReference<String>();
+			final AtomicReference<String> payloadReference = new AtomicReference<>();
 			boolean received1 = template.receiveAndReply((ReceiveAndReplyCallback<String, Void>) payload -> {
 				payloadReference.set(payload);
 				return null;
@@ -1201,13 +1202,7 @@ public class RabbitTemplateIntegrationTests {
 		template.convertAndSend("test");
 		this.template.setReceiveTimeout(timeout);
 		try {
-			this.template.receiveAndReply(new ReceiveAndReplyCallback<Double, Void>() {
-
-				@Override
-				public Void handle(Double message) {
-					return null;
-				}
-			});
+			this.template.receiveAndReply(message -> null);
 			fail("IllegalArgumentException expected");
 		}
 		catch (Exception e) {
@@ -1241,7 +1236,7 @@ public class RabbitTemplateIntegrationTests {
 
 		int count = 10;
 
-		final Map<Double, Object> results = new ConcurrentHashMap<Double, Object>();
+		final Map<Double, Object> results = new ConcurrentHashMap<>();
 
 		ExecutorService executor = Executors.newFixedThreadPool(10);
 
@@ -1344,7 +1339,7 @@ public class RabbitTemplateIntegrationTests {
 			SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
 			container.setConnectionFactory(template.getConnectionFactory());
 			container.setQueueNames(ROUTE);
-			final AtomicReference<String> replyToWas = new AtomicReference<String>();
+			final AtomicReference<String> replyToWas = new AtomicReference<>();
 			MessageListenerAdapter messageListenerAdapter = new MessageListenerAdapter(new Object() {
 
 				@SuppressWarnings("unused")
@@ -1464,8 +1459,8 @@ public class RabbitTemplateIntegrationTests {
 		boolean exchange = false;
 		for (Object log : logs.getAllValues()) {
 			String logMessage = (String) log;
-			queue |= (logMessage.contains(queueName) && logMessage.contains("404"));
-			exchange |= (logMessage.contains(queueName) && logMessage.contains("404"));
+			queue |= logMessage.contains(queueName) && logMessage.contains("404");
+			exchange |= logMessage.contains(queueName) && logMessage.contains("404");
 		}
 		assertThat(queue).isTrue();
 		assertThat(exchange).isTrue();
@@ -1731,6 +1726,8 @@ public class RabbitTemplateIntegrationTests {
 
 	@SuppressWarnings("serial")
 	private class TestTransactionManager extends AbstractPlatformTransactionManager {
+
+		private static final long serialVersionUID = 1;
 
 		@Override
 		protected void doBegin(Object transaction, TransactionDefinition definition) throws TransactionException {

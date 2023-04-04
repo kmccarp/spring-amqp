@@ -116,7 +116,7 @@ public class Jackson2JsonMessageConverterTests {
 	@Test
 	@SuppressWarnings("unchecked")
 	public void hashtable() {
-		Hashtable<String, String> hashtable = new Hashtable<String, String>();
+		Hashtable<String, String> hashtable = new Hashtable<>();
 		hashtable.put("TICKER", "VMW");
 		hashtable.put("PRICE", "103.2");
 
@@ -631,6 +631,8 @@ public class Jackson2JsonMessageConverterTests {
 	@SuppressWarnings("serial")
 	public static class BazDeserializer extends StdDeserializer<Baz> {
 
+		private static final long serialVersionUID = 1;
+
 		public BazDeserializer() {
 			super(Baz.class);
 		}
@@ -668,6 +670,8 @@ public class Jackson2JsonMessageConverterTests {
 
 	@SuppressWarnings("serial")
 	public static class BazModule extends SimpleModule {
+
+		private static final long serialVersionUID = 1;
 
 		public BazModule() {
 			addDeserializer(Baz.class, new BazDeserializer());

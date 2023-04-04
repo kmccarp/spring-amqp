@@ -152,8 +152,7 @@ public class SingleConnectionFactory extends AbstractConnectionFactory {
 	 * @return the new Connection
 	 */
 	protected Connection doCreateConnection() {
-		Connection connection = createBareConnection();
-		return connection;
+		return createBareConnection();
 	}
 
 	@Override

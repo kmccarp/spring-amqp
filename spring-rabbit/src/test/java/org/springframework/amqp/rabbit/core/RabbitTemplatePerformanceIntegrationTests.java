@@ -124,6 +124,8 @@ public class RabbitTemplatePerformanceIntegrationTests {
 	@SuppressWarnings("serial")
 	private class TestTransactionManager extends AbstractPlatformTransactionManager {
 
+		private static final long serialVersionUID = 1;
+
 		TestTransactionManager() {
 		}
 

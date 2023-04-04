@@ -23,6 +23,7 @@ import static org.awaitility.Awaitility.await;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
@@ -423,7 +424,7 @@ public class RabbitAdminIntegrationTests extends NeedsManagementTests {
 
 	private Map<String, Object> getExchange(String exchangeName) throws Exception {
 		return await().pollDelay(Duration.ZERO)
-				.until(() -> exchangeInfo(exchangeName), exch -> exch != null);
+				.until(() -> exchangeInfo(exchangeName), Objects::nonNull);
 	}
 
 	/**
