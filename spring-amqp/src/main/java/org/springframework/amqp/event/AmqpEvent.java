@@ -29,6 +29,8 @@ import org.springframework.context.ApplicationEvent;
 @SuppressWarnings("serial")
 public abstract class AmqpEvent extends ApplicationEvent {
 
+	private static final long serialVersionUID = 1;
+
 	public AmqpEvent(Object source) {
 		super(source);
 	}

@@ -105,7 +105,7 @@ public class Jackson2XmlMessageConverterTests {
 	@Test
 	@SuppressWarnings("unchecked")
 	public void hashtable() {
-		Hashtable<String, String> hashtable = new Hashtable<String, String>();
+		Hashtable<String, String> hashtable = new Hashtable<>();
 		hashtable.put("TICKER", "VMW");
 		hashtable.put("PRICE", "103.2");
 

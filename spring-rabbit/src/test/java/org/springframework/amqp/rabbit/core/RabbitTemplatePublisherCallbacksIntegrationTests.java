@@ -156,7 +156,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 	public void testPublisherConfirmReceived() throws Exception {
 		final CountDownLatch latch = new CountDownLatch(10000);
 		final AtomicInteger acks = new AtomicInteger();
-		final AtomicReference<CorrelationData> confirmCorrelation = new AtomicReference<CorrelationData>();
+		final AtomicReference<CorrelationData> confirmCorrelation = new AtomicReference<>();
 		AtomicReference<String> callbackThreadName = new AtomicReference<>();
 		this.templateWithConfirmsEnabled.setConfirmCallback((correlationData, ack, cause) -> {
 			acks.incrementAndGet();
@@ -219,7 +219,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 	@Test
 	public void testPublisherConfirmWithSendAndReceive() throws Exception {
 		final CountDownLatch latch = new CountDownLatch(1);
-		final AtomicReference<CorrelationData> confirmCD = new AtomicReference<CorrelationData>();
+		final AtomicReference<CorrelationData> confirmCD = new AtomicReference<>();
 		templateWithConfirmsEnabled.setConfirmCallback((correlationData, ack, cause) -> {
 			confirmCD.set(correlationData);
 			latch.countDown();
@@ -285,8 +285,8 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 	@Test
 	public void testPublisherReturns() throws Exception {
 		final CountDownLatch latch = new CountDownLatch(1);
-		final List<Message> returns = new ArrayList<Message>();
-		templateWithReturnsEnabled.setReturnsCallback((returned) -> {
+		final List<Message> returns = new ArrayList<>();
+		templateWithReturnsEnabled.setReturnsCallback(returned -> {
 			returns.add(returned.getMessage());
 			latch.countDown();
 		});
@@ -301,8 +301,8 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 	@Test
 	public void testPublisherReturnsWithMandatoryExpression() throws Exception {
 		final CountDownLatch latch = new CountDownLatch(1);
-		final List<Message> returns = new ArrayList<Message>();
-		templateWithReturnsEnabled.setReturnsCallback((returned) -> {
+		final List<Message> returns = new ArrayList<>();
+		templateWithReturnsEnabled.setReturnsCallback(returned -> {
 			returns.add(returned.getMessage());
 			latch.countDown();
 		});
@@ -403,7 +403,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 		Collection<CorrelationData> unconfirmed = template.getUnconfirmed(-1);
 		assertThat(unconfirmed).hasSize(2);
 		assertThat(template.getUnconfirmedCount()).isEqualTo(0);
-		Set<String> ids = new HashSet<String>();
+		Set<String> ids = new HashSet<>();
 		Iterator<CorrelationData> iterator = unconfirmed.iterator();
 		ids.add(iterator.next().getId());
 		ids.add(iterator.next().getId());
@@ -523,7 +523,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 		ccf.setPublisherConfirmType(ConfirmType.CORRELATED);
 		final RabbitTemplate template1 = new RabbitTemplate(ccf);
 
-		final Set<String> confirms = new HashSet<String>();
+		final Set<String> confirms = new HashSet<>();
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		template1.setConfirmCallback((correlationData, ack, cause) -> {
 			if (ack) {
@@ -638,8 +638,8 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 	@Test
 	public void testNackForBadExchange() throws Exception {
 		final AtomicBoolean nack = new AtomicBoolean(true);
-		final AtomicReference<CorrelationData> correlation = new AtomicReference<CorrelationData>();
-		final AtomicReference<String> reason = new AtomicReference<String>();
+		final AtomicReference<CorrelationData> correlation = new AtomicReference<>();
+		final AtomicReference<String> reason = new AtomicReference<>();
 		final CountDownLatch latch = new CountDownLatch(2);
 		this.templateWithConfirmsEnabled.setConfirmCallback((correlationData, ack, cause) -> {
 			nack.set(ack);
@@ -648,7 +648,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 			latch.countDown();
 		});
 		Log logger = spy(TestUtils.getPropertyValue(connectionFactoryWithConfirmsEnabled, "logger", Log.class));
-		final AtomicReference<String> log = new AtomicReference<String>();
+		final AtomicReference<String> log = new AtomicReference<>();
 		willAnswer(invocation -> {
 			log.set((String) invocation.getArguments()[0]);
 			invocation.callRealMethod();
@@ -851,7 +851,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests {
 		AtomicBoolean resent = new AtomicBoolean();
 		AtomicReference<String> callbackThreadName = new AtomicReference<>();
 		CountDownLatch callbackLatch = new CountDownLatch(1);
-		this.templateWithConfirmsAndReturnsEnabled.setReturnsCallback((returned) -> {
+		this.templateWithConfirmsAndReturnsEnabled.setReturnsCallback(returned -> {
 			this.templateWithConfirmsAndReturnsEnabled.send(ROUTE, returned.getMessage());
 			callbackThreadName.set(Thread.currentThread().getName());
 			resent.set(true);

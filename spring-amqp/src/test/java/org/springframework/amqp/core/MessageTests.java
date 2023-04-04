@@ -132,6 +132,8 @@ public class MessageTests {
 	@SuppressWarnings("serial")
 	public static class Foo implements Serializable {
 
+		private static final long serialVersionUID = 1;
+
 		@Override
 		public String toString() {
 			return "aFoo";

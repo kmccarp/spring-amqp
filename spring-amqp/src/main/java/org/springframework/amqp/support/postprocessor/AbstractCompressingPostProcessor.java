@@ -53,7 +53,7 @@ public abstract class AbstractCompressingPostProcessor implements MessagePostPro
 
 	private int order;
 
-	private boolean copyProperties = false;
+	private boolean copyProperties;
 
 	private String encodingDelimiter = ", ";
 
