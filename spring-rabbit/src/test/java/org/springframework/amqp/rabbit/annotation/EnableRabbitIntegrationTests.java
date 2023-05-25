@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -845,7 +846,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 		this.rabbitTemplate.convertAndSend("amqp656", "foo");
 		assertThat(this.rabbitTemplate.receiveAndConvert("amqp656dlq", 10000)).isEqualTo("foo");
 		try {
-			Map<String, Object> amqp656 = await().until(() -> queueInfo("amqp656"), q -> q != null);
+			Map<String, Object> amqp656 = await().until(() -> queueInfo("amqp656"), Objects::nonNull);
 			if (amqp656 != null) {
 				assertThat(arguments(amqp656).get("test-empty")).isEqualTo("");
 				assertThat(arguments(amqp656).get("test-null")).isEqualTo("undefined");
@@ -960,7 +961,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 			catch (@SuppressWarnings("unused") Exception e) {
 				return null;
 			}
-		}, tim -> tim != null);
+		}, Objects::nonNull);
 		assertThat(timer.count()).isEqualTo(1L);
 	}
 
@@ -1544,12 +1545,12 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 		@Override
 		public Object invoke(MethodInvocation invocation) throws Throwable {
 			String methodName = invocation.getMethod().getName();
-			if (methodName.equals("listen") && invocation.getArguments().length == 1 &&
+			if ("listen".equals(methodName) && invocation.getArguments().length == 1 &&
 					invocation.getArguments()[0].equals("intercept this")) {
 				this.oneWayLatch.countDown();
 				return invocation.proceed();
 			}
-			else if (methodName.equals("listenAndReply") && invocation.getArguments().length == 1 &&
+			else if ("listenAndReply".equals(methodName) && invocation.getArguments().length == 1 &&
 					invocation.getArguments()[0].equals("intercept this")) {
 				Object result = invocation.proceed();
 				if (result.equals("INTERCEPT THIS")) {
@@ -1861,7 +1862,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 
 		@Bean
 		public AtomicReference<Throwable> errorHandlerError() {
-			return new AtomicReference<Throwable>();
+			return new AtomicReference<>();
 		}
 
 		@Bean
@@ -2066,7 +2067,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 		@RabbitHandler
 		@SendTo("${foo.bar:#{sendToRepliesBean}}")
 		public String bar(@NonNull Bar bar) {
-			if (bar.field.equals("crash")) {
+			if ("crash".equals(bar.field)) {
 				throw new RuntimeException("Test reply from error handler");
 			}
 			return "BAR: " + bar.field;
@@ -2169,6 +2170,8 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 	@SuppressWarnings("serial")
 	static class Foo implements Serializable {
 
+		private static final long serialVersionUID = 1;
+
 		public String field;
 
 	}
@@ -2200,16 +2203,19 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 
 	@SuppressWarnings("serial")
 	static class Bar extends Foo {
+		private static final long serialVersionUID = 1;
 
 	}
 
 	@SuppressWarnings("serial")
 	static class Baz extends Foo {
+		private static final long serialVersionUID = 1;
 
 	}
 
 	@SuppressWarnings("serial")
 	static class Qux extends Foo {
+		private static final long serialVersionUID = 1;
 
 	}
 
@@ -2485,6 +2491,8 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 
 	@SuppressWarnings("serial")
 	public static class ValidatedClass implements Serializable {
+
+		private static final long serialVersionUID = 1;
 
 		private int bar;
 

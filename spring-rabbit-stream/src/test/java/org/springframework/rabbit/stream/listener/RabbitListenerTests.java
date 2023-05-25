@@ -129,9 +129,8 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 	}
 
 	private URI queueUri(String queue) throws URISyntaxException {
-		URI uri = new URI("http://localhost:" + managementPort() + "/api")
+		return new URI("http://localhost:" + managementPort() + "/api")
 				.resolve("/api/queues/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/" + queue);
-		return uri;
 	}
 
 	private WebClient createClient(String adminUser, String adminPassword) {
@@ -257,7 +256,7 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 				builder.name(id)
 						.offset(OffsetSpecification.first())
 						.manualTrackingStrategy();
-				if (id.equals("testNative")) {
+				if ("testNative".equals(id)) {
 					this.id = id;
 				}
 			});

@@ -43,7 +43,7 @@ import org.springframework.validation.Validator;
 public class RabbitListenerEndpointRegistrar implements BeanFactoryAware, InitializingBean {
 
 	private final List<AmqpListenerEndpointDescriptor> endpointDescriptors =
-			new ArrayList<AmqpListenerEndpointDescriptor>();
+			new ArrayList<>();
 
 	private List<HandlerMethodArgumentResolver> customMethodArgumentResolvers = new ArrayList<>();
 

@@ -164,9 +164,9 @@ public class DefaultMessagePropertiesConverter implements MessagePropertiesConve
 
 	private Map<String, Object> convertHeadersIfNecessary(Map<String, Object> headers) {
 		if (CollectionUtils.isEmpty(headers)) {
-			return Collections.<String, Object>emptyMap();
+			return Collections.emptyMap();
 		}
-		Map<String, Object> writableHeaders = new HashMap<String, Object>();
+		Map<String, Object> writableHeaders = new HashMap<>();
 		for (Map.Entry<String, Object> entry : headers.entrySet()) {
 			writableHeaders.put(entry.getKey(), this.convertHeaderValueIfNecessary(entry.getValue()));
 		}
@@ -200,7 +200,7 @@ public class DefaultMessagePropertiesConverter implements MessagePropertiesConve
 			value = writableArray;
 		}
 		else if (value instanceof List<?>) {
-			List<Object> writableList = new ArrayList<Object>(((List<?>) value).size());
+			List<Object> writableList = new ArrayList<>(((List<?>) value).size());
 			for (Object listValue : (List<?>) value) {
 				writableList.add(convertHeaderValueIfNecessary(listValue));
 			}
@@ -209,7 +209,7 @@ public class DefaultMessagePropertiesConverter implements MessagePropertiesConve
 		else if (value instanceof Map<?, ?>) {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> originalMap = (Map<String, Object>) value;
-			Map<String, Object> writableMap = new HashMap<String, Object>(originalMap.size());
+			Map<String, Object> writableMap = new HashMap<>(originalMap.size());
 			for (Map.Entry<String, Object> entry : originalMap.entrySet()) {
 				writableMap.put(entry.getKey(), this.convertHeaderValueIfNecessary(entry.getValue()));
 			}
@@ -257,7 +257,7 @@ public class DefaultMessagePropertiesConverter implements MessagePropertiesConve
 			value = convertLongString(longStr, charset);
 		}
 		else if (value instanceof List<?>) {
-			List<Object> convertedList = new ArrayList<Object>(((List<?>) value).size());
+			List<Object> convertedList = new ArrayList<>(((List<?>) value).size());
 			for (Object listValue : (List<?>) value) {
 				convertedList.add(this.convertLongStringIfNecessary(listValue, charset));
 			}
@@ -266,7 +266,7 @@ public class DefaultMessagePropertiesConverter implements MessagePropertiesConve
 		else if (value instanceof Map<?, ?>) {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> originalMap = (Map<String, Object>) value;
-			Map<String, Object> convertedMap = new HashMap<String, Object>();
+			Map<String, Object> convertedMap = new HashMap<>();
 			for (Map.Entry<String, Object> entry : originalMap.entrySet()) {
 				convertedMap.put(entry.getKey(), this.convertLongStringIfNecessary(entry.getValue(), charset));
 			}

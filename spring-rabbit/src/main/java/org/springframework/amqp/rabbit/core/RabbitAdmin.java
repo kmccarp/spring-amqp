@@ -150,7 +150,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 
 	private boolean redeclareManualDeclarations;
 
-	private volatile boolean running = false;
+	private volatile boolean running;
 
 	private volatile DeclarationExceptionEvent lastDeclarationExceptionEvent;
 
@@ -646,11 +646,11 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 		}
 
 		this.logger.debug("Initializing declarations");
-		Collection<Exchange> contextExchanges = new LinkedList<Exchange>(
+		Collection<Exchange> contextExchanges = new LinkedList<>(
 				this.applicationContext.getBeansOfType(Exchange.class).values());
-		Collection<Queue> contextQueues = new LinkedList<Queue>(
+		Collection<Queue> contextQueues = new LinkedList<>(
 				this.applicationContext.getBeansOfType(Queue.class).values());
-		Collection<Binding> contextBindings = new LinkedList<Binding>(
+		Collection<Binding> contextBindings = new LinkedList<>(
 				this.applicationContext.getBeansOfType(Binding.class).values());
 		Collection<DeclarableCustomizer> customizers =
 				this.applicationContext.getBeansOfType(DeclarableCustomizer.class).values();
@@ -682,7 +682,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 			}
 		}
 
-		if (exchanges.size() == 0 && queues.size() == 0 && bindings.size() == 0 && this.manualDeclarables.size() == 0) {
+		if (exchanges.isEmpty() && queues.isEmpty() && bindings.isEmpty() && this.manualDeclarables.size() == 0) {
 			this.logger.debug("Nothing to declare");
 			return;
 		}
@@ -803,10 +803,10 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 					if (exchange.isDelayed()) {
 						Map<String, Object> arguments = exchange.getArguments();
 						if (arguments == null) {
-							arguments = new HashMap<String, Object>();
+							arguments = new HashMap<>();
 						}
 						else {
-							arguments = new HashMap<String, Object>(arguments);
+							arguments = new HashMap<>(arguments);
 						}
 						arguments.put("x-delayed-type", exchange.getType());
 						channel.exchangeDeclare(exchange.getName(), DELAYED_MESSAGE_EXCHANGE, exchange.isDurable(),
@@ -825,7 +825,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 	}
 
 	private DeclareOk[] declareQueues(final Channel channel, final Queue... queues) throws IOException {
-		List<DeclareOk> declareOks = new ArrayList<DeclareOk>(queues.length);
+		List<DeclareOk> declareOks = new ArrayList<>(queues.length);
 		for (int i = 0; i < queues.length; i++) {
 			Queue queue = queues[i];
 			if (!queue.getName().startsWith("amq.")) {

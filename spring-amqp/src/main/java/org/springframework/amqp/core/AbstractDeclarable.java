@@ -37,7 +37,7 @@ public abstract class AbstractDeclarable implements Declarable {
 
 	private boolean shouldDeclare = true;
 
-	private Collection<Object> declaringAdmins = new ArrayList<Object>();
+	private Collection<Object> declaringAdmins = new ArrayList<>();
 
 	private boolean ignoreDeclarationExceptions;
 
@@ -57,7 +57,7 @@ public abstract class AbstractDeclarable implements Declarable {
 			this.arguments = new HashMap<>(arguments);
 		}
 		else {
-			this.arguments = new HashMap<String, Object>();
+			this.arguments = new HashMap<>();
 		}
 	}
 
@@ -96,7 +96,7 @@ public abstract class AbstractDeclarable implements Declarable {
 
 	@Override
 	public void setAdminsThatShouldDeclare(Object... adminArgs) {
-		Collection<Object> admins = new ArrayList<Object>();
+		Collection<Object> admins = new ArrayList<>();
 		if (adminArgs != null) {
 			if (adminArgs.length > 1) {
 				Assert.noNullElements(adminArgs, "'admins' cannot contain null elements");
