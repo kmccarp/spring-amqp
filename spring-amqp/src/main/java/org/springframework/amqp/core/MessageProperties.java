@@ -781,31 +781,31 @@ public class MessageProperties implements Serializable {
 	@Override // NOSONAR complexity
 	public String toString() {
 		return "MessageProperties [headers=" + this.headers
-				+ (this.timestamp == null ? "" : ", timestamp=" + this.timestamp)
-				+ (this.messageId == null ? "" : ", messageId=" + this.messageId)
-				+ (this.userId == null ? "" : ", userId=" + this.userId)
-				+ (this.receivedUserId == null ? "" : ", receivedUserId=" + this.receivedUserId)
-				+ (this.appId == null ? "" : ", appId=" + this.appId)
-				+ (this.clusterId == null ? "" : ", clusterId=" + this.clusterId)
-				+ (this.type == null ? "" : ", type=" + this.type)
-				+ (this.correlationId == null ? "" : ", correlationId=" + this.correlationId)
-				+ (this.replyTo == null ? "" : ", replyTo=" + this.replyTo)
-				+ (this.contentType == null ? "" : ", contentType=" + this.contentType)
-				+ (this.contentEncoding == null ? "" : ", contentEncoding=" + this.contentEncoding)
-				+ ", contentLength=" + this.contentLength
-				+ (this.deliveryMode == null ? "" : ", deliveryMode=" + this.deliveryMode)
-				+ (this.receivedDeliveryMode == null ? "" : ", receivedDeliveryMode=" + this.receivedDeliveryMode)
-				+ (this.expiration == null ? "" : ", expiration=" + this.expiration)
-				+ (this.priority == null ? "" : ", priority=" + this.priority)
-				+ (this.redelivered == null ? "" : ", redelivered=" + this.redelivered)
-				+ (this.receivedExchange == null ? "" : ", receivedExchange=" + this.receivedExchange)
-				+ (this.receivedRoutingKey == null ? "" : ", receivedRoutingKey=" + this.receivedRoutingKey)
-				+ (this.receivedDelay == null ? "" : ", receivedDelay=" + this.receivedDelay)
-				+ ", deliveryTag=" + this.deliveryTag
-				+ (this.messageCount == null ? "" : ", messageCount=" + this.messageCount)
-				+ (this.consumerTag == null ? "" : ", consumerTag=" + this.consumerTag)
-				+ (this.consumerQueue == null ? "" : ", consumerQueue=" + this.consumerQueue)
-				+ "]";
+	+ (this.timestamp == null ? "" : ", timestamp=" + this.timestamp)
+	+ (this.messageId == null ? "" : ", messageId=" + this.messageId)
+	+ (this.userId == null ? "" : ", userId=" + this.userId)
+	+ (this.receivedUserId == null ? "" : ", receivedUserId=" + this.receivedUserId)
+	+ (this.appId == null ? "" : ", appId=" + this.appId)
+	+ (this.clusterId == null ? "" : ", clusterId=" + this.clusterId)
+	+ (this.type == null ? "" : ", type=" + this.type)
+	+ (this.correlationId == null ? "" : ", correlationId=" + this.correlationId)
+	+ (this.replyTo == null ? "" : ", replyTo=" + this.replyTo)
+	+ (this.contentType == null ? "" : ", contentType=" + this.contentType)
+	+ (this.contentEncoding == null ? "" : ", contentEncoding=" + this.contentEncoding)
+	+ ", contentLength=" + this.contentLength
+	+ (this.deliveryMode == null ? "" : ", deliveryMode=" + this.deliveryMode)
+	+ (this.receivedDeliveryMode == null ? "" : ", receivedDeliveryMode=" + this.receivedDeliveryMode)
+	+ (this.expiration == null ? "" : ", expiration=" + this.expiration)
+	+ (this.priority == null ? "" : ", priority=" + this.priority)
+	+ (this.redelivered == null ? "" : ", redelivered=" + this.redelivered)
+	+ (this.receivedExchange == null ? "" : ", receivedExchange=" + this.receivedExchange)
+	+ (this.receivedRoutingKey == null ? "" : ", receivedRoutingKey=" + this.receivedRoutingKey)
+	+ (this.receivedDelay == null ? "" : ", receivedDelay=" + this.receivedDelay)
+	+ ", deliveryTag=" + this.deliveryTag
+	+ (this.messageCount == null ? "" : ", messageCount=" + this.messageCount)
+	+ (this.consumerTag == null ? "" : ", consumerTag=" + this.consumerTag)
+	+ (this.consumerQueue == null ? "" : ", consumerQueue=" + this.consumerQueue)
+	+ "]";
 	}
 
 }

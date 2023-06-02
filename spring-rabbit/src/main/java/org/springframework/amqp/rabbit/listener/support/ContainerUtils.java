@@ -48,7 +48,7 @@ public final class ContainerUtils {
 	 */
 	public static boolean shouldRequeue(boolean defaultRequeueRejected, Throwable throwable, Log logger) {
 		boolean shouldRequeue = defaultRequeueRejected ||
-				throwable instanceof MessageRejectedWhileStoppingException;
+	throwable instanceof MessageRejectedWhileStoppingException;
 		Throwable t = throwable;
 		while (t != null) {
 			if (t instanceof AmqpRejectAndDontRequeueException) {
@@ -76,7 +76,7 @@ public final class ContainerUtils {
 	 */
 	public static boolean isRejectManual(Throwable ex) {
 		return ex instanceof AmqpRejectAndDontRequeueException aradrex
-				&& aradrex.isRejectManual();
+	&& aradrex.isRejectManual();
 	}
 
 }

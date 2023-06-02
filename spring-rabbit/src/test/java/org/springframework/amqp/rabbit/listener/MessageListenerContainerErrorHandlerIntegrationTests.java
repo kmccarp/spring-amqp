@@ -126,7 +126,7 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 		template.convertAndSend(QUEUE.getName(), "baz");
 		assertThat(messageReceived.await(10, TimeUnit.SECONDS)).isTrue();
 		Object consumer = TestUtils.getPropertyValue(container, "consumers", Set.class)
-				.iterator().next();
+	.iterator().next();
 		Log qLogger = spy(TestUtils.getPropertyValue(consumer, "logger", Log.class));
 		willReturn(true).given(qLogger).isDebugEnabled();
 		new DirectFieldAccessor(consumer).setPropertyValue("logger", qLogger);
@@ -143,7 +143,7 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 		int messageCount = 3;
 		CountDownLatch latch = new CountDownLatch(messageCount);
 		doTest(messageCount, errorHandler, latch, new MessageListenerAdapter(new PojoThrowingExceptionListener(latch,
-				new Exception("Pojo exception"))));
+	new Exception("Pojo exception"))));
 	}
 
 	@Test
@@ -151,7 +151,7 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 		int messageCount = 3;
 		CountDownLatch latch = new CountDownLatch(messageCount);
 		doTest(messageCount, errorHandler, latch, new MessageListenerAdapter(new PojoThrowingExceptionListener(latch,
-				new RuntimeException("Pojo runtime exception"))));
+	new RuntimeException("Pojo runtime exception"))));
 	}
 
 	@Test
@@ -159,8 +159,8 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 		int messageCount = 3;
 		CountDownLatch latch = new CountDownLatch(messageCount);
 		doTest(messageCount, errorHandler, latch, new ThrowingExceptionListener(latch,
-				new ListenerExecutionFailedException("Listener throws specific runtime exception", null,
-						mock(Message.class))));
+	new ListenerExecutionFailedException("Listener throws specific runtime exception", null,
+mock(Message.class))));
 	}
 
 	@Test
@@ -168,7 +168,7 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 		int messageCount = 3;
 		CountDownLatch latch = new CountDownLatch(messageCount);
 		doTest(messageCount, errorHandler, latch, new ThrowingExceptionListener(latch, new RuntimeException(
-				"Listener runtime exception")));
+	"Listener runtime exception")));
 	}
 
 	@Test
@@ -176,7 +176,7 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 		int messageCount = 3;
 		CountDownLatch latch = new CountDownLatch(messageCount);
 		doTest(messageCount, errorHandler, latch, new ThrowingExceptionChannelAwareListener(latch, new Exception(
-				"Channel aware listener exception")));
+	"Channel aware listener exception")));
 	}
 
 	@Test
@@ -184,7 +184,7 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 		int messageCount = 3;
 		CountDownLatch latch = new CountDownLatch(messageCount);
 		doTest(messageCount, errorHandler, latch, new ThrowingExceptionChannelAwareListener(latch,
-				new RuntimeException("Channel aware listener runtime exception")));
+	new RuntimeException("Channel aware listener runtime exception")));
 	}
 
 	@Test
@@ -220,16 +220,16 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 	}
 
 	private void testRejectingErrorHandler(RabbitTemplate template, AbstractMessageListenerContainer container)
-			throws Exception {
+throws Exception {
 		MessageListenerAdapter messageListener = new MessageListenerAdapter();
 		messageListener.setDelegate(new Object());
 		container.setMessageListener(messageListener);
 
 		RabbitAdmin admin = new RabbitAdmin(template.getConnectionFactory());
 		Queue queueForTest = QueueBuilder.nonDurable("")
-				.autoDelete()
-				.withArgument("x-dead-letter-exchange", "test.DLE")
-				.build();
+	.autoDelete()
+	.withArgument("x-dead-letter-exchange", "test.DLE")
+	.build();
 		String testQueueName = admin.declareQueue(queueForTest);
 		// Create a DeadLetterExchange and bind a queue to it with the original routing key
 		DirectExchange dle = new DirectExchange("test.DLE", false, true);
@@ -243,14 +243,14 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 		container.start();
 
 		Message message = MessageBuilder.withBody("foo".getBytes())
-				.setContentType("text/plain")
-				.setContentEncoding("junk")
-				.build();
+	.setContentType("text/plain")
+	.setContentEncoding("junk")
+	.build();
 		template.send("", testQueueName, message);
 
 		// can't use timed receive, queue will be deleted
 		Message rejected = await("Message did not arrive in DLQ")
-				.until(() -> template.receive(dlq.getName()), msg -> msg != null);
+	.until(() -> template.receive(dlq.getName()), msg -> msg != null);
 		assertThat(new String(rejected.getBody())).isEqualTo("foo");
 
 		// Verify that the exception strategy has access to the message
@@ -260,21 +260,21 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 				failed.set(((ListenerExecutionFailedException) t).getFailedMessage());
 			}
 			return t instanceof ListenerExecutionFailedException
-					&& t.getCause() instanceof MessageConversionException;
+		&& t.getCause() instanceof MessageConversionException;
 		});
 		container.setErrorHandler(eh);
 
 		template.send("", testQueueName, message);
 
 		rejected = await("Message did not arrive in DLQ")
-				.until(() -> template.receive(dlq.getName()), msg -> msg != null);
+	.until(() -> template.receive(dlq.getName()), msg -> msg != null);
 		assertThat(new String(rejected.getBody())).isEqualTo("foo");
 		assertThat(failed.get()).isNotNull();
 
 		container.stop();
 
 		Exception e = new ListenerExecutionFailedException("foo", new MessageConversionException("bar"),
-				new Message("".getBytes(), new MessageProperties()));
+	new Message("".getBytes(), new MessageProperties()));
 		try {
 			eh.handleError(e);
 			fail("expected exception");
@@ -283,13 +283,13 @@ public class MessageListenerContainerErrorHandlerIntegrationTests {
 			assertThat(aradre.getCause()).isSameAs(e);
 		}
 		e = new ListenerExecutionFailedException("foo", new MessageConversionException("bar",
-				new AmqpRejectAndDontRequeueException("baz")), mock(Message.class));
+	new AmqpRejectAndDontRequeueException("baz")), mock(Message.class));
 		eh.handleError(e);
 		((DisposableBean) template.getConnectionFactory()).destroy();
 	}
 
 	public void doTest(int messageCount, ErrorHandler eh, CountDownLatch latch, MessageListener listener)
-			throws Exception {
+throws Exception {
 		this.errorsHandled = new CountDownLatch(messageCount);
 		int concurrentConsumers = 1;
 		RabbitTemplate template = createTemplate(concurrentConsumers);

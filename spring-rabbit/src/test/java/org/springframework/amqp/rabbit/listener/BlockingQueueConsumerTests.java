@@ -140,21 +140,21 @@ public class BlockingQueueConsumerTests {
 		given(connection.createChannel(anyBoolean())).willReturn(channel);
 		given(channel.isOpen()).willReturn(true);
 		given(channel.queueDeclarePassive(anyString()))
-				.willAnswer(invocation -> {
-					String arg = invocation.getArgument(0);
-					if ("good".equals(arg)) {
-						return any(AMQP.Queue.DeclareOk.class);
-					}
-					else {
-						throw new IOException();
-					}
-				});
+	.willAnswer(invocation -> {
+		String arg = invocation.getArgument(0);
+		if ("good".equals(arg)) {
+			return any(AMQP.Queue.DeclareOk.class);
+		}
+		else {
+			throw new IOException();
+		}
+	});
 		given(channel.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-				anyMap(), any(Consumer.class))).willReturn("consumerTag");
+	anyMap(), any(Consumer.class))).willReturn("consumerTag");
 
 		BlockingQueueConsumer blockingQueueConsumer = new BlockingQueueConsumer(connectionFactory,
-				new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
-				AcknowledgeMode.AUTO, true, 20, "good", "bad");
+	new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
+	AcknowledgeMode.AUTO, true, 20, "good", "bad");
 
 		blockingQueueConsumer.setDeclarationRetries(1);
 		blockingQueueConsumer.setRetryDeclarationInterval(10);
@@ -178,12 +178,12 @@ public class BlockingQueueConsumerTests {
 		final boolean noLocal = true;
 
 		BlockingQueueConsumer blockingQueueConsumer = new BlockingQueueConsumer(connectionFactory,
-				new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
-				AcknowledgeMode.AUTO, true, 1, true, null, noLocal, false, queue);
+	new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
+	AcknowledgeMode.AUTO, true, 1, true, null, noLocal, false, queue);
 		blockingQueueConsumer.start();
 		verify(channel)
-				.basicConsume(eq(queue), eq(AcknowledgeMode.AUTO.isAutoAck()), eq(""), eq(noLocal),
-						eq(false), anyMap(), any(Consumer.class));
+	.basicConsume(eq(queue), eq(AcknowledgeMode.AUTO.isAutoAck()), eq(""), eq(noLocal),
+eq(false), anyMap(), any(Consumer.class));
 		blockingQueueConsumer.stop();
 	}
 
@@ -203,12 +203,12 @@ public class BlockingQueueConsumerTests {
 			consumerLatch.countDown();
 			return "consumer" + n.incrementAndGet();
 		}).given(channel).basicConsume(anyString(),
-				anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(), consumerCaptor.capture());
+	anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(), consumerCaptor.capture());
 		willThrow(new IOException("Intentional cancel fail")).given(channel).basicCancel("consumer2");
 
 		final BlockingQueueConsumer blockingQueueConsumer = new BlockingQueueConsumer(connectionFactory,
-				new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
-				AcknowledgeMode.AUTO, false, 1, "testQ1", "testQ2");
+	new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
+	AcknowledgeMode.AUTO, false, 1, "testQ1", "testQ2");
 		final CountDownLatch latch = new CountDownLatch(1);
 		Executors.newSingleThreadExecutor().execute(() -> {
 			blockingQueueConsumer.start();
@@ -237,8 +237,8 @@ public class BlockingQueueConsumerTests {
 		ConnectionFactory connectionFactory = mock(ConnectionFactory.class);
 		Channel channel = mock(Channel.class);
 		BlockingQueueConsumer blockingQueueConsumer = new BlockingQueueConsumer(connectionFactory,
-				new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
-				AcknowledgeMode.AUTO, true, 1, "testQ");
+	new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
+	AcknowledgeMode.AUTO, true, 1, "testQ");
 		testRequeueOrNotGuts(ex, expectedRequeue, channel, blockingQueueConsumer);
 	}
 
@@ -246,13 +246,13 @@ public class BlockingQueueConsumerTests {
 		ConnectionFactory connectionFactory = mock(ConnectionFactory.class);
 		Channel channel = mock(Channel.class);
 		BlockingQueueConsumer blockingQueueConsumer = new BlockingQueueConsumer(connectionFactory,
-				new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
-				AcknowledgeMode.AUTO, true, 1, false, "testQ");
+	new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
+	AcknowledgeMode.AUTO, true, 1, false, "testQ");
 		testRequeueOrNotGuts(ex, expectedRequeue, channel, blockingQueueConsumer);
 	}
 
 	private void testRequeueOrNotGuts(Exception ex, boolean expectedRequeue,
-			Channel channel, BlockingQueueConsumer blockingQueueConsumer) throws Exception {
+Channel channel, BlockingQueueConsumer blockingQueueConsumer) throws Exception {
 		DirectFieldAccessor dfa = new DirectFieldAccessor(blockingQueueConsumer);
 		dfa.setPropertyValue("channel", channel);
 		Set<Long> deliveryTags = new HashSet<Long>();
@@ -275,16 +275,16 @@ public class BlockingQueueConsumerTests {
 		final AtomicBoolean isOpen = new AtomicBoolean(true);
 		willReturn(isOpen.get()).given(channel).isOpen();
 		given(channel.queueDeclarePassive(anyString()))
-				.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
+	.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
 		willAnswer(i -> {
 			((Consumer) i.getArgument(6)).handleConsumeOk("consumerTag");
 			return "consumerTag";
 		}).given(channel).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-				anyMap(), any(Consumer.class));
+	anyMap(), any(Consumer.class));
 
 		BlockingQueueConsumer blockingQueueConsumer = new BlockingQueueConsumer(connectionFactory,
-				new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<>(),
-				AcknowledgeMode.AUTO, true, 2, "test");
+	new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<>(),
+	AcknowledgeMode.AUTO, true, 2, "test");
 
 		blockingQueueConsumer.setDeclarationRetries(1);
 		blockingQueueConsumer.setRetryDeclarationInterval(10);
@@ -311,7 +311,7 @@ public class BlockingQueueConsumerTests {
 		final AtomicBoolean isOpen = new AtomicBoolean(true);
 		willReturn(isOpen.get()).given(channel).isOpen();
 		given(channel.queueDeclarePassive(anyString()))
-				.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
+	.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
 		AtomicReference<Consumer> theConsumer = new AtomicReference<>();
 		willAnswer(inv -> {
 			Consumer consumer = inv.getArgument(6);
@@ -319,14 +319,14 @@ public class BlockingQueueConsumerTests {
 			theConsumer.set(consumer);
 			return "consumerTag";
 		}).given(channel).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-				anyMap(), any(Consumer.class));
+	anyMap(), any(Consumer.class));
 		willAnswer(inv -> {
 			theConsumer.get().handleCancelOk("consumerTag");
 			return null;
 		}).given(channel).basicCancel("consumerTag");
 		BlockingQueueConsumer blockingQueueConsumer = new BlockingQueueConsumer(connectionFactory,
-				new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
-				AcknowledgeMode.AUTO, true, 2, "test");
+	new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
+	AcknowledgeMode.AUTO, true, 2, "test");
 
 		blockingQueueConsumer.setDeclarationRetries(1);
 		blockingQueueConsumer.setRetryDeclarationInterval(10);
@@ -335,7 +335,7 @@ public class BlockingQueueConsumerTests {
 
 		verify(channel).basicQos(2, false);
 		Consumer consumer = (Consumer) TestUtils.getPropertyValue(blockingQueueConsumer, "consumers", Map.class)
-				.get("test");
+	.get("test");
 		isOpen.set(false);
 		blockingQueueConsumer.stop();
 		verify(channel).basicCancel("consumerTag");

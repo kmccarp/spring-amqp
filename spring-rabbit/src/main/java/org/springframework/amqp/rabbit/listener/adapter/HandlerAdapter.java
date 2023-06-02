@@ -49,8 +49,8 @@ public class HandlerAdapter {
 		this.invokerHandlerMethod = invokerHandlerMethod;
 		this.delegatingHandler = null;
 		this.asyncReplies = (AbstractAdaptableMessageListener.monoPresent
-				&& MonoHandler.isMono(invokerHandlerMethod.getMethod().getReturnType()))
-			|| CompletableFuture.class.isAssignableFrom(invokerHandlerMethod.getMethod().getReturnType());
+	&& MonoHandler.isMono(invokerHandlerMethod.getMethod().getReturnType()))
+	|| CompletableFuture.class.isAssignableFrom(invokerHandlerMethod.getMethod().getReturnType());
 	}
 
 	/**
@@ -73,9 +73,9 @@ public class HandlerAdapter {
 	public InvocationResult invoke(@Nullable Message<?> message, Object... providedArgs) throws Exception { // NOSONAR
 		if (this.invokerHandlerMethod != null) { // NOSONAR (nullable message)
 			return new InvocationResult(this.invokerHandlerMethod.invoke(message, providedArgs),
-					null, this.invokerHandlerMethod.getMethod().getGenericReturnType(),
-					this.invokerHandlerMethod.getBean(),
-					this.invokerHandlerMethod.getMethod());
+		null, this.invokerHandlerMethod.getMethod().getGenericReturnType(),
+		this.invokerHandlerMethod.getBean(),
+		this.invokerHandlerMethod.getMethod());
 		}
 		else if (this.delegatingHandler.hasDefaultHandler()) {
 			// Needed to avoid returning raw Message which matches Object
@@ -166,7 +166,7 @@ public class HandlerAdapter {
 	public InvocationResult getInvocationResultFor(Object result, Object inboundPayload) {
 		if (this.invokerHandlerMethod != null) {
 			return new InvocationResult(result, null, this.invokerHandlerMethod.getMethod().getGenericReturnType(),
-					this.invokerHandlerMethod.getBean(), this.invokerHandlerMethod.getMethod());
+		this.invokerHandlerMethod.getBean(), this.invokerHandlerMethod.getMethod());
 		}
 		else {
 			return this.delegatingHandler.getInvocationResultFor(result, inboundPayload);

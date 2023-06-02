@@ -37,17 +37,17 @@ public class ContainerUtilsTests {
 	@Test
 	void testMustRequeue() {
 		assertThat(ContainerUtils.shouldRequeue(false,
-				new ListenerExecutionFailedException("", new ImmediateRequeueAmqpException("requeue")),
-				mock(Log.class)))
-			.isTrue();
+	new ListenerExecutionFailedException("", new ImmediateRequeueAmqpException("requeue")),
+	mock(Log.class)))
+	.isTrue();
 	}
 
 	@Test
 	void testMustNotRequeue() {
 		assertThat(ContainerUtils.shouldRequeue(true,
-				new ListenerExecutionFailedException("", new AmqpRejectAndDontRequeueException("no requeue")),
-				mock(Log.class)))
-			.isFalse();
+	new ListenerExecutionFailedException("", new AmqpRejectAndDontRequeueException("no requeue")),
+	mock(Log.class)))
+	.isFalse();
 	}
 
 }

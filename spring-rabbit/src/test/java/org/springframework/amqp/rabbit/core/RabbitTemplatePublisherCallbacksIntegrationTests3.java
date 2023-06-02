@@ -41,9 +41,7 @@ import com.rabbitmq.client.Channel;
  * @since 2.1
  *
  */
-@RabbitAvailable(queues = { RabbitTemplatePublisherCallbacksIntegrationTests3.QUEUE1,
-		RabbitTemplatePublisherCallbacksIntegrationTests3.QUEUE2,
-		RabbitTemplatePublisherCallbacksIntegrationTests3.QUEUE3 })
+@RabbitAvailable(queues = {RabbitTemplatePublisherCallbacksIntegrationTests3.QUEUE1,RabbitTemplatePublisherCallbacksIntegrationTests3.QUEUE2,RabbitTemplatePublisherCallbacksIntegrationTests3.QUEUE3})
 public class RabbitTemplatePublisherCallbacksIntegrationTests3 {
 
 	public static final String QUEUE1 = "synthetic.nack";
@@ -55,7 +53,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests3 {
 	@Test
 	public void testRepublishOnNackThreadNoExchange() throws Exception {
 		CachingConnectionFactory cf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		cf.setPublisherConfirmType(ConfirmType.CORRELATED);
 		final RabbitTemplate template = new RabbitTemplate(cf);
 		final CountDownLatch confirmLatch = new CountDownLatch(2);
@@ -73,7 +71,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests3 {
 	@Test
 	public void testDeferredChannelCacheNack() throws Exception {
 		final CachingConnectionFactory cf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		cf.setPublisherReturns(true);
 		cf.setPublisherConfirmType(ConfirmType.CORRELATED);
 		final RabbitTemplate template = new RabbitTemplate(cf);
@@ -110,7 +108,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests3 {
 	@Test
 	public void testDeferredChannelCacheAck() throws Exception {
 		final CachingConnectionFactory cf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		cf.setPublisherConfirmType(ConfirmType.CORRELATED);
 		final RabbitTemplate template = new RabbitTemplate(cf);
 		final CountDownLatch confirmLatch = new CountDownLatch(1);
@@ -136,7 +134,7 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests3 {
 	@Test
 	public void testTwoSendsAndReceivesDRTMLC() throws Exception {
 		CachingConnectionFactory cf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		cf.setPublisherConfirmType(ConfirmType.CORRELATED);
 		RabbitTemplate template = new RabbitTemplate(cf);
 		template.setReplyTimeout(0);

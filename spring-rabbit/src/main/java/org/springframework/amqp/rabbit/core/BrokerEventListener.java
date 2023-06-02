@@ -53,8 +53,7 @@ import org.springframework.util.ObjectUtils;
  * @since 2.1
  *
  */
-public class BrokerEventListener implements MessageListener, ApplicationEventPublisherAware, ConnectionListener,
-		SmartLifecycle {
+public class BrokerEventListener implements MessageListener, ApplicationEventPublisherAware, ConnectionListener,SmartLifecycle {
 
 	private static final Log logger = LogFactory.getLog(BrokerEventListener.class); // NOSONAR - lower case
 
@@ -193,7 +192,7 @@ public class BrokerEventListener implements MessageListener, ApplicationEventPub
 		else {
 			if (logger.isWarnEnabled()) {
 				logger.warn("No event publisher available for " + message + "; if the BrokerEventListener "
-						+ "is not defined as a bean, you must provide an ApplicationEventPublisher");
+			+ "is not defined as a bean, you must provide an ApplicationEventPublisher");
 			}
 		}
 	}

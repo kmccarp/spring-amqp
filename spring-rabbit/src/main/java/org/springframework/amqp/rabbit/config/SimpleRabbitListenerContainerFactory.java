@@ -35,8 +35,7 @@ import org.springframework.amqp.utils.JavaUtils;
  *
  * @since 1.4
  */
-public class SimpleRabbitListenerContainerFactory
-		extends AbstractRabbitListenerContainerFactory<SimpleMessageListenerContainer> {
+public class SimpleRabbitListenerContainerFactoryextends AbstractRabbitListenerContainerFactory<SimpleMessageListenerContainer> {
 
 	private Integer batchSize;
 
@@ -147,23 +146,23 @@ public class SimpleRabbitListenerContainerFactory
 		super.initializeContainer(instance, endpoint);
 
 		JavaUtils javaUtils = JavaUtils.INSTANCE
-			.acceptIfNotNull(this.batchSize, instance::setBatchSize);
+	.acceptIfNotNull(this.batchSize, instance::setBatchSize);
 		String concurrency = null;
 		if (endpoint != null) {
 			concurrency = endpoint.getConcurrency();
 			javaUtils.acceptIfNotNull(concurrency, instance::setConcurrency);
 		}
 		javaUtils
-			.acceptIfCondition(concurrency == null && this.concurrentConsumers != null, this.concurrentConsumers,
-				instance::setConcurrentConsumers)
-			.acceptIfCondition((concurrency == null || !(concurrency.contains("-")))
-					&& this.maxConcurrentConsumers != null,
-				this.maxConcurrentConsumers, instance::setMaxConcurrentConsumers)
-			.acceptIfNotNull(this.startConsumerMinInterval, instance::setStartConsumerMinInterval)
-			.acceptIfNotNull(this.stopConsumerMinInterval, instance::setStopConsumerMinInterval)
-			.acceptIfNotNull(this.consecutiveActiveTrigger, instance::setConsecutiveActiveTrigger)
-			.acceptIfNotNull(this.consecutiveIdleTrigger, instance::setConsecutiveIdleTrigger)
-			.acceptIfNotNull(this.receiveTimeout, instance::setReceiveTimeout);
+	.acceptIfCondition(concurrency == null && this.concurrentConsumers != null, this.concurrentConsumers,
+instance::setConcurrentConsumers)
+	.acceptIfCondition((concurrency == null || !(concurrency.contains("-")))
+&& this.maxConcurrentConsumers != null,
+this.maxConcurrentConsumers, instance::setMaxConcurrentConsumers)
+	.acceptIfNotNull(this.startConsumerMinInterval, instance::setStartConsumerMinInterval)
+	.acceptIfNotNull(this.stopConsumerMinInterval, instance::setStopConsumerMinInterval)
+	.acceptIfNotNull(this.consecutiveActiveTrigger, instance::setConsecutiveActiveTrigger)
+	.acceptIfNotNull(this.consecutiveIdleTrigger, instance::setConsecutiveIdleTrigger)
+	.acceptIfNotNull(this.receiveTimeout, instance::setReceiveTimeout);
 		if (Boolean.TRUE.equals(this.consumerBatchEnabled)) {
 			instance.setConsumerBatchEnabled(true);
 			/*

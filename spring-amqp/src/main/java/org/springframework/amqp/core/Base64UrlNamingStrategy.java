@@ -64,10 +64,10 @@ public class Base64UrlNamingStrategy implements NamingStrategy {
 		UUID uuid = UUID.randomUUID();
 		ByteBuffer bb = ByteBuffer.wrap(new byte[SIXTEEN]);
 		bb.putLong(uuid.getMostSignificantBits())
-		  .putLong(uuid.getLeastSignificantBits());
+	.putLong(uuid.getLeastSignificantBits());
 		// Convert to base64 and remove trailing =
 		return this.prefix + Base64.getUrlEncoder().encodeToString(bb.array())
-								.replaceAll("=", "");
+	.replaceAll("=", "");
 	}
 
 }

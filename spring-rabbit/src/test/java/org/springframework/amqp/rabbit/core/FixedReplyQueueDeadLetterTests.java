@@ -210,10 +210,10 @@ public class FixedReplyQueueDeadLetterTests extends NeedsManagementTests {
 		@Bean
 		public DirectExchange ex() {
 			return ExchangeBuilder.directExchange("dlx.test.requestEx")
-					.durable(false)
-					.autoDelete()
-					.alternate("alternate")
-					.build();
+		.durable(false)
+		.autoDelete()
+		.alternate("alternate")
+		.build();
 		}
 
 		@Bean
@@ -235,8 +235,8 @@ public class FixedReplyQueueDeadLetterTests extends NeedsManagementTests {
 		@Bean
 		public Queue requestQueue() {
 			return QueueBuilder.nonDurable("dlx.test.requestQ")
-					.autoDelete()
-					.build();
+		.autoDelete()
+		.build();
 		}
 
 		/**
@@ -245,9 +245,9 @@ public class FixedReplyQueueDeadLetterTests extends NeedsManagementTests {
 		@Bean
 		public Queue replyQueue() {
 			return QueueBuilder.nonDurable("dlx.test.replyQ")
-				    .autoDelete()
-				    .withArgument("x-dead-letter-exchange", "reply.dlx")
-				    .build();
+		.autoDelete()
+		.withArgument("x-dead-letter-exchange", "reply.dlx")
+		.build();
 		}
 
 		/**
@@ -256,65 +256,65 @@ public class FixedReplyQueueDeadLetterTests extends NeedsManagementTests {
 		@Bean
 		public Queue dlq() {
 			return QueueBuilder.nonDurable("dlx.test.DLQ")
-					.autoDelete()
-					.build();
+		.autoDelete()
+		.build();
 		}
 
 		@Bean
 		public Queue allArgs1() {
 			return QueueBuilder.nonDurable("all.args.1")
-					.ttl(1000)
-					.expires(200_000)
-					.maxLength(42)
-					.maxLengthBytes(10_000)
-					.overflow(Overflow.rejectPublish)
-					.deadLetterExchange("reply.dlx")
-					.deadLetterRoutingKey("reply.dlrk")
-					.maxPriority(4)
-					.lazy()
-					.leaderLocator(LeaderLocator.minLeaders)
-					.singleActiveConsumer()
-					.build();
+		.ttl(1000)
+		.expires(200_000)
+		.maxLength(42)
+		.maxLengthBytes(10_000)
+		.overflow(Overflow.rejectPublish)
+		.deadLetterExchange("reply.dlx")
+		.deadLetterRoutingKey("reply.dlrk")
+		.maxPriority(4)
+		.lazy()
+		.leaderLocator(LeaderLocator.minLeaders)
+		.singleActiveConsumer()
+		.build();
 		}
 
 		@Bean
 		public Queue allArgs2() {
 			return QueueBuilder.nonDurable("all.args.2")
-					.ttl(1000)
-					.expires(200_000)
-					.maxLength(42)
-					.maxLengthBytes(10_000)
-					.overflow(Overflow.dropHead)
-					.deadLetterExchange("reply.dlx")
-					.deadLetterRoutingKey("reply.dlrk")
-					.maxPriority(4)
-					.lazy()
-					.leaderLocator(LeaderLocator.clientLocal)
-					.build();
+		.ttl(1000)
+		.expires(200_000)
+		.maxLength(42)
+		.maxLengthBytes(10_000)
+		.overflow(Overflow.dropHead)
+		.deadLetterExchange("reply.dlx")
+		.deadLetterRoutingKey("reply.dlrk")
+		.maxPriority(4)
+		.lazy()
+		.leaderLocator(LeaderLocator.clientLocal)
+		.build();
 		}
 
 		@Bean
 		public Queue allArgs3() {
 			return QueueBuilder.nonDurable("all.args.3")
-					.ttl(1000)
-					.expires(200_000)
-					.maxLength(42)
-					.maxLengthBytes(10_000)
-					.overflow(Overflow.rejectPublish)
-					.deadLetterExchange("reply.dlx")
-					.deadLetterRoutingKey("reply.dlrk")
-					.maxPriority(4)
-					.lazy()
-					.leaderLocator(LeaderLocator.random)
-					.build();
+		.ttl(1000)
+		.expires(200_000)
+		.maxLength(42)
+		.maxLengthBytes(10_000)
+		.overflow(Overflow.rejectPublish)
+		.deadLetterExchange("reply.dlx")
+		.deadLetterRoutingKey("reply.dlrk")
+		.maxPriority(4)
+		.lazy()
+		.leaderLocator(LeaderLocator.random)
+		.build();
 		}
 
 		@Bean
 		public Queue quorum() {
 			return QueueBuilder.durable("test.quorum")
-					.quorum()
-					.deliveryLimit(10)
-					.build();
+		.quorum()
+		.deliveryLimit(10)
+		.build();
 		}
 
 		@Bean

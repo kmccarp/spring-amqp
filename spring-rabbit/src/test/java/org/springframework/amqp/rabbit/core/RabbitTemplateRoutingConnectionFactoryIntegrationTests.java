@@ -77,7 +77,7 @@ class RabbitTemplateRoutingConnectionFactoryIntegrationTests {
 		rabbitTemplate = new RabbitTemplate(routingConnectionFactory);
 
 		final Expression sendExpression = new SpelExpressionParser().parseExpression(
-				"messageProperties.headers['x-use-publisher-confirms'] ?: false");
+	"messageProperties.headers['x-use-publisher-confirms'] ?: false");
 		rabbitTemplate.setSendConnectionFactorySelectorExpression(sendExpression);
 	}
 
@@ -103,7 +103,7 @@ class RabbitTemplateRoutingConnectionFactoryIntegrationTests {
 	void sendWithConfirmsTest() throws Exception {
 		final String payload = UUID.randomUUID().toString();
 		final Message message = MessageBuilder.withBody(payload.getBytes(StandardCharsets.UTF_8))
-				.setHeader("x-use-publisher-confirms", "true").build();
+	.setHeader("x-use-publisher-confirms", "true").build();
 
 		final CorrelationData correlationData = new CorrelationData();
 		rabbitTemplate.send(ROUTE, message, correlationData);

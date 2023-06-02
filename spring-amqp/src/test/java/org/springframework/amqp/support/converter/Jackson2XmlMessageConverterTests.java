@@ -83,7 +83,7 @@ public class Jackson2XmlMessageConverterTests {
 		converter = new Jackson2XmlMessageConverter(mapper);
 
 		((DefaultJackson2JavaTypeMapper) this.converter.getJavaTypeMapper())
-				.setTrustedPackages(TRUSTED_PACKAGE);
+	.setTrustedPackages(TRUSTED_PACKAGE);
 
 		Message message = converter.toMessage(trade, new MessageProperties());
 
@@ -142,7 +142,7 @@ public class Jackson2XmlMessageConverterTests {
 
 	@Test
 	public void testAmqp330StringArray() {
-		String[] testData = { "test" };
+		String[] testData = {"test"};
 		Message message = converter.toMessage(testData, new MessageProperties());
 
 		assertThat(testData).containsExactly((String[]) converter.fromMessage(message));
@@ -150,7 +150,7 @@ public class Jackson2XmlMessageConverterTests {
 
 	@Test
 	public void testAmqp330ObjectArray() {
-		SimpleTrade[] testData = { trade };
+		SimpleTrade[] testData = {trade};
 		Message message = converter.toMessage(testData, new MessageProperties());
 		assertThat(testData).containsExactly((SimpleTrade[]) converter.fromMessage(message));
 	}
@@ -233,9 +233,9 @@ public class Jackson2XmlMessageConverterTests {
 		MessageProperties messageProperties = new MessageProperties();
 		messageProperties.setContentType("application/xml");
 		messageProperties.setInferredArgumentType(
-				(new ParameterizedTypeReference<Map<String, List<Bar>>>() {
+	(new ParameterizedTypeReference<Map<String, List<Bar>>>() {
 
-				}).getType());
+	}).getType());
 		Message message = new Message(bytes, messageProperties);
 		Object foo = this.converter.fromMessage(message);
 		assertThat(foo).isInstanceOf(LinkedHashMap.class);
@@ -253,9 +253,9 @@ public class Jackson2XmlMessageConverterTests {
 		MessageProperties messageProperties = new MessageProperties();
 		messageProperties.setContentType("application/xml");
 		messageProperties.setInferredArgumentType(
-				(new ParameterizedTypeReference<Map<String, Map<String, Bar>>>() {
+	(new ParameterizedTypeReference<Map<String, Map<String, Bar>>>() {
 
-				}).getType());
+	}).getType());
 		Message message = new Message(bytes, messageProperties);
 		Object foo = this.converter.fromMessage(message);
 		assertThat(foo).isInstanceOf(LinkedHashMap.class);

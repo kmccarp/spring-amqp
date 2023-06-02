@@ -49,7 +49,7 @@ public class MessageTests {
 	@Test
 	public void properEncoding() {
 		Message message = new Message("ÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP".getBytes(StandardCharsets.UTF_16),
-				new MessageProperties());
+	new MessageProperties());
 		message.getMessageProperties().setContentType(MessageProperties.CONTENT_TYPE_JSON);
 		message.getMessageProperties().setContentEncoding("UTF-16");
 		assertThat(message.toString()).contains("ÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP");
@@ -105,7 +105,7 @@ public class MessageTests {
 		Message message = new SimpleMessageConverter().toMessage(new Foo(), new MessageProperties());
 		assertThat(message.toString()).doesNotContainPattern("aFoo");
 		Message listMessage = new SimpleMessageConverter().toMessage(Collections.singletonList(new Foo()),
-				new MessageProperties());
+	new MessageProperties());
 		assertThat(listMessage.toString()).doesNotContainPattern("aFoo");
 		assertThat(message.toString()).contains("[serialized object]");
 		assertThat(listMessage.toString()).contains("[serialized object]");

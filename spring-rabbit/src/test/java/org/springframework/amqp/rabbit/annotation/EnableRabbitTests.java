@@ -67,7 +67,7 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 	@Test
 	public void sampleConfiguration() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				EnableRabbitSampleConfig.class, SampleBean.class);
+	EnableRabbitSampleConfig.class, SampleBean.class);
 		testSampleConfiguration(context, 2);
 	}
 
@@ -75,7 +75,7 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 	@Test
 	public void fullConfiguration() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				EnableRabbitFullConfig.class, FullBean.class);
+	EnableRabbitFullConfig.class, FullBean.class);
 		testFullConfiguration(context);
 	}
 
@@ -83,23 +83,23 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 	@Test
 	public void fullConfigurableConfiguration() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				EnableRabbitFullConfigurableConfig.class, FullConfigurableBean.class);
+	EnableRabbitFullConfigurableConfig.class, FullConfigurableBean.class);
 		testFullConfiguration(context);
 	}
 
 	@Override
 	public void noRabbitAdminConfiguration() {
 		assertThatThrownBy(
-				() -> new AnnotationConfigApplicationContext(EnableRabbitSampleConfig.class, FullBean.class).close())
-			.isExactlyInstanceOf(BeanCreationException.class)
-			.withFailMessage("'rabbitAdmin'");
+	() -> new AnnotationConfigApplicationContext(EnableRabbitSampleConfig.class, FullBean.class).close())
+	.isExactlyInstanceOf(BeanCreationException.class)
+	.withFailMessage("'rabbitAdmin'");
 	}
 
 	@Override
 	@Test
 	public void customConfiguration() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				EnableRabbitCustomConfig.class, CustomBean.class);
+	EnableRabbitCustomConfig.class, CustomBean.class);
 		testCustomConfiguration(context);
 	}
 
@@ -107,7 +107,7 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 	@Test
 	public void explicitContainerFactory() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				EnableRabbitCustomContainerFactoryConfig.class, DefaultBean.class);
+	EnableRabbitCustomContainerFactoryConfig.class, DefaultBean.class);
 		testExplicitContainerFactoryConfiguration(context);
 	}
 
@@ -115,7 +115,7 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 	@Test
 	public void defaultContainerFactory() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				EnableRabbitDefaultContainerFactoryConfig.class, DefaultBean.class);
+	EnableRabbitDefaultContainerFactoryConfig.class, DefaultBean.class);
 		testDefaultContainerFactoryConfiguration(context);
 	}
 
@@ -123,36 +123,36 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 	@Test
 	public void rabbitHandlerMethodFactoryConfiguration() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				EnableRabbitHandlerMethodFactoryConfig.class, ValidationBean.class);
+	EnableRabbitHandlerMethodFactoryConfig.class, ValidationBean.class);
 
 		assertThatThrownBy(() -> testRabbitHandlerMethodFactoryConfiguration(context))
-			.isExactlyInstanceOf(ListenerExecutionFailedException.class)
-			.hasCauseExactlyInstanceOf(MethodArgumentNotValidException.class);
+	.isExactlyInstanceOf(ListenerExecutionFailedException.class)
+	.hasCauseExactlyInstanceOf(MethodArgumentNotValidException.class);
 	}
 
 	@Test
 	public void unknownFactory() {
 		assertThatThrownBy(
-				() -> new AnnotationConfigApplicationContext(EnableRabbitSampleConfig.class, CustomBean.class).close())
-			.isExactlyInstanceOf(BeanCreationException.class)
-			.withFailMessage("customFactory");
+	() -> new AnnotationConfigApplicationContext(EnableRabbitSampleConfig.class, CustomBean.class).close())
+	.isExactlyInstanceOf(BeanCreationException.class)
+	.withFailMessage("customFactory");
 	}
 
 	@Test
 	public void invalidPriorityConfiguration() {
 		assertThatThrownBy(
-				() -> new AnnotationConfigApplicationContext(EnableRabbitSampleConfig.class, InvalidPriorityBean.class)
-					.close())
-			.isExactlyInstanceOf(BeanCreationException.class)
-			.withFailMessage("NotANumber");
+	() -> new AnnotationConfigApplicationContext(EnableRabbitSampleConfig.class, InvalidPriorityBean.class)
+.close())
+	.isExactlyInstanceOf(BeanCreationException.class)
+	.withFailMessage("NotANumber");
 	}
 
 	@Test
 	public void lazyComponent() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				EnableRabbitDefaultContainerFactoryConfig.class, LazyBean.class);
+	EnableRabbitDefaultContainerFactoryConfig.class, LazyBean.class);
 		RabbitListenerContainerTestFactory defaultFactory =
-				context.getBean("rabbitListenerContainerFactory", RabbitListenerContainerTestFactory.class);
+	context.getBean("rabbitListenerContainerFactory", RabbitListenerContainerTestFactory.class);
 		assertThat(defaultFactory.getListenerContainers()).hasSize(0);
 
 		context.getBean(LazyBean.class); // trigger lazy resolution
@@ -167,18 +167,18 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 	@Test
 	public void rabbitListeners() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				EnableRabbitDefaultContainerFactoryConfig.class,
-				RabbitListenersBean.class,
-				ClassLevelListenersBean.class);
+	EnableRabbitDefaultContainerFactoryConfig.class,
+	RabbitListenersBean.class,
+	ClassLevelListenersBean.class);
 		testRabbitListenerRepeatable(context);
 	}
 
 	@Test
 	public void testProperShutdownOnException() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				ProperShutdownConfig.class,
-				RabbitListenersBean.class,
-				ClassLevelListenersBean.class);
+	ProperShutdownConfig.class,
+	RabbitListenersBean.class,
+	ClassLevelListenersBean.class);
 		RabbitListenerEndpointRegistry listenerEndpointRegistry = context.getBean(RabbitListenerEndpointRegistry.class);
 
 		// Previously this takes 30 seconds to finish (see DefaultLifecycleProcessor#timeoutPerShutdownPhase)
@@ -216,12 +216,12 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 		static class Listener {
 
 			@RabbitListener(bindings =
-				@QueueBinding(value = @Queue(value = "foo", ignoreDeclarationExceptions = "true",
-						declare = "false", admins = "myAdmin"),
-					exchange = @Exchange(value = "bar", ignoreDeclarationExceptions = "true",
-						declare = "false", admins = "myAdmin"),
-					key = "baz", ignoreDeclarationExceptions = "true",
-						declare = "false", admins = "myAdmin"))
+		@QueueBinding(value = @Queue(value = "foo", ignoreDeclarationExceptions = "true",
+	declare = "false", admins = "myAdmin"),
+	exchange = @Exchange(value = "bar", ignoreDeclarationExceptions = "true",
+declare = "false", admins = "myAdmin"),
+	key = "baz", ignoreDeclarationExceptions = "true",
+	declare = "false", admins = "myAdmin"))
 			public void handle(String foo) {
 				// empty
 			}
@@ -364,8 +364,8 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 					SimpleMessageListenerContainer listenerContainer = spy(super.createContainerInstance());
 
 					willThrow(RuntimeException.class)
-							.given(listenerContainer)
-							.shutdown();
+				.given(listenerContainer)
+				.shutdown();
 
 					return listenerContainer;
 				}
@@ -377,10 +377,10 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 			Connection connection = mock(Connection.class);
 
 			given(connection.createChannel(anyBoolean()))
-					.willReturn(mock(Channel.class));
+		.willReturn(mock(Channel.class));
 
 			given(connectionFactory.createConnection())
-					.willReturn(connection);
+		.willReturn(connection);
 
 			containerFactory.setConnectionFactory(connectionFactory);
 			return containerFactory;

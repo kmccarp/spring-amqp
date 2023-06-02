@@ -38,13 +38,13 @@ import org.springframework.util.StringUtils;
 public class LongRunningIntegrationTestCondition implements ExecutionCondition {
 
 	private static final ConditionEvaluationResult ENABLED = ConditionEvaluationResult.enabled(
-			"@LongRunning is not present");
+"@LongRunning is not present");
 
 	@Override
 	public ConditionEvaluationResult evaluateExecutionCondition(ExtensionContext context) {
 		Optional<AnnotatedElement> element = context.getElement();
 		MergedAnnotations annotations = MergedAnnotations.from(element.get(),
-				MergedAnnotations.SearchStrategy.TYPE_HIERARCHY);
+	MergedAnnotations.SearchStrategy.TYPE_HIERARCHY);
 		MergedAnnotation<LongRunning> mergedAnnotation = annotations.get(LongRunning.class);
 		if (mergedAnnotation.isPresent()) {
 			LongRunning longRunning = mergedAnnotation.synthesize();
@@ -53,8 +53,8 @@ public class LongRunningIntegrationTestCondition implements ExecutionCondition {
 				property = LongRunningIntegrationTest.RUN_LONG_INTEGRATION_TESTS;
 			}
 			return JUnitUtils.parseBooleanProperty(property)
-					? ConditionEvaluationResult.enabled("Long running tests must run")
-					: ConditionEvaluationResult.disabled("Long running tests are skipped");
+		? ConditionEvaluationResult.enabled("Long running tests must run")
+		: ConditionEvaluationResult.disabled("Long running tests are skipped");
 		}
 		return ENABLED;
 	}

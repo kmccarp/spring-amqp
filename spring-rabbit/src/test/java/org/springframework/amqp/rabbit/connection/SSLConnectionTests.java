@@ -46,7 +46,6 @@ import com.rabbitmq.client.impl.CredentialsProvider;
 import com.rabbitmq.client.impl.CredentialsRefreshService;
 
 
-
 /**
  * @author Gary Russell
  * @author Heath Abelson
@@ -135,7 +134,6 @@ public class SSLConnectionTests {
 		fb.getObject();
 		verify(rabbitCf).useSslProtocol("TLSv1.1");
 	}
-
 
 
 	@Test
@@ -268,9 +266,9 @@ public class SSLConnectionTests {
 		CredentialsRefreshService service = mock(CredentialsRefreshService.class);
 		fb.setCredentialsRefreshService(service);
 		assertThat(TestUtils.getPropertyValue(fb.getRabbitConnectionFactory(), "credentialsProvider"))
-				.isSameAs(provider);
+	.isSameAs(provider);
 		assertThat(TestUtils.getPropertyValue(fb.getRabbitConnectionFactory(), "credentialsRefreshService"))
-				.isSameAs(service);
+	.isSameAs(service);
 	}
 
 

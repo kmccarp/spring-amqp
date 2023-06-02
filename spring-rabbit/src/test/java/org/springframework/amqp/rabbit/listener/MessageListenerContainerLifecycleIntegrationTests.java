@@ -71,9 +71,7 @@ import com.rabbitmq.client.DnsRecordIpAddressResolver;
  */
 @RabbitAvailable(queues = MessageListenerContainerLifecycleIntegrationTests.TEST_QUEUE)
 @LongRunning
-@LogLevels(classes = { RabbitTemplate.class,
-			SimpleMessageListenerContainer.class, BlockingQueueConsumer.class,
-			MessageListenerContainerLifecycleIntegrationTests.class }, level = "INFO")
+@LogLevels(classes = {RabbitTemplate.class,SimpleMessageListenerContainer.class, BlockingQueueConsumer.class,MessageListenerContainerLifecycleIntegrationTests.class}, level = "INFO")
 public class MessageListenerContainerLifecycleIntegrationTests {
 
 	public static final String TEST_QUEUE = "test.queue.MessageListenerContainerLifecycleIntegrationTests";
@@ -84,6 +82,7 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 
 	private enum TransactionMode {
 		ON, OFF, PREFETCH, PREFETCH_NO_TX;
+
 		public boolean isTransactional() {
 			return this != OFF && this != PREFETCH_NO_TX;
 		}
@@ -191,7 +190,7 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 
 	@Test
 	@DisabledIf("#{T(org.springframework.amqp.rabbit.listener.MessageListenerContainerLifecycleIntegrationTests)"
-			+ ".checkIpV6()}")
++ ".checkIpV6()}")
 	public void testBadCredentials() throws Exception {
 		RabbitTemplate template = createTemplate(1);
 		com.rabbitmq.client.ConnectionFactory cf = new com.rabbitmq.client.ConnectionFactory();
@@ -199,8 +198,8 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 		cf.setUsername("foo");
 		final CachingConnectionFactory connectionFactory = new CachingConnectionFactory(cf);
 		assertThatExceptionOfType(AmqpIllegalStateException.class).isThrownBy(() ->
-			doTest(MessageCount.LOW, Concurrency.LOW, TransactionMode.OFF, template, connectionFactory))
-				.withCauseExactlyInstanceOf(FatalListenerStartupException.class);
+	doTest(MessageCount.LOW, Concurrency.LOW, TransactionMode.OFF, template, connectionFactory))
+	.withCauseExactlyInstanceOf(FatalListenerStartupException.class);
 		((DisposableBean) template.getConnectionFactory()).destroy();
 	}
 
@@ -214,7 +213,7 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 	 * ON, PREFETCH, or PREFETCH_NO_TX, ack=AUTO, so we should not lose any messages.
 	 */
 	private void doTest(MessageCount level, Concurrency concurrency, TransactionMode transactionMode,
-			RabbitTemplate template, ConnectionFactory connectionFactory) throws Exception {
+RabbitTemplate template, ConnectionFactory connectionFactory) throws Exception {
 
 		int messageCount = level.value();
 		int concurrentConsumers = concurrency.value();
@@ -274,7 +273,7 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 				}
 				// Even though not transactional, we shouldn't lose messages for PREFETCH_NO_TX
 				int expectedAfterRestart = transactionMode == TransactionMode.PREFETCH_NO_TX ?
-						messageCount * 2 - messagesReceivedAfterStop : messageCount;
+			messageCount * 2 - messagesReceivedAfterStop : messageCount;
 				latch = new CountDownLatch(expectedAfterRestart);
 				listener.reset(latch);
 
@@ -294,7 +293,7 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 			else {
 				int count = listener.getCount();
 				assertThat(messagesReceivedBeforeStart < count).as("Expected additional messages received after start: " + messagesReceivedBeforeStart + ">="
-						+ count).isTrue();
+			+ count).isTrue();
 				assertThat(template.receive(queue.getName())).as("Messages still available").isNull();
 			}
 
@@ -361,10 +360,10 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 		// ... and the remaining 4 are queued...
 		@SuppressWarnings("unchecked")
 		Set<BlockingQueueConsumer> consumers = (Set<BlockingQueueConsumer>) TestUtils
-				.getPropertyValue(container, "consumers");
+	.getPropertyValue(container, "consumers");
 		await().until(() -> {
 			if (consumers.size() > 0
-				&& TestUtils.getPropertyValue(consumers.iterator().next(), "queue", BlockingQueue.class).size() > 3) {
+		&& TestUtils.getPropertyValue(consumers.iterator().next(), "queue", BlockingQueue.class).size() > 3) {
 				prefetched.countDown();
 				return true;
 			}
@@ -377,7 +376,7 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 		awaitStop.countDown();
 
 		assertThat(awaitConsumeFirst.await(10, TimeUnit.SECONDS))
-				.as("awaitConsumeFirst.count=" + awaitConsumeFirst.getCount()).isTrue();
+	.as("awaitConsumeFirst.count=" + awaitConsumeFirst.getCount()).isTrue();
 		DirectFieldAccessor dfa = new DirectFieldAccessor(container);
 		await().until(() -> dfa.getPropertyValue("consumers") == null);
 		// make sure we stopped receiving after the prefetch was consumed
@@ -387,7 +386,7 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 		container.start();
 		assertThat(awaitStart2.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(awaitConsumeSecond.await(10, TimeUnit.SECONDS))
-				.as("awaitConsumeSecond.count=" + awaitConsumeSecond.getCount()).isTrue();
+	.as("awaitConsumeSecond.count=" + awaitConsumeSecond.getCount()).isTrue();
 		container.stop();
 		((DisposableBean) template.getConnectionFactory()).destroy();
 	}
@@ -407,7 +406,7 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 			invocation.callRealMethod();
 			return null;
 		}).given(log).debug(
-				Mockito.contains("Consumer received Shutdown Signal, processing stopped"));
+	Mockito.contains("Consumer received Shutdown Signal, processing stopped"));
 		DirectFieldAccessor dfa = new DirectFieldAccessor(container);
 		dfa.setPropertyValue("logger", log);
 		container.setQueues(queue);
@@ -420,7 +419,7 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 
 			assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
 			Mockito.verify(log).debug(
-					Mockito.contains("Consumer received Shutdown Signal, processing stopped"));
+		Mockito.contains("Consumer received Shutdown Signal, processing stopped"));
 			Mockito.verify(log, Mockito.never()).warn(Mockito.anyString(), Mockito.any(Throwable.class));
 		}
 		finally {
@@ -433,7 +432,7 @@ public class MessageListenerContainerLifecycleIntegrationTests {
 	@Test
 	public void testLongLivingConsumerStoppedProperlyAfterContextClose() throws Exception {
 		ConfigurableApplicationContext applicationContext =
-				new AnnotationConfigApplicationContext(LongLiveConsumerConfig.class);
+	new AnnotationConfigApplicationContext(LongLiveConsumerConfig.class);
 
 		RabbitTemplate template = createTemplate(1);
 		template.convertAndSend(queue.getName(), "foo");

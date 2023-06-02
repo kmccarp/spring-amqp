@@ -59,7 +59,7 @@ public final class QueueParserIntegrationTests {
 		Queue queue = beanFactory.getBean("arguments", Queue.class);
 		assertThat(queue).isNotNull();
 		CachingConnectionFactory connectionFactory = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		RabbitTemplate template = new RabbitTemplate(connectionFactory);
 		RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
 		rabbitAdmin.deleteQueue(queue.getName());
@@ -68,8 +68,8 @@ public final class QueueParserIntegrationTests {
 		assertThat(queue.getArguments().get("x-message-ttl")).isEqualTo(100L);
 		template.convertAndSend(queue.getName(), "message");
 		await().with().pollInterval(Duration.ofMillis(50))
-				.until(() -> rabbitAdmin.getQueueProperties("arguments")
-						.get(RabbitAdmin.QUEUE_MESSAGE_COUNT).equals(0));
+	.until(() -> rabbitAdmin.getQueueProperties("arguments")
+.get(RabbitAdmin.QUEUE_MESSAGE_COUNT).equals(0));
 		connectionFactory.destroy();
 		RabbitAvailableCondition.getBrokerRunning().deleteQueues("arguments");
 	}

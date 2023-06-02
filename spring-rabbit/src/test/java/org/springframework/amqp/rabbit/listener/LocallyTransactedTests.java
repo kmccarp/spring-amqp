@@ -102,8 +102,8 @@ public abstract class LocallyTransactedTests {
 			consumerLatch.countDown();
 			return "consumerTag";
 		}).given(onlyChannel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-						any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
+any(Consumer.class));
 
 		final AtomicReference<CountDownLatch> commitLatch = new AtomicReference<>(new CountDownLatch(1));
 		willAnswer(invocation -> {
@@ -136,7 +136,7 @@ public abstract class LocallyTransactedTests {
 		assertThat(consumerLatch.await(10, TimeUnit.SECONDS)).isTrue();
 
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 
 		assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
 
@@ -149,7 +149,7 @@ public abstract class LocallyTransactedTests {
 		assertThat(commitLatch.get().await(10, TimeUnit.SECONDS)).isTrue();
 		verify(onlyChannel).txCommit();
 		verify(onlyChannel).basicPublish(Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
-				Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
+	Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
 
 		DirectFieldAccessor dfa = new DirectFieldAccessor(cachingConnectionFactory);
 		List<?> channels = (List<?>) dfa.getPropertyValue("cachedChannelsTransactional");
@@ -160,7 +160,7 @@ public abstract class LocallyTransactedTests {
 		});
 		commitLatch.set(new CountDownLatch(1));
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 		assertThat(commitLatch.get().await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(rollbackLatch.get().await(10, TimeUnit.SECONDS)).isTrue();
 		verify(onlyChannel).basicNack(anyLong(), anyBoolean(), anyBoolean());
@@ -174,7 +174,7 @@ public abstract class LocallyTransactedTests {
 		commitLatch.set(new CountDownLatch(1));
 		rollbackLatch.set(new CountDownLatch(1));
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 		assertThat(rollbackLatch.get().await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(commitLatch.get().await(10, TimeUnit.SECONDS)).isTrue();
 		verify(onlyChannel, times(2)).basicNack(anyLong(), anyBoolean(), anyBoolean());
@@ -186,7 +186,7 @@ public abstract class LocallyTransactedTests {
 		});
 		commitLatch.set(new CountDownLatch(1));
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 		assertThat(commitLatch.get().await(10, TimeUnit.SECONDS)).isTrue();
 		verify(onlyChannel, times(2)).basicAck(anyLong(), anyBoolean());
 		verify(onlyChannel, times(4)).txCommit();
@@ -222,8 +222,8 @@ public abstract class LocallyTransactedTests {
 			consumerLatch.countDown();
 			return "consumerTag";
 		}).given(channel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-						any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
+any(Consumer.class));
 
 		final CountDownLatch rollbackLatch = new CountDownLatch(1);
 		willAnswer(invocation -> {
@@ -245,7 +245,7 @@ public abstract class LocallyTransactedTests {
 		assertThat(consumerLatch.await(10, TimeUnit.SECONDS)).isTrue();
 
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 
 		assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
 
@@ -309,7 +309,7 @@ public abstract class LocallyTransactedTests {
 			consumerLatch.countDown();
 			return "consumerTag";
 		}).given(channel1).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-				any(Consumer.class));
+	any(Consumer.class));
 
 		final CountDownLatch commitLatch = new CountDownLatch(1);
 		willAnswer(invocation -> {
@@ -334,7 +334,7 @@ public abstract class LocallyTransactedTests {
 		assertThat(consumerLatch.await(10, TimeUnit.SECONDS)).isTrue();
 
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 
 		assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
 
@@ -347,9 +347,9 @@ public abstract class LocallyTransactedTests {
 		assertThat(commitLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		verify(channel1).txCommit();
 		verify(channel1, never()).basicPublish(Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
-				Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
+	Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
 		verify(channel2).basicPublish(Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
-				Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
+	Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
 
 		// verify close() was never called on the channel
 		DirectFieldAccessor dfa = new DirectFieldAccessor(cachingConnectionFactory);
@@ -402,8 +402,8 @@ public abstract class LocallyTransactedTests {
 			consumerLatch.countDown();
 			return "consumerTag";
 		}).given(onlyChannel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-						any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
+any(Consumer.class));
 
 		final CountDownLatch commitLatch = new CountDownLatch(1);
 		willAnswer(invocation -> {
@@ -430,7 +430,7 @@ public abstract class LocallyTransactedTests {
 		assertThat(consumerLatch.await(10, TimeUnit.SECONDS)).isTrue();
 
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 
 		assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
 
@@ -443,7 +443,7 @@ public abstract class LocallyTransactedTests {
 		assertThat(commitLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		verify(onlyChannel).txCommit();
 		verify(onlyChannel).basicPublish(Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
-				Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
+	Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
 
 		// verify close() was never called on the channel
 		verify(onlyChannel, Mockito.never()).close();
@@ -491,7 +491,7 @@ public abstract class LocallyTransactedTests {
 			consumerLatch.countDown();
 			return "consumerTag";
 		}).given(firstChannel)
-			.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(), any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(), any(Consumer.class));
 
 		final CountDownLatch commitLatch = new CountDownLatch(1);
 		willAnswer(invocation -> {
@@ -518,7 +518,7 @@ public abstract class LocallyTransactedTests {
 		container.start();
 		assertThat(consumerLatch.await(10, TimeUnit.SECONDS)).isTrue();
 
-		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(), new byte[] {0});
+		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(), new byte[]{0});
 
 		assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
 
@@ -533,7 +533,7 @@ public abstract class LocallyTransactedTests {
 		verify(firstChannel).txCommit();
 		verify(secondChannel).txCommit();
 		verify(secondChannel).basicPublish(Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
-				Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
+	Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
 
 		assertThat(exposed.get()).isSameAs(secondChannel);
 

@@ -60,7 +60,8 @@ public class PooledChannelConnectionFactory extends AbstractConnectionFactory im
 
 	private boolean simplePublisherConfirms;
 
-	private BiConsumer<GenericObjectPool<Channel>, Boolean> poolConfigurer = (pool, tx) -> { };
+	private BiConsumer<GenericObjectPool<Channel>, Boolean> poolConfigurer = (pool, tx) -> {
+	};
 
 	private boolean defaultPublisherFactory = true;
 
@@ -119,7 +120,7 @@ public class PooledChannelConnectionFactory extends AbstractConnectionFactory im
 		this.simplePublisherConfirms = simplePublisherConfirms;
 		if (this.defaultPublisherFactory) {
 			((PooledChannelConnectionFactory) getPublisherConnectionFactory())
-				.setSimplePublisherConfirms(simplePublisherConfirms); // NOSONAR
+		.setSimplePublisherConfirms(simplePublisherConfirms); // NOSONAR
 		}
 	}
 
@@ -137,7 +138,7 @@ public class PooledChannelConnectionFactory extends AbstractConnectionFactory im
 		if (this.connection == null || !this.connection.isOpen()) {
 			Connection bareConnection = createBareConnection(); // NOSONAR - see destroy()
 			this.connection = new ConnectionWrapper(bareConnection.getDelegate(), getCloseTimeout(), // NOSONAR
-					this.simplePublisherConfirms, this.poolConfigurer, getChannelListener()); // NOSONAR
+		this.simplePublisherConfirms, this.poolConfigurer, getChannelListener()); // NOSONAR
 			getConnectionListener().onCreate(this.connection);
 		}
 		return this.connection;
@@ -177,7 +178,7 @@ public class PooledChannelConnectionFactory extends AbstractConnectionFactory im
 		private final ChannelListener channelListener;
 
 		ConnectionWrapper(com.rabbitmq.client.Connection delegate, int closeTimeout, boolean simplePublisherConfirms,
-				BiConsumer<GenericObjectPool<Channel>, Boolean> configurer, ChannelListener channelListener) {
+	BiConsumer<GenericObjectPool<Channel>, Boolean> configurer, ChannelListener channelListener) {
 
 			super(delegate, closeTimeout);
 			GenericObjectPool<Channel> pool = new GenericObjectPool<>(new ChannelFactory());
@@ -207,26 +208,26 @@ public class PooledChannelConnectionFactory extends AbstractConnectionFactory im
 			AtomicReference<Channel> proxy = new AtomicReference<>();
 			AtomicBoolean confirmSelected = new AtomicBoolean();
 			Advice advice =
-					(MethodInterceptor) invocation -> {
-						String method = invocation.getMethod().getName();
-						switch (method) {
-						case "close":
-							handleClose(channel, transacted, proxy);
-							return null;
-						case "getTargetChannel":
-							return channel;
-						case "isTransactional":
-							return transacted;
-						case "confirmSelect":
-							confirmSelected.set(true);
-							return channel.confirmSelect();
-						case "isConfirmSelected":
-							return confirmSelected.get();
-						case "isPublisherConfirms":
-							return false;
-						}
-						return null;
-					};
+		(MethodInterceptor) invocation -> {
+			String method = invocation.getMethod().getName();
+			switch (method) {
+				case "close":
+					handleClose(channel, transacted, proxy);
+					return null;
+				case "getTargetChannel":
+					return channel;
+				case "isTransactional":
+					return transacted;
+				case "confirmSelect":
+					confirmSelected.set(true);
+					return channel.confirmSelect();
+				case "isConfirmSelected":
+					return confirmSelected.get();
+				case "isPublisherConfirms":
+					return false;
+			}
+			return null;
+		};
 			NameMatchMethodPointcutAdvisor advisor = new NameMatchMethodPointcutAdvisor(advice);
 			advisor.addMethodName("close");
 			advisor.addMethodName("getTargetChannel");
@@ -241,7 +242,7 @@ public class PooledChannelConnectionFactory extends AbstractConnectionFactory im
 		}
 
 		private void handleClose(Channel channel, boolean transacted, AtomicReference<Channel> proxy)
-				throws Exception { // NOSONAR returnObject() throws it
+	throws Exception { // NOSONAR returnObject() throws it
 
 			if (!RabbitUtils.isPhysicalCloseRequired()) {
 				if (transacted) {

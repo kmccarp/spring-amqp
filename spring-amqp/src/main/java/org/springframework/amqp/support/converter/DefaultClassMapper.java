@@ -53,10 +53,8 @@ public class DefaultClassMapper implements ClassMapper, InitializingBean {
 	private static final String DEFAULT_HASHTABLE_TYPE_ID = "Hashtable";
 
 	private static final List<String> TRUSTED_PACKAGES =
-			Arrays.asList(
-					"java.util",
-					"java.lang"
-			);
+Arrays.asList("java.util","java.lang"
+);
 
 	private final Set<String> trustedPackages = new LinkedHashSet<>(TRUSTED_PACKAGES);
 
@@ -181,9 +179,9 @@ public class DefaultClassMapper implements ClassMapper, InitializingBean {
 			}
 			else {
 				throw new MessageConversionException(
-						"failed to convert Message content. Could not resolve "
-								+ getClassIdFieldName() + " in header " +
-								"and no defaultType provided");
+			"failed to convert Message content. Could not resolve "
+		+ getClassIdFieldName() + " in header " +
+		"and no defaultType provided");
 			}
 		}
 		return toClass(classId);
@@ -199,9 +197,9 @@ public class DefaultClassMapper implements ClassMapper, InitializingBean {
 		try {
 			if (!isTrustedPackage(classId)) {
 				throw new IllegalArgumentException("The class '" + classId + "' is not in the trusted packages: " +
-						this.trustedPackages + ". " +
-						"If you believe this class is safe to deserialize, please provide its name. " +
-						"If the serialization is only done by a trusted source, you can also enable trust all (*).");
+			this.trustedPackages + ". " +
+			"If you believe this class is safe to deserialize, please provide its name. " +
+			"If the serialization is only done by a trusted source, you can also enable trust all (*).");
 			}
 			else {
 				return ClassUtils.forName(classId, ClassUtils.getDefaultClassLoader());
@@ -209,7 +207,7 @@ public class DefaultClassMapper implements ClassMapper, InitializingBean {
 		}
 		catch (ClassNotFoundException | LinkageError e) {
 			throw new MessageConversionException(
-					"failed to resolve class name [" + classId + "]", e);
+		"failed to resolve class name [" + classId + "]", e);
 		}
 	}
 

@@ -40,10 +40,10 @@ public class AnswerTests {
 		willAnswer(new LambdaAnswer<String>(true, (i, r) -> r + r, delegate)).given(foo).foo(anyString());
 		assertThat(foo.foo("foo")).isEqualTo("FOOFOO");
 		willAnswer(new LambdaAnswer<String>(true, (i, r) -> r + i.getArguments()[0], delegate))
-				.given(foo).foo(anyString());
+	.given(foo).foo(anyString());
 		assertThat(foo.foo("foo")).isEqualTo("FOOfoo");
 		willAnswer(new LambdaAnswer<String>(false, (i, r) ->
-			"" + i.getArguments()[0] + i.getArguments()[0], delegate)).given(foo).foo(anyString());
+	"" + i.getArguments()[0] + i.getArguments()[0], delegate)).given(foo).foo(anyString());
 		assertThat(foo.foo("foo")).isEqualTo("foofoo");
 		LambdaAnswer<String> answer = new LambdaAnswer<>(true, (inv, result) -> result, delegate);
 		willAnswer(answer).given(foo).foo("fail");

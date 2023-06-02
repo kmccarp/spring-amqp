@@ -43,6 +43,6 @@ public interface RabbitListenerErrorHandler {
 	 * @throws Exception an exception which may be the original or different.
 	 */
 	Object handleError(Message amqpMessage, @Nullable org.springframework.messaging.Message<?> message,
-			ListenerExecutionFailedException exception) throws Exception; // NOSONAR
+ListenerExecutionFailedException exception) throws Exception; // NOSONAR
 
 }

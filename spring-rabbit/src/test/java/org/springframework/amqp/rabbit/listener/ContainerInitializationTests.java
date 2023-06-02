@@ -47,7 +47,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 1.6
  *
  */
-@RabbitAvailable(queues = { ContainerInitializationTests.TEST_MISMATCH, ContainerInitializationTests.TEST_MISMATCH2 })
+@RabbitAvailable(queues = {ContainerInitializationTests.TEST_MISMATCH, ContainerInitializationTests.TEST_MISMATCH2})
 public class ContainerInitializationTests {
 
 	public static final String TEST_MISMATCH = "test.mismatch";
@@ -64,7 +64,7 @@ public class ContainerInitializationTests {
 		catch (ApplicationContextException e) {
 			assertThat(e.getCause().getCause()).isInstanceOf(IllegalStateException.class);
 			assertThat(e.getCause().getMessage()).contains("When 'mismatchedQueuesFatal' is 'true', there must be "
-					+ "exactly one AmqpAdmin in the context or you must inject one into this container; found: 0");
+		+ "exactly one AmqpAdmin in the context or you must inject one into this container; found: 0");
 		}
 	}
 
@@ -129,7 +129,7 @@ public class ContainerInitializationTests {
 				mismatchLatch.countDown();
 			}
 		});
-		return new CountDownLatch[] { cancelLatch, mismatchLatch, preventContainerRedeclareQueueLatch };
+		return new CountDownLatch[]{cancelLatch, mismatchLatch, preventContainerRedeclareQueueLatch};
 	}
 
 	@Configuration

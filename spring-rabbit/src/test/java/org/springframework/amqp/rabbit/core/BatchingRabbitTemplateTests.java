@@ -344,7 +344,8 @@ public class BatchingRabbitTemplateTests {
 	public void testDebatchByContainerBadMessageRejected() throws Exception {
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(this.connectionFactory);
 		container.setQueueNames(ROUTE);
-		container.setMessageListener((MessageListener) message -> { });
+		container.setMessageListener((MessageListener) message -> {
+		});
 		container.setReceiveTimeout(100);
 		ConditionalRejectingErrorHandler errorHandler = new ConditionalRejectingErrorHandler();
 		container.setErrorHandler(errorHandler);
@@ -627,7 +628,7 @@ public class BatchingRabbitTemplateTests {
 	@Nullable
 	private Message receive(BatchingRabbitTemplate template) throws InterruptedException {
 		return await().with().pollInterval(Duration.ofMillis(50))
-				.until(() -> template.receive(ROUTE), msg -> msg != null);
+	.until(() -> template.receive(ROUTE), msg -> msg != null);
 	}
 
 	@Test

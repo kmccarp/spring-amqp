@@ -136,7 +136,7 @@ public class SimpleMessageListenerContainerTests {
 		container.setAcknowledgeMode(AcknowledgeMode.NONE);
 		container.setTransactionManager(new TestTransactionManager());
 		assertThatIllegalStateException()
-			.isThrownBy(container::afterPropertiesSet);
+	.isThrownBy(container::afterPropertiesSet);
 		container.stop();
 		singleConnectionFactory.destroy();
 	}
@@ -150,7 +150,7 @@ public class SimpleMessageListenerContainerTests {
 		container.setChannelTransacted(true);
 		container.setAcknowledgeMode(AcknowledgeMode.NONE);
 		assertThatIllegalStateException()
-			.isThrownBy(container::afterPropertiesSet);
+	.isThrownBy(container::afterPropertiesSet);
 		container.stop();
 		singleConnectionFactory.destroy();
 	}
@@ -201,8 +201,8 @@ public class SimpleMessageListenerContainerTests {
 			consumer.get().handleConsumeOk("1");
 			return "1";
 		}).given(channel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-						any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
+any(Consumer.class));
 		final CountDownLatch latch = new CountDownLatch(2);
 		willAnswer(invocation -> {
 			latch.countDown();
@@ -253,8 +253,8 @@ public class SimpleMessageListenerContainerTests {
 			consumer.get().handleConsumeOk(consumerTag);
 			return consumerTag;
 		}).given(channel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-						any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
+any(Consumer.class));
 		final CountDownLatch latch = new CountDownLatch(2);
 		willAnswer(invocation -> {
 			latch.countDown();
@@ -306,8 +306,8 @@ public class SimpleMessageListenerContainerTests {
 			args.set(invocation.getArgument(5));
 			return "foo";
 		}).given(channel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), any(Map.class),
-						any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), any(Map.class),
+any(Consumer.class));
 
 		final SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
 		container.setQueueNames("foo");
@@ -318,8 +318,8 @@ public class SimpleMessageListenerContainerTests {
 		container.afterPropertiesSet();
 		container.start();
 		verify(channel).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-				any(Map.class),
-				any(Consumer.class));
+	any(Map.class),
+	any(Consumer.class));
 		assertThat(args.get() != null).isTrue();
 		assertThat(args.get().get("x-priority")).isEqualTo(10);
 		consumer.get().handleCancelOk("foo");
@@ -391,8 +391,8 @@ public class SimpleMessageListenerContainerTests {
 			cons.handleConsumeOk(consumerTag);
 			return consumerTag;
 		}).given(channel1)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-						any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
+any(Consumer.class));
 
 		final SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
 		container.setMessageListener(message -> {
@@ -410,7 +410,7 @@ public class SimpleMessageListenerContainerTests {
 	}
 
 	protected void setupMockConsume(Channel channel, final List<Consumer> consumers, final AtomicInteger consumerTag,
-			final CountDownLatch latch) throws IOException {
+final CountDownLatch latch) throws IOException {
 
 		willAnswer(invocation -> {
 			Consumer cons = invocation.getArgument(6);
@@ -420,7 +420,7 @@ public class SimpleMessageListenerContainerTests {
 			latch.countDown();
 			return actualTag;
 		}).given(channel).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-				any(Consumer.class));
+	any(Consumer.class));
 	}
 
 	protected void setUpMockCancel(Channel channel, final List<Consumer> consumers) throws IOException {
@@ -458,16 +458,16 @@ public class SimpleMessageListenerContainerTests {
 	@Test
 	public void testWithConnectionPerListenerThread() throws Exception {
 		com.rabbitmq.client.ConnectionFactory mockConnectionFactory =
-				mock(com.rabbitmq.client.ConnectionFactory.class);
+	mock(com.rabbitmq.client.ConnectionFactory.class);
 		com.rabbitmq.client.Connection mockConnection1 = mock(com.rabbitmq.client.Connection.class);
 		com.rabbitmq.client.Connection mockConnection2 = mock(com.rabbitmq.client.Connection.class);
 		Channel mockChannel1 = mock(Channel.class);
 		Channel mockChannel2 = mock(Channel.class);
 
 		given(mockConnectionFactory.newConnection(any(ExecutorService.class), anyString()))
-				.willReturn(mockConnection1)
-				.willReturn(mockConnection2)
-				.willReturn(null);
+	.willReturn(mockConnection1)
+	.willReturn(mockConnection2)
+	.willReturn(null);
 		given(mockConnection1.createChannel()).willReturn(mockChannel1).willReturn(null);
 		given(mockConnection2.createChannel()).willReturn(mockChannel2).willReturn(null);
 		given(mockChannel1.isOpen()).willReturn(true);
@@ -488,11 +488,11 @@ public class SimpleMessageListenerContainerTests {
 		CountDownLatch latch1 = new CountDownLatch(2);
 		CountDownLatch latch2 = new CountDownLatch(2);
 		willAnswer(messageToConsumer(mockChannel1, container, false, latch1))
-				.given(mockChannel1).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-				anyMap(), any(Consumer.class));
+	.given(mockChannel1).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
+	anyMap(), any(Consumer.class));
 		willAnswer(messageToConsumer(mockChannel2, container, false, latch1))
-				.given(mockChannel2).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-				anyMap(), any(Consumer.class));
+	.given(mockChannel2).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
+	anyMap(), any(Consumer.class));
 		willAnswer(messageToConsumer(mockChannel1, container, true, latch2)).given(mockChannel1).basicCancel(anyString());
 		willAnswer(messageToConsumer(mockChannel2, container, true, latch2)).given(mockChannel2).basicCancel(anyString());
 
@@ -531,7 +531,7 @@ public class SimpleMessageListenerContainerTests {
 			consumer.get().handleConsumeOk("foo");
 			return "foo";
 		}).given(channel).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-				any(Consumer.class));
+	any(Consumer.class));
 
 		final SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
 		container.setQueueNames("foo");
@@ -541,7 +541,7 @@ public class SimpleMessageListenerContainerTests {
 		container.afterPropertiesSet();
 		container.start();
 		verify(channel).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-				any(Consumer.class));
+	any(Consumer.class));
 		Log logger = spy(TestUtils.getPropertyValue(container, "logger", Log.class));
 		willReturn(false).given(logger).isDebugEnabled();
 		willReturn(true).given(logger).isWarnEnabled();
@@ -558,15 +558,15 @@ public class SimpleMessageListenerContainerTests {
 		new DirectFieldAccessor(container).setPropertyValue("logger", logger);
 		consumer.get().handleCancel("foo");
 		assertThat(latch.await(10, TimeUnit.SECONDS))
-				.as("Expected 'Consumer raised exception' but got %s", messages)
-				.isTrue();
+	.as("Expected 'Consumer raised exception' but got %s", messages)
+	.isTrue();
 		container.stop();
 	}
 
 	@Test
 	public void testContainerNotRecoveredAfterExhaustingRecoveryBackOff() throws Exception {
 		SimpleMessageListenerContainer container =
-				spy(new SimpleMessageListenerContainer(mock(ConnectionFactory.class)));
+	spy(new SimpleMessageListenerContainer(mock(ConnectionFactory.class)));
 		container.setQueueNames("foo");
 		container.setRecoveryBackOff(new FixedBackOff(100, 3));
 		container.setConcurrentConsumers(3);
@@ -588,7 +588,7 @@ public class SimpleMessageListenerContainerTests {
 		ConnectionFactory connectionFactory = mock(ConnectionFactory.class);
 
 		given(connectionFactory.createConnection())
-				.willThrow(new AmqpAuthenticationException(new PossibleAuthenticationFailureException("intentional")));
+	.willThrow(new AmqpAuthenticationException(new PossibleAuthenticationFailureException("intentional")));
 
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
 		container.setConnectionFactory(connectionFactory);
@@ -681,7 +681,7 @@ public class SimpleMessageListenerContainerTests {
 		boolean removed = container.removeAfterReceivePostProcessor(mpp1);
 		@SuppressWarnings("unchecked")
 		Collection<Object> afterReceivePostProcessors =
-				(Collection<Object>) ReflectionTestUtils.getField(container, "afterReceivePostProcessors");
+	(Collection<Object>) ReflectionTestUtils.getField(container, "afterReceivePostProcessors");
 
 		assertThat(removed).isEqualTo(true);
 		assertThat(afterReceivePostProcessors).containsExactly(mpp2, mpp3);
@@ -701,8 +701,8 @@ public class SimpleMessageListenerContainerTests {
 			consumer.get().handleConsumeOk("1");
 			return "1";
 		}).given(channel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-						any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
+any(Consumer.class));
 		final SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
 		container.setQueueNames("foo", "bar");
 		container.setMessageListener(mock(MessageListener.class));
@@ -726,8 +726,8 @@ public class SimpleMessageListenerContainerTests {
 			consumer.get().handleConsumeOk("1");
 			return "1";
 		}).given(channel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-						any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
+any(Consumer.class));
 		final CountDownLatch latch = new CountDownLatch(1);
 		willAnswer(invocation -> {
 			latch.countDown();
@@ -782,7 +782,7 @@ public class SimpleMessageListenerContainerTests {
 	}
 
 	private Answer<Object> messageToConsumer(final Channel mockChannel, final SimpleMessageListenerContainer container,
-			final boolean cancel, final CountDownLatch latch) {
+final boolean cancel, final CountDownLatch latch) {
 		return invocation -> {
 			String returnValue = null;
 			Set<?> consumers = TestUtils.getPropertyValue(container, "consumers", Set.class);
@@ -791,7 +791,7 @@ public class SimpleMessageListenerContainerTests {
 				if (channel != null && channel.getTargetChannel() == mockChannel) {
 					if (cancel) {
 						((Consumer) TestUtils.getPropertyValue(consumer, "consumers", Map.class)
-								.values().iterator().next()).handleCancelOk(invocation.getArgument(0));
+					.values().iterator().next()).handleCancelOk(invocation.getArgument(0));
 					}
 					else {
 						((Consumer) invocation.getArgument(6)).handleConsumeOk("foo");
@@ -807,9 +807,9 @@ public class SimpleMessageListenerContainerTests {
 
 	private void waitForConsumersToStop(Set<?> consumers) throws Exception {
 		with().pollInterval(Duration.ofMillis(10)).atMost(Duration.ofSeconds(10))
-				.until(() -> consumers.stream()
-						.map(consumer -> TestUtils.getPropertyValue(consumer, "consumer"))
-						.allMatch(c -> c == null));
+	.until(() -> consumers.stream()
+.map(consumer -> TestUtils.getPropertyValue(consumer, "consumer"))
+.allMatch(c -> c == null));
 	}
 
 	@SuppressWarnings("serial")

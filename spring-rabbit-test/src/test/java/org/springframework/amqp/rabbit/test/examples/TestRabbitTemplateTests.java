@@ -105,7 +105,7 @@ public class TestRabbitTemplateTests {
 			willReturn(channel).given(connection).createChannel(anyBoolean());
 			given(channel.isOpen()).willReturn(true);
 			given(channel.queueDeclare(anyString(), anyBoolean(), anyBoolean(), anyBoolean(), anyMap()))
-					.willReturn(declareOk);
+		.willReturn(declareOk);
 			return factory;
 		}
 

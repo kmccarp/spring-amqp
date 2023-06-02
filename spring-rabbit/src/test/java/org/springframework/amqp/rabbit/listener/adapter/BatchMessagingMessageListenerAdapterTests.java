@@ -37,13 +37,13 @@ public class BatchMessagingMessageListenerAdapterTests {
 	void compatibleMethod() throws Exception {
 		Method method = getClass().getDeclaredMethod("listen", List.class);
 		BatchMessagingMessageListenerAdapter adapter = new BatchMessagingMessageListenerAdapter(this, method, false,
-				null, null);
+	null, null);
 		assertThat(TestUtils.getPropertyValue(adapter, "messagingMessageConverter.inferredArgumentType"))
-				.isEqualTo(String.class);
+	.isEqualTo(String.class);
 		Method badMethod = getClass().getDeclaredMethod("listen", String.class);
 		assertThatIllegalStateException().isThrownBy(() ->
-				new BatchMessagingMessageListenerAdapter(this, badMethod, false, null, null)
-			).withMessageStartingWith("Mis-configuration");
+	new BatchMessagingMessageListenerAdapter(this, badMethod, false, null, null)
+		).withMessageStartingWith("Mis-configuration");
 	}
 
 	public void listen(String in) {

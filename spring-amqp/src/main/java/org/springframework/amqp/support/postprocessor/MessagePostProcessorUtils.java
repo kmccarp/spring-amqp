@@ -58,6 +58,7 @@ public final class MessagePostProcessorUtils {
 		return sorted;
 	}
 
-	private MessagePostProcessorUtils() { }
+	private MessagePostProcessorUtils() {
+	}
 
 }

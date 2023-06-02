@@ -52,7 +52,7 @@ public final class ListenerContainerPlaceholderParserTests {
 	@BeforeEach
 	public void setUp() {
 		this.context = new GenericXmlApplicationContext(
-				new ClassPathResource(getClass().getSimpleName() + "-context.xml", getClass()));
+	new ClassPathResource(getClass().getSimpleName() + "-context.xml", getClass()));
 	}
 
 	@AfterEach
@@ -71,7 +71,7 @@ public final class ListenerContainerPlaceholderParserTests {
 	@Test
 	public void testParseWithQueueNames() throws Exception {
 		SimpleMessageListenerContainer container =
-				this.context.getBean("testListener", SimpleMessageListenerContainer.class);
+	this.context.getBean("testListener", SimpleMessageListenerContainer.class);
 		assertThat(container.getAcknowledgeMode()).isEqualTo(AcknowledgeMode.MANUAL);
 		assertThat(container.getConnectionFactory()).isEqualTo(this.context.getBean(ConnectionFactory.class));
 		assertThat(container.getMessageListener().getClass()).isEqualTo(MessageListenerAdapter.class);
@@ -85,14 +85,14 @@ public final class ListenerContainerPlaceholderParserTests {
 	@Test
 	public void commasInPropertyNames() {
 		SimpleMessageListenerContainer container = this.context.getBean("commaProps1",
-				SimpleMessageListenerContainer.class);
+	SimpleMessageListenerContainer.class);
 		assertThat(container.getQueueNames()).containsExactly("foo", "bar");
 	}
 
 	@Test
 	public void commasInPropertyQueues() {
 		SimpleMessageListenerContainer container = this.context.getBean("commaProps2",
-				SimpleMessageListenerContainer.class);
+	SimpleMessageListenerContainer.class);
 		String[] queueNames = container.getQueueNames();
 		assertThat(queueNames).hasSize(2);
 		assertThat(queueNames[0]).isEqualTo("foo");

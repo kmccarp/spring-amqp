@@ -30,8 +30,7 @@ import org.springframework.context.annotation.PropertySource;
  *
  * @author Wander Costa
  */
-class MultiRabbitListenerAnnotationBeanPostProcessorCompatibilityTests
-		extends RabbitListenerAnnotationBeanPostProcessorTests {
+class MultiRabbitListenerAnnotationBeanPostProcessorCompatibilityTestsextends RabbitListenerAnnotationBeanPostProcessorTests {
 
 	@Override
 	protected Class<?> getConfigClass() {
@@ -46,7 +45,7 @@ class MultiRabbitListenerAnnotationBeanPostProcessorCompatibilityTests
 		@Override
 		public MultiRabbitListenerAnnotationBeanPostProcessor postProcessor() {
 			MultiRabbitListenerAnnotationBeanPostProcessor postProcessor
-					= new MultiRabbitListenerAnnotationBeanPostProcessor();
+		= new MultiRabbitListenerAnnotationBeanPostProcessor();
 			postProcessor.setEndpointRegistry(rabbitListenerEndpointRegistry());
 			postProcessor.setContainerFactoryBeanName("testFactory");
 			return postProcessor;

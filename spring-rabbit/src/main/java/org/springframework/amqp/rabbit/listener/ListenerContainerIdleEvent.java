@@ -76,8 +76,8 @@ public class ListenerContainerIdleEvent extends AmqpEvent {
 	@Override
 	public String toString() {
 		return "ListenerContainerIdleEvent [idleTime="
-				+ Duration.ofMillis(this.idleTime) + ", listenerId=" + this.listenerId
-				+ ", container=" + getSource() + "]";
+	+ Duration.ofMillis(this.idleTime) + ", listenerId=" + this.listenerId
+	+ ", container=" + getSource() + "]";
 	}
 
 }

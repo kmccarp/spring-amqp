@@ -44,7 +44,7 @@ public class SuperStreamProvisioningTests extends AbstractTestContainerTests {
 
 	@Test
 	void provision(@Autowired Declarables declarables, @Autowired CachingConnectionFactory cf,
-			@Autowired RabbitAdmin admin) {
+@Autowired RabbitAdmin admin) {
 
 		assertThat(declarables.getDeclarables()).hasSize(7);
 		cf.createConnection();

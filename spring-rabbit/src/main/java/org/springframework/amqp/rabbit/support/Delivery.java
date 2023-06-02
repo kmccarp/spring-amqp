@@ -39,7 +39,7 @@ public class Delivery {
 	private final byte[] body;
 
 	public Delivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body, // NOSONAR
-			String queue) {
+String queue) {
 		this.consumerTag = consumerTag;
 		this.envelope = envelope;
 		this.properties = properties;

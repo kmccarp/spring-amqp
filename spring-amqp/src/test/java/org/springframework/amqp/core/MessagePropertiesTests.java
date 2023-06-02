@@ -35,7 +35,6 @@ import org.junit.jupiter.api.Test;
 public class MessagePropertiesTests {
 
 
-
 	@Test
 	public void testReplyTo() {
 		MessageProperties properties = new MessageProperties();
@@ -74,11 +73,11 @@ public class MessagePropertiesTests {
 		assertThat(mp.equals(mp2)).isTrue();
 	}
 
-	 @Test
-	  public void tesNoNullPointerInHashCode() {
-	    Set<MessageProperties> messageList = new HashSet<>();
-	    messageList.add(new MessageProperties());
-	    assertThat(messageList).hasSize(1);
-	  }
+	@Test
+	public void tesNoNullPointerInHashCode() {
+		Set<MessageProperties> messageList = new HashSet<>();
+		messageList.add(new MessageProperties());
+		assertThat(messageList).hasSize(1);
+	}
 
 }

@@ -77,18 +77,18 @@ public enum RabbitStreamListenerObservation implements ObservationDocumentation 
 	 * Default {@link RabbitStreamListenerObservationConvention} for Rabbit listener key values.
 	 */
 	public static class DefaultRabbitStreamListenerObservationConvention
-			implements RabbitStreamListenerObservationConvention {
+implements RabbitStreamListenerObservationConvention {
 
 		/**
 		 * A singleton instance of the convention.
 		 */
 		public static final DefaultRabbitStreamListenerObservationConvention INSTANCE =
-				new DefaultRabbitStreamListenerObservationConvention();
+	new DefaultRabbitStreamListenerObservationConvention();
 
 		@Override
 		public KeyValues getLowCardinalityKeyValues(RabbitStreamMessageReceiverContext context) {
 			return KeyValues.of(RabbitStreamListenerObservation.ListenerLowCardinalityTags.LISTENER_ID.asString(),
-							context.getListenerId());
+		context.getListenerId());
 		}
 
 		@Override

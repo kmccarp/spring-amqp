@@ -66,7 +66,7 @@ public class ListenerContainerParserTests {
 	@Test
 	public void testParseWithQueueNames() {
 		SimpleMessageListenerContainer container =
-				this.beanFactory.getBean("container1", SimpleMessageListenerContainer.class);
+	this.beanFactory.getBean("container1", SimpleMessageListenerContainer.class);
 		assertThat(container.getAcknowledgeMode()).isEqualTo(AcknowledgeMode.MANUAL);
 		assertThat(container.getConnectionFactory()).isEqualTo(beanFactory.getBean(ConnectionFactory.class));
 		assertThat(container.getMessageListener().getClass()).isEqualTo(MessageListenerAdapter.class);
@@ -100,7 +100,7 @@ public class ListenerContainerParserTests {
 		Collection<Object> group = beanFactory.getBean("containerGroup", Collection.class);
 		assertThat(group).hasSize(4);
 		assertThat(group).containsExactly(beanFactory.getBean("container1"), beanFactory.getBean("testListener1"),
-				beanFactory.getBean("testListener2"), beanFactory.getBean("direct1"));
+	beanFactory.getBean("testListener2"), beanFactory.getBean("direct1"));
 		assertThat(ReflectionTestUtils.getField(container, "idleEventInterval")).isEqualTo(1235L);
 		assertThat(container.getListenerId()).isEqualTo("container1");
 		assertThat(TestUtils.getPropertyValue(container, "mismatchedQueuesFatal", Boolean.class)).isTrue();
@@ -137,7 +137,7 @@ public class ListenerContainerParserTests {
 		Collection<Object> group = beanFactory.getBean("containerGroup", Collection.class);
 		assertThat(group).hasSize(4);
 		assertThat(group).containsExactly(beanFactory.getBean("container1"), beanFactory.getBean("testListener1"),
-				beanFactory.getBean("testListener2"), beanFactory.getBean("direct1"));
+	beanFactory.getBean("testListener2"), beanFactory.getBean("direct1"));
 		assertThat(ReflectionTestUtils.getField(container, "idleEventInterval")).isEqualTo(1235L);
 		assertThat(container.getListenerId()).isEqualTo("direct1");
 		assertThat(TestUtils.getPropertyValue(container, "mismatchedQueuesFatal", Boolean.class)).isTrue();
@@ -194,26 +194,26 @@ public class ListenerContainerParserTests {
 	@Test
 	public void testAnonListeners() {
 		beanFactory.getBean("org.springframework.amqp.rabbit.config.ListenerContainerFactoryBean#0",
-				SimpleMessageListenerContainer.class);
+	SimpleMessageListenerContainer.class);
 		beanFactory.getBean("org.springframework.amqp.rabbit.config.ListenerContainerFactoryBean#1",
-				SimpleMessageListenerContainer.class);
+	SimpleMessageListenerContainer.class);
 		beanFactory.getBean("namedListener", SimpleMessageListenerContainer.class);
 		beanFactory.getBean("org.springframework.amqp.rabbit.config.ListenerContainerFactoryBean#2",
-				SimpleMessageListenerContainer.class);
+	SimpleMessageListenerContainer.class);
 	}
 
 	@Test
 	public void testAnonEverything() {
 		SimpleMessageListenerContainer container = beanFactory.getBean(
-				"org.springframework.amqp.rabbit.config.ListenerContainerFactoryBean#3",
-				SimpleMessageListenerContainer.class);
+	"org.springframework.amqp.rabbit.config.ListenerContainerFactoryBean#3",
+	SimpleMessageListenerContainer.class);
 		assertThat(ReflectionTestUtils.getField(ReflectionTestUtils.getField(container, "messageListener"),
-				"responseExchange")).isEqualTo("ex1");
+	"responseExchange")).isEqualTo("ex1");
 		container = beanFactory.getBean(
-				"org.springframework.amqp.rabbit.config.ListenerContainerFactoryBean#4",
-				SimpleMessageListenerContainer.class);
+	"org.springframework.amqp.rabbit.config.ListenerContainerFactoryBean#4",
+	SimpleMessageListenerContainer.class);
 		assertThat(ReflectionTestUtils.getField(ReflectionTestUtils.getField(container, "messageListener"),
-				"responseExchange")).isEqualTo("ex2");
+	"responseExchange")).isEqualTo("ex2");
 	}
 
 	@Test
@@ -230,7 +230,7 @@ public class ListenerContainerParserTests {
 		}
 		catch (BeanDefinitionParsingException e) {
 			assertThat(e.getMessage().startsWith(
-					"Configuration problem: Listener Container - cannot set channel-transacted with acknowledge='NONE'")).isTrue();
+		"Configuration problem: Listener Container - cannot set channel-transacted with acknowledge='NONE'")).isTrue();
 		}
 	}
 
@@ -238,14 +238,14 @@ public class ListenerContainerParserTests {
 	@SuppressWarnings("unchecked")
 	public void testParseMessagePostProcessor() {
 		SimpleMessageListenerContainer listenerContainer =
-				this.beanFactory.getBean("testMessagePostProcessor", SimpleMessageListenerContainer.class);
+	this.beanFactory.getBean("testMessagePostProcessor", SimpleMessageListenerContainer.class);
 
 		Collection<Object> messagePostProcessors =
-				TestUtils.getPropertyValue(listenerContainer, "afterReceivePostProcessors", Collection.class);
+	TestUtils.getPropertyValue(listenerContainer, "afterReceivePostProcessors", Collection.class);
 
 		assertThat(messagePostProcessors.isEmpty()).isFalse();
 		assertThat(messagePostProcessors).containsExactly(this.beanFactory.getBean("unzipPostProcessor"),
-				this.beanFactory.getBean("gUnzipPostProcessor"));
+	this.beanFactory.getBean("gUnzipPostProcessor"));
 	}
 
 	static class TestBean {

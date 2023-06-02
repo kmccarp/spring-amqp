@@ -47,7 +47,7 @@ import org.springframework.validation.Validator;
 public class AmqpMessageHandlerMethodFactory extends DefaultMessageHandlerMethodFactory {
 
 	private final HandlerMethodArgumentResolverComposite argumentResolvers =
-			new HandlerMethodArgumentResolverComposite();
+new HandlerMethodArgumentResolverComposite();
 
 	private MessageConverter messageConverter;
 
@@ -74,7 +74,7 @@ public class AmqpMessageHandlerMethodFactory extends DefaultMessageHandlerMethod
 		}
 		// Has to be at the end, but before PayloadMethodArgumentResolver
 		resolvers.add(resolvers.size() - 1,
-				new OptionalEmptyAwarePayloadArgumentResolver(this.messageConverter, this.validator));
+	new OptionalEmptyAwarePayloadArgumentResolver(this.messageConverter, this.validator));
 		this.argumentResolvers.addResolvers(resolvers);
 		return resolvers;
 	}
@@ -129,8 +129,8 @@ public class AmqpMessageHandlerMethodFactory extends DefaultMessageHandlerMethod
 
 		private boolean isOptional(Message<?> message, Type type) {
 			return (Optional.class.equals(type) ||
-					(type instanceof ParameterizedType pType && Optional.class.equals(pType.getRawType())))
-					&& message.getPayload().equals(Optional.empty());
+		(type instanceof ParameterizedType pType && Optional.class.equals(pType.getRawType())))
+		&& message.getPayload().equals(Optional.empty());
 		}
 
 		@Override

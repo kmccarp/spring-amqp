@@ -92,7 +92,7 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 		future = template.convertAndSend("bar", msg -> msg);
 		assertThat(future.get(10, TimeUnit.SECONDS)).isTrue();
 		future = template.send(new org.springframework.amqp.core.Message("baz".getBytes(),
-				new StreamMessageProperties()));
+	new StreamMessageProperties()));
 		assertThat(future.get(10, TimeUnit.SECONDS)).isTrue();
 		future = template.send(template.messageBuilder().addData("qux".getBytes()).build());
 		assertThat(future.get(10, TimeUnit.SECONDS)).isTrue();
@@ -102,18 +102,17 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 		assertThat(this.config.received).containsExactly("foo", "foo", "bar", "baz", "qux");
 		assertThat(this.config.id).isEqualTo("testNative");
 		MeterRegistryAssert.assertThat(meterRegistry)
-				.hasTimerWithNameAndTags("spring.rabbit.stream.template",
-						KeyValues.of("spring.rabbit.stream.template.name", "streamTemplate1"))
-				.hasTimerWithNameAndTags("spring.rabbit.stream.listener",
-						KeyValues.of("spring.rabbit.stream.listener.id", "obs"))
-				.hasTimerWithNameAndTags("spring.rabbitmq.listener",
-						KeyValues.of("listener.id", "notObs")
-								.and("queue", "test.stream.queue1"));
+	.hasTimerWithNameAndTags("spring.rabbit.stream.template",
+KeyValues.of("spring.rabbit.stream.template.name", "streamTemplate1"))
+	.hasTimerWithNameAndTags("spring.rabbit.stream.listener",
+KeyValues.of("spring.rabbit.stream.listener.id", "obs"))
+	.hasTimerWithNameAndTags("spring.rabbitmq.listener",
+KeyValues.of("listener.id", "notObs").and("queue", "test.stream.queue1"));
 	}
 
 	@Test
 	void nativeMsg(@Autowired RabbitTemplate template, @Autowired MeterRegistry meterRegistry)
-			throws InterruptedException {
+throws InterruptedException {
 
 		template.convertAndSend("test.stream.queue2", "foo");
 		// Send a second to ensure the timer exists before the assertion
@@ -124,20 +123,20 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 		assertThat(this.config.latch3.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.config.latch4.await(10, TimeUnit.SECONDS)).isTrue();
 		MeterRegistryAssert.assertThat(meterRegistry)
-				.hasTimerWithNameAndTags("spring.rabbit.stream.listener",
-						KeyValues.of("spring.rabbit.stream.listener.id", "testObsNative"))
-				.hasTimerWithNameAndTags("spring.rabbitmq.listener",
-						KeyValues.of("listener.id", "testNative"))
-				.hasTimerWithNameAndTags("spring.rabbitmq.listener",
-						KeyValues.of("listener.id", "testNativeFail"));
+	.hasTimerWithNameAndTags("spring.rabbit.stream.listener",
+KeyValues.of("spring.rabbit.stream.listener.id", "testObsNative"))
+	.hasTimerWithNameAndTags("spring.rabbitmq.listener",
+KeyValues.of("listener.id", "testNative"))
+	.hasTimerWithNameAndTags("spring.rabbitmq.listener",
+KeyValues.of("listener.id", "testNativeFail"));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Test
 	void queueOverAmqp() throws Exception {
 		WebClient client = WebClient.builder()
-				.filter(ExchangeFilterFunctions.basicAuthentication("guest", "guest"))
-				.build();
+	.filter(ExchangeFilterFunctions.basicAuthentication("guest", "guest"))
+	.build();
 		Map<String, Object> queue = queueInfo("stream.created.over.amqp");
 		assertThat(((Map<String, Object>) queue.get("arguments")).get("x-queue-type")).isEqualTo("stream");
 	}
@@ -146,24 +145,24 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 		WebClient client = createClient("guest", "guest");
 		URI uri = queueUri(queueName);
 		return client.get()
-				.uri(uri)
-				.accept(MediaType.APPLICATION_JSON)
-				.retrieve()
-				.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
-				})
-				.block(Duration.ofSeconds(10));
+	.uri(uri)
+	.accept(MediaType.APPLICATION_JSON)
+	.retrieve()
+	.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+	})
+	.block(Duration.ofSeconds(10));
 	}
 
 	private URI queueUri(String queue) throws URISyntaxException {
 		URI uri = new URI("http://localhost:" + managementPort() + "/api")
-				.resolve("/api/queues/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/" + queue);
+	.resolve("/api/queues/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/" + queue);
 		return uri;
 	}
 
 	private WebClient createClient(String adminUser, String adminPassword) {
 		return WebClient.builder()
-				.filter(ExchangeFilterFunctions.basicAuthentication(adminUser, adminPassword))
-				.build();
+	.filter(ExchangeFilterFunctions.basicAuthentication(adminUser, adminPassword))
+	.build();
 	}
 
 	@Configuration(proxyBeanMethods = false)
@@ -203,8 +202,8 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 		@Bean
 		static Environment environment() {
 			return Environment.builder()
-					.addressResolver(add -> new Address("localhost", streamPort()))
-					.build();
+		.addressResolver(add -> new Address("localhost", streamPort()))
+		.build();
 		}
 
 		@Bean
@@ -280,8 +279,8 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 			factory.setObservationEnabled(true);
 			factory.setConsumerCustomizer((id, builder) -> {
 				builder.name(id)
-						.offset(OffsetSpecification.first())
-						.manualTrackingStrategy();
+			.offset(OffsetSpecification.first())
+			.manualTrackingStrategy();
 			});
 			return factory;
 		}
@@ -312,14 +311,14 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 		@Bean
 		@DependsOn("sfb")
 		RabbitListenerContainerFactory<StreamListenerContainer> nativeFactory(Environment env,
-				RetryOperationsInterceptor retry) {
+	RetryOperationsInterceptor retry) {
 
 			StreamRabbitListenerContainerFactory factory = new StreamRabbitListenerContainerFactory(env);
 			factory.setNativeListener(true);
 			factory.setConsumerCustomizer((id, builder) -> {
 				builder.name(id)
-						.offset(OffsetSpecification.first())
-						.manualTrackingStrategy();
+			.offset(OffsetSpecification.first())
+			.manualTrackingStrategy();
 				if (id.equals("testNative")) {
 					this.id = id;
 				}
@@ -330,15 +329,15 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 
 		@Bean
 		RabbitListenerContainerFactory<StreamListenerContainer> nativeObsFactory(Environment env,
-				RetryOperationsInterceptor retry) {
+	RetryOperationsInterceptor retry) {
 
 			StreamRabbitListenerContainerFactory factory = new StreamRabbitListenerContainerFactory(env);
 			factory.setNativeListener(true);
 			factory.setObservationEnabled(true);
 			factory.setConsumerCustomizer((id, builder) -> {
 				builder.name(id)
-						.offset(OffsetSpecification.first())
-						.manualTrackingStrategy();
+			.offset(OffsetSpecification.first())
+			.manualTrackingStrategy();
 			});
 			return factory;
 		}
@@ -391,10 +390,10 @@ public class RabbitListenerTests extends AbstractTestContainerTests {
 		@Bean
 		Queue queue() {
 			return QueueBuilder.durable("stream.created.over.amqp")
-					.stream()
-					.build();
+		.stream()
+		.build();
 		}
 
- 	}
+	}
 
 }

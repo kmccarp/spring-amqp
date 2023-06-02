@@ -70,8 +70,8 @@ public class LogLevelAdjuster implements MethodRule {
 				LevelsContainer container = null;
 				try {
 					container = JUnitUtils.adjustLogLevels(method.getName(),
-							LogLevelAdjuster.this.classes, LogLevelAdjuster.this.categories,
-							LogLevelAdjuster.this.level);
+				LogLevelAdjuster.this.classes, LogLevelAdjuster.this.categories,
+				LogLevelAdjuster.this.level);
 					base.evaluate();
 				}
 				finally {

@@ -81,19 +81,19 @@ public class ValueExpression<V> implements Expression {
 	@Override
 	public <T> T getValue(Class<T> desiredResultType) throws EvaluationException {
 		return org.springframework.expression.common.ExpressionUtils
-				.convertTypedValue(null, this.typedResultValue, desiredResultType);
+	.convertTypedValue(null, this.typedResultValue, desiredResultType);
 	}
 
 	@Override
 	public <T> T getValue(EvaluationContext context, Object rootObject, Class<T> desiredResultType)
-			throws EvaluationException {
+throws EvaluationException {
 		return getValue(context, desiredResultType);
 	}
 
 	@Override
 	public <T> T getValue(EvaluationContext context, Class<T> desiredResultType) throws EvaluationException {
 		return org.springframework.expression.common.ExpressionUtils
-				.convertTypedValue(context, this.typedResultValue, desiredResultType);
+	.convertTypedValue(context, this.typedResultValue, desiredResultType);
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class ValueExpression<V> implements Expression {
 
 	@Override
 	public TypeDescriptor getValueTypeDescriptor(EvaluationContext context, Object rootObject)
-			throws EvaluationException {
+throws EvaluationException {
 		return this.typeDescriptor;
 	}
 

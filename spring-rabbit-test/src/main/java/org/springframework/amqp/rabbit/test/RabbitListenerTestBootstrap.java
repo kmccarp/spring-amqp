@@ -36,9 +36,9 @@ public class RabbitListenerTestBootstrap implements ImportBeanDefinitionRegistra
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
 		registry.registerBeanDefinition(RabbitListenerConfigUtils.RABBIT_LISTENER_ANNOTATION_PROCESSOR_BEAN_NAME,
-				BeanDefinitionBuilder.rootBeanDefinition(RabbitListenerTestHarness.class)
-						.addConstructorArgValue(importingClassMetadata)
-						.getBeanDefinition());
+	BeanDefinitionBuilder.rootBeanDefinition(RabbitListenerTestHarness.class)
+.addConstructorArgValue(importingClassMetadata)
+.getBeanDefinition());
 	}
 
 }

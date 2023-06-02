@@ -64,7 +64,7 @@ public class AmqpMessageHeaderAccessor extends NativeMessageHeaderAccessor {
 		super.verifyType(headerName, headerValue);
 		if (PRIORITY.equals(headerName)) {
 			Assert.isTrue(Integer.class.isAssignableFrom(headerValue.getClass()), "The '" + headerName
-					+ "' header value must be an Integer.");
+		+ "' header value must be an Integer.");
 		}
 	}
 

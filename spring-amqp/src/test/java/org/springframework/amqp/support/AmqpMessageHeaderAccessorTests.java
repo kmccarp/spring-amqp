@@ -95,7 +95,7 @@ public class AmqpMessageHeaderAccessorTests {
 	@Test
 	public void prioritySet() {
 		Message<?> message = MessageBuilder.withPayload("payload").
-				setHeader(AmqpMessageHeaderAccessor.PRIORITY, 90).build();
+	setHeader(AmqpMessageHeaderAccessor.PRIORITY, 90).build();
 		AmqpMessageHeaderAccessor accessor = new AmqpMessageHeaderAccessor(message);
 		assertThat(accessor.getPriority()).isEqualTo(Integer.valueOf(90));
 	}
@@ -104,8 +104,8 @@ public class AmqpMessageHeaderAccessorTests {
 	public void priorityMustBeInteger() {
 		AmqpMessageHeaderAccessor accessor = new AmqpMessageHeaderAccessor(MessageBuilder.withPayload("foo").build());
 		assertThatIllegalArgumentException()
-				.isThrownBy(() -> accessor.setHeader(AmqpMessageHeaderAccessor.PRIORITY, "Foo"))
-				.withFailMessage("priority");
+	.isThrownBy(() -> accessor.setHeader(AmqpMessageHeaderAccessor.PRIORITY, "Foo"))
+	.withFailMessage("priority");
 	}
 
 }

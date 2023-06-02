@@ -73,7 +73,7 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 	@Test
 	public void simpleMessageListener() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				getConfigClass(), SimpleMessageListenerTestBean.class);
+	getConfigClass(), SimpleMessageListenerTestBean.class);
 
 		RabbitListenerContainerTestFactory factory = context.getBean(RabbitListenerContainerTestFactory.class);
 		assertThat(factory.getListenerContainers().size()).as("One container should have been registered").isEqualTo(1);
@@ -97,7 +97,7 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 	@Test
 	public void simpleMessageListenerWithMixedAnnotations() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				getConfigClass(), SimpleMessageListenerWithMixedAnnotationsTestBean.class);
+	getConfigClass(), SimpleMessageListenerWithMixedAnnotationsTestBean.class);
 
 		RabbitListenerContainerTestFactory factory = context.getBean(RabbitListenerContainerTestFactory.class);
 		assertThat(factory.getListenerContainers().size()).as("One container should have been registered").isEqualTo(1);
@@ -125,20 +125,20 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 	@Test
 	public void metaAnnotationIsDiscovered() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				getConfigClass(), MetaAnnotationTestBean.class);
+	getConfigClass(), MetaAnnotationTestBean.class);
 
 		RabbitListenerContainerTestFactory factory = context.getBean(RabbitListenerContainerTestFactory.class);
 		assertThat(factory.getListenerContainers().size()).as("one container should have been registered").isEqualTo(2);
 		RabbitListenerEndpoint endpoint = factory.getListenerContainers().get(0).getEndpoint();
 		assertThat(((AbstractRabbitListenerEndpoint) endpoint).getQueueNames()
-				.iterator()
-				.next())
-				.isEqualTo("metaTestQueue1");
+	.iterator()
+	.next())
+	.isEqualTo("metaTestQueue1");
 		endpoint = factory.getListenerContainers().get(1).getEndpoint();
 		assertThat(((AbstractRabbitListenerEndpoint) endpoint).getQueueNames()
-				.iterator()
-				.next())
-				.isEqualTo("metaTestQueue2");
+	.iterator()
+	.next())
+	.isEqualTo("metaTestQueue2");
 
 		context.close();
 	}
@@ -146,20 +146,20 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 	@Test
 	public void metaAnnotationIsDiscoveredClassLevel() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				Config.class, MetaAnnotationTestBean2.class);
+	Config.class, MetaAnnotationTestBean2.class);
 
 		RabbitListenerContainerTestFactory factory = context.getBean(RabbitListenerContainerTestFactory.class);
 		assertThat(factory.getListenerContainers().size()).as("one container should have been registered").isEqualTo(2);
 		RabbitListenerEndpoint endpoint = factory.getListenerContainers().get(0).getEndpoint();
 		assertThat(((AbstractRabbitListenerEndpoint) endpoint).getQueueNames()
-				.iterator()
-				.next())
-				.isEqualTo("metaTestQueue3");
+	.iterator()
+	.next())
+	.isEqualTo("metaTestQueue3");
 		endpoint = factory.getListenerContainers().get(1).getEndpoint();
 		assertThat(((AbstractRabbitListenerEndpoint) endpoint).getQueueNames()
-				.iterator()
-				.next())
-				.isEqualTo("metaTestQueue4");
+	.iterator()
+	.next())
+	.isEqualTo("metaTestQueue4");
 
 		context.close();
 	}
@@ -167,7 +167,7 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 	@Test
 	public void multipleQueueNamesTestBean() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				getConfigClass(), MultipleQueueNamesTestBean.class);
+	getConfigClass(), MultipleQueueNamesTestBean.class);
 
 		RabbitListenerContainerTestFactory factory = context.getBean(RabbitListenerContainerTestFactory.class);
 		assertThat(factory.getListenerContainers().size()).as("one container should have been registered").isEqualTo(1);
@@ -182,7 +182,7 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 	@Test
 	public void multipleQueuesTestBean() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				getConfigClass(), MultipleQueuesTestBean.class);
+	getConfigClass(), MultipleQueuesTestBean.class);
 
 		RabbitListenerContainerTestFactory factory = context.getBean(RabbitListenerContainerTestFactory.class);
 		assertThat(factory.getListenerContainers().size()).as("one container should have been registered").isEqualTo(1);
@@ -197,7 +197,7 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 	@Test
 	public void mixedQueuesAndQueueNamesTestBean() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				getConfigClass(), MixedQueuesAndQueueNamesTestBean.class);
+	getConfigClass(), MixedQueuesAndQueueNamesTestBean.class);
 
 		RabbitListenerContainerTestFactory factory = context.getBean(RabbitListenerContainerTestFactory.class);
 		assertThat(factory.getListenerContainers().size()).as("one container should have been registered").isEqualTo(1);
@@ -213,7 +213,7 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 	@Test
 	public void propertyResolvingToExpressionTestBean() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				getConfigClass(), PropertyResolvingToExpressionTestBean.class);
+	getConfigClass(), PropertyResolvingToExpressionTestBean.class);
 
 		RabbitListenerContainerTestFactory factory = context.getBean(RabbitListenerContainerTestFactory.class);
 		assertThat(factory.getListenerContainers().size()).as("one container should have been registered").isEqualTo(1);
@@ -233,24 +233,24 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 		catch (BeanCreationException e) {
 			assertThat(e.getCause()).isInstanceOf(IllegalArgumentException.class);
 			assertThat(e.getMessage()).contains("@RabbitListener.queues can't resolve")
-					.contains("as a String[] or a String or a Queue");
+		.contains("as a String[] or a String or a Queue");
 		}
 	}
 
 	@Test
 	public void multipleRoutingKeysTestBean() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(getConfigClass(),
-				MultipleRoutingKeysTestBean.class);
+	MultipleRoutingKeysTestBean.class);
 
 		RabbitListenerContainerTestFactory factory = context.getBean(RabbitListenerContainerTestFactory.class);
 		assertThat(factory.getListenerContainers()).as("one container should have been registered").hasSize(1);
 		RabbitListenerEndpoint endpoint = factory.getListenerContainers().get(0).getEndpoint();
 		assertThat(((AbstractRabbitListenerEndpoint) endpoint).getQueueNames())
-				.isEqualTo(Collections.singletonList("my_queue"));
+	.isEqualTo(Collections.singletonList("my_queue"));
 		final List<Queue> queues = new ArrayList<>(context.getBeansOfType(Queue.class).values());
 		queues.sort(Comparator.comparing(Queue::getName));
 		assertThat(queues.stream().map(Queue::getName).collect(Collectors.toList())).containsExactly("my_queue",
-				"secondQueue", "testQueue");
+	"secondQueue", "testQueue");
 		assertThat(queues.get(0).getArguments()).isEqualTo(Collections.singletonMap("foo", "bar"));
 
 		assertThat(context.getBeansOfType(org.springframework.amqp.core.Exchange.class).values()).hasSize(1);
@@ -259,11 +259,11 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 		assertThat(bindings).hasSize(3);
 		bindings.sort(Comparator.comparing(Binding::getRoutingKey));
 		assertThat(bindings.get(0).toString())
-				.isEqualTo("Binding [destination=my_queue, exchange=my_exchange, routingKey=green, arguments={}]");
+	.isEqualTo("Binding [destination=my_queue, exchange=my_exchange, routingKey=green, arguments={}]");
 		assertThat(bindings.get(1).toString())
-				.isEqualTo("Binding [destination=my_queue, exchange=my_exchange, routingKey=red, arguments={}]");
+	.isEqualTo("Binding [destination=my_queue, exchange=my_exchange, routingKey=red, arguments={}]");
 		assertThat(bindings.get(2).toString())
-				.isEqualTo("Binding [destination=my_queue, exchange=my_exchange, routingKey=yellow, arguments={}]");
+	.isEqualTo("Binding [destination=my_queue, exchange=my_exchange, routingKey=yellow, arguments={}]");
 
 		context.close();
 	}
@@ -271,7 +271,7 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 	@Test
 	public void customExchangeTestBean() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(getConfigClass(),
-				CustomExchangeTestBean.class);
+	CustomExchangeTestBean.class);
 
 		final Collection<CustomExchange> exchanges = context.getBeansOfType(CustomExchange.class).values();
 		assertThat(exchanges).hasSize(1);
@@ -285,7 +285,7 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 	@Test
 	public void queuesToDeclare() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(getConfigClass(),
-				QueuesToDeclareTestBean.class);
+	QueuesToDeclareTestBean.class);
 
 		final List<Queue> queues = new ArrayList<>(context.getBeansOfType(Queue.class).values());
 		assertThat(queues).hasSize(4);
@@ -317,7 +317,7 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 				try {
 					final Callable<?> task = () -> context.getBeanFactory().createBean(BeanForConcurrencyTesting.class);
 					final List<? extends Future<?>> futures = executorService
-							.invokeAll(Collections.nCopies(concurrencyLevel, task));
+				.invokeAll(Collections.nCopies(concurrencyLevel, task));
 					for (Future<?> future : futures) {
 						future.get();
 					}
@@ -385,7 +385,7 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 
 
 	@RabbitListener(autoStartup = "false")
-	@Target({ ElementType.METHOD, ElementType.TYPE })
+	@Target({ElementType.METHOD, ElementType.TYPE})
 	@Retention(RetentionPolicy.RUNTIME)
 	@Repeatable(FooListeners.class)
 	static @interface FooListener {
@@ -395,7 +395,7 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 
 	}
 
-	@Target({ ElementType.METHOD, ElementType.TYPE })
+	@Target({ElementType.METHOD, ElementType.TYPE})
 	@Retention(RetentionPolicy.RUNTIME)
 	static @interface FooListeners {
 
@@ -447,9 +447,9 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 	static class MultipleRoutingKeysTestBean {
 
 		@RabbitListener(bindings = @QueueBinding(exchange = @Exchange("my_exchange"),
-				value = @org.springframework.amqp.rabbit.annotation.Queue(value = "my_queue",
-					arguments = @Argument(name = "foo", value = "bar")),
-				key = {"${xxxxxxx:red}", "#{'yellow,green'.split(',')}"}))
+	value = @org.springframework.amqp.rabbit.annotation.Queue(value = "my_queue",
+arguments = @Argument(name = "foo", value = "bar")),
+	key = {"${xxxxxxx:red}", "#{'yellow,green'.split(',')}"}))
 		public void handleIt(String body) {
 		}
 	}
@@ -458,8 +458,8 @@ public class RabbitListenerAnnotationBeanPostProcessorTests {
 	static class CustomExchangeTestBean {
 
 		@RabbitListener(bindings = @QueueBinding(exchange = @Exchange(value = "my_custom_exchange", type = "custom_type"),
-				value = @org.springframework.amqp.rabbit.annotation.Queue,
-				key = "test"))
+	value = @org.springframework.amqp.rabbit.annotation.Queue,
+	key = "test"))
 		public void handleIt(String body) {
 		}
 	}

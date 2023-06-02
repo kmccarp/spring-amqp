@@ -62,7 +62,7 @@ public final class ExchangeParserTests {
 		assertThat(exchange.shouldDeclare()).isFalse();
 		assertThat(exchange.getDeclaringAdmins()).hasSize(2);
 		Binding binding =
-				beanFactory.getBean("org.springframework.amqp.rabbit.config.BindingFactoryBean#0", Binding.class);
+	beanFactory.getBean("org.springframework.amqp.rabbit.config.BindingFactoryBean#0", Binding.class);
 		assertThat(binding.shouldDeclare()).isFalse();
 		assertThat(binding.getDeclaringAdmins()).hasSize(2);
 

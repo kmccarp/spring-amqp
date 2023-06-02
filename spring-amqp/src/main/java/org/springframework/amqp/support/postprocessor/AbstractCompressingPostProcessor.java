@@ -116,20 +116,20 @@ public abstract class AbstractCompressingPostProcessor implements MessagePostPro
 			MessageProperties originalProperties = message.getMessageProperties();
 
 			MessagePropertiesBuilder messagePropertiesBuilder =
-					this.copyProperties
-							? MessagePropertiesBuilder.fromClonedProperties(originalProperties)
-							: MessagePropertiesBuilder.fromProperties(originalProperties);
+		this.copyProperties
+	? MessagePropertiesBuilder.fromClonedProperties(originalProperties)
+	: MessagePropertiesBuilder.fromProperties(originalProperties);
 
 			if (this.autoDecompress) {
 				messagePropertiesBuilder.setHeader(MessageProperties.SPRING_AUTO_DECOMPRESS, true);
 			}
 
 			MessageProperties messageProperties =
-					messagePropertiesBuilder.setContentEncoding(getEncoding() +
-							(!StringUtils.hasText(originalProperties.getContentEncoding())
-									? ""
-									: this.encodingDelimiter + originalProperties.getContentEncoding()))
-							.build();
+		messagePropertiesBuilder.setContentEncoding(getEncoding() +
+	(!StringUtils.hasText(originalProperties.getContentEncoding())
+? ""
+: this.encodingDelimiter + originalProperties.getContentEncoding()))
+	.build();
 
 			return new Message(compressed, messageProperties);
 		}

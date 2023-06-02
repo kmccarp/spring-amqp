@@ -34,7 +34,7 @@ import java.lang.annotation.Target;
  * @since 1.6
  * @see RabbitListener
  */
-@Target({ ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE })
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface RabbitListeners {

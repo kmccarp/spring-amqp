@@ -43,13 +43,12 @@ import com.rabbitmq.client.ConnectionFactory;
  * @since 2.0.2
  *
  */
-public class RabbitAvailableCondition
-		implements ExecutionCondition, AfterEachCallback, AfterAllCallback, ParameterResolver {
+public class RabbitAvailableConditionimplements ExecutionCondition, AfterEachCallback, AfterAllCallback, ParameterResolver {
 
 	private static final String BROKER_RUNNING_BEAN = "brokerRunning";
 
 	private static final ConditionEvaluationResult ENABLED = ConditionEvaluationResult.enabled(
-			"@RabbitAvailable is not present");
+"@RabbitAvailable is not present");
 
 	private static final ThreadLocal<BrokerRunningSupport> BROKER_RUNNING_HOLDER = new ThreadLocal<>();
 
@@ -57,13 +56,13 @@ public class RabbitAvailableCondition
 	public ConditionEvaluationResult evaluateExecutionCondition(ExtensionContext context) {
 		Optional<AnnotatedElement> element = context.getElement();
 		MergedAnnotations annotations = MergedAnnotations.from(element.get(),
-				MergedAnnotations.SearchStrategy.TYPE_HIERARCHY);
+	MergedAnnotations.SearchStrategy.TYPE_HIERARCHY);
 		if (annotations.get(RabbitAvailable.class).isPresent()) {
 			RabbitAvailable rabbit = annotations.get(RabbitAvailable.class).synthesize();
 			try {
 				String[] queues = rabbit.queues();
 				BrokerRunningSupport brokerRunning = getStore(context).get(BROKER_RUNNING_BEAN,
-						BrokerRunningSupport.class);
+			BrokerRunningSupport.class);
 				if (brokerRunning == null) {
 					if (rabbit.management()) {
 						brokerRunning = BrokerRunningSupport.isBrokerAndManagementRunningWithEmptyQueues(queues);
@@ -110,23 +109,23 @@ public class RabbitAvailableCondition
 
 	@Override
 	public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
-			throws ParameterResolutionException {
+throws ParameterResolutionException {
 		Class<?> type = parameterContext.getParameter().getType();
 		return type.equals(ConnectionFactory.class) || type.equals(BrokerRunningSupport.class);
 	}
 
 	@Override
 	public Object resolveParameter(ParameterContext parameterContext, ExtensionContext context)
-			throws ParameterResolutionException {
+throws ParameterResolutionException {
 		// in parent for method injection, Composite key causes a store miss
 		BrokerRunningSupport brokerRunning = getParentStore(context).get(BROKER_RUNNING_BEAN,
-				BrokerRunningSupport.class) == null
-						? getStore(context).get(BROKER_RUNNING_BEAN, BrokerRunningSupport.class)
-						: getParentStore(context).get(BROKER_RUNNING_BEAN, BrokerRunningSupport.class);
+	BrokerRunningSupport.class) == null
+	? getStore(context).get(BROKER_RUNNING_BEAN, BrokerRunningSupport.class)
+	: getParentStore(context).get(BROKER_RUNNING_BEAN, BrokerRunningSupport.class);
 		Assert.state(brokerRunning != null, "Could not find brokerRunning instance");
 		Class<?> type = parameterContext.getParameter().getType();
 		return type.equals(ConnectionFactory.class) ? brokerRunning.getConnectionFactory()
-				: brokerRunning;
+	: brokerRunning;
 	}
 
 	private Store getStore(ExtensionContext context) {

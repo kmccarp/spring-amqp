@@ -44,7 +44,7 @@ public class StreamMessageListenerAdapter extends MessagingMessageListenerAdapte
 	 * @param errorHandler the error handler.
 	 */
 	public StreamMessageListenerAdapter(Object bean, Method method, boolean returnExceptions,
-			RabbitListenerErrorHandler errorHandler) {
+RabbitListenerErrorHandler errorHandler) {
 
 		super(bean, method, returnExceptions, errorHandler);
 	}

@@ -67,7 +67,7 @@ public class SerializerMessageConverterTests extends AllowedListDeserializingMes
 	@Test
 	public void messageToBytes() {
 		SerializerMessageConverter converter = new SerializerMessageConverter();
-		Message message = new Message(new byte[]{ 1, 2, 3 }, new MessageProperties());
+		Message message = new Message(new byte[]{1, 2, 3}, new MessageProperties());
 		message.getMessageProperties().setContentType(MessageProperties.CONTENT_TYPE_BYTES);
 		Object result = converter.fromMessage(message);
 		assertThat(result.getClass()).isEqualTo(byte[].class);
@@ -120,7 +120,7 @@ public class SerializerMessageConverterTests extends AllowedListDeserializingMes
 		Message message = converter.toMessage("test", new MessageProperties());
 		String contentType = message.getMessageProperties().getContentType();
 		String content = new String(message.getBody(),
-				message.getMessageProperties().getContentEncoding());
+	message.getMessageProperties().getContentEncoding());
 		assertThat(contentType).isEqualTo("text/plain");
 		assertThat(content).isEqualTo("test");
 	}
@@ -128,7 +128,7 @@ public class SerializerMessageConverterTests extends AllowedListDeserializingMes
 	@Test
 	public void bytesToMessage() throws Exception {
 		SerializerMessageConverter converter = new SerializerMessageConverter();
-		Message message = converter.toMessage(new byte[]{ 1, 2, 3 }, new MessageProperties());
+		Message message = converter.toMessage(new byte[]{1, 2, 3}, new MessageProperties());
 		String contentType = message.getMessageProperties().getContentType();
 		byte[] body = message.getBody();
 		assertThat(contentType).isEqualTo("application/octet-stream");
@@ -179,8 +179,8 @@ public class SerializerMessageConverterTests extends AllowedListDeserializingMes
 		byte[] body = message.getBody();
 		body[10] = 'z';
 		assertThatThrownBy(() -> converter.fromMessage(message))
-				.isExactlyInstanceOf(MessageConversionException.class)
-				.hasCauseExactlyInstanceOf(IOException.class);
+	.isExactlyInstanceOf(MessageConversionException.class)
+	.hasCauseExactlyInstanceOf(IOException.class);
 	}
 
 }

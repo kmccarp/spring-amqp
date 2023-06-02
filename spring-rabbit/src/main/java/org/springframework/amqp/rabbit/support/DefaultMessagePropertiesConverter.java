@@ -84,7 +84,7 @@ public class DefaultMessagePropertiesConverter implements MessagePropertiesConve
 
 	@Override
 	public MessageProperties toMessageProperties(final BasicProperties source, final Envelope envelope,
-			final String charset) {
+final String charset) {
 		MessageProperties target = new MessageProperties();
 		Map<String, Object> headers = source.getHeaders();
 		if (!CollectionUtils.isEmpty(headers)) {
@@ -137,20 +137,20 @@ public class DefaultMessagePropertiesConverter implements MessagePropertiesConve
 	public BasicProperties fromMessageProperties(final MessageProperties source, final String charset) {
 		BasicProperties.Builder target = new BasicProperties.Builder();
 		target.headers(this.convertHeadersIfNecessary(source.getHeaders()))
-			.timestamp(source.getTimestamp())
-			.messageId(source.getMessageId())
-			.userId(source.getUserId())
-			.appId(source.getAppId())
-			.clusterId(source.getClusterId())
-			.type(source.getType());
+	.timestamp(source.getTimestamp())
+	.messageId(source.getMessageId())
+	.userId(source.getUserId())
+	.appId(source.getAppId())
+	.clusterId(source.getClusterId())
+	.type(source.getType());
 		MessageDeliveryMode deliveryMode = source.getDeliveryMode();
 		if (deliveryMode != null) {
 			target.deliveryMode(MessageDeliveryMode.toInt(deliveryMode));
 		}
 		target.expiration(source.getExpiration())
-			.priority(source.getPriority())
-			.contentType(source.getContentType())
-			.contentEncoding(source.getContentEncoding());
+	.priority(source.getPriority())
+	.contentType(source.getContentType())
+	.contentEncoding(source.getContentEncoding());
 		String correlationId = source.getCorrelationId();
 		if (StringUtils.hasText(correlationId)) {
 			target.correlationId(correlationId);
@@ -184,11 +184,11 @@ public class DefaultMessagePropertiesConverter implements MessagePropertiesConve
 	private Object convertHeaderValueIfNecessary(@Nullable Object valueArg) {
 		Object value = valueArg;
 		boolean valid = (value instanceof String) || (value instanceof byte[]) // NOSONAR boolean complexity
-				|| (value instanceof Boolean) || (value instanceof Class)
-				|| (value instanceof LongString) || (value instanceof Integer) || (value instanceof Long)
-				|| (value instanceof Float) || (value instanceof Double) || (value instanceof BigDecimal)
-				|| (value instanceof Short) || (value instanceof Byte) || (value instanceof Date)
-				|| (value instanceof List) || (value instanceof Map) || (value instanceof Object[]);
+	|| (value instanceof Boolean) || (value instanceof Class)
+	|| (value instanceof LongString) || (value instanceof Integer) || (value instanceof Long)
+	|| (value instanceof Float) || (value instanceof Double) || (value instanceof BigDecimal)
+	|| (value instanceof Short) || (value instanceof Byte) || (value instanceof Date)
+	|| (value instanceof List) || (value instanceof Map) || (value instanceof Object[]);
 		if (!valid && value != null) {
 			value = value.toString();
 		}

@@ -46,7 +46,7 @@ public class AsyncConsumerStoppedEvent extends AmqpEvent {
 	@Override
 	public String toString() {
 		return "AsyncConsumerStoppedEvent [consumer=" + this.consumer
-				+ ", container=" + this.getSource() + "]";
+	+ ", container=" + this.getSource() + "]";
 	}
 
 }

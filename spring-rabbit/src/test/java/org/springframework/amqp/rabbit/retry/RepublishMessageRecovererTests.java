@@ -155,8 +155,8 @@ public class RepublishMessageRecovererTests {
 	@Test
 	void dynamicExRk() {
 		this.recoverer = new RepublishMessageRecoverer(this.amqpTemplate,
-				new SpelExpressionParser().parseExpression("messageProperties.headers.get('errorExchange')"),
-				new SpelExpressionParser().parseExpression("messageProperties.headers.get('errorRK')"));
+	new SpelExpressionParser().parseExpression("messageProperties.headers.get('errorExchange')"),
+	new SpelExpressionParser().parseExpression("messageProperties.headers.get('errorRK')"));
 		this.message.getMessageProperties().setHeader("errorExchange", "ex");
 		this.message.getMessageProperties().setHeader("errorRK", "rk");
 
@@ -168,7 +168,7 @@ public class RepublishMessageRecovererTests {
 	@Test
 	void dynamicRk() {
 		this.recoverer = new RepublishMessageRecoverer(this.amqpTemplate, null,
-				new SpelExpressionParser().parseExpression("messageProperties.headers.get('errorRK')"));
+	new SpelExpressionParser().parseExpression("messageProperties.headers.get('errorRK')"));
 		this.message.getMessageProperties().setHeader("errorExchange", "ex");
 		this.message.getMessageProperties().setHeader("errorRK", "rk");
 

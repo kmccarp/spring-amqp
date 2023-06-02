@@ -119,9 +119,9 @@ public class AsyncListenerTests {
 		this.rabbitTemplate.convertAndSend(this.queue4.getName(), "foo");
 		assertThat(listener.latch4.await(10, TimeUnit.SECONDS));
 		assertThat(TestUtils.getPropertyValue(registry.getListenerContainer("foo"), "asyncReplies", Boolean.class))
-				.isTrue();
+	.isTrue();
 		assertThat(TestUtils.getPropertyValue(registry.getListenerContainer("bar"), "asyncReplies", Boolean.class))
-				.isTrue();
+	.isTrue();
 	}
 
 	@Test
@@ -140,7 +140,7 @@ public class AsyncListenerTests {
 	@Test
 	public void testAuthByProps() {
 		assertThat(TestUtils.getPropertyValue(this.registry.getListenerContainer("foo"),
-				"possibleAuthenticationFailureFatal", Boolean.class)).isFalse();
+	"possibleAuthenticationFailureFatal", Boolean.class)).isFalse();
 	}
 
 	@Configuration
@@ -346,7 +346,7 @@ public class AsyncListenerTests {
 		}
 
 		@RabbitListener(id = "overrideFactoryRequeue", queues = "#{queue7.name}",
-				containerFactory = "dontRequeueFactory")
+	containerFactory = "dontRequeueFactory")
 		public CompletableFuture<String> listen7(@SuppressWarnings("unused") String foo) {
 			CompletableFuture<String> future = new CompletableFuture<>();
 			if (this.first7.compareAndSet(true, false)) {

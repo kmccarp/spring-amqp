@@ -49,7 +49,7 @@ public class StreamMessageProperties extends MessageProperties {
 	private String replyToGroupId;
 
 	/**
- 	 * Create a new instance.
+	 * Create a new instance.
 	 */
 	public StreamMessageProperties() {
 	}
@@ -175,7 +175,7 @@ public class StreamMessageProperties extends MessageProperties {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + Objects.hash(this.creationTime, this.groupId, this.groupSequence, this.replyToGroupId,
-				this.subject, this.to);
+	this.subject, this.to);
 		return result;
 	}
 
@@ -192,9 +192,9 @@ public class StreamMessageProperties extends MessageProperties {
 		}
 		StreamMessageProperties other = (StreamMessageProperties) obj;
 		return this.creationTime == other.creationTime && Objects.equals(this.groupId, other.groupId)
-				&& this.groupSequence == other.groupSequence
-				&& Objects.equals(this.replyToGroupId, other.replyToGroupId)
-				&& Objects.equals(this.subject, other.subject) && Objects.equals(this.to, other.to);
+	&& this.groupSequence == other.groupSequence
+	&& Objects.equals(this.replyToGroupId, other.replyToGroupId)
+	&& Objects.equals(this.subject, other.subject) && Objects.equals(this.to, other.to);
 	}
 
 }

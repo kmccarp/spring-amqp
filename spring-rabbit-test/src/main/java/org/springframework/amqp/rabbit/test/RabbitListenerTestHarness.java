@@ -76,12 +76,12 @@ public class RabbitListenerTestHarness extends RabbitListenerAnnotationBeanPostP
 		Map<String, Object> map = importMetadata.getAnnotationAttributes(RabbitListenerTest.class.getName());
 		this.attributes = AnnotationAttributes.fromMap(map);
 		Assert.notNull(this.attributes,
-				() -> "@RabbitListenerTest is not present on importing class " + importMetadata.getClassName());
+	() -> "@RabbitListenerTest is not present on importing class " + importMetadata.getClassName());
 	}
 
 	@Override
 	protected Collection<Declarable> processListener(MethodRabbitListenerEndpoint endpoint,
-			RabbitListener rabbitListener, Object bean, Object target, String beanName) {
+RabbitListener rabbitListener, Object bean, Object target, String beanName) {
 
 		Object proxy = bean;
 		String id = rabbitListener.id();
@@ -89,7 +89,7 @@ public class RabbitListenerTestHarness extends RabbitListenerAnnotationBeanPostP
 			if (this.attributes.getBoolean("spy")) {
 				this.delegates.put(id, proxy);
 				proxy = Mockito.mock(AopTestUtils.getUltimateTargetObject(proxy).getClass(),
-						AdditionalAnswers.delegatesTo(proxy));
+			AdditionalAnswers.delegatesTo(proxy));
 				this.listeners.put(id, proxy);
 			}
 			if (this.attributes.getBoolean("capture")) {
@@ -174,7 +174,7 @@ public class RabbitListenerTestHarness extends RabbitListenerAnnotationBeanPostP
 		public Object invoke(MethodInvocation invocation) throws Throwable {
 			MergedAnnotations annotations = MergedAnnotations.from(invocation.getMethod());
 			boolean isListenerMethod = annotations.isPresent(RabbitListener.class)
-					|| annotations.isPresent(RabbitHandler.class);
+		|| annotations.isPresent(RabbitHandler.class);
 			try {
 				Object result = invocation.proceed();
 				if (isListenerMethod) {

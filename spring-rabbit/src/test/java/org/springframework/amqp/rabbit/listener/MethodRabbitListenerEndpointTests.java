@@ -92,7 +92,7 @@ public class MethodRabbitListenerEndpointTests {
 		endpoint.setMethod(info.getTestMethod().get());
 
 		assertThatIllegalStateException()
-			.isThrownBy(() -> endpoint.createMessageListener(container));
+	.isThrownBy(() -> endpoint.createMessageListener(container));
 	}
 
 	@Test
@@ -108,7 +108,7 @@ public class MethodRabbitListenerEndpointTests {
 	@Test
 	public void resolveMessageAndSession() throws Exception {
 		MessagingMessageListenerAdapter listener = createDefaultInstance(
-				org.springframework.amqp.core.Message.class, Channel.class);
+	org.springframework.amqp.core.Message.class, Channel.class);
 
 		Channel channel = mock(Channel.class);
 		listener.onMessage(MessageTestUtils.createTextMessage("test"), channel);
@@ -199,7 +199,7 @@ public class MethodRabbitListenerEndpointTests {
 		MessageProperties messageProperties = new MessageProperties();
 		messageProperties.setContentType(MessageProperties.CONTENT_TYPE_SERIALIZED_OBJECT);
 		org.springframework.amqp.core.Message message =
-				new org.springframework.amqp.core.Message(SerializationUtils.serialize(myBean), messageProperties);
+	new org.springframework.amqp.core.Message(SerializationUtils.serialize(myBean), messageProperties);
 		listener.onMessage(message, channel);
 		assertDefaultListenerMethodInvocation();
 	}
@@ -300,8 +300,8 @@ public class MethodRabbitListenerEndpointTests {
 	}
 
 	public void processAndReply(MessagingMessageListenerAdapter listener,
-			org.springframework.amqp.core.Message message, String expectedExchange, String routingKey,
-			boolean mandatory, String expectedCorrelationId) throws Exception {
+org.springframework.amqp.core.Message message, String expectedExchange, String routingKey,
+boolean mandatory, String expectedCorrelationId) throws Exception {
 
 		Channel channel = mock(Channel.class);
 
@@ -309,7 +309,7 @@ public class MethodRabbitListenerEndpointTests {
 
 		ArgumentCaptor<AMQP.BasicProperties> argument = ArgumentCaptor.forClass(AMQP.BasicProperties.class);
 		verify(channel).basicPublish(eq(expectedExchange), eq(routingKey), eq(mandatory),
-				argument.capture(), aryEq(message.getBody()));
+	argument.capture(), aryEq(message.getBody()));
 		assertThat(argument.getValue().getCorrelationId()).as("Wrong correlationId in reply").isEqualTo(expectedCorrelationId);
 	}
 
@@ -329,8 +329,8 @@ public class MethodRabbitListenerEndpointTests {
 	@Test
 	public void invalidSendTo() {
 		assertThatIllegalStateException()
-			.isThrownBy(() -> createDefaultInstance(String.class))
-			.withMessageMatching(".*firstDestination, secondDestination.*");
+	.isThrownBy(() -> createDefaultInstance(String.class))
+	.withMessageMatching(".*firstDestination, secondDestination.*");
 	}
 
 	@Test
@@ -358,7 +358,7 @@ public class MethodRabbitListenerEndpointTests {
 		Channel channel = mock(Channel.class);
 
 		assertThatThrownBy(() -> listener.onMessage(MessageTestUtils.createTextMessage("invalid value"), channel))
-			.isInstanceOf(ListenerExecutionFailedException.class);
+	.isInstanceOf(ListenerExecutionFailedException.class);
 
 	}
 
@@ -371,9 +371,9 @@ public class MethodRabbitListenerEndpointTests {
 
 		// test is not a valid integer
 		assertThatThrownBy(() -> listener.onMessage(MessageTestUtils.createTextMessage("test"), channel))
-			.isInstanceOf(ListenerExecutionFailedException.class)
-			.hasCauseExactlyInstanceOf(org.springframework.messaging.converter.MessageConversionException.class)
-			.hasMessageContaining(getDefaultListenerMethod(Integer.class).toGenericString()); // ref to method
+	.isInstanceOf(ListenerExecutionFailedException.class)
+	.hasCauseExactlyInstanceOf(org.springframework.messaging.converter.MessageConversionException.class)
+	.hasMessageContaining(getDefaultListenerMethod(Integer.class).toGenericString()); // ref to method
 	}
 
 	@Test
@@ -383,14 +383,14 @@ public class MethodRabbitListenerEndpointTests {
 
 		// Message<String> as Message<Integer>
 		assertThatThrownBy(() -> listener.onMessage(MessageTestUtils.createTextMessage("test"), channel))
-			.extracting(t -> t.getCause())
-			.isInstanceOfAny(MethodArgumentTypeMismatchException.class,
-					org.springframework.messaging.converter.MessageConversionException.class);
+	.extracting(t -> t.getCause())
+	.isInstanceOfAny(MethodArgumentTypeMismatchException.class,
+org.springframework.messaging.converter.MessageConversionException.class);
 	}
 
 	private MessagingMessageListenerAdapter createInstance(
-			DefaultMessageHandlerMethodFactory methodFactory, Method method,
-			MessageListenerContainer listenerContainer) {
+DefaultMessageHandlerMethodFactory methodFactory, Method method,
+MessageListenerContainer listenerContainer) {
 
 		MethodRabbitListenerEndpoint endpoint = new MethodRabbitListenerEndpoint();
 		endpoint.setBean(sample);
@@ -400,7 +400,7 @@ public class MethodRabbitListenerEndpointTests {
 	}
 
 	private MessagingMessageListenerAdapter createInstance(
-			DefaultMessageHandlerMethodFactory methodFactory, Method method) {
+DefaultMessageHandlerMethodFactory methodFactory, Method method) {
 
 		return createInstance(methodFactory, method, new SimpleMessageListenerContainer());
 	}
@@ -466,8 +466,8 @@ public class MethodRabbitListenerEndpointTests {
 		}
 
 		public void resolveHeaderAndPayload(@Payload String content, @Header int myCounter,
-				@Header(AmqpHeaders.CONSUMER_TAG) String tag,
-				@Header(AmqpHeaders.CONSUMER_QUEUE) String queue) {
+	@Header(AmqpHeaders.CONSUMER_TAG) String tag,
+	@Header(AmqpHeaders.CONSUMER_QUEUE) String queue) {
 			invocations.put("resolveHeaderAndPayload", true);
 			assertThat(content).as("Wrong @Payload resolution").isEqualTo("my payload");
 			assertThat(myCounter).as("Wrong @Header resolution").isEqualTo(55);
@@ -521,13 +521,13 @@ public class MethodRabbitListenerEndpointTests {
 		}
 
 		public org.springframework.amqp.core.Message processAndReplyWithMessage(
-				org.springframework.amqp.core.Message content) {
+	org.springframework.amqp.core.Message content) {
 			invocations.put("processAndReplyWithMessage", true);
 			return content;
 		}
 
 		public String processAndReplyWithMessageAndStringReply(
-				org.springframework.amqp.core.Message content) {
+	org.springframework.amqp.core.Message content) {
 			invocations.put("processAndReplyWithMessageAndStringReply", true);
 			return "foo";
 		}

@@ -318,7 +318,7 @@ public class RabbitConnectionFactoryBean extends AbstractFactoryBean<ConnectionF
 	 */
 	protected String getKeyStorePassphrase() {
 		return this.keyStorePassphrase == null ? this.sslProperties.getProperty(KEY_STORE_PASS_PHRASE)
-				: this.keyStorePassphrase;
+	: this.keyStorePassphrase;
 	}
 
 	/**
@@ -337,7 +337,7 @@ public class RabbitConnectionFactoryBean extends AbstractFactoryBean<ConnectionF
 	 */
 	protected String getTrustStorePassphrase() {
 		return this.trustStorePassphrase == null ? this.sslProperties.getProperty(TRUST_STORE_PASS_PHRASE)
-				: this.trustStorePassphrase;
+	: this.trustStorePassphrase;
 	}
 
 	/**
@@ -759,7 +759,7 @@ public class RabbitConnectionFactoryBean extends AbstractFactoryBean<ConnectionF
 	protected void setUpSSL() {
 		try {
 			if (this.sslPropertiesLocation == null && this.keyStore == null && this.trustStore == null // NOSONAR boolean complexity
-					&& this.keyStoreResource == null && this.trustStoreResource == null) {
+		&& this.keyStoreResource == null && this.trustStoreResource == null) {
 				setupBasicSSL();
 			}
 			else {
@@ -771,9 +771,9 @@ public class RabbitConnectionFactoryBean extends AbstractFactoryBean<ConnectionF
 
 				if (this.logger.isDebugEnabled()) {
 					this.logger.debug("Initializing SSLContext with KM: "
-							+ Arrays.toString(keyManagers)
-							+ ", TM: " + Arrays.toString(trustManagers)
-							+ ", random: " + this.secureRandom);
+				+ Arrays.toString(keyManagers)
+				+ ", TM: " + Arrays.toString(trustManagers)
+				+ ", random: " + this.secureRandom);
 				}
 				SSLContext context = createSSLContext();
 				context.init(keyManagers, trustManagers, this.secureRandom);
@@ -804,7 +804,7 @@ public class RabbitConnectionFactoryBean extends AbstractFactoryBean<ConnectionF
 
 	@Nullable
 	protected KeyManager[] configureKeyManagers() throws KeyStoreException, IOException, NoSuchAlgorithmException,
-			CertificateException, UnrecoverableKeyException {
+CertificateException, UnrecoverableKeyException {
 		String keyStoreName = getKeyStore();
 		String keyStorePassword = getKeyStorePassphrase();
 		String storeType = getKeyStoreType();
@@ -815,7 +815,7 @@ public class RabbitConnectionFactoryBean extends AbstractFactoryBean<ConnectionF
 		KeyManager[] keyManagers = null;
 		if (StringUtils.hasText(keyStoreName) || this.keyStoreResource != null) {
 			Resource resource = this.keyStoreResource != null ? this.keyStoreResource
-					: this.resourceLoader.getResource(keyStoreName);
+		: this.resourceLoader.getResource(keyStoreName);
 			KeyStore ks = KeyStore.getInstance(storeType);
 			try (InputStream inputStream = resource.getInputStream()) {
 				ks.load(inputStream, keyPassphrase);
@@ -829,7 +829,7 @@ public class RabbitConnectionFactoryBean extends AbstractFactoryBean<ConnectionF
 
 	@Nullable
 	protected TrustManager[] configureTrustManagers()
-			throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
+throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
 		String trustStoreName = getTrustStore();
 		String trustStorePassword = getTrustStorePassphrase();
 		String storeType = getTrustStoreType();
@@ -840,7 +840,7 @@ public class RabbitConnectionFactoryBean extends AbstractFactoryBean<ConnectionF
 		TrustManager[] trustManagers = null;
 		if (StringUtils.hasText(trustStoreName) || this.trustStoreResource != null) {
 			Resource resource = this.trustStoreResource != null ? this.trustStoreResource
-					: this.resourceLoader.getResource(trustStoreName);
+		: this.resourceLoader.getResource(trustStoreName);
 			KeyStore tks = KeyStore.getInstance(storeType);
 			try (InputStream inputStream = resource.getInputStream()) {
 				tks.load(inputStream, trustPassphrase);
@@ -865,10 +865,10 @@ public class RabbitConnectionFactoryBean extends AbstractFactoryBean<ConnectionF
 
 
 	private void useDefaultTrustStoreMechanism()
-			throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
+throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
 		SSLContext sslContext = SSLContext.getInstance(this.sslAlgorithm);
 		TrustManagerFactory trustManagerFactory =
-				TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+	TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
 		trustManagerFactory.init((KeyStore) null);
 		sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
 		this.connectionFactory.useSslProtocol(sslContext);

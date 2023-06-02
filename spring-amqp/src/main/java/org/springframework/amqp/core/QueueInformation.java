@@ -83,7 +83,7 @@ public class QueueInformation {
 	@Override
 	public String toString() {
 		return "QueueInformation [name=" + this.name + ", messageCount=" + this.messageCount + ", consumerCount="
-				+ this.consumerCount + "]";
+	+ this.consumerCount + "]";
 	}
 
 }

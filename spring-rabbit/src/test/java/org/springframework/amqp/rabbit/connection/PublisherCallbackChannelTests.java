@@ -90,11 +90,11 @@ public class PublisherCallbackChannelTests {
 	}
 
 	@Test
-	@LogLevels(classes = { CachingConnectionFactory.class, AbstractConnectionFactory.class,
-			PublisherCallbackChannelImpl.class })
+	@LogLevels(classes = {CachingConnectionFactory.class, AbstractConnectionFactory.class,
+PublisherCallbackChannelImpl.class})
 	void testNotCached() throws Exception {
 		CachingConnectionFactory cf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		cf.setPublisherConfirmType(ConfirmType.CORRELATED);
 		cf.setChannelCacheSize(2);
 		cf.afterPropertiesSet();

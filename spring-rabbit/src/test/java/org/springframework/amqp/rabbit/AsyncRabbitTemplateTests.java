@@ -109,8 +109,8 @@ public class AsyncRabbitTemplateTests {
 		this.latch.set(null);
 		waitForZeroInUseConsumers();
 		assertThat(TestUtils
-				.getPropertyValue(this.asyncDirectTemplate, "directReplyToContainer.consumerCount",
-						Integer.class)).isEqualTo(2);
+	.getPropertyValue(this.asyncDirectTemplate, "directReplyToContainer.consumerCount",
+Integer.class)).isEqualTo(2);
 		final String missingQueue = UUID.randomUUID().toString();
 		this.asyncDirectTemplate.convertSendAndReceive("", missingQueue, "foo"); // send to nowhere
 		this.asyncDirectTemplate.stop(); // should clear the inUse channel map
@@ -140,10 +140,10 @@ public class AsyncRabbitTemplateTests {
 	@Test
 	public void testConvert4Args() throws Exception {
 		CompletableFuture<String> future = this.asyncTemplate.convertSendAndReceive("", this.requests.getName(), "foo",
-				message -> {
-					String body = new String(message.getBody());
-					return new Message((body + "bar").getBytes(), message.getMessageProperties());
-				});
+	message -> {
+		String body = new String(message.getBody());
+		return new Message((body + "bar").getBytes(), message.getMessageProperties());
+	});
 		checkConverterResult(future, "FOOBAR");
 	}
 
@@ -166,18 +166,18 @@ public class AsyncRabbitTemplateTests {
 		this.latch.set(null);
 		waitForZeroInUseConsumers();
 		assertThat(TestUtils
-				.getPropertyValue(this.asyncDirectTemplate, "directReplyToContainer.consumerCount",
-						Integer.class)).isEqualTo(2);
+	.getPropertyValue(this.asyncDirectTemplate, "directReplyToContainer.consumerCount",
+Integer.class)).isEqualTo(2);
 		this.asyncDirectTemplate.stop();
 		this.asyncDirectTemplate.start();
 		assertThat(TestUtils
-				.getPropertyValue(this.asyncDirectTemplate, "directReplyToContainer.consumerCount",
-						Integer.class)).isEqualTo(0);
+	.getPropertyValue(this.asyncDirectTemplate, "directReplyToContainer.consumerCount",
+Integer.class)).isEqualTo(0);
 	}
 
 	private void waitForZeroInUseConsumers() throws InterruptedException {
 		Map<?, ?> inUseConsumers = TestUtils
-				.getPropertyValue(this.asyncDirectTemplate, "directReplyToContainer.inUseConsumerChannels", Map.class);
+	.getPropertyValue(this.asyncDirectTemplate, "directReplyToContainer.inUseConsumerChannels", Map.class);
 		await().until(() -> inUseConsumers.size() == 0);
 	}
 
@@ -190,7 +190,7 @@ public class AsyncRabbitTemplateTests {
 	@Test
 	public void testMessage3Args() throws Exception {
 		CompletableFuture<Message> future = this.asyncTemplate.sendAndReceive("", this.requests.getName(),
-				getFooMessage());
+	getFooMessage());
 		checkMessageResult(future, "FOO");
 	}
 
@@ -222,7 +222,7 @@ public class AsyncRabbitTemplateTests {
 	public void testReturn() throws Exception {
 		this.asyncTemplate.setMandatory(true);
 		CompletableFuture<String> future = this.asyncTemplate.convertSendAndReceive(this.requests.getName() + "x",
-				"foo");
+	"foo");
 		try {
 			future.get(10, TimeUnit.SECONDS);
 			fail("Expected exception");
@@ -238,7 +238,7 @@ public class AsyncRabbitTemplateTests {
 	public void testReturnDirect() throws Exception {
 		this.asyncDirectTemplate.setMandatory(true);
 		CompletableFuture<String> future = this.asyncDirectTemplate.convertSendAndReceive(this.requests.getName() + "x",
-				"foo");
+	"foo");
 		try {
 			future.get(10, TimeUnit.SECONDS);
 			fail("Expected exception");
@@ -265,7 +265,7 @@ public class AsyncRabbitTemplateTests {
 	public void testMessageWithConfirm() throws Exception {
 		this.asyncTemplate.setEnableConfirms(true);
 		RabbitMessageFuture future = this.asyncTemplate
-				.sendAndReceive(new SimpleMessageConverter().toMessage("sleep", new MessageProperties()));
+	.sendAndReceive(new SimpleMessageConverter().toMessage("sleep", new MessageProperties()));
 		CompletableFuture<Boolean> confirm = future.getConfirm();
 		assertThat(confirm).isNotNull();
 		assertThat(confirm.get(10, TimeUnit.SECONDS)).isTrue();
@@ -288,7 +288,7 @@ public class AsyncRabbitTemplateTests {
 	public void testMessageWithConfirmDirect() throws Exception {
 		this.asyncDirectTemplate.setEnableConfirms(true);
 		RabbitMessageFuture future = this.asyncDirectTemplate
-				.sendAndReceive(new SimpleMessageConverter().toMessage("sleep", new MessageProperties()));
+	.sendAndReceive(new SimpleMessageConverter().toMessage("sleep", new MessageProperties()));
 		CompletableFuture<Boolean> confirm = future.getConfirm();
 		assertThat(confirm).isNotNull();
 		assertThat(confirm.get(10, TimeUnit.SECONDS)).isTrue();
@@ -383,42 +383,42 @@ public class AsyncRabbitTemplateTests {
 	void ctorCoverage() {
 		AsyncRabbitTemplate template = new AsyncRabbitTemplate(mock(ConnectionFactory.class), "ex", "rk");
 		assertThat(template).extracting(t -> t.getRabbitTemplate())
-				.extracting("exchange")
-				.isEqualTo("ex");
+	.extracting("exchange")
+	.isEqualTo("ex");
 		assertThat(template).extracting(t -> t.getRabbitTemplate())
-				.extracting("routingKey")
-				.isEqualTo("rk");
+	.extracting("routingKey")
+	.isEqualTo("rk");
 		template = new AsyncRabbitTemplate(mock(ConnectionFactory.class), "ex", "rk", "rq");
 		assertThat(template).extracting(t -> t.getRabbitTemplate())
-				.extracting("exchange")
-				.isEqualTo("ex");
+	.extracting("exchange")
+	.isEqualTo("ex");
 		assertThat(template).extracting(t -> t.getRabbitTemplate())
-				.extracting("routingKey")
-				.isEqualTo("rk");
+	.extracting("routingKey")
+	.isEqualTo("rk");
 		assertThat(template)
-				.extracting("replyAddress")
-				.isEqualTo("rq");
+	.extracting("replyAddress")
+	.isEqualTo("rq");
 		assertThat(template).extracting("container")
-				.extracting("queueNames")
-				.isEqualTo(new String[] { "rq" });
+	.extracting("queueNames")
+	.isEqualTo(new String[]{"rq"});
 		template = new AsyncRabbitTemplate(mock(ConnectionFactory.class), "ex", "rk", "rq", "ra");
 		assertThat(template).extracting(t -> t.getRabbitTemplate())
-				.extracting("exchange")
-				.isEqualTo("ex");
+	.extracting("exchange")
+	.isEqualTo("ex");
 		assertThat(template).extracting(t -> t.getRabbitTemplate())
-				.extracting("routingKey")
-				.isEqualTo("rk");
+	.extracting("routingKey")
+	.isEqualTo("rk");
 		assertThat(template)
-				.extracting("replyAddress")
-				.isEqualTo("ra");
+	.extracting("replyAddress")
+	.isEqualTo("ra");
 		assertThat(template).extracting("container")
-				.extracting("queueNames")
-				.isEqualTo(new String[] { "rq" });
+	.extracting("queueNames")
+	.isEqualTo(new String[]{"rq"});
 		template = new AsyncRabbitTemplate(mock(RabbitTemplate.class), mock(AbstractMessageListenerContainer.class),
-				"rq");
+	"rq");
 		assertThat(template)
-				.extracting("replyAddress")
-				.isEqualTo("rq");
+	.extracting("replyAddress")
+	.isEqualTo("rq");
 	}
 
 	private void checkConverterResult(CompletableFuture<String> future, String expected) throws InterruptedException {
@@ -543,30 +543,30 @@ public class AsyncRabbitTemplateTests {
 			container.setQueueNames(requests().getName());
 			container.setAfterReceivePostProcessors(new GUnzipPostProcessor());
 			MessageListenerAdapter messageListener =
-					new MessageListenerAdapter((ReplyingMessageListener<String, String>)
-							message -> {
-								CountDownLatch countDownLatch = latch().get();
-								if (countDownLatch != null) {
-									try {
-										countDownLatch.await(10, TimeUnit.SECONDS);
-									}
-									catch (InterruptedException e) {
-										Thread.currentThread().interrupt();
-									}
-								}
-								if ("sleep".equals(message)) {
-									try {
-										Thread.sleep(500); // time for confirm to be delivered, or timeout to occur
-									}
-									catch (InterruptedException e) {
-										Thread.currentThread().interrupt();
-									}
-								}
-								else if ("noReply".equals(message)) {
-									return null;
-								}
-								return message.toUpperCase();
-							});
+		new MessageListenerAdapter((ReplyingMessageListener<String, String>)
+	message -> {
+		CountDownLatch countDownLatch = latch().get();
+		if (countDownLatch != null) {
+			try {
+				countDownLatch.await(10, TimeUnit.SECONDS);
+			}
+			catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+		if ("sleep".equals(message)) {
+			try {
+				Thread.sleep(500); // time for confirm to be delivered, or timeout to occur
+			}
+			catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+		else if ("noReply".equals(message)) {
+			return null;
+		}
+		return message.toUpperCase();
+	});
 
 			messageListener.setBeforeSendReplyPostProcessors(gZipPostProcessor());
 			container.setMessageListener(messageListener);

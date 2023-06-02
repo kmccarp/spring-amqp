@@ -65,17 +65,17 @@ public class Binding extends AbstractDeclarable {
 	private final Queue lazyQueue;
 
 	public Binding(String destination, DestinationType destinationType, String exchange, String routingKey,
-			@Nullable Map<String, Object> arguments) {
+@Nullable Map<String, Object> arguments) {
 
 		this(null, destination, destinationType, exchange, routingKey, arguments);
 	}
 
 	public Binding(@Nullable Queue lazyQueue, @Nullable String destination, DestinationType destinationType,
-			String exchange, @Nullable String routingKey, @Nullable Map<String, Object> arguments) {
+String exchange, @Nullable String routingKey, @Nullable Map<String, Object> arguments) {
 
 		super(arguments);
 		Assert.isTrue(lazyQueue == null || destinationType.equals(DestinationType.QUEUE),
-				"'lazyQueue' must be null for destination type " + destinationType);
+	"'lazyQueue' must be null for destination type " + destinationType);
 		Assert.isTrue(lazyQueue != null || destination != null, "`destination` cannot be null");
 		this.lazyQueue = lazyQueue;
 		this.destination = destination;
@@ -115,7 +115,7 @@ public class Binding extends AbstractDeclarable {
 	@Override
 	public String toString() {
 		return "Binding [destination=" + this.destination + ", exchange=" + this.exchange + ", routingKey="
-					+ this.routingKey + ", arguments=" + getArguments() + "]";
+	+ this.routingKey + ", arguments=" + getArguments() + "]";
 	}
 
 }

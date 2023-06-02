@@ -114,7 +114,7 @@ public final class ConnectionFactoryParserTests {
 		CachingConnectionFactory connectionFactory = beanFactory.getBean("multiHost", CachingConnectionFactory.class);
 		assertThat(connectionFactory).isNotNull();
 		assertThat(connectionFactory.getChannelCacheSize()).isEqualTo(10);
-		DirectFieldAccessor dfa =  new DirectFieldAccessor(connectionFactory);
+		DirectFieldAccessor dfa = new DirectFieldAccessor(connectionFactory);
 		@SuppressWarnings("unchecked")
 		List<Address> addresses = (List<Address>) dfa.getPropertyValue("addresses");
 		assertThat(addresses).hasSize(3);
@@ -126,13 +126,13 @@ public final class ConnectionFactoryParserTests {
 		assertThat(addresses.get(2).getPort()).isEqualTo(4567);
 		assertThat(dfa.getPropertyValue("addressShuffleMode")).isEqualTo(AddressShuffleMode.INORDER);
 		assertThat(TestUtils.getPropertyValue(connectionFactory,
-				"rabbitConnectionFactory.threadFactory")).isSameAs(beanFactory.getBean("tf"));
+	"rabbitConnectionFactory.threadFactory")).isSameAs(beanFactory.getBean("tf"));
 	}
 
 	@Test
 	void testResolver() {
 		CachingConnectionFactory connectionFactory = beanFactory.getBean("resolved", CachingConnectionFactory.class);
 		assertThat(TestUtils.getPropertyValue(connectionFactory, "addressResolver"))
-				.isSameAs(this.beanFactory.getBean("resolver"));
+	.isSameAs(this.beanFactory.getBean("resolver"));
 	}
 }

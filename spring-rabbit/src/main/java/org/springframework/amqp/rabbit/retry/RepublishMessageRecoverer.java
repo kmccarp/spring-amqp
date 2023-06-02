@@ -111,7 +111,7 @@ public class RepublishMessageRecoverer implements MessageRecoverer {
 	 * @param errorRoutingKey the routing key.
 	 */
 	public RepublishMessageRecoverer(AmqpTemplate errorTemplate, @Nullable String errorExchange,
-			@Nullable String errorRoutingKey) {
+@Nullable String errorRoutingKey) {
 
 		this(errorTemplate, new LiteralExpression(errorExchange), new LiteralExpression(errorRoutingKey)); // NOSONAR
 	}
@@ -124,7 +124,7 @@ public class RepublishMessageRecoverer implements MessageRecoverer {
 	 * @param errorRoutingKey the routing key, evaluated against the message.
 	 */
 	public RepublishMessageRecoverer(AmqpTemplate errorTemplate, @Nullable Expression errorExchange,
-			@Nullable Expression errorRoutingKey) {
+@Nullable Expression errorRoutingKey) {
 
 		Assert.notNull(errorTemplate, "'errorTemplate' cannot be null");
 		this.errorTemplate = errorTemplate;
@@ -219,14 +219,14 @@ public class RepublishMessageRecoverer implements MessageRecoverer {
 			doSend(exchangeName, routingKey, message);
 			if (this.logger.isWarnEnabled()) {
 				this.logger.warn("Republishing failed message to exchange '" + exchangeName
-						+ "' with routing key " + routingKey);
+			+ "' with routing key " + routingKey);
 			}
 		}
 		else {
 			doSend(null, routingKey, message);
 			if (this.logger.isWarnEnabled()) {
 				this.logger.warn("Republishing failed message to the template's default exchange with routing key "
-						+ routingKey);
+			+ routingKey);
 			}
 		}
 	}
@@ -251,7 +251,7 @@ public class RepublishMessageRecoverer implements MessageRecoverer {
 		String stackTraceAsString = getStackTraceAsString(cause);
 		if (this.maxStackTraceLength < 0) {
 			int maxStackTraceLen = RabbitUtils
-					.getMaxFrame(((RabbitTemplate) this.errorTemplate).getConnectionFactory());
+		.getMaxFrame(((RabbitTemplate) this.errorTemplate).getConnectionFactory());
 			if (maxStackTraceLen > 0) {
 				maxStackTraceLen -= this.frameMaxHeadroom;
 				this.maxStackTraceLength = maxStackTraceLen;
@@ -265,37 +265,37 @@ public class RepublishMessageRecoverer implements MessageRecoverer {
 		String stackTraceAsString = stackTrace;
 		String exceptionMessage = exception == null ? "" : exception;
 		String truncatedExceptionMessage = exceptionMessage.length() <= MAX_EXCEPTION_MESSAGE_SIZE_IN_TRACE
-				? exceptionMessage
-				: (exceptionMessage.substring(0, MAX_EXCEPTION_MESSAGE_SIZE_IN_TRACE) + "...");
+	? exceptionMessage
+	: (exceptionMessage.substring(0, MAX_EXCEPTION_MESSAGE_SIZE_IN_TRACE) + "...");
 		if (this.maxStackTraceLength > 0 &&
-				stackTraceAsString.length() + exceptionMessage.length() > this.maxStackTraceLength) {
+	stackTraceAsString.length() + exceptionMessage.length() > this.maxStackTraceLength) {
 
 			if (!exceptionMessage.equals(truncatedExceptionMessage)) {
 				int start = stackTraceAsString.indexOf(exceptionMessage);
 				stackTraceAsString = stackTraceAsString.substring(0, start)
-						+ truncatedExceptionMessage
-						+ stackTraceAsString.substring(start + exceptionMessage.length());
+			+ truncatedExceptionMessage
+			+ stackTraceAsString.substring(start + exceptionMessage.length());
 			}
 			int adjustedStackTraceLen = this.maxStackTraceLength - truncatedExceptionMessage.length();
 			if (adjustedStackTraceLen > 0) {
 				if (stackTraceAsString.length() > adjustedStackTraceLen) {
 					stackTraceAsString = stackTraceAsString.substring(0, adjustedStackTraceLen);
 					this.logger.warn("Stack trace in republished message header truncated due to frame_max "
-							+ "limitations; "
-							+ "consider increasing frame_max on the broker or reduce the stack trace depth", cause);
+				+ "limitations; "
+				+ "consider increasing frame_max on the broker or reduce the stack trace depth", cause);
 					truncated = true;
 				}
 				else if (stackTraceAsString.length() + exceptionMessage.length() > this.maxStackTraceLength) {
 					this.logger.warn("Exception message in republished message header truncated due to frame_max "
-							+ "limitations; consider increasing frame_max on the broker or reduce the exception "
-							+ "message size", cause);
+				+ "limitations; consider increasing frame_max on the broker or reduce the exception "
+				+ "message size", cause);
 					truncatedExceptionMessage = exceptionMessage.substring(0,
-							this.maxStackTraceLength - stackTraceAsString.length() - ELLIPSIS_LENGTH) + "...";
+				this.maxStackTraceLength - stackTraceAsString.length() - ELLIPSIS_LENGTH) + "...";
 					truncated = true;
 				}
 			}
 		}
-		return new String[] { stackTraceAsString, truncated ? truncatedExceptionMessage : null };
+		return new String[]{stackTraceAsString, truncated ? truncatedExceptionMessage : null};
 	}
 
 	/**

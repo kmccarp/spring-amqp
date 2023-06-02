@@ -89,7 +89,7 @@ public class LocalizedQueueConnectionFactoryTests {
 		mockCFs.put(rabbit1, mockCF(rabbit1, latch1));
 		mockCFs.put(rabbit2, mockCF(rabbit2, latch2));
 		LocalizedQueueConnectionFactory lqcf = new LocalizedQueueConnectionFactory(defaultConnectionFactory, addresses,
-				adminUris, nodes, vhost, username, password, false, null) {
+	adminUris, nodes, vhost, username, password, false, null) {
 
 			@Override
 			protected ConnectionFactory createConnectionFactory(String address, String node) {
@@ -123,8 +123,8 @@ public class LocalizedQueueConnectionFactoryTests {
 		Channel channel = this.channels.get(rabbit1);
 		assertThat(channel).isNotNull();
 		verify(channel).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(),
-				anyBoolean(), anyMap(),
-				any(Consumer.class));
+	anyBoolean(), anyMap(),
+	any(Consumer.class));
 		verify(logger, atLeast(1)).info(captor.capture());
 		assertThat(assertLog(captor.getAllValues(), "Queue: q is on node: rabbit@foo at: localhost:1235")).isTrue();
 
@@ -136,8 +136,8 @@ public class LocalizedQueueConnectionFactoryTests {
 		channel = this.channels.get(rabbit2);
 		assertThat(channel).isNotNull();
 		verify(channel).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(),
-				anyBoolean(), anyMap(),
-				any(Consumer.class));
+	anyBoolean(), anyMap(),
+	any(Consumer.class));
 		container.stop();
 		verify(logger, atLeast(1)).info(captor.capture());
 		assertThat(assertLog(captor.getAllValues(), "Queue: q is on node: rabbit@bar at: localhost:1236")).isTrue();
@@ -154,18 +154,18 @@ public class LocalizedQueueConnectionFactoryTests {
 
 	private WebClient doCreateClient(String uri, String username, String password, String node) {
 		ClientHttpConnector httpConnector =
-				new HttpHandlerConnector((request, response) -> {
-					response.setStatusCode(HttpStatus.OK);
-					response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-					Mono<DataBuffer> json = Mono
-							.just(response.bufferFactory().wrap(("{\"node\":\"" + node + "\"}").getBytes()));
-					return response.writeWith(json)
-							.then(Mono.defer(response::setComplete));
-				});
+	new HttpHandlerConnector((request, response) -> {
+		response.setStatusCode(HttpStatus.OK);
+		response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+		Mono<DataBuffer> json = Mono
+	.just(response.bufferFactory().wrap(("{\"node\":\"" + node + "\"}").getBytes()));
+		return response.writeWith(json)
+	.then(Mono.defer(response::setComplete));
+	});
 
 		return WebClient.builder()
-				.clientConnector(httpConnector)
-				.build();
+	.clientConnector(httpConnector)
+	.build();
 	}
 
 	@Test
@@ -180,7 +180,7 @@ public class LocalizedQueueConnectionFactoryTests {
 			String username = "guest";
 			String password = "guest";
 			LocalizedQueueConnectionFactory lqcf = new LocalizedQueueConnectionFactory(mockCF("localhost:1234", null),
-					addresses, adminUris, nodes, vhost, username, password, false, null);
+		addresses, adminUris, nodes, vhost, username, password, false, null);
 			lqcf.getTargetConnectionFactory("[foo, bar]");
 		}
 		catch (IllegalArgumentException e) {
@@ -205,7 +205,7 @@ public class LocalizedQueueConnectionFactoryTests {
 			}
 			return tag;
 		}).given(channel).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-				any(Consumer.class));
+	any(Consumer.class));
 		given(connectionFactory.getHost()).willReturn(address);
 		this.channels.put(address, channel);
 		return connectionFactory;

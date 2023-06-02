@@ -45,26 +45,26 @@ public abstract class AbstractRabbitAnnotationDrivenTests {
 	 */
 	public void testRabbitListenerRepeatable(ApplicationContext context) {
 		RabbitListenerContainerTestFactory simpleFactory =
-				context.getBean("rabbitListenerContainerFactory", RabbitListenerContainerTestFactory.class);
+	context.getBean("rabbitListenerContainerFactory", RabbitListenerContainerTestFactory.class);
 		assertThat(simpleFactory.getListenerContainers()).hasSize(4);
 
 		MethodRabbitListenerEndpoint first = (MethodRabbitListenerEndpoint)
-				simpleFactory.getListenerContainer("first").getEndpoint();
+	simpleFactory.getListenerContainer("first").getEndpoint();
 		assertThat(first.getId()).isEqualTo("first");
 		assertThat(first.getQueueNames().iterator().next()).isEqualTo("myQueue");
 
 		MethodRabbitListenerEndpoint second = (MethodRabbitListenerEndpoint)
-				simpleFactory.getListenerContainer("second").getEndpoint();
+	simpleFactory.getListenerContainer("second").getEndpoint();
 		assertThat(second.getId()).isEqualTo("second");
 		assertThat(second.getQueueNames().iterator().next()).isEqualTo("anotherQueue");
 
 		MethodRabbitListenerEndpoint third = (MethodRabbitListenerEndpoint)
-				simpleFactory.getListenerContainer("third").getEndpoint();
+	simpleFactory.getListenerContainer("third").getEndpoint();
 		assertThat(third.getId()).isEqualTo("third");
 		assertThat(third.getQueueNames().iterator().next()).isEqualTo("class1");
 
 		MethodRabbitListenerEndpoint fourth = (MethodRabbitListenerEndpoint)
-				simpleFactory.getListenerContainer("fourth").getEndpoint();
+	simpleFactory.getListenerContainer("fourth").getEndpoint();
 		assertThat(fourth.getId()).isEqualTo("fourth");
 		assertThat(fourth.getQueueNames().iterator().next()).isEqualTo("class2");
 	}

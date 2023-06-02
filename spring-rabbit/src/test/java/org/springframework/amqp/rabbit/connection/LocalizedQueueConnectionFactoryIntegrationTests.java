@@ -67,15 +67,15 @@ public class LocalizedQueueConnectionFactoryIntegrationTests extends AbstractTes
 		this.testContainerAdmin = new RabbitAdmin(this.testContainerFactory);
 		BrokerRunningSupport brokerRunning = RabbitAvailableCondition.getBrokerRunning();
 
-		String[] addresses = new String[] { brokerRunning.getHostName() + ":" + brokerRunning.getPort(),
-				RABBITMQ.getHost() + ":" + RABBITMQ.getAmqpPort() };
-		String[] adminUris = new String[] { brokerRunning.getAdminUri(), RABBITMQ.getHttpUrl() };
-		String[] nodes = new String[] { findLocalNode(), findTcNode() };
+		String[] addresses = new String[]{brokerRunning.getHostName() + ":" + brokerRunning.getPort(),
+	RABBITMQ.getHost() + ":" + RABBITMQ.getAmqpPort()};
+		String[] adminUris = new String[]{brokerRunning.getAdminUri(), RABBITMQ.getHttpUrl()};
+		String[] nodes = new String[]{findLocalNode(), findTcNode()};
 		String vhost = "/";
 		String username = brokerRunning.getAdminUser();
 		String password = brokerRunning.getAdminPassword();
 		this.lqcf = new LocalizedQueueConnectionFactory(defaultConnectionFactory, addresses,
-				adminUris, nodes, vhost, username, password, false, null);
+	adminUris, nodes, vhost, username, password, false, null);
 	}
 
 	@AfterEach
@@ -92,7 +92,7 @@ public class LocalizedQueueConnectionFactoryIntegrationTests extends AbstractTes
 		this.defaultAdmin.declareQueue(externalQueue);
 		this.testContainerAdmin.declareQueue(tcQueue);
 		ConnectionFactory cf = this.lqcf
-				.getTargetConnectionFactory("[" + externalQueue.getName() + "]");
+	.getTargetConnectionFactory("[" + externalQueue.getName() + "]");
 		assertThat(cf).isNotSameAs(this.defaultConnectionFactory);
 		assertThat(this.defaultAdmin.getQueueProperties(externalQueue.getName())).isNotNull();
 		cf = this.lqcf.getTargetConnectionFactory("[" + tcQueue.getName() + "]");
@@ -107,9 +107,9 @@ public class LocalizedQueueConnectionFactoryIntegrationTests extends AbstractTes
 		ConnectionFactory defaultCf = mock(ConnectionFactory.class);
 		BrokerRunningSupport brokerRunning = RabbitAvailableCondition.getBrokerRunning();
 		LocalizedQueueConnectionFactory lqcf = new LocalizedQueueConnectionFactory(defaultCf,
-				Map.of(findLocalNode(), brokerRunning.getHostName() + ":" + brokerRunning.getPort()),
-				new String[] { brokerRunning.getAdminUri() },
-				"/", brokerRunning.getAdminUser(), brokerRunning.getAdminPassword(), false, null);
+	Map.of(findLocalNode(), brokerRunning.getHostName() + ":" + brokerRunning.getPort()),
+	new String[]{brokerRunning.getAdminUri()},
+	"/", brokerRunning.getAdminUser(), brokerRunning.getAdminPassword(), false, null);
 		ConnectionFactory cf = lqcf.getTargetConnectionFactory("[local]");
 		RabbitAdmin admin = new RabbitAdmin(cf);
 		assertThat(admin.getQueueProperties("local")).isNotNull();
@@ -125,23 +125,23 @@ public class LocalizedQueueConnectionFactoryIntegrationTests extends AbstractTes
 		URI uri;
 		try {
 			uri = new URI(restUri())
-					.resolve("/api/queues/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/"
-							+ queue.getName());
+		.resolve("/api/queues/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/"
+	+ queue.getName());
 		}
 		catch (URISyntaxException ex) {
 			throw new IllegalStateException(ex);
 		}
 		WebClient client = WebClient.builder()
-				.filter(ExchangeFilterFunctions.basicAuthentication(RABBITMQ.getAdminUsername(),
-						RABBITMQ.getAdminPassword()))
-				.build();
+	.filter(ExchangeFilterFunctions.basicAuthentication(RABBITMQ.getAdminUsername(),
+RABBITMQ.getAdminPassword()))
+	.build();
 		Map<String, Object> queueInfo = client.get()
-				.uri(uri)
-				.accept(MediaType.APPLICATION_JSON)
-				.retrieve()
-				.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
-				})
-				.block(Duration.ofSeconds(10));
+	.uri(uri)
+	.accept(MediaType.APPLICATION_JSON)
+	.retrieve()
+	.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+	})
+	.block(Duration.ofSeconds(10));
 		this.testContainerAdmin.deleteQueue(queue.getName());
 		return (String) queueInfo.get("node");
 	}
@@ -153,23 +153,23 @@ public class LocalizedQueueConnectionFactoryIntegrationTests extends AbstractTes
 		BrokerRunningSupport brokerRunning = RabbitAvailableCondition.getBrokerRunning();
 		try {
 			uri = new URI(brokerRunning.getAdminUri())
-					.resolve("/api/queues/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/"
-							+ queue.getName());
+		.resolve("/api/queues/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/"
+	+ queue.getName());
 		}
 		catch (URISyntaxException ex) {
 			throw new IllegalStateException(ex);
 		}
 		WebClient client = WebClient.builder()
-				.filter(ExchangeFilterFunctions.basicAuthentication(brokerRunning.getAdminUser(),
-						brokerRunning.getAdminPassword()))
-				.build();
+	.filter(ExchangeFilterFunctions.basicAuthentication(brokerRunning.getAdminUser(),
+brokerRunning.getAdminPassword()))
+	.build();
 		Map<String, Object> queueInfo = client.get()
-				.uri(uri)
-				.accept(MediaType.APPLICATION_JSON)
-				.retrieve()
-				.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
-				})
-				.block(Duration.ofSeconds(10));
+	.uri(uri)
+	.accept(MediaType.APPLICATION_JSON)
+	.retrieve()
+	.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+	})
+	.block(Duration.ofSeconds(10));
 		this.defaultAdmin.deleteQueue(queue.getName());
 		return (String) queueInfo.get("node");
 	}

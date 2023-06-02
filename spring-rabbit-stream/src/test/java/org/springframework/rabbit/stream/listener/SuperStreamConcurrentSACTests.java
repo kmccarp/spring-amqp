@@ -53,8 +53,8 @@ public class SuperStreamConcurrentSACTests extends AbstractTestContainerTests {
 
 	@Test
 	void concurrent(@Autowired StreamListenerContainer container, @Autowired RabbitTemplate template,
-			@Autowired Config config, @Autowired RabbitAdmin admin,
-			@Autowired Declarables superStream) throws InterruptedException {
+@Autowired Config config, @Autowired RabbitAdmin admin,
+@Autowired Declarables superStream) throws InterruptedException {
 
 		template.getConnectionFactory().createConnection();
 		container.start();
@@ -105,9 +105,9 @@ public class SuperStreamConcurrentSACTests extends AbstractTestContainerTests {
 		@Bean
 		static Environment environment() {
 			return Environment.builder()
-					.addressResolver(add -> new Address("localhost", streamPort()))
-					.maxConsumersByConnection(1)
-					.build();
+		.addressResolver(add -> new Address("localhost", streamPort()))
+		.maxConsumersByConnection(1)
+		.build();
 		}
 
 		@Bean

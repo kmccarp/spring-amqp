@@ -82,7 +82,7 @@ public class QueueDeclarationTests {
 		SimpleMessageListenerContainer container = createContainer(admin, latch);
 		given(context.getBeansOfType(Queue.class, false, false)).willReturn(new HashMap<>());
 		given(context.getBeansOfType(Declarables.class, false, false))
-				.willReturn(Map.of("foo", new Declarables(List.of(new Queue("test")))));
+	.willReturn(Map.of("foo", new Declarables(List.of(new Queue("test")))));
 		container.setApplicationContext(context);
 		container.start();
 
@@ -92,7 +92,7 @@ public class QueueDeclarationTests {
 	}
 
 	private SimpleMessageListenerContainer createContainer(AmqpAdmin admin, final CountDownLatch latch)
-			throws IOException {
+throws IOException {
 		ConnectionFactory connectionFactory = mock(ConnectionFactory.class);
 		Connection connection = mock(Connection.class);
 		ChannelProxy channel = mock(ChannelProxy.class);
@@ -104,9 +104,9 @@ public class QueueDeclarationTests {
 		final AtomicBoolean isOpen = new AtomicBoolean(true);
 		willAnswer(i -> isOpen.get()).given(channel).isOpen();
 		given(channel.queueDeclarePassive(Mockito.anyString()))
-				.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
+	.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
 		given(channel.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-						anyMap(), any(Consumer.class))).willReturn("consumerTag");
+	anyMap(), any(Consumer.class))).willReturn("consumerTag");
 
 		willAnswer(i -> {
 			latch.countDown();

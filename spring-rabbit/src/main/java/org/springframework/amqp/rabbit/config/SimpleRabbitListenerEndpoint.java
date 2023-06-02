@@ -60,7 +60,7 @@ public class SimpleRabbitListenerEndpoint extends AbstractRabbitListenerEndpoint
 	@Override
 	protected StringBuilder getEndpointDescription() {
 		return super.getEndpointDescription()
-				.append(" | messageListener='").append(this.messageListener).append("'");
+	.append(" | messageListener='").append(this.messageListener).append("'");
 	}
 
 }

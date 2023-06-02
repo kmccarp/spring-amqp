@@ -160,7 +160,7 @@ public class RoutingConnectionFactoryTests {
 		ConnectionFactory targetConnectionFactory = Mockito.mock(ConnectionFactory.class);
 		routingFactory.addTargetConnectionFactory("1", targetConnectionFactory);
 		verify(targetConnectionFactory,
-				times(2)).addConnectionListener(any(ConnectionListener.class));
+	times(2)).addConnectionListener(any(ConnectionListener.class));
 	}
 
 	@Test
@@ -337,7 +337,7 @@ public class RoutingConnectionFactoryTests {
 		routingFactory.addTargetConnectionFactory("1", Mockito.mock(ConnectionFactory.class));
 
 		assertThatNoException()
-				.isThrownBy(routingFactory::afterPropertiesSet);
+	.isThrownBy(routingFactory::afterPropertiesSet);
 	}
 
 }

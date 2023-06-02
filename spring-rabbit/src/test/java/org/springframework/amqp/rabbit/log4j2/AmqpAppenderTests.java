@@ -128,7 +128,7 @@ public class AmqpAppenderTests {
 	public void testProperties() {
 		Logger logger = LogManager.getLogger("foo");
 		AmqpAppender appender = (AmqpAppender) TestUtils.getPropertyValue(logger, "context.configuration.appenders",
-				Map.class).get("rabbitmq");
+	Map.class).get("rabbitmq");
 		Object manager = TestUtils.getPropertyValue(appender, "manager");
 		// <RabbitMQ name="rabbitmq"
 		// addresses="localhost:5672"
@@ -182,27 +182,27 @@ public class AmqpAppenderTests {
 	public void testSaslConfig() {
 		Logger logger = LogManager.getLogger("sasl");
 		AmqpAppender appender = (AmqpAppender) TestUtils.getPropertyValue(logger, "context.configuration.appenders",
-				Map.class).get("sasl1");
+	Map.class).get("sasl1");
 		assertThat(RabbitUtils.stringToSaslConfig(TestUtils.getPropertyValue(appender, "manager.saslConfig",
-				String.class), mock(ConnectionFactory.class)))
-			.isInstanceOf(DefaultSaslConfig.class)
-			.hasFieldOrPropertyWithValue("mechanism", "PLAIN");
+	String.class), mock(ConnectionFactory.class)))
+	.isInstanceOf(DefaultSaslConfig.class)
+	.hasFieldOrPropertyWithValue("mechanism", "PLAIN");
 		appender = (AmqpAppender) TestUtils.getPropertyValue(logger, "context.configuration.appenders",
-				Map.class).get("sasl2");
+	Map.class).get("sasl2");
 		assertThat(RabbitUtils.stringToSaslConfig(TestUtils.getPropertyValue(appender, "manager.saslConfig",
-				String.class), mock(ConnectionFactory.class)))
-			.isInstanceOf(DefaultSaslConfig.class)
-			.hasFieldOrPropertyWithValue("mechanism", "EXTERNAL");
+	String.class), mock(ConnectionFactory.class)))
+	.isInstanceOf(DefaultSaslConfig.class)
+	.hasFieldOrPropertyWithValue("mechanism", "EXTERNAL");
 		appender = (AmqpAppender) TestUtils.getPropertyValue(logger, "context.configuration.appenders",
-				Map.class).get("sasl3");
+	Map.class).get("sasl3");
 		assertThat(RabbitUtils.stringToSaslConfig(TestUtils.getPropertyValue(appender, "manager.saslConfig",
-				String.class), mock(ConnectionFactory.class)))
-			.isInstanceOf(JDKSaslConfig.class);
+	String.class), mock(ConnectionFactory.class)))
+	.isInstanceOf(JDKSaslConfig.class);
 		appender = (AmqpAppender) TestUtils.getPropertyValue(logger, "context.configuration.appenders",
-				Map.class).get("sasl4");
+	Map.class).get("sasl4");
 		assertThat(RabbitUtils.stringToSaslConfig(TestUtils.getPropertyValue(appender, "manager.saslConfig",
-				String.class), mock(ConnectionFactory.class)))
-			.isInstanceOf(CRDemoMechanism.CRDemoSaslConfig.class);
+	String.class), mock(ConnectionFactory.class)))
+	.isInstanceOf(CRDemoMechanism.CRDemoSaslConfig.class);
 	}
 
 	@Test
@@ -210,7 +210,7 @@ public class AmqpAppenderTests {
 		Logger logger = LogManager.getLogger("default_queue_logger");
 		logger.info("test");
 		AmqpAppender appender = (AmqpAppender) TestUtils.getPropertyValue(logger, "context.configuration.appenders",
-				Map.class).get("rabbitmq_default_queue");
+	Map.class).get("rabbitmq_default_queue");
 
 		Object events = TestUtils.getPropertyValue(appender, "events");
 
@@ -226,10 +226,10 @@ public class AmqpAppenderTests {
 	public void testUriProperties() {
 		Logger logger = LogManager.getLogger("bar");
 		AmqpAppender appender = (AmqpAppender) TestUtils.getPropertyValue(logger, "context.configuration.appenders",
-				Map.class).get("rabbitmq_uri");
+	Map.class).get("rabbitmq_uri");
 		Object manager = TestUtils.getPropertyValue(appender, "manager");
 		assertThat(TestUtils.getPropertyValue(manager, "uri").toString())
-				.isEqualTo("amqp://guest:guest@localhost:5672/");
+	.isEqualTo("amqp://guest:guest@localhost:5672/");
 
 		assertThat(TestUtils.getPropertyValue(manager, "host")).isNull();
 		assertThat(TestUtils.getPropertyValue(manager, "port")).isNull();

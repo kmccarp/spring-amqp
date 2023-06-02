@@ -74,28 +74,28 @@ public class TracingTests extends SampleTestRunner {
 
 			List<FinishedSpan> finishedSpans = bb.getFinishedSpans();
 			SpansAssert.assertThat(finishedSpans)
-					.haveSameTraceId()
-					.hasSize(3);
+		.haveSameTraceId()
+		.hasSize(3);
 			List<FinishedSpan> producerSpans = finishedSpans.stream()
-					.filter(span -> span.getKind().equals(Kind.PRODUCER))
-					.collect(Collectors.toList());
+		.filter(span -> span.getKind().equals(Kind.PRODUCER))
+		.collect(Collectors.toList());
 			List<FinishedSpan> consumerSpans = finishedSpans.stream()
-					.filter(span -> span.getKind().equals(Kind.CONSUMER))
-					.collect(Collectors.toList());
+		.filter(span -> span.getKind().equals(Kind.CONSUMER))
+		.collect(Collectors.toList());
 			SpanAssert.assertThat(producerSpans.get(0))
-					.hasTag("spring.rabbit.stream.template.name", "streamTemplate1");
+		.hasTag("spring.rabbit.stream.template.name", "streamTemplate1");
 			SpanAssert.assertThat(producerSpans.get(0))
-					.hasRemoteServiceNameEqualTo("RabbitMQ Stream");
+		.hasRemoteServiceNameEqualTo("RabbitMQ Stream");
 			SpanAssert.assertThat(consumerSpans.get(0))
-					.hasTagWithKey("spring.rabbit.stream.listener.id");
+		.hasTagWithKey("spring.rabbit.stream.listener.id");
 			SpanAssert.assertThat(consumerSpans.get(0))
-					.hasRemoteServiceNameEqualTo("RabbitMQ Stream");
+		.hasRemoteServiceNameEqualTo("RabbitMQ Stream");
 			assertThat(consumerSpans.get(0).getTags().get("spring.rabbit.stream.listener.id")).isIn("one", "two");
 			SpanAssert.assertThat(consumerSpans.get(1))
-					.hasTagWithKey("spring.rabbit.stream.listener.id");
+		.hasTagWithKey("spring.rabbit.stream.listener.id");
 			assertThat(consumerSpans.get(1).getTags().get("spring.rabbit.stream.listener.id")).isIn("one", "two");
 			assertThat(consumerSpans.get(0).getTags().get("spring.rabbit.stream.listener.id"))
-					.isNotEqualTo(consumerSpans.get(1).getTags().get("spring.rabbit.stream.listener.id"));
+		.isNotEqualTo(consumerSpans.get(1).getTags().get("spring.rabbit.stream.listener.id"));
 		};
 	}
 
@@ -106,8 +106,8 @@ public class TracingTests extends SampleTestRunner {
 		@Bean
 		static Environment environment() {
 			return Environment.builder()
-					.addressResolver(add -> new Address("localhost", AbstractTestContainerTests.streamPort()))
-					.build();
+		.addressResolver(add -> new Address("localhost", AbstractTestContainerTests.streamPort()))
+		.build();
 		}
 
 		@Bean
@@ -165,8 +165,8 @@ public class TracingTests extends SampleTestRunner {
 			factory.setObservationEnabled(true);
 			factory.setConsumerCustomizer((id, builder) -> {
 				builder.name(id)
-						.offset(OffsetSpecification.first())
-						.manualTrackingStrategy();
+			.offset(OffsetSpecification.first())
+			.manualTrackingStrategy();
 			});
 			return factory;
 		}
@@ -178,8 +178,8 @@ public class TracingTests extends SampleTestRunner {
 			factory.setObservationEnabled(true);
 			factory.setConsumerCustomizer((id, builder) -> {
 				builder.name(id)
-						.offset(OffsetSpecification.first())
-						.manualTrackingStrategy();
+			.offset(OffsetSpecification.first())
+			.manualTrackingStrategy();
 			});
 			return factory;
 		}

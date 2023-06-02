@@ -204,8 +204,8 @@ public final class BrokerRunningSupport {
 		this.purge = purge;
 		this.management = management;
 		setPort(fromEnvironment(BROKER_PORT, null) == null
-				? BrokerTestUtils.getPort()
-				: Integer.valueOf(fromEnvironment(BROKER_PORT, null)));
+	? BrokerTestUtils.getPort()
+	: Integer.valueOf(fromEnvironment(BROKER_PORT, null)));
 	}
 
 	private BrokerRunningSupport(boolean assumeOnline) {
@@ -388,21 +388,21 @@ public final class BrokerRunningSupport {
 
 	private void alivenessTest() throws URISyntaxException {
 		HttpClient client = HttpClient.newBuilder()
-				.authenticator(new Authenticator() {
+	.authenticator(new Authenticator() {
 
-					@Override
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(getAdminUser(), getAdminPassword().toCharArray());
-					}
+		@Override
+		protected PasswordAuthentication getPasswordAuthentication() {
+			return new PasswordAuthentication(getAdminUser(), getAdminPassword().toCharArray());
+		}
 
-				})
-				.build();
+	})
+	.build();
 		URI uri = new URI(getAdminUri())
-				.resolve("/api/aliveness-test/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8));
+	.resolve("/api/aliveness-test/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8));
 		HttpRequest request = HttpRequest.newBuilder()
-				.GET()
-				.uri(uri)
-				.build();
+	.GET()
+	.uri(uri)
+	.build();
 		HttpResponse<String> response;
 		try {
 			response = client.send(request, BodyHandlers.ofString());
@@ -420,9 +420,9 @@ public final class BrokerRunningSupport {
 		}
 		if (body == null || !body.contentEquals("{\"status\":\"ok\"}")) {
 			throw new BrokerNotAliveException("Aliveness test failed for " + uri.toString()
-					+ " user: " + getAdminUser() + " pw: " + getAdminPassword()
-					+ " status: " + response.statusCode() + " body: " + body
-					+ "; management not available");
+		+ " user: " + getAdminUser() + " pw: " + getAdminPassword()
+		+ " status: " + response.statusCode() + " body: " + body
+		+ "; management not available");
 		}
 	}
 
@@ -446,7 +446,7 @@ public final class BrokerRunningSupport {
 		UUID uuid = UUID.randomUUID();
 		ByteBuffer bb = ByteBuffer.wrap(new byte[SIXTEEN]);
 		bb.putLong(uuid.getMostSignificantBits())
-		  .putLong(uuid.getLeastSignificantBits());
+	.putLong(uuid.getLeastSignificantBits());
 		return "SpringBrokerRunning." + Base64.getUrlEncoder().encodeToString(bb.array()).replaceAll("=", "");
 	}
 

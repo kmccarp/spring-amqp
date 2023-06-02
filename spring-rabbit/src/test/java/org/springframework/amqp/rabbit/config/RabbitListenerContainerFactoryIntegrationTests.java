@@ -75,7 +75,7 @@ public class RabbitListenerContainerFactoryIntegrationTests {
 
 	private void invokeListener(RabbitListenerEndpoint endpoint, Message message) throws Exception {
 		SimpleMessageListenerContainer messageListenerContainer =
-				containerFactory.createListenerContainer(endpoint);
+	containerFactory.createListenerContainer(endpoint);
 		Object listener = messageListenerContainer.getMessageListener();
 		if (listener instanceof ChannelAwareMessageListener) {
 			((ChannelAwareMessageListener) listener).onMessage(message, mock(Channel.class));
@@ -91,7 +91,7 @@ public class RabbitListenerContainerFactoryIntegrationTests {
 
 
 	private MethodRabbitListenerEndpoint createMethodRabbitEndpoint(
-			DefaultMessageHandlerMethodFactory factory, Method method) {
+DefaultMessageHandlerMethodFactory factory, Method method) {
 		MethodRabbitListenerEndpoint endpoint = new MethodRabbitListenerEndpoint();
 		endpoint.setBean(sample);
 		endpoint.setMethod(method);

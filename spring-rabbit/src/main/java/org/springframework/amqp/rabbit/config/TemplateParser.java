@@ -100,7 +100,7 @@ class TemplateParser extends AbstractSingleBeanDefinitionParser {
 
 		if (!StringUtils.hasText(connectionFactoryRef)) {
 			parserContext.getReaderContext().error("A '" + CONNECTION_FACTORY_ATTRIBUTE + "' attribute must be set.",
-					element);
+		element);
 		}
 
 		if (StringUtils.hasText(connectionFactoryRef)) {
@@ -119,7 +119,7 @@ class TemplateParser extends AbstractSingleBeanDefinitionParser {
 		String replyAddress = element.getAttribute(REPLY_ADDRESS_ATTRIBUTE);
 		if (!StringUtils.hasText(replyAddress)) {
 			NamespaceUtils.setReferenceIfAttributeDefined(builder, element, REPLY_QUEUE_ATTRIBUTE,
-					Conventions.attributeNameToPropertyName(REPLY_ADDRESS_ATTRIBUTE));
+		Conventions.attributeNameToPropertyName(REPLY_ADDRESS_ATTRIBUTE));
 		}
 		NamespaceUtils.setValueIfAttributeDefined(builder, element, USE_TEMPORARY_REPLY_QUEUES_ATTRIBUTE);
 		NamespaceUtils.setValueIfAttributeDefined(builder, element, REPLY_ADDRESS_ATTRIBUTE);
@@ -130,32 +130,32 @@ class TemplateParser extends AbstractSingleBeanDefinitionParser {
 		NamespaceUtils.setReferenceIfAttributeDefined(builder, element, RETRY_TEMPLATE);
 		NamespaceUtils.setReferenceIfAttributeDefined(builder, element, RECOVERY_CALLBACK);
 		NamespaceUtils.setValueIfAttributeDefined(builder, element, DIRECT_REPLY_TO_CONTAINER,
-				"useDirectReplyToContainer");
+	"useDirectReplyToContainer");
 
 		BeanDefinition expressionDef =
-				NamespaceUtils.createExpressionDefinitionFromValueOrExpression(MANDATORY_ATTRIBUTE,
-						"mandatory-expression", parserContext, element, false);
+	NamespaceUtils.createExpressionDefinitionFromValueOrExpression(MANDATORY_ATTRIBUTE,
+"mandatory-expression", parserContext, element, false);
 		if (expressionDef != null) {
 			builder.addPropertyValue("mandatoryExpression", expressionDef);
 		}
 
 		BeanDefinition sendConnectionFactorySelectorExpression =
-				NamespaceUtils.createExpressionDefIfAttributeDefined("send-connection-factory-selector-expression",
-						element);
+	NamespaceUtils.createExpressionDefIfAttributeDefined("send-connection-factory-selector-expression",
+element);
 		if (sendConnectionFactorySelectorExpression != null) {
 			builder.addPropertyValue("sendConnectionFactorySelectorExpression", sendConnectionFactorySelectorExpression);
 		}
 
 		BeanDefinition receiveConnectionFactorySelectorExpression =
-				NamespaceUtils.createExpressionDefIfAttributeDefined("receive-connection-factory-selector-expression",
-						element);
+	NamespaceUtils.createExpressionDefIfAttributeDefined("receive-connection-factory-selector-expression",
+element);
 		if (receiveConnectionFactorySelectorExpression != null) {
 			builder.addPropertyValue("receiveConnectionFactorySelectorExpression",
-					receiveConnectionFactorySelectorExpression);
+		receiveConnectionFactorySelectorExpression);
 		}
 
 		BeanDefinition userIdExpression = NamespaceUtils.createExpressionDefIfAttributeDefined("user-id-expression",
-				element);
+	element);
 		if (userIdExpression != null) {
 			builder.addPropertyValue("userIdExpression", userIdExpression);
 		}
@@ -168,41 +168,41 @@ class TemplateParser extends AbstractSingleBeanDefinitionParser {
 		}
 		if (childElement != null) {
 			replyContainer = parseListener(childElement, element,
-					parserContext);
+		parserContext);
 			if (replyContainer != null) {
 				replyContainer.getPropertyValues().add("messageListener",
-						new RuntimeBeanReference(element.getAttribute(ID_ATTRIBUTE)));
+			new RuntimeBeanReference(element.getAttribute(ID_ATTRIBUTE)));
 				String replyContainerName = element.getAttribute(ID_ATTRIBUTE) + ".replyListener";
 				parserContext.getRegistry().registerBeanDefinition(replyContainerName, replyContainer);
 			}
 		}
 		if (replyContainer == null && element.hasAttribute(REPLY_QUEUE_ATTRIBUTE)) {
 			parserContext.getReaderContext().error(
-					"For template '" + element.getAttribute(ID_ATTRIBUTE)
-							+ "', when specifying a reply-queue, "
-							+ "a <reply-listener/> element is required",
-					element);
+		"For template '" + element.getAttribute(ID_ATTRIBUTE)
+	+ "', when specifying a reply-queue, "
+	+ "a <reply-listener/> element is required",
+		element);
 		}
 		else if (replyContainer != null && !element.hasAttribute(REPLY_QUEUE_ATTRIBUTE)) {
 			parserContext.getReaderContext().error(
-					"For template '" + element.getAttribute(ID_ATTRIBUTE)
-							+ "', a <reply-listener/> element is not allowed if no " +
-							"'reply-queue' is supplied",
-					element);
+		"For template '" + element.getAttribute(ID_ATTRIBUTE)
+	+ "', a <reply-listener/> element is not allowed if no " +
+	"'reply-queue' is supplied",
+		element);
 		}
 	}
 
 	private BeanDefinition parseListener(Element childElement, Element element,
-			ParserContext parserContext) {
+ParserContext parserContext) {
 		BeanDefinition replyContainer = RabbitNamespaceUtils.parseContainer(childElement, parserContext);
 		if (replyContainer != null) {
 			replyContainer.getPropertyValues().add(
-					"connectionFactory",
-					new RuntimeBeanReference(element.getAttribute(CONNECTION_FACTORY_ATTRIBUTE)));
+		"connectionFactory",
+		new RuntimeBeanReference(element.getAttribute(CONNECTION_FACTORY_ATTRIBUTE)));
 		}
 		if (element.hasAttribute(REPLY_QUEUE_ATTRIBUTE)) {
 			replyContainer.getPropertyValues().add("queues",
-					new RuntimeBeanReference(element.getAttribute(REPLY_QUEUE_ATTRIBUTE)));
+		new RuntimeBeanReference(element.getAttribute(REPLY_QUEUE_ATTRIBUTE)));
 		}
 		return replyContainer;
 	}

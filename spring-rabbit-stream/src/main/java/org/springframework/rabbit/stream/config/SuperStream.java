@@ -48,8 +48,8 @@ public class SuperStream extends Declarables {
 	 */
 	public SuperStream(String name, int partitions) {
 		this(name, partitions, (q, i) -> IntStream.range(0, i)
-				.mapToObj(String::valueOf)
-				.collect(Collectors.toList()));
+	.mapToObj(String::valueOf)
+	.collect(Collectors.toList()));
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class SuperStream extends Declarables {
 	}
 
 	private static Collection<Declarable> declarables(String name, int partitions,
-			BiFunction<String, Integer, List<String>> routingKeyStrategy) {
+BiFunction<String, Integer, List<String>> routingKeyStrategy) {
 
 		List<Declarable> declarables = new ArrayList<>();
 		List<String> rks = routingKeyStrategy.apply(name, partitions);
@@ -76,7 +76,7 @@ public class SuperStream extends Declarables {
 			Queue q = new Queue(name + "-" + i, true, false, false, Map.of("x-queue-type", "stream"));
 			declarables.add(q);
 			declarables.add(new Binding(q.getName(), DestinationType.QUEUE, name, rk,
-					Map.of("x-stream-partition-order", i)));
+		Map.of("x-stream-partition-order", i)));
 		}
 		return declarables;
 	}

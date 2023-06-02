@@ -79,9 +79,9 @@ public final class TemplateParserTests {
 		assertThat(template).isNotNull();
 		assertThat(TestUtils.getPropertyValue(template, "mandatoryExpression.expression")).isEqualTo("'true'");
 		assertThat(TestUtils.getPropertyValue(template, "sendConnectionFactorySelectorExpression.expression"))
-				.isEqualTo("'foo'");
+	.isEqualTo("'foo'");
 		assertThat(TestUtils.getPropertyValue(template, "receiveConnectionFactorySelectorExpression.expression"))
-				.isEqualTo("'foo'");
+	.isEqualTo("'foo'");
 		assertThat(TestUtils.getPropertyValue(template, "useTemporaryReplyQueues", Boolean.class)).isFalse();
 	}
 
@@ -101,7 +101,7 @@ public final class TemplateParserTests {
 		assertThat(accessor.getPropertyValue("routingKey")).isEqualTo("spam");
 		assertThat(TestUtils.getPropertyValue(template, "useTemporaryReplyQueues", Boolean.class)).isTrue();
 		assertThat(TestUtils.getPropertyValue(template, "userIdExpression.expression"))
-				.isEqualTo("@connectionFactory.username");
+	.isEqualTo("@connectionFactory.username");
 	}
 
 	@Test
@@ -115,12 +115,12 @@ public final class TemplateParserTests {
 		Queue queueBean = beanFactory.getBean("replyQId", Queue.class);
 		assertThat(replyQueue).isEqualTo(queueBean.getName());
 		SimpleMessageListenerContainer container =
-				beanFactory.getBean("withReplyQ.replyListener", SimpleMessageListenerContainer.class);
+	beanFactory.getBean("withReplyQ.replyListener", SimpleMessageListenerContainer.class);
 		assertThat(container).isNotNull();
 		dfa = new DirectFieldAccessor(container);
 		assertThat(dfa.getPropertyValue("messageListener")).isSameAs(template);
 		SimpleMessageListenerContainer messageListenerContainer =
-				beanFactory.getBean(SimpleMessageListenerContainer.class);
+	beanFactory.getBean(SimpleMessageListenerContainer.class);
 		dfa = new DirectFieldAccessor(messageListenerContainer);
 		Collection<?> queueNames = (Collection<?>) dfa.getPropertyValue("queues");
 		assertThat(queueNames).hasSize(1);

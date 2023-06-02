@@ -75,8 +75,8 @@ public class ClientRecoveryCompatibilityTests {
 		Connection conn3 = ccf.createConnection();
 		assertThat(conn3).isSameAs(conn1);
 		assertThatExceptionOfType(AutoRecoverConnectionNotCurrentlyOpenException.class).isThrownBy(() ->
-					conn3.createChannel(false))
-				.withMessage("Auto recovery connection is not currently open");
+	conn3.createChannel(false))
+	.withMessage("Auto recovery connection is not currently open");
 		channel = conn2.createChannel(false);
 		proxy = (ChannelProxy) channel;
 		assertThat(proxy.getTargetChannel()).isSameAs(channel2);

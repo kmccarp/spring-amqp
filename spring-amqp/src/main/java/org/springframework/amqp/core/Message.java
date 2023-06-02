@@ -121,10 +121,10 @@ public class Message implements Serializable {
 			}
 			String encoding = encoding();
 			if (this.body.length <= maxBodyLength // NOSONAR
-					&& (MessageProperties.CONTENT_TYPE_TEXT_PLAIN.equals(contentType)
-					|| MessageProperties.CONTENT_TYPE_JSON.equals(contentType)
-					|| MessageProperties.CONTENT_TYPE_JSON_ALT.equals(contentType)
-					|| MessageProperties.CONTENT_TYPE_XML.equals(contentType))) {
+		&& (MessageProperties.CONTENT_TYPE_TEXT_PLAIN.equals(contentType)
+		|| MessageProperties.CONTENT_TYPE_JSON.equals(contentType)
+		|| MessageProperties.CONTENT_TYPE_JSON_ALT.equals(contentType)
+		|| MessageProperties.CONTENT_TYPE_XML.equals(contentType))) {
 				return new String(this.body, encoding);
 			}
 		}

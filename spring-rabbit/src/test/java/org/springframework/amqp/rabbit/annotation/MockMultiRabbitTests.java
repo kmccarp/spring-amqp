@@ -64,20 +64,20 @@ class MockMultiRabbitTests {
 	@DisplayName("Test instantiation of multiple message listeners")
 	void multipleSimpleMessageListeners() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(MultiConfig.class,
-				SimpleMessageListenerTestBean.class);
+	SimpleMessageListenerTestBean.class);
 
 		Map<String, RabbitListenerContainerTestFactory> factories = context
-				.getBeansOfType(RabbitListenerContainerTestFactory.class, false, false);
+	.getBeansOfType(RabbitListenerContainerTestFactory.class, false, false);
 		Assertions.assertThat(factories).hasSize(3);
 
 		factories.values().forEach(factory -> {
 			Assertions.assertThat(factory.getListenerContainers().size())
-					.as("One container should have been registered").isEqualTo(1);
+		.as("One container should have been registered").isEqualTo(1);
 			MessageListenerTestContainer container = factory.getListenerContainers().get(0);
 
 			RabbitListenerEndpoint endpoint = container.getEndpoint();
 			Assertions.assertThat(endpoint.getClass()).as("Wrong endpoint type")
-					.isEqualTo(MethodRabbitListenerEndpoint.class);
+		.isEqualTo(MethodRabbitListenerEndpoint.class);
 			MethodRabbitListenerEndpoint methodEndpoint = (MethodRabbitListenerEndpoint) endpoint;
 			Assertions.assertThat(methodEndpoint.getBean()).isNotNull();
 			Assertions.assertThat(methodEndpoint.getMethod()).isNotNull();
@@ -94,34 +94,34 @@ class MockMultiRabbitTests {
 	@DisplayName("Test declarables matching the proper declaring admin")
 	void testDeclarablesMatchProperRabbitAdmin() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(MultiConfig.class,
-				AutoBindingListenerTestBeans.class);
+	AutoBindingListenerTestBeans.class);
 
 		Map<String, RabbitListenerContainerTestFactory> factories = context
-				.getBeansOfType(RabbitListenerContainerTestFactory.class, false, false);
+	.getBeansOfType(RabbitListenerContainerTestFactory.class, false, false);
 		Assertions.assertThat(factories).hasSize(3);
 
 		BiFunction<RabbitAdmin, Declarable, Boolean> declares = (admin, dec) -> dec.getDeclaringAdmins().size() == 1
-				&& dec.getDeclaringAdmins().contains(admin.getBeanName());
+	&& dec.getDeclaringAdmins().contains(admin.getBeanName());
 
 		Map<String, AbstractExchange> exchanges = context.getBeansOfType(AbstractExchange.class, false, false)
-				.values().stream().collect(Collectors.toMap(AbstractExchange::getName, v -> v));
+	.values().stream().collect(Collectors.toMap(AbstractExchange::getName, v -> v));
 		Assertions.assertThat(exchanges).hasSize(3);
 		Assertions.assertThat(declares.apply(MultiConfig.DEFAULT_RABBIT_ADMIN, exchanges.get("testExchange"))).isTrue();
 		Assertions.assertThat(declares.apply(MultiConfig.RABBIT_ADMIN_BROKER_B, exchanges.get("testExchangeB")))
-				.isTrue();
+	.isTrue();
 		Assertions.assertThat(declares.apply(MultiConfig.RABBIT_ADMIN_BROKER_C, exchanges.get("testExchangeC")))
-				.isTrue();
+	.isTrue();
 
 		Map<String, org.springframework.amqp.core.Queue> queues = context
-				.getBeansOfType(org.springframework.amqp.core.Queue.class, false, false)
-				.values().stream().collect(Collectors.toMap(org.springframework.amqp.core.Queue::getName, v -> v));
+	.getBeansOfType(org.springframework.amqp.core.Queue.class, false, false)
+	.values().stream().collect(Collectors.toMap(org.springframework.amqp.core.Queue::getName, v -> v));
 		Assertions.assertThat(queues).hasSize(3);
 		Assertions.assertThat(declares.apply(MultiConfig.DEFAULT_RABBIT_ADMIN, queues.get("testQueue"))).isTrue();
 		Assertions.assertThat(declares.apply(MultiConfig.RABBIT_ADMIN_BROKER_B, queues.get("testQueueB"))).isTrue();
 		Assertions.assertThat(declares.apply(MultiConfig.RABBIT_ADMIN_BROKER_C, queues.get("testQueueC"))).isTrue();
 
 		Map<String, Binding> bindings = context.getBeansOfType(Binding.class, false, false)
-				.values().stream().collect(Collectors.toMap(Binding::getRoutingKey, v -> v));
+	.values().stream().collect(Collectors.toMap(Binding::getRoutingKey, v -> v));
 		Assertions.assertThat(bindings).hasSize(3);
 		Assertions.assertThat(declares.apply(MultiConfig.DEFAULT_RABBIT_ADMIN, bindings.get("testKey"))).isTrue();
 		Assertions.assertThat(declares.apply(MultiConfig.RABBIT_ADMIN_BROKER_B, bindings.get("testKeyB"))).isTrue();
@@ -134,13 +134,13 @@ class MockMultiRabbitTests {
 	@DisplayName("Test stand-alone declarable not associated to any declaring admin")
 	void testStandAloneDeclarablesNotEnhancedWithSpecificDeclaringAdmin() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(MultiConfig.class,
-				StandAloneDeclarablesConfig.class, AutoBindingListenerTestBeans.class);
+	StandAloneDeclarablesConfig.class, AutoBindingListenerTestBeans.class);
 
 		Declarable exchange = context.getBean(StandAloneDeclarablesConfig.EXCHANGE, AbstractExchange.class);
 		Assertions.assertThat(exchange.getDeclaringAdmins()).isEmpty();
 
 		Declarable queue = context.getBean(StandAloneDeclarablesConfig.QUEUE,
-				org.springframework.amqp.core.Queue.class);
+	org.springframework.amqp.core.Queue.class);
 		Assertions.assertThat(queue.getDeclaringAdmins()).isEmpty();
 
 		Declarable binding = context.getBean(StandAloneDeclarablesConfig.BINDING, Binding.class);
@@ -153,7 +153,7 @@ class MockMultiRabbitTests {
 	@DisplayName("Test creation of connections at the proper brokers")
 	void testCreationOfConnections() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(MultiConfig.class,
-				AutoBindingListenerTestBeans.class);
+	AutoBindingListenerTestBeans.class);
 
 		final RabbitTemplate rabbitTemplate = new RabbitTemplate(MultiConfig.ROUTING_CONNECTION_FACTORY);
 
@@ -186,7 +186,7 @@ class MockMultiRabbitTests {
 	@DisplayName("Test assignment of RabbitAdmin in the endpoint registry")
 	void testAssignmentOfRabbitAdminInTheEndpointRegistry() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(MultiConfig.class,
-				AutoBindingListenerTestBeans.class);
+	AutoBindingListenerTestBeans.class);
 
 		final RabbitListenerEndpointRegistry registry = context.getBean(RabbitListenerEndpointRegistry.class);
 		final Collection<MessageListenerContainer> listenerContainers = registry.getListenerContainers();
@@ -208,23 +208,23 @@ class MockMultiRabbitTests {
 	static class AutoBindingListenerTestBeans {
 
 		@RabbitListener(bindings = @QueueBinding(
-				exchange = @Exchange("testExchange"),
-				value = @Queue("testQueue"),
-				key = "testKey"))
+	exchange = @Exchange("testExchange"),
+	value = @Queue("testQueue"),
+	key = "testKey"))
 		public void handleIt(String body) {
 		}
 
 		@RabbitListener(containerFactory = "brokerB", bindings = @QueueBinding(
-				exchange = @Exchange("testExchangeB"),
-				value = @Queue("testQueueB"),
-				key = "testKeyB"))
+	exchange = @Exchange("testExchangeB"),
+	value = @Queue("testQueueB"),
+	key = "testKeyB"))
 		public void handleItB(String body) {
 		}
 
 		@RabbitListener(containerFactory = "brokerC", bindings = @QueueBinding(
-				exchange = @Exchange("testExchangeC"),
-				value = @Queue("testQueueC"),
-				key = "testKeyC"))
+	exchange = @Exchange("testExchangeC"),
+	value = @Queue("testQueueC"),
+	key = "testKeyC"))
 		public void handleItC(String body) {
 		}
 	}
@@ -285,7 +285,7 @@ class MockMultiRabbitTests {
 		@Bean
 		public RabbitListenerAnnotationBeanPostProcessor postProcessor() {
 			MultiRabbitListenerAnnotationBeanPostProcessor postProcessor
-					= new MultiRabbitListenerAnnotationBeanPostProcessor();
+		= new MultiRabbitListenerAnnotationBeanPostProcessor();
 			postProcessor.setEndpointRegistry(rabbitListenerEndpointRegistry());
 			postProcessor.setContainerFactoryBeanName("defaultContainerFactory");
 			return postProcessor;

@@ -40,23 +40,23 @@ public enum MessageDeliveryMode {
 
 	public static int toInt(MessageDeliveryMode mode) {
 		switch (mode) {
-		case NON_PERSISTENT:
-			return 1;
-		case PERSISTENT:
-			return 2;
-		default:
-			return -1;
+			case NON_PERSISTENT:
+				return 1;
+			case PERSISTENT:
+				return 2;
+			default:
+				return -1;
 		}
 	}
 
 	public static MessageDeliveryMode fromInt(int modeAsNumber) {
 		switch (modeAsNumber) {
-		case 1:
-			return NON_PERSISTENT;
-		case 2:
-			return PERSISTENT;
-		default:
-			return null;
+			case 1:
+				return NON_PERSISTENT;
+			case 2:
+				return PERSISTENT;
+			default:
+				return null;
 		}
 	}
 

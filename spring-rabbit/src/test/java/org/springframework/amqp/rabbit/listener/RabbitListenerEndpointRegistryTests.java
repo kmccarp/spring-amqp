@@ -38,19 +38,19 @@ public class RabbitListenerEndpointRegistryTests {
 	@Test
 	public void createWithNullEndpoint() {
 		assertThatIllegalArgumentException()
-			.isThrownBy(() -> registry.registerListenerContainer(null, containerFactory));
+	.isThrownBy(() -> registry.registerListenerContainer(null, containerFactory));
 	}
 
 	@Test
 	public void createWithNullEndpointId() {
 		assertThatIllegalArgumentException()
-			.isThrownBy(() -> registry.registerListenerContainer(new SimpleRabbitListenerEndpoint(), containerFactory));
+	.isThrownBy(() -> registry.registerListenerContainer(new SimpleRabbitListenerEndpoint(), containerFactory));
 	}
 
 	@Test
 	public void createWithNullContainerFactory() {
 		assertThatIllegalArgumentException()
-			.isThrownBy(() -> registry.registerListenerContainer(createEndpoint("foo", "myDestination"), null));
+	.isThrownBy(() -> registry.registerListenerContainer(createEndpoint("foo", "myDestination"), null));
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class RabbitListenerEndpointRegistryTests {
 		registry.registerListenerContainer(createEndpoint("test", "queue"), containerFactory);
 
 		assertThatIllegalStateException()
-			.isThrownBy(() -> registry.registerListenerContainer(createEndpoint("test", "queue"), containerFactory));
+	.isThrownBy(() -> registry.registerListenerContainer(createEndpoint("test", "queue"), containerFactory));
 	}
 
 	private SimpleRabbitListenerEndpoint createEndpoint(String id, String queueName) {

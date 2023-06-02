@@ -54,11 +54,11 @@ public class ErrorHandlerTests {
 		willDoNothing().given(logger).warn(anyString(), any(Throwable.class));
 		new DirectFieldAccessor(handler).setPropertyValue("logger", logger);
 		handler.handleError(new ListenerExecutionFailedException("intended", new RuntimeException(),
-				new org.springframework.amqp.core.Message("".getBytes(), new MessageProperties())));
+	new org.springframework.amqp.core.Message("".getBytes(), new MessageProperties())));
 
 		try {
 			handler.handleError(new ListenerExecutionFailedException("intended", new MessageConversionException(""),
-					new org.springframework.amqp.core.Message("".getBytes(), new MessageProperties())));
+		new org.springframework.amqp.core.Message("".getBytes(), new MessageProperties())));
 			fail("Expected exception");
 		}
 		catch (AmqpRejectAndDontRequeueException e) {
@@ -66,8 +66,8 @@ public class ErrorHandlerTests {
 
 		try {
 			handler.handleError(new ListenerExecutionFailedException("intended",
-					new org.springframework.messaging.converter.MessageConversionException(""),
-					new org.springframework.amqp.core.Message("".getBytes(), new MessageProperties())));
+		new org.springframework.messaging.converter.MessageConversionException(""),
+		new org.springframework.amqp.core.Message("".getBytes(), new MessageProperties())));
 			fail("Expected exception");
 		}
 		catch (AmqpRejectAndDontRequeueException e) {
@@ -77,8 +77,8 @@ public class ErrorHandlerTests {
 		MethodParameter mp = new MethodParameter(Foo.class.getMethod("foo", String.class), 0);
 		try {
 			handler.handleError(new ListenerExecutionFailedException("intended",
-					new MethodArgumentNotValidException(message, mp),
-					new org.springframework.amqp.core.Message("".getBytes(), new MessageProperties())));
+		new MethodArgumentNotValidException(message, mp),
+		new org.springframework.amqp.core.Message("".getBytes(), new MessageProperties())));
 			fail("Expected exception");
 		}
 		catch (AmqpRejectAndDontRequeueException e) {
@@ -86,8 +86,8 @@ public class ErrorHandlerTests {
 
 		try {
 			handler.handleError(new ListenerExecutionFailedException("intended",
-					new MethodArgumentTypeMismatchException(message, mp, ""),
-					new org.springframework.amqp.core.Message("".getBytes(), new MessageProperties())));
+		new MethodArgumentTypeMismatchException(message, mp, ""),
+		new org.springframework.amqp.core.Message("".getBytes(), new MessageProperties())));
 			fail("Expected exception");
 		}
 		catch (AmqpRejectAndDontRequeueException e) {
@@ -109,7 +109,7 @@ public class ErrorHandlerTests {
 	@Test
 	public void testMessagingException() {
 		Throwable cause = new MessageHandlingException(null, "test",
-				new MessageHandlingException(null, "test", new ClassCastException()));
+	new MessageHandlingException(null, "test", new ClassCastException()));
 		try {
 			doTest(cause);
 			fail("Expected exception");
@@ -122,9 +122,8 @@ public class ErrorHandlerTests {
 	private void doTest(Throwable cause) {
 		ConditionalRejectingErrorHandler handler = new ConditionalRejectingErrorHandler();
 		handler.handleError(
-				new ListenerExecutionFailedException("test", cause,
-						new org.springframework.amqp.core.Message(new byte[0],
-				new MessageProperties())));
+	new ListenerExecutionFailedException("test", cause,
+new org.springframework.amqp.core.Message(new byte[0],new MessageProperties())));
 	}
 
 	private static class Foo {

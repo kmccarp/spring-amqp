@@ -39,8 +39,7 @@ import org.springframework.util.Assert;
  * @author Gary Russell
  * @since 1.4
  */
-public class RabbitMessagingTemplate extends AbstractMessagingTemplate<String>
-		implements RabbitMessageOperations, InitializingBean {
+public class RabbitMessagingTemplate extends AbstractMessagingTemplate<String>implements RabbitMessageOperations, InitializingBean {
 
 	private RabbitTemplate rabbitTemplate;
 
@@ -128,7 +127,7 @@ public class RabbitMessagingTemplate extends AbstractMessagingTemplate<String>
 		Assert.notNull(getAmqpMessageConverter(), "Property 'amqpMessageConverter' is required");
 		if (!this.converterSet && this.rabbitTemplate.getMessageConverter() != null) {
 			((MessagingMessageConverter) this.amqpMessageConverter)
-					.setPayloadConverter(this.rabbitTemplate.getMessageConverter());
+		.setPayloadConverter(this.rabbitTemplate.getMessageConverter());
 		}
 	}
 
@@ -144,22 +143,22 @@ public class RabbitMessagingTemplate extends AbstractMessagingTemplate<String>
 
 	@Override
 	public void convertAndSend(String exchange, String routingKey, Object payload,
-			@Nullable Map<String, Object> headers) throws MessagingException {
+@Nullable Map<String, Object> headers) throws MessagingException {
 
 		convertAndSend(exchange, routingKey, payload, headers, null);
 	}
 
 	@Override
 	public void convertAndSend(String exchange, String routingKey, Object payload,
-			@Nullable MessagePostProcessor postProcessor) throws MessagingException {
+@Nullable MessagePostProcessor postProcessor) throws MessagingException {
 
 		convertAndSend(exchange, routingKey, payload, null, postProcessor);
 	}
 
 	@Override
 	public void convertAndSend(String exchange, String routingKey, Object payload,
-			@Nullable Map<String, Object> headers, @Nullable MessagePostProcessor postProcessor)
-					throws MessagingException {
+@Nullable Map<String, Object> headers, @Nullable MessagePostProcessor postProcessor)
+throws MessagingException {
 
 		Message<?> message = doConvert(payload, headers, postProcessor);
 		send(exchange, routingKey, message);
@@ -168,7 +167,7 @@ public class RabbitMessagingTemplate extends AbstractMessagingTemplate<String>
 	@Override
 	@Nullable
 	public Message<?> sendAndReceive(String exchange, String routingKey, Message<?> requestMessage)
-			throws MessagingException {
+throws MessagingException {
 
 		return doSendAndReceive(exchange, routingKey, requestMessage);
 	}
@@ -176,7 +175,7 @@ public class RabbitMessagingTemplate extends AbstractMessagingTemplate<String>
 	@Override
 	@Nullable
 	public <T> T convertSendAndReceive(String exchange, String routingKey, Object request,
-			Class<T> targetClass) throws MessagingException {
+Class<T> targetClass) throws MessagingException {
 
 		return convertSendAndReceive(exchange, routingKey, request, null, targetClass);
 	}
@@ -184,7 +183,7 @@ public class RabbitMessagingTemplate extends AbstractMessagingTemplate<String>
 	@Override
 	@Nullable
 	public <T> T convertSendAndReceive(String exchange, String routingKey, Object request,
-			@Nullable Map<String, Object> headers, Class<T> targetClass) throws MessagingException {
+@Nullable Map<String, Object> headers, Class<T> targetClass) throws MessagingException {
 
 		return convertSendAndReceive(exchange, routingKey, request, headers, targetClass, null);
 	}
@@ -192,7 +191,7 @@ public class RabbitMessagingTemplate extends AbstractMessagingTemplate<String>
 	@Override
 	@Nullable
 	public <T> T convertSendAndReceive(String exchange, String routingKey, Object request,
-			Class<T> targetClass, @Nullable MessagePostProcessor requestPostProcessor) throws MessagingException {
+Class<T> targetClass, @Nullable MessagePostProcessor requestPostProcessor) throws MessagingException {
 
 		return convertSendAndReceive(exchange, routingKey, request, null, targetClass, requestPostProcessor);
 	}
@@ -201,8 +200,8 @@ public class RabbitMessagingTemplate extends AbstractMessagingTemplate<String>
 	@Override
 	@Nullable
 	public <T> T convertSendAndReceive(String exchange, String routingKey, Object request,
-			@Nullable Map<String, Object> headers,
-			Class<T> targetClass, @Nullable MessagePostProcessor requestPostProcessor) throws MessagingException {
+@Nullable Map<String, Object> headers,
+Class<T> targetClass, @Nullable MessagePostProcessor requestPostProcessor) throws MessagingException {
 
 		Message<?> requestMessage = doConvert(request, headers, requestPostProcessor);
 		Message<?> replyMessage = sendAndReceive(exchange, routingKey, requestMessage);
@@ -280,7 +279,7 @@ public class RabbitMessagingTemplate extends AbstractMessagingTemplate<String>
 	protected Message<?> doSendAndReceive(String destination, Message<?> requestMessage) {
 		try {
 			org.springframework.amqp.core.Message amqpMessage = this.rabbitTemplate.sendAndReceive(
-					destination, createMessage(requestMessage));
+		destination, createMessage(requestMessage));
 			return convertAmqpMessage(amqpMessage);
 		}
 		catch (RuntimeException ex) {
@@ -292,7 +291,7 @@ public class RabbitMessagingTemplate extends AbstractMessagingTemplate<String>
 	protected Message<?> doSendAndReceive(String exchange, String routingKey, Message<?> requestMessage) {
 		try {
 			org.springframework.amqp.core.Message amqpMessage = this.rabbitTemplate.sendAndReceive(
-					exchange, routingKey, createMessage(requestMessage));
+		exchange, routingKey, createMessage(requestMessage));
 			return convertAmqpMessage(amqpMessage);
 		}
 		catch (RuntimeException ex) {

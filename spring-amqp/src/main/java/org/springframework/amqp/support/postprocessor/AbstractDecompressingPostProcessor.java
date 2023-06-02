@@ -82,7 +82,7 @@ public abstract class AbstractDecompressingPostProcessor implements MessagePostP
 	@Override
 	public Message postProcessMessage(Message message) throws AmqpException {
 		Object autoDecompress = message.getMessageProperties().getHeaders()
-				.get(MessageProperties.SPRING_AUTO_DECOMPRESS);
+	.get(MessageProperties.SPRING_AUTO_DECOMPRESS);
 		if (this.alwaysDecompress || (autoDecompress instanceof Boolean && ((Boolean) autoDecompress))) {
 			ByteArrayInputStream zipped = new ByteArrayInputStream(message.getBody());
 			try {
@@ -99,14 +99,14 @@ public abstract class AbstractDecompressingPostProcessor implements MessagePostP
 					encoding = encoding.substring(0, delimAt);
 				}
 				Assert.state(getEncoding().equals(encoding), "Content encoding must be:" + getEncoding() + ", was:"
-						+ encoding);
+			+ encoding);
 				if (delimAt < 0) {
 					messageProperties.setContentEncoding(null);
 				}
 				else {
 					messageProperties.setContentEncoding(messageProperties.getContentEncoding()
-							.substring(delimAt + 1)
-							.trim());
+				.substring(delimAt + 1)
+				.trim());
 				}
 				messageProperties.getHeaders().remove(MessageProperties.SPRING_AUTO_DECOMPRESS);
 				return new Message(out.toByteArray(), messageProperties);

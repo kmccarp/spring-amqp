@@ -157,8 +157,8 @@ public abstract class RabbitUtils {
 
 	public static void closeMessageConsumer(Channel channel, Collection<String> consumerTags, boolean transactional) {
 		if (!channel.isOpen() && !(channel instanceof ChannelProxy proxy
-					&& proxy.getTargetChannel() instanceof AutorecoveringChannel)
-				&& !(channel instanceof AutorecoveringChannel)) {
+	&& proxy.getTargetChannel() instanceof AutorecoveringChannel)
+	&& !(channel instanceof AutorecoveringChannel)) {
 			return;
 		}
 		try {
@@ -252,8 +252,8 @@ public abstract class RabbitUtils {
 	public static boolean isNormalShutdown(ShutdownSignalException sig) {
 		Method shutdownReason = sig.getReason();
 		return shutdownReason instanceof AMQP.Connection.Close closeReason
-				&& AMQP.REPLY_SUCCESS == closeReason.getReplyCode()
-				&& "OK".equals(closeReason.getReplyText());
+	&& AMQP.REPLY_SUCCESS == closeReason.getReplyCode()
+	&& "OK".equals(closeReason.getReplyText());
 	}
 
 	/**
@@ -265,9 +265,9 @@ public abstract class RabbitUtils {
 	public static boolean isNormalChannelClose(ShutdownSignalException sig) {
 		Method shutdownReason = sig.getReason();
 		return isNormalShutdown(sig) ||
-				(shutdownReason instanceof AMQP.Channel.Close closeReason
-					&& AMQP.REPLY_SUCCESS == closeReason.getReplyCode()
-					&& "OK".equals(closeReason.getReplyText()));
+	(shutdownReason instanceof AMQP.Channel.Close closeReason
+&& AMQP.REPLY_SUCCESS == closeReason.getReplyCode()
+&& "OK".equals(closeReason.getReplyText()));
 	}
 
 	/**
@@ -279,10 +279,10 @@ public abstract class RabbitUtils {
 	public static boolean isPassiveDeclarationChannelClose(ShutdownSignalException sig) {
 		Method shutdownReason = sig.getReason();
 		return shutdownReason instanceof AMQP.Channel.Close closeReason // NOSONAR boolean complexity
-				&& AMQP.NOT_FOUND == closeReason.getReplyCode()
-				&& ((closeReason.getClassId() == EXCHANGE_CLASS_ID_40
-					|| closeReason.getClassId() == QUEUE_CLASS_ID_50)
-					&& closeReason.getMethodId() == DECLARE_METHOD_ID_10);
+	&& AMQP.NOT_FOUND == closeReason.getReplyCode()
+	&& ((closeReason.getClassId() == EXCHANGE_CLASS_ID_40
+	|| closeReason.getClassId() == QUEUE_CLASS_ID_50)
+	&& closeReason.getMethodId() == DECLARE_METHOD_ID_10);
 	}
 
 	/**
@@ -295,10 +295,10 @@ public abstract class RabbitUtils {
 	public static boolean isExclusiveUseChannelClose(ShutdownSignalException sig) {
 		Method shutdownReason = sig.getReason();
 		return shutdownReason instanceof AMQP.Channel.Close closeReason // NOSONAR boolean complexity
-				&& AMQP.ACCESS_REFUSED == closeReason.getReplyCode()
-				&& closeReason.getClassId() == BASIC_CLASS_ID_60
-				&& closeReason.getMethodId() == CONSUME_METHOD_ID_20
-				&& closeReason.getReplyText().contains("exclusive");
+	&& AMQP.ACCESS_REFUSED == closeReason.getReplyCode()
+	&& closeReason.getClassId() == BASIC_CLASS_ID_60
+	&& closeReason.getMethodId() == CONSUME_METHOD_ID_20
+	&& closeReason.getReplyText().contains("exclusive");
 	}
 
 	/**
@@ -325,9 +325,9 @@ public abstract class RabbitUtils {
 		else {
 			Method shutdownReason = sig.getReason();
 			return shutdownReason instanceof AMQP.Channel.Close closeReason
-					&& AMQP.PRECONDITION_FAILED == closeReason.getReplyCode()
-					&& closeReason.getClassId() == QUEUE_CLASS_ID_50
-					&& closeReason.getMethodId() == DECLARE_METHOD_ID_10;
+		&& AMQP.PRECONDITION_FAILED == closeReason.getReplyCode()
+		&& closeReason.getClassId() == QUEUE_CLASS_ID_50
+		&& closeReason.getMethodId() == DECLARE_METHOD_ID_10;
 		}
 	}
 
@@ -355,9 +355,9 @@ public abstract class RabbitUtils {
 		else {
 			Method shutdownReason = sig.getReason();
 			return shutdownReason instanceof AMQP.Connection.Close closeReason
-					&& AMQP.COMMAND_INVALID == closeReason.getReplyCode()
-					&& closeReason.getClassId() == EXCHANGE_CLASS_ID_40
-					&& closeReason.getMethodId() == DECLARE_METHOD_ID_10;
+		&& AMQP.COMMAND_INVALID == closeReason.getReplyCode()
+		&& closeReason.getClassId() == EXCHANGE_CLASS_ID_40
+		&& closeReason.getMethodId() == DECLARE_METHOD_ID_10;
 		}
 	}
 
@@ -393,19 +393,19 @@ public abstract class RabbitUtils {
 	 * @return the saslConfig.
 	 */
 	public static SaslConfig stringToSaslConfig(String saslConfig,
-			com.rabbitmq.client.ConnectionFactory connectionFactory) {
+com.rabbitmq.client.ConnectionFactory connectionFactory) {
 
 		switch (saslConfig) {
-		case "DefaultSaslConfig.PLAIN":
-			return DefaultSaslConfig.PLAIN;
-		case "DefaultSaslConfig.EXTERNAL":
-			return DefaultSaslConfig.EXTERNAL;
-		case "JDKSaslConfig":
-			return new JDKSaslConfig(connectionFactory);
-		case "CRDemoSaslConfig":
-			return new CRDemoMechanism.CRDemoSaslConfig();
-		default:
-			throw new IllegalStateException("Unrecognized SaslConfig: " + saslConfig);
+			case "DefaultSaslConfig.PLAIN":
+				return DefaultSaslConfig.PLAIN;
+			case "DefaultSaslConfig.EXTERNAL":
+				return DefaultSaslConfig.EXTERNAL;
+			case "JDKSaslConfig":
+				return new JDKSaslConfig(connectionFactory);
+			case "CRDemoSaslConfig":
+				return new CRDemoMechanism.CRDemoSaslConfig();
+			default:
+				throw new IllegalStateException("Unrecognized SaslConfig: " + saslConfig);
 		}
 	}
 

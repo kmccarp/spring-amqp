@@ -267,8 +267,8 @@ public class RabbitBindingIntegrationTests {
 
 	private BlockingQueueConsumer createConsumer(RabbitAccessor accessor) {
 		BlockingQueueConsumer consumer = new BlockingQueueConsumer(
-				accessor.getConnectionFactory(), new DefaultMessagePropertiesConverter(),
-				new ActiveObjectCounter<BlockingQueueConsumer>(), AcknowledgeMode.AUTO, true, 1, QUEUE.getName());
+	accessor.getConnectionFactory(), new DefaultMessagePropertiesConverter(),
+	new ActiveObjectCounter<BlockingQueueConsumer>(), AcknowledgeMode.AUTO, true, 1, QUEUE.getName());
 		consumer.start();
 		// wait for consumeOk...
 		await().with().pollDelay(Duration.ZERO).until(() -> consumer.getConsumerTags().size() > 0);

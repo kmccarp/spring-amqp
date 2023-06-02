@@ -61,9 +61,9 @@ public class Declarables {
 	 */
 	public <T> List<T> getDeclarablesByType(Class<T> type) {
 		return this.declarables.stream()
-				.filter(type::isInstance)
-				.map(type::cast)
-				.collect(Collectors.toList());
+	.filter(type::isInstance)
+	.map(type::cast)
+	.collect(Collectors.toList());
 	}
 
 	@Override

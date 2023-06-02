@@ -118,7 +118,7 @@ public interface AmqpTemplate {
 	 * @throws AmqpException if there is a problem
 	 */
 	void convertAndSend(String routingKey, Object message, MessagePostProcessor messagePostProcessor)
-			throws AmqpException;
+throws AmqpException;
 
 	/**
 	 * Convert a Java object to an Amqp {@link Message} and send it to a specific exchange
@@ -131,7 +131,7 @@ public interface AmqpTemplate {
 	 * @throws AmqpException if there is a problem
 	 */
 	void convertAndSend(String exchange, String routingKey, Object message, MessagePostProcessor messagePostProcessor)
-			throws AmqpException;
+throws AmqpException;
 
 	// receive methods for messages
 
@@ -304,7 +304,7 @@ public interface AmqpTemplate {
 	 */
 	@Nullable
 	<T> T receiveAndConvert(String queueName, long timeoutMillis, ParameterizedTypeReference<T> type)
-			throws AmqpException;
+throws AmqpException;
 
 	// receive and send methods for provided callback
 
@@ -356,7 +356,7 @@ public interface AmqpTemplate {
 	 * @throws AmqpException if there is a problem.
 	 */
 	<R, S> boolean receiveAndReply(ReceiveAndReplyCallback<R, S> callback, String replyExchange, String replyRoutingKey)
-			throws AmqpException;
+throws AmqpException;
 
 	/**
 	 * Receive a message if there is one from provided queue, invoke provided
@@ -375,7 +375,7 @@ public interface AmqpTemplate {
 	 * @throws AmqpException if there is a problem
 	 */
 	<R, S> boolean receiveAndReply(String queueName, ReceiveAndReplyCallback<R, S> callback, String replyExchange,
-			String replyRoutingKey) throws AmqpException;
+String replyRoutingKey) throws AmqpException;
 
 	/**
 	 * Receive a message if there is one from a default queue, invoke provided
@@ -392,7 +392,7 @@ public interface AmqpTemplate {
 	 * @throws AmqpException if there is a problem.
 	 */
 	<R, S> boolean receiveAndReply(ReceiveAndReplyCallback<R, S> callback,
-			ReplyToAddressCallback<S> replyToAddressCallback) throws AmqpException;
+ReplyToAddressCallback<S> replyToAddressCallback) throws AmqpException;
 
 	/**
 	 * Receive a message if there is one from provided queue, invoke provided
@@ -410,7 +410,7 @@ public interface AmqpTemplate {
 	 * @throws AmqpException if there is a problem
 	 */
 	<R, S> boolean receiveAndReply(String queueName, ReceiveAndReplyCallback<R, S> callback,
-			ReplyToAddressCallback<S> replyToAddressCallback) throws AmqpException;
+ReplyToAddressCallback<S> replyToAddressCallback) throws AmqpException;
 
 	// send and receive methods for messages
 
@@ -526,7 +526,7 @@ public interface AmqpTemplate {
 	 */
 	@Nullable
 	Object convertSendAndReceive(String routingKey, Object message, MessagePostProcessor messagePostProcessor)
-			throws AmqpException;
+throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -543,7 +543,7 @@ public interface AmqpTemplate {
 	 */
 	@Nullable
 	Object convertSendAndReceive(String exchange, String routingKey, Object message,
-			MessagePostProcessor messagePostProcessor) throws AmqpException;
+MessagePostProcessor messagePostProcessor) throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -561,7 +561,7 @@ public interface AmqpTemplate {
 	 */
 	@Nullable
 	<T> T convertSendAndReceiveAsType(Object message, ParameterizedTypeReference<T> responseType)
-			throws AmqpException;
+throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -579,7 +579,7 @@ public interface AmqpTemplate {
 	 */
 	@Nullable
 	<T> T convertSendAndReceiveAsType(String routingKey, Object message,
-			ParameterizedTypeReference<T> responseType) throws AmqpException;
+ParameterizedTypeReference<T> responseType) throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -592,13 +592,13 @@ public interface AmqpTemplate {
 	 * @param message a message to send.
 	 * @param responseType the type to convert the reply to.
 	 * @param <T> the type.
- 	 * @return the response; or null if the reply times out.
+	 * @return the response; or null if the reply times out.
 	 * @throws AmqpException if there is a problem.
 	 * @since 2.0
 	 */
 	@Nullable
 	<T> T convertSendAndReceiveAsType(String exchange, String routingKey, Object message,
-			ParameterizedTypeReference<T> responseType) throws AmqpException;
+ParameterizedTypeReference<T> responseType) throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -616,7 +616,7 @@ public interface AmqpTemplate {
 	 */
 	@Nullable
 	<T> T convertSendAndReceiveAsType(Object message, MessagePostProcessor messagePostProcessor,
-			ParameterizedTypeReference<T> responseType) throws AmqpException;
+ParameterizedTypeReference<T> responseType) throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -635,8 +635,8 @@ public interface AmqpTemplate {
 	 */
 	@Nullable
 	<T> T convertSendAndReceiveAsType(String routingKey, Object message,
-			MessagePostProcessor messagePostProcessor, ParameterizedTypeReference<T> responseType)
-			throws AmqpException;
+MessagePostProcessor messagePostProcessor, ParameterizedTypeReference<T> responseType)
+throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -656,7 +656,7 @@ public interface AmqpTemplate {
 	 */
 	@Nullable
 	<T> T convertSendAndReceiveAsType(String exchange, String routingKey, Object message,
-			MessagePostProcessor messagePostProcessor, ParameterizedTypeReference<T> responseType)
-			throws AmqpException;
+MessagePostProcessor messagePostProcessor, ParameterizedTypeReference<T> responseType)
+throws AmqpException;
 
 }

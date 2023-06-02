@@ -79,18 +79,18 @@ public enum RabbitStreamTemplateObservation implements ObservationDocumentation 
 	 * Default {@link RabbitStreamTemplateObservationConvention} for Rabbit template key values.
 	 */
 	public static class DefaultRabbitStreamTemplateObservationConvention
-			implements RabbitStreamTemplateObservationConvention {
+implements RabbitStreamTemplateObservationConvention {
 
 		/**
 		 * A singleton instance of the convention.
 		 */
 		public static final DefaultRabbitStreamTemplateObservationConvention INSTANCE =
-				new DefaultRabbitStreamTemplateObservationConvention();
+	new DefaultRabbitStreamTemplateObservationConvention();
 
 		@Override
 		public KeyValues getLowCardinalityKeyValues(RabbitStreamMessageSenderContext context) {
 			return KeyValues.of(RabbitStreamTemplateObservation.TemplateLowCardinalityTags.BEAN_NAME.asString(),
-							context.getBeanName());
+		context.getBeanName());
 		}
 
 		@Override

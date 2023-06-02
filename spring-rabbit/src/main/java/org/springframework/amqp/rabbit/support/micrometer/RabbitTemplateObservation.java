@@ -81,12 +81,12 @@ public enum RabbitTemplateObservation implements ObservationDocumentation {
 		 * A singleton instance of the convention.
 		 */
 		public static final DefaultRabbitTemplateObservationConvention INSTANCE =
-				new DefaultRabbitTemplateObservationConvention();
+	new DefaultRabbitTemplateObservationConvention();
 
 		@Override
 		public KeyValues getLowCardinalityKeyValues(RabbitMessageSenderContext context) {
 			return KeyValues.of(RabbitTemplateObservation.TemplateLowCardinalityTags.BEAN_NAME.asString(),
-							context.getBeanName());
+		context.getBeanName());
 		}
 
 		@Override

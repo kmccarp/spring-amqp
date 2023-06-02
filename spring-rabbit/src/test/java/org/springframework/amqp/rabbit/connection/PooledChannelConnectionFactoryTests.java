@@ -92,7 +92,7 @@ public class PooledChannelConnectionFactoryTests {
 
 	@Test
 	void queueDeclared(@Autowired RabbitAdmin admin, @Autowired Config config,
-			@Autowired PooledChannelConnectionFactory pccf) throws Exception {
+@Autowired PooledChannelConnectionFactory pccf) throws Exception {
 
 		assertThat(admin.getQueueProperties("PooledChannelConnectionFactoryTests.q")).isNotNull();
 		assertThat(config.created).isTrue();
@@ -121,7 +121,7 @@ public class PooledChannelConnectionFactoryTests {
 		createAndCloseConnectionChannelTxAndChannelNonTx(pcf);
 
 		final org.springframework.amqp.rabbit.connection.ConnectionFactory publisherConnectionFactory = pcf
-				.getPublisherConnectionFactory();
+	.getPublisherConnectionFactory();
 		assertThat(publisherConnectionFactory).isNotNull();
 
 		createAndCloseConnectionChannelTxAndChannelNonTx(publisherConnectionFactory);
@@ -131,10 +131,10 @@ public class PooledChannelConnectionFactoryTests {
 
 		final Object listenerPoolConfigurer = ReflectionTestUtils.getField(pcf, "poolConfigurer");
 		final Object publisherPoolConfigurer = ReflectionTestUtils.getField(publisherConnectionFactory,
-				"poolConfigurer");
+	"poolConfigurer");
 
 		assertThat(listenerPoolConfigurer)
-				.isSameAs(publisherPoolConfigurer);
+	.isSameAs(publisherPoolConfigurer);
 
 		pcf.destroy();
 	}
@@ -154,7 +154,7 @@ public class PooledChannelConnectionFactoryTests {
 		});
 
 		final PooledChannelConnectionFactory publisherConnectionFactory = new PooledChannelConnectionFactory(
-				new ConnectionFactory());
+	new ConnectionFactory());
 
 		AtomicBoolean publisherTxConfiged = new AtomicBoolean();
 		AtomicBoolean publisherNonTxConfiged = new AtomicBoolean();
@@ -178,10 +178,10 @@ public class PooledChannelConnectionFactoryTests {
 
 		final Object listenerPoolConfigurer = ReflectionTestUtils.getField(pcf, "poolConfigurer");
 		final Object publisherPoolConfigurer = ReflectionTestUtils.getField(publisherConnectionFactory,
-				"poolConfigurer");
+	"poolConfigurer");
 
 		assertThat(listenerPoolConfigurer)
-				.isNotSameAs(publisherPoolConfigurer);
+	.isNotSameAs(publisherPoolConfigurer);
 
 		createAndCloseConnectionChannelTxAndChannelNonTx(publisherConnectionFactory);
 
@@ -192,7 +192,7 @@ public class PooledChannelConnectionFactoryTests {
 	}
 
 	private void createAndCloseConnectionChannelTxAndChannelNonTx(
-			org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory) {
+org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory) {
 
 		Connection connection = connectionFactory.createConnection();
 		Channel nonTxChannel = connection.createChannel(false);
@@ -231,23 +231,23 @@ public class PooledChannelConnectionFactoryTests {
 		channels.evict();
 
 		assertThat(channels.getNumIdle())
-				.isEqualTo(1);
+	.isEqualTo(1);
 		assertThat(channels.getDestroyedByEvictorCount())
-				.isEqualTo(4);
+	.isEqualTo(4);
 
 		final GenericObjectPool<Channel> txChannels = txChannelsReference.get();
 		txChannels.evict();
 		assertThat(txChannels.getNumIdle())
-				.isEqualTo(1);
+	.isEqualTo(1);
 		assertThat(txChannels.getDestroyedByEvictorCount())
-				.isEqualTo(4);
+	.isEqualTo(4);
 
 		assertThat(swallowedExceptionsCount.get())
-				.isZero();
+	.isZero();
 	}
 
 	private void createAndCloseFiveChannelTxAndChannelNonTx(
-			org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory) {
+org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory) {
 		int channelAmount = 5;
 		Connection connection = connectionFactory.createConnection();
 
@@ -281,7 +281,7 @@ public class PooledChannelConnectionFactoryTests {
 		@Bean
 		PooledChannelConnectionFactory pccf() {
 			PooledChannelConnectionFactory pccf = new PooledChannelConnectionFactory(
-					RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+		RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 			pccf.addConnectionListener(new ConnectionListener() {
 
 				@Override

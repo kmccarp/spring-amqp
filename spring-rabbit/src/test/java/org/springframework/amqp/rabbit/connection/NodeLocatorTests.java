@@ -59,10 +59,10 @@ public class NodeLocatorTests {
 			}
 
 		});
-		ConnectionFactory factory = nodeLocator.locate(new String[] { "http://foo", "http://bar" },
-				Map.of("a@b", "baz"), null, "q", null, null, (q, n, u) -> {
-					return null;
-		});
+		ConnectionFactory factory = nodeLocator.locate(new String[]{"http://foo", "http://bar"},
+	Map.of("a@b", "baz"), null, "q", null, null, (q, n, u) -> {
+		return null;
+	});
 		verify(nodeLocator, times(2)).restCall(any(), any(), any(), any());
 	}
 
@@ -89,10 +89,10 @@ public class NodeLocatorTests {
 			}
 
 		});
-		ConnectionFactory factory = nodeLocator.locate(new String[] { "http://foo", "http://bar" },
-				Map.of("a@b", "baz"), null, "q", null, null, (q, n, u) -> {
-					return null;
-		});
+		ConnectionFactory factory = nodeLocator.locate(new String[]{"http://foo", "http://bar"},
+	Map.of("a@b", "baz"), null, "q", null, null, (q, n, u) -> {
+		return null;
+	});
 		verify(nodeLocator, times(2)).restCall(any(), any(), any(), any());
 	}
 
@@ -114,10 +114,10 @@ public class NodeLocatorTests {
 			}
 
 		});
-		ConnectionFactory factory = nodeLocator.locate(new String[] { "http://foo", "http://bar" },
-				Map.of("a@b", "baz"), null, "q", null, null, (q, n, u) -> {
-					return null;
-		});
+		ConnectionFactory factory = nodeLocator.locate(new String[]{"http://foo", "http://bar"},
+	Map.of("a@b", "baz"), null, "q", null, null, (q, n, u) -> {
+		return null;
+	});
 		verify(nodeLocator, times(2)).restCall(any(), any(), any(), any());
 	}
 

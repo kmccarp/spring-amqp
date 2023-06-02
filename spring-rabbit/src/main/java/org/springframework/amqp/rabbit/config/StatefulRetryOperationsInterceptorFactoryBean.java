@@ -113,7 +113,7 @@ public class StatefulRetryOperationsInterceptorFactoryBean extends AbstractRetry
 			// This is actually a normal outcome. It means the recovery was successful, but we don't want to consume
 			// any more messages until the acks and commits are sent for this (problematic) message...
 			throw new ImmediateAcknowledgeAmqpException("Recovered message forces ack (if ack mode requires it): "
-					+ arg, cause);
+		+ arg, cause);
 		};
 	}
 

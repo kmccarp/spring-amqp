@@ -77,7 +77,7 @@ public class ContainerShutDownTests {
 		});
 		Connection connection = cf.createConnection();
 		Map<?, ?> channels = TestUtils.getPropertyValue(connection, "target.delegate._channelManager._channelMap",
-				Map.class);
+	Map.class);
 		container.start();
 		try {
 			assertThat(startLatch.await(30, TimeUnit.SECONDS)).isTrue();

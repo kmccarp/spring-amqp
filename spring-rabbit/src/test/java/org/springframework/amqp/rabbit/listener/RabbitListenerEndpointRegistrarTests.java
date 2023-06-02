@@ -50,13 +50,13 @@ public class RabbitListenerEndpointRegistrarTests {
 	@Test
 	public void registerNullEndpoint() {
 		assertThatIllegalArgumentException()
-			.isThrownBy(() -> registrar.registerEndpoint(null, containerFactory));
+	.isThrownBy(() -> registrar.registerEndpoint(null, containerFactory));
 	}
 
 	@Test
 	public void registerNullEndpointId() {
 		assertThatIllegalArgumentException()
-			.isThrownBy(() -> registrar.registerEndpoint(new SimpleRabbitListenerEndpoint(), containerFactory));
+	.isThrownBy(() -> registrar.registerEndpoint(new SimpleRabbitListenerEndpoint(), containerFactory));
 	}
 
 	@Test
@@ -65,7 +65,7 @@ public class RabbitListenerEndpointRegistrarTests {
 		endpoint.setId("");
 
 		assertThatIllegalArgumentException()
-			.isThrownBy(() -> registrar.registerEndpoint(endpoint, containerFactory));
+	.isThrownBy(() -> registrar.registerEndpoint(endpoint, containerFactory));
 	}
 
 	@Test
@@ -87,8 +87,8 @@ public class RabbitListenerEndpointRegistrarTests {
 		registrar.registerEndpoint(endpoint, null);
 
 		assertThatIllegalStateException()
-			.isThrownBy(() -> registrar.afterPropertiesSet())
-			.withMessageContaining(endpoint.toString());
+	.isThrownBy(() -> registrar.afterPropertiesSet())
+	.withMessageContaining(endpoint.toString());
 	}
 
 	@Test

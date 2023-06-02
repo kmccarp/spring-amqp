@@ -57,28 +57,29 @@ public class DirectReplyToMessageListenerContainerTests {
 		final CountDownLatch latch = new CountDownLatch(1);
 
 		// Populate void MessageListener for wrapping in the DirectReplyToMessageListenerContainer
-		container.setMessageListener(m -> { });
+		container.setMessageListener(m -> {
+		});
 
 		// Extract actual ChannelAwareMessageListener from container
 		// with the inUseConsumerChannels.remove(channel); operation
 		final ChannelAwareMessageListener messageListener =
-				TestUtils.getPropertyValue(container, "messageListener",
-						ChannelAwareMessageListener.class);
+	TestUtils.getPropertyValue(container, "messageListener",
+ChannelAwareMessageListener.class);
 
 		// Wrap actual listener for latch barrier exactly after inUseConsumerChannels.remove(channel);
 		ChannelAwareMessageListener mockMessageListener =
-				(message, channel) -> {
-					try {
-						messageListener.onMessage(message, channel);
-					}
-					finally {
-						latch.countDown();
-					}
-				};
+	(message, channel) -> {
+		try {
+			messageListener.onMessage(message, channel);
+		}
+		finally {
+			latch.countDown();
+		}
+	};
 
 		// Populated mocked listener via reflection
 		new DirectFieldAccessor(container)
-				.setPropertyValue("messageListener", mockMessageListener);
+	.setPropertyValue("messageListener", mockMessageListener);
 
 		container.start();
 		ChannelHolder channel1 = container.getChannelHolder();
@@ -86,8 +87,8 @@ public class DirectReplyToMessageListenerContainerTests {
 		channel1.getChannel().basicPublish("", TEST_RELEASE_CONSUMER_Q, props, "foo".getBytes());
 		Channel replyChannel = connectionFactory.createConnection().createChannel(false);
 		GetResponse request = await()
-				.pollDelay(Duration.ZERO)
-				.until(() -> replyChannel.basicGet(TEST_RELEASE_CONSUMER_Q, true), req -> req != null);
+	.pollDelay(Duration.ZERO)
+	.until(() -> replyChannel.basicGet(TEST_RELEASE_CONSUMER_Q, true), req -> req != null);
 		assertThat(request).isNotNull();
 		replyChannel.basicPublish("", request.getProps().getReplyTo(), new BasicProperties(), "bar".getBytes());
 		replyChannel.close();

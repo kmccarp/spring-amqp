@@ -43,7 +43,7 @@ import org.springframework.validation.Validator;
 public class RabbitListenerEndpointRegistrar implements BeanFactoryAware, InitializingBean {
 
 	private final List<AmqpListenerEndpointDescriptor> endpointDescriptors =
-			new ArrayList<AmqpListenerEndpointDescriptor>();
+new ArrayList<AmqpListenerEndpointDescriptor>();
 
 	private List<HandlerMethodArgumentResolver> customMethodArgumentResolvers = new ArrayList<>();
 
@@ -114,7 +114,7 @@ public class RabbitListenerEndpointRegistrar implements BeanFactoryAware, Initia
 	 */
 	public void setMessageHandlerMethodFactory(MessageHandlerMethodFactory rabbitHandlerMethodFactory) {
 		Assert.isNull(this.validator,
-				"A validator cannot be provided with a custom message handler factory");
+	"A validator cannot be provided with a custom message handler factory");
 		this.messageHandlerMethodFactory = rabbitHandlerMethodFactory;
 	}
 
@@ -175,7 +175,7 @@ public class RabbitListenerEndpointRegistrar implements BeanFactoryAware, Initia
 	 */
 	public void setValidator(Validator validator) {
 		Assert.isNull(this.messageHandlerMethodFactory,
-				"A validator cannot be provided with a custom message handler factory");
+	"A validator cannot be provided with a custom message handler factory");
 		this.validator = validator;
 	}
 
@@ -192,7 +192,7 @@ public class RabbitListenerEndpointRegistrar implements BeanFactoryAware, Initia
 					multi.setValidator(this.validator);
 				}
 				this.endpointRegistry.registerListenerContainer(// NOSONAR never null
-						descriptor.endpoint, resolveContainerFactory(descriptor));
+			descriptor.endpoint, resolveContainerFactory(descriptor));
 			}
 			this.startImmediately = true;  // trigger immediate startup
 		}
@@ -208,13 +208,13 @@ public class RabbitListenerEndpointRegistrar implements BeanFactoryAware, Initia
 		else if (this.containerFactoryBeanName != null) {
 			Assert.state(this.beanFactory != null, "BeanFactory must be set to obtain container factory by bean name");
 			this.containerFactory = this.beanFactory.getBean(
-					this.containerFactoryBeanName, RabbitListenerContainerFactory.class);
+		this.containerFactoryBeanName, RabbitListenerContainerFactory.class);
 			return this.containerFactory;  // Consider changing this if live change of the factory is required
 		}
 		else {
 			throw new IllegalStateException("Could not resolve the " +
-					RabbitListenerContainerFactory.class.getSimpleName() + " to use for [" +
-					descriptor.endpoint + "] no factory was given and no default is set.");
+		RabbitListenerContainerFactory.class.getSimpleName() + " to use for [" +
+		descriptor.endpoint + "] no factory was given and no default is set.");
 		}
 	}
 
@@ -227,7 +227,7 @@ public class RabbitListenerEndpointRegistrar implements BeanFactoryAware, Initia
 	 * @param factory the {@link RabbitListenerContainerFactory} to use.
 	 */
 	public void registerEndpoint(RabbitListenerEndpoint endpoint,
-			@Nullable RabbitListenerContainerFactory<?> factory) {
+@Nullable RabbitListenerContainerFactory<?> factory) {
 		Assert.notNull(endpoint, "Endpoint must be set");
 		Assert.hasText(endpoint.getId(), "Endpoint id must be set");
 		Assert.state(!this.startImmediately || this.endpointRegistry != null, "No registry available");
@@ -236,7 +236,7 @@ public class RabbitListenerEndpointRegistrar implements BeanFactoryAware, Initia
 		synchronized (this.endpointDescriptors) {
 			if (this.startImmediately) { // Register and start immediately
 				this.endpointRegistry.registerListenerContainer(descriptor.endpoint, // NOSONAR never null
-						resolveContainerFactory(descriptor), true);
+			resolveContainerFactory(descriptor), true);
 			}
 			else {
 				this.endpointDescriptors.add(descriptor);
@@ -263,7 +263,7 @@ public class RabbitListenerEndpointRegistrar implements BeanFactoryAware, Initia
 		private final RabbitListenerContainerFactory<?> containerFactory;
 
 		AmqpListenerEndpointDescriptor(RabbitListenerEndpoint endpoint,
-				@Nullable RabbitListenerContainerFactory<?> containerFactory) {
+	@Nullable RabbitListenerContainerFactory<?> containerFactory) {
 			this.endpoint = endpoint;
 			this.containerFactory = containerFactory;
 		}

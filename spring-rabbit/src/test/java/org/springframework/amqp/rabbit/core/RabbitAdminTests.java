@@ -247,17 +247,17 @@ public class RabbitAdminTests extends NeedsManagementTests {
 		assertThat(admin.getQueueProperties(ctx.getBean(Config.class).prototypeQueueName)).isNull();
 		Declarables mixedDeclarables = ctx.getBean("ds", Declarables.class);
 		assertThat(mixedDeclarables.getDeclarablesByType(Queue.class))
-			.hasSize(1)
-			.extracting(Queue::getName)
-			.contains("q4");
+	.hasSize(1)
+	.extracting(Queue::getName)
+	.contains("q4");
 		assertThat(mixedDeclarables.getDeclarablesByType(Exchange.class))
-			.hasSize(1)
-			.extracting(Exchange::getName)
-			.contains("e4");
+	.hasSize(1)
+	.extracting(Exchange::getName)
+	.contains("e4");
 		assertThat(mixedDeclarables.getDeclarablesByType(Binding.class))
-			.hasSize(1)
-			.extracting(Binding::getDestination)
-			.contains("q4");
+	.hasSize(1)
+	.extracting(Binding::getDestination)
+	.contains("q4");
 		ctx.close();
 	}
 
@@ -284,7 +284,7 @@ public class RabbitAdminTests extends NeedsManagementTests {
 	@Test
 	public void testIgnoreDeclarationExceptionsTimeout() throws Exception {
 		com.rabbitmq.client.ConnectionFactory rabbitConnectionFactory = mock(
-				com.rabbitmq.client.ConnectionFactory.class);
+	com.rabbitmq.client.ConnectionFactory.class);
 		TimeoutException toBeThrown = new TimeoutException("test");
 		willThrow(toBeThrown).given(rabbitConnectionFactory).newConnection(any(ExecutorService.class), anyString());
 		CachingConnectionFactory ccf = new CachingConnectionFactory(rabbitConnectionFactory);
@@ -346,7 +346,7 @@ public class RabbitAdminTests extends NeedsManagementTests {
 		given(connection.createChannel()).willReturn(channel);
 		given(channel.isOpen()).willReturn(true);
 		willThrow(new RuntimeException()).given(channel)
-			.queueDeclare(anyString(), anyBoolean(), anyBoolean(), anyBoolean(), any());
+	.queueDeclare(anyString(), anyBoolean(), anyBoolean(), anyBoolean(), any());
 		CachingConnectionFactory ccf = new CachingConnectionFactory(rabbitConnectionFactory);
 		RabbitAdmin admin = new RabbitAdmin(ccf);
 		RetryTemplate rtt = new RetryTemplate();
@@ -359,7 +359,7 @@ public class RabbitAdminTests extends NeedsManagementTests {
 		ctx.getBeanFactory().initializeBean(admin, "admin");
 		ctx.refresh();
 		assertThatThrownBy(() -> ccf.createConnection())
-			.isInstanceOf(UncategorizedAmqpException.class);
+	.isInstanceOf(UncategorizedAmqpException.class);
 		ctx.close();
 		verify(channel, times(3)).queueDeclare(anyString(), anyBoolean(), anyBoolean(), anyBoolean(), any());
 	}
@@ -367,7 +367,7 @@ public class RabbitAdminTests extends NeedsManagementTests {
 	@Test
 	public void testLeaderLocator() throws Exception {
 		CachingConnectionFactory cf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		RabbitAdmin admin = new RabbitAdmin(cf);
 		AnonymousQueue queue = new AnonymousQueue();
 		admin.declareQueue(queue);
@@ -387,19 +387,19 @@ public class RabbitAdminTests extends NeedsManagementTests {
 	@Test
 	void manualDeclarations() {
 		CachingConnectionFactory cf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		RabbitAdmin admin = new RabbitAdmin(cf);
 		GenericApplicationContext applicationContext = new GenericApplicationContext();
 		admin.setApplicationContext(applicationContext);
 		admin.setRedeclareManualDeclarations(true);
 		applicationContext.registerBean("admin", RabbitAdmin.class, () -> admin);
 		applicationContext.registerBean("beanQueue", Queue.class,
-				() -> new Queue("thisOneShouldntBeInTheManualDecs", false, true, true));
+	() -> new Queue("thisOneShouldntBeInTheManualDecs", false, true, true));
 		applicationContext.registerBean("beanEx", DirectExchange.class,
-				() -> new DirectExchange("thisOneShouldntBeInTheManualDecs", false, true));
+	() -> new DirectExchange("thisOneShouldntBeInTheManualDecs", false, true));
 		applicationContext.registerBean("beanBinding", Binding.class,
-				() -> new Binding("thisOneShouldntBeInTheManualDecs", DestinationType.QUEUE,
-						"thisOneShouldntBeInTheManualDecs", "test", null));
+	() -> new Binding("thisOneShouldntBeInTheManualDecs", DestinationType.QUEUE,
+"thisOneShouldntBeInTheManualDecs", "test", null));
 		applicationContext.refresh();
 		Map<?, ?> declarables = TestUtils.getPropertyValue(admin, "manualDeclarables", Map.class);
 		assertThat(declarables).hasSize(0);
@@ -448,7 +448,7 @@ public class RabbitAdminTests extends NeedsManagementTests {
 	@Test
 	void manualDeclarationsWithoutApplicationContext() {
 		CachingConnectionFactory cf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		RabbitAdmin admin = new RabbitAdmin(cf);
 		admin.setRedeclareManualDeclarations(true);
 		Map<?, ?> declarables = TestUtils.getPropertyValue(admin, "manualDeclarables", Map.class);
@@ -529,15 +529,15 @@ public class RabbitAdminTests extends NeedsManagementTests {
 		@Bean
 		public Declarables es() {
 			return new Declarables(
-					new DirectExchange("e2", false, true),
-					new DirectExchange("e3", false, true));
+		new DirectExchange("e2", false, true),
+		new DirectExchange("e3", false, true));
 		}
 
 		@Bean
 		public Declarables qs() {
 			return new Declarables(
-					new Queue("q2", false, false, true),
-					new Queue("q3", false, false, true));
+		new Queue("q2", false, false, true),
+		new Queue("q3", false, false, true));
 		}
 
 		@Bean
@@ -549,16 +549,16 @@ public class RabbitAdminTests extends NeedsManagementTests {
 		@Bean
 		public Declarables bs() {
 			return new Declarables(
-					new Binding("q2", DestinationType.QUEUE, "e2", "k2", null),
-					new Binding("q3", DestinationType.QUEUE, "e3", "k3", null));
+		new Binding("q2", DestinationType.QUEUE, "e2", "k2", null),
+		new Binding("q3", DestinationType.QUEUE, "e3", "k3", null));
 		}
 
 		@Bean
 		public Declarables ds() {
 			return new Declarables(
-					new DirectExchange("e4", false, true),
-					new Queue("q4", false, false, true),
-					new Binding("q4", DestinationType.QUEUE, "e4", "k4", null));
+		new DirectExchange("e4", false, true),
+		new Queue("q4", false, false, true),
+		new Binding("q4", DestinationType.QUEUE, "e4", "k4", null));
 		}
 
 	}

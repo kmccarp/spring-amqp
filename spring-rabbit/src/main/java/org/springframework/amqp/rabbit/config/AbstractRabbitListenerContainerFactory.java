@@ -59,9 +59,7 @@ import org.springframework.util.backoff.FixedBackOff;
  *
  * @see AbstractMessageListenerContainer
  */
-public abstract class AbstractRabbitListenerContainerFactory<C extends AbstractMessageListenerContainer>
-		extends BaseRabbitListenerContainerFactory<C>
-		implements ApplicationContextAware, ApplicationEventPublisherAware {
+public abstract class AbstractRabbitListenerContainerFactory<C extends AbstractMessageListenerContainer>extends BaseRabbitListenerContainerFactory<C>implements ApplicationContextAware, ApplicationEventPublisherAware {
 
 	protected final Log logger = LogFactory.getLog(getClass()); // NOSONAR
 
@@ -344,48 +342,48 @@ public abstract class AbstractRabbitListenerContainerFactory<C extends AbstractM
 		C instance = createContainerInstance();
 
 		JavaUtils javaUtils =
-				JavaUtils.INSTANCE
-						.acceptIfNotNull(this.connectionFactory, instance::setConnectionFactory)
-						.acceptIfNotNull(this.errorHandler, instance::setErrorHandler);
+	JavaUtils.INSTANCE
+.acceptIfNotNull(this.connectionFactory, instance::setConnectionFactory)
+.acceptIfNotNull(this.errorHandler, instance::setErrorHandler);
 		if (this.messageConverter != null && endpoint != null && endpoint.getMessageConverter() == null) {
 			endpoint.setMessageConverter(this.messageConverter);
 		}
 		Advice[] adviceChain = getAdviceChain();
 		javaUtils
-			.acceptIfNotNull(this.acknowledgeMode, instance::setAcknowledgeMode)
-			.acceptIfNotNull(this.channelTransacted, instance::setChannelTransacted)
-			.acceptIfNotNull(getApplicationContext(), instance::setApplicationContext)
-			.acceptIfNotNull(this.taskExecutor, instance::setTaskExecutor)
-			.acceptIfNotNull(this.transactionManager, instance::setTransactionManager)
-			.acceptIfNotNull(this.prefetchCount, instance::setPrefetchCount)
-			.acceptIfNotNull(this.globalQos, instance::setGlobalQos)
-			.acceptIfNotNull(getDefaultRequeueRejected(), instance::setDefaultRequeueRejected)
-			.acceptIfNotNull(adviceChain, instance::setAdviceChain)
-			.acceptIfNotNull(this.recoveryBackOff, instance::setRecoveryBackOff)
-			.acceptIfNotNull(this.mismatchedQueuesFatal, instance::setMismatchedQueuesFatal)
-			.acceptIfNotNull(this.missingQueuesFatal, instance::setMissingQueuesFatal)
-			.acceptIfNotNull(this.consumerTagStrategy, instance::setConsumerTagStrategy)
-			.acceptIfNotNull(this.idleEventInterval, instance::setIdleEventInterval)
-			.acceptIfNotNull(this.failedDeclarationRetryInterval, instance::setFailedDeclarationRetryInterval)
-			.acceptIfNotNull(this.applicationEventPublisher, instance::setApplicationEventPublisher)
-			.acceptIfNotNull(this.autoStartup, instance::setAutoStartup)
-			.acceptIfNotNull(this.phase, instance::setPhase)
-			.acceptIfNotNull(this.afterReceivePostProcessors, instance::setAfterReceivePostProcessors)
-			.acceptIfNotNull(this.deBatchingEnabled, instance::setDeBatchingEnabled)
-			.acceptIfNotNull(this.messageAckListener, instance::setMessageAckListener)
-			.acceptIfNotNull(this.batchingStrategy, instance::setBatchingStrategy)
-			.acceptIfNotNull(getMicrometerEnabled(), instance::setMicrometerEnabled)
-			.acceptIfNotNull(getObservationEnabled(), instance::setObservationEnabled)
-			.acceptIfNotNull(this.observationConvention, instance::setObservationConvention);
+	.acceptIfNotNull(this.acknowledgeMode, instance::setAcknowledgeMode)
+	.acceptIfNotNull(this.channelTransacted, instance::setChannelTransacted)
+	.acceptIfNotNull(getApplicationContext(), instance::setApplicationContext)
+	.acceptIfNotNull(this.taskExecutor, instance::setTaskExecutor)
+	.acceptIfNotNull(this.transactionManager, instance::setTransactionManager)
+	.acceptIfNotNull(this.prefetchCount, instance::setPrefetchCount)
+	.acceptIfNotNull(this.globalQos, instance::setGlobalQos)
+	.acceptIfNotNull(getDefaultRequeueRejected(), instance::setDefaultRequeueRejected)
+	.acceptIfNotNull(adviceChain, instance::setAdviceChain)
+	.acceptIfNotNull(this.recoveryBackOff, instance::setRecoveryBackOff)
+	.acceptIfNotNull(this.mismatchedQueuesFatal, instance::setMismatchedQueuesFatal)
+	.acceptIfNotNull(this.missingQueuesFatal, instance::setMissingQueuesFatal)
+	.acceptIfNotNull(this.consumerTagStrategy, instance::setConsumerTagStrategy)
+	.acceptIfNotNull(this.idleEventInterval, instance::setIdleEventInterval)
+	.acceptIfNotNull(this.failedDeclarationRetryInterval, instance::setFailedDeclarationRetryInterval)
+	.acceptIfNotNull(this.applicationEventPublisher, instance::setApplicationEventPublisher)
+	.acceptIfNotNull(this.autoStartup, instance::setAutoStartup)
+	.acceptIfNotNull(this.phase, instance::setPhase)
+	.acceptIfNotNull(this.afterReceivePostProcessors, instance::setAfterReceivePostProcessors)
+	.acceptIfNotNull(this.deBatchingEnabled, instance::setDeBatchingEnabled)
+	.acceptIfNotNull(this.messageAckListener, instance::setMessageAckListener)
+	.acceptIfNotNull(this.batchingStrategy, instance::setBatchingStrategy)
+	.acceptIfNotNull(getMicrometerEnabled(), instance::setMicrometerEnabled)
+	.acceptIfNotNull(getObservationEnabled(), instance::setObservationEnabled)
+	.acceptIfNotNull(this.observationConvention, instance::setObservationConvention);
 		if (this.batchListener && this.deBatchingEnabled == null) {
 			// turn off container debatching by default for batch listeners
 			instance.setDeBatchingEnabled(false);
 		}
 		if (endpoint != null) { // endpoint settings overriding default factory settings
 			javaUtils
-				.acceptIfNotNull(endpoint.getTaskExecutor(), instance::setTaskExecutor)
-				.acceptIfNotNull(endpoint.getAckMode(), instance::setAcknowledgeMode)
-				.acceptIfNotNull(endpoint.getBatchingStrategy(), instance::setBatchingStrategy);
+		.acceptIfNotNull(endpoint.getTaskExecutor(), instance::setTaskExecutor)
+		.acceptIfNotNull(endpoint.getAckMode(), instance::setAcknowledgeMode)
+		.acceptIfNotNull(endpoint.getBatchingStrategy(), instance::setBatchingStrategy);
 			instance.setListenerId(endpoint.getId());
 			if (endpoint.getBatchListener() == null) {
 				endpoint.setBatchListener(this.batchListener);

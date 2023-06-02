@@ -73,7 +73,7 @@ public class SimpleMessageConverterTests extends AllowedListDeserializingMessage
 	@Test
 	public void messageToBytes() {
 		SimpleMessageConverter converter = new SimpleMessageConverter();
-		Message message = new Message(new byte[] { 1, 2, 3 }, new MessageProperties());
+		Message message = new Message(new byte[]{1, 2, 3}, new MessageProperties());
 		message.getMessageProperties().setContentType(MessageProperties.CONTENT_TYPE_BYTES);
 		Object result = converter.fromMessage(message);
 		assertThat(result.getClass()).isEqualTo(byte[].class);
@@ -108,7 +108,7 @@ public class SimpleMessageConverterTests extends AllowedListDeserializingMessage
 		Message message = converter.toMessage("test", new MessageProperties());
 		String contentType = message.getMessageProperties().getContentType();
 		String content = new String(message.getBody(),
-				message.getMessageProperties().getContentEncoding());
+	message.getMessageProperties().getContentEncoding());
 		assertThat(contentType).isEqualTo("text/plain");
 		assertThat(content).isEqualTo("test");
 	}
@@ -116,7 +116,7 @@ public class SimpleMessageConverterTests extends AllowedListDeserializingMessage
 	@Test
 	public void bytesToMessage() throws Exception {
 		SimpleMessageConverter converter = new SimpleMessageConverter();
-		Message message = converter.toMessage(new byte[] { 1, 2, 3 }, new MessageProperties());
+		Message message = converter.toMessage(new byte[]{1, 2, 3}, new MessageProperties());
 		String contentType = message.getMessageProperties().getContentType();
 		byte[] body = message.getBody();
 		assertThat(contentType).isEqualTo("application/octet-stream");
@@ -149,8 +149,8 @@ public class SimpleMessageConverterTests extends AllowedListDeserializingMessage
 		byte[] body = message.getBody();
 		body[10] = 'z';
 		assertThatThrownBy(() -> converter.fromMessage(message))
-				.isExactlyInstanceOf(MessageConversionException.class)
-				.hasCauseExactlyInstanceOf(IllegalStateException.class);
+	.isExactlyInstanceOf(MessageConversionException.class)
+	.hasCauseExactlyInstanceOf(IllegalStateException.class);
 	}
 
 	@Test

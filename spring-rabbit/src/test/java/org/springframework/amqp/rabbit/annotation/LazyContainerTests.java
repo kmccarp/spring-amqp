@@ -72,7 +72,7 @@ public class LazyContainerTests {
 		@Bean
 		public CachingConnectionFactory cf() {
 			return new CachingConnectionFactory(RabbitAvailableCondition.getBrokerRunning()
-					.getConnectionFactory());
+		.getConnectionFactory());
 		}
 
 		@Bean

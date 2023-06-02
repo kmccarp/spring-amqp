@@ -90,9 +90,9 @@ class ConnectionFactoryParser extends AbstractSingleBeanDefinitionParser {
 	@Override
 	protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {
 		if (element.hasAttribute(ADDRESSES) &&
-				(element.hasAttribute(HOST_ATTRIBUTE) || element.hasAttribute(PORT_ATTRIBUTE))) {
+	(element.hasAttribute(HOST_ATTRIBUTE) || element.hasAttribute(PORT_ATTRIBUTE))) {
 			parserContext.getReaderContext().error("If the 'addresses' attribute is provided, a connection " +
-					"factory can not have 'host' or 'port' attributes.", element);
+		"factory can not have 'host' or 'port' attributes.", element);
 		}
 
 		NamespaceUtils.addConstructorArgParentRefIfAttributeDefined(builder, element, CONNECTION_FACTORY_ATTRIBUTE);
@@ -107,7 +107,7 @@ class ConnectionFactoryParser extends AbstractSingleBeanDefinitionParser {
 		NamespaceUtils.setValueIfAttributeDefined(builder, element, SHUFFLE_ADDRESSES);
 		if (element.hasAttribute(SHUFFLE_ADDRESSES) && element.hasAttribute(SHUFFLE_MODE)) {
 			parserContext.getReaderContext()
-					.error("You must not specify both '" + SHUFFLE_ADDRESSES + "' and '" + SHUFFLE_MODE + "'", element);
+		.error("You must not specify both '" + SHUFFLE_ADDRESSES + "' and '" + SHUFFLE_MODE + "'", element);
 		}
 		NamespaceUtils.setValueIfAttributeDefined(builder, element, SHUFFLE_MODE);
 		NamespaceUtils.setReferenceIfAttributeDefined(builder, element, ADDRESS_RESOLVER);

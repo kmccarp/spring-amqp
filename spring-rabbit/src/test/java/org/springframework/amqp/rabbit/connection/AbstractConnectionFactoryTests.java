@@ -169,7 +169,7 @@ public abstract class AbstractConnectionFactoryTests {
 		com.rabbitmq.client.Connection mockConnection2 = mock(com.rabbitmq.client.Connection.class);
 
 		given(mockConnectionFactory.newConnection(any(ExecutorService.class), anyString()))
-				.willReturn(mockConnection1, mockConnection2);
+	.willReturn(mockConnection1, mockConnection2);
 		// simulate a dead connection
 		given(mockConnection1.isOpen()).willReturn(false);
 		given(mockConnection2.createChannel()).willReturn(mock(Channel.class));

@@ -84,7 +84,7 @@ public abstract class AbstractExchangeParser extends AbstractSingleBeanDefinitio
 
 		NamespaceUtils.addConstructorArgBooleanValueIfAttributeDefined(builder, element, DURABLE_ATTRIBUTE, true);
 		NamespaceUtils.addConstructorArgBooleanValueIfAttributeDefined(builder, element, AUTO_DELETE_ATTRIBUTE,
-				false);
+	false);
 		NamespaceUtils.setValueIfAttributeDefined(builder, element, DELAYED_ATTRIBUTE);
 		NamespaceUtils.setValueIfAttributeDefined(builder, element, "internal");
 
@@ -95,27 +95,27 @@ public abstract class AbstractExchangeParser extends AbstractSingleBeanDefinitio
 	}
 
 	protected void parseBindings(Element element, ParserContext parserContext, BeanDefinitionBuilder builder,
-			String exchangeName) {
+String exchangeName) {
 		Element bindingsElement = DomUtils.getChildElementByTagName(element, BINDINGS_ELE);
 		doParseBindings(element, parserContext, exchangeName, bindingsElement, this);
 	}
 
 	protected void doParseBindings(Element element, ParserContext parserContext,
-			String exchangeName, Element bindings, AbstractExchangeParser parser) {
+String exchangeName, Element bindings, AbstractExchangeParser parser) {
 		if (bindings != null) {
 			for (Element binding : DomUtils.getChildElementsByTagName(bindings, BINDING_ELE)) {
 				BeanDefinitionBuilder bindingBuilder = parser.parseBinding(exchangeName, binding,
-						parserContext);
+			parserContext);
 				NamespaceUtils.parseDeclarationControls(element, bindingBuilder);
 				BeanDefinition beanDefinition = bindingBuilder.getBeanDefinition();
 				registerBeanDefinition(new BeanDefinitionHolder(beanDefinition, parserContext.getReaderContext()
-						.generateBeanName(beanDefinition)), parserContext.getRegistry());
+			.generateBeanName(beanDefinition)), parserContext.getRegistry());
 			}
 		}
 	}
 
 	protected abstract BeanDefinitionBuilder parseBinding(String exchangeName, Element binding,
-			ParserContext parserContext);
+ParserContext parserContext);
 
 	protected void parseDestination(Element binding, ParserContext parserContext, BeanDefinitionBuilder builder) {
 		String queueAttribute = binding.getAttribute(BINDING_QUEUE_ATTR);
@@ -136,13 +136,13 @@ public abstract class AbstractExchangeParser extends AbstractSingleBeanDefinitio
 	}
 
 	private void parseArguments(Element element, String argumentsElementName, ParserContext parserContext,
-								BeanDefinitionBuilder builder, String propertyName) {
+BeanDefinitionBuilder builder, String propertyName) {
 		Element argumentsElement = DomUtils.getChildElementByTagName(element, argumentsElementName);
 		if (argumentsElement != null) {
 
 			String ref = argumentsElement.getAttribute(REF_ATTRIBUTE);
 			Map<?, ?> map = parserContext.getDelegate().parseMapElement(argumentsElement,
-					builder.getRawBeanDefinition());
+		builder.getRawBeanDefinition());
 			if (StringUtils.hasText(ref)) {
 				if (map != null && map.size() > 0) {
 					parserContext.getReaderContext().error("You cannot have both a 'ref' and a nested map", element);

@@ -40,7 +40,7 @@ final class MonoHandler { // NOSONAR - pointless to name it ..Utils|Helper
 
 	@SuppressWarnings("unchecked")
 	static void subscribe(Object returnValue, Consumer<? super Object> success,
-			Consumer<? super Throwable> failure, Runnable completeConsumer) {
+Consumer<? super Throwable> failure, Runnable completeConsumer) {
 
 		((Mono<? super Object>) returnValue).subscribe(success, failure, completeConsumer);
 	}

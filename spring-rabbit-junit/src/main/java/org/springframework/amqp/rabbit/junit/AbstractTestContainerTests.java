@@ -34,18 +34,18 @@ public abstract class AbstractTestContainerTests {
 
 	static {
 		if (System.getProperty("spring.rabbit.use.local.server") == null
-				&& System.getenv("SPRING_RABBIT_USE_LOCAL_SERVER") == null) {
+	&& System.getenv("SPRING_RABBIT_USE_LOCAL_SERVER") == null) {
 			String image = "rabbitmq:3.11-management";
 			String cache = System.getenv().get("IMAGE_CACHE");
 			if (cache != null) {
 				image = cache + image;
 			}
 			DockerImageName imageName = DockerImageName.parse(image)
-					.asCompatibleSubstituteFor("rabbitmq");
+		.asCompatibleSubstituteFor("rabbitmq");
 			RABBITMQ = new RabbitMQContainer(imageName)
-						.withExposedPorts(5672, 15672, 5552)
-						.withPluginsEnabled("rabbitmq_stream")
-						.withStartupTimeout(Duration.ofMinutes(2));
+		.withExposedPorts(5672, 15672, 5552)
+		.withPluginsEnabled("rabbitmq_stream")
+		.withStartupTimeout(Duration.ofMinutes(2));
 			RABBITMQ.start();
 		}
 		else {

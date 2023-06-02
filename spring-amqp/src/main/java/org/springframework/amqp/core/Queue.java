@@ -89,13 +89,13 @@ public class Queue extends AbstractDeclarable implements Cloneable {
 	 * @param arguments the arguments used to declare the queue
 	 */
 	public Queue(String name, boolean durable, boolean exclusive, boolean autoDelete,
-			@Nullable Map<String, Object> arguments) {
+@Nullable Map<String, Object> arguments) {
 
 		super(arguments);
 		Assert.notNull(name, "'name' cannot be null");
 		this.name = name;
 		this.actualName = StringUtils.hasText(name) ? name
-				: (Base64UrlNamingStrategy.DEFAULT.generateName() + "_awaiting_declaration");
+	: (Base64UrlNamingStrategy.DEFAULT.generateName() + "_awaiting_declaration");
 		this.durable = durable;
 		this.exclusive = exclusive;
 		this.autoDelete = autoDelete;
@@ -174,7 +174,7 @@ public class Queue extends AbstractDeclarable implements Cloneable {
 	@Override
 	public Object clone() {  // NOSONAR - doesn't throw CloneNotSupportedException
 		Queue queue = new Queue(this.name, this.durable, this.exclusive, // NOSONAR - doesn't need to call super.clone()
-				this.autoDelete, new HashMap<>(getArguments()));
+	this.autoDelete, new HashMap<>(getArguments()));
 		queue.setActualName(this.actualName);
 		return queue;
 	}
@@ -182,8 +182,8 @@ public class Queue extends AbstractDeclarable implements Cloneable {
 	@Override
 	public String toString() {
 		return "Queue [name=" + this.name + ", durable=" + this.durable + ", autoDelete=" + this.autoDelete
-				+ ", exclusive=" + this.exclusive + ", arguments=" + getArguments()
-				+ ", actualName=" + this.actualName + "]";
+	+ ", exclusive=" + this.exclusive + ", arguments=" + getArguments()
+	+ ", actualName=" + this.actualName + "]";
 	}
 
 }

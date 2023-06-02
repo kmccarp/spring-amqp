@@ -68,14 +68,14 @@ public class MultiMethodRabbitListenerEndpoint extends MethodRabbitListenerEndpo
 		InvocableHandlerMethod defaultHandler = null;
 		for (Method method : this.methods) {
 			InvocableHandlerMethod handler = getMessageHandlerMethodFactory()
-					.createInvocableHandlerMethod(getBean(), method);
+		.createInvocableHandlerMethod(getBean(), method);
 			invocableHandlerMethods.add(handler);
 			if (method.equals(this.defaultMethod)) {
 				defaultHandler = handler;
 			}
 		}
 		DelegatingInvocableHandler delegatingHandler = new DelegatingInvocableHandler(invocableHandlerMethods,
-				defaultHandler, getBean(), getResolver(), getBeanExpressionContext(), this.validator);
+	defaultHandler, getBean(), getResolver(), getBeanExpressionContext(), this.validator);
 		return new HandlerAdapter(delegatingHandler);
 	}
 

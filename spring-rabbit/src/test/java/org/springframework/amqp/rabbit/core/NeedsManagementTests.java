@@ -50,24 +50,24 @@ public abstract class NeedsManagementTests {
 		WebClient client = createClient(brokerRunning.getAdminUser(), brokerRunning.getAdminPassword());
 		URI uri = queueUri(queueName);
 		return client.get()
-				.uri(uri)
-				.accept(MediaType.APPLICATION_JSON)
-				.retrieve()
-				.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
-				})
-				.block(Duration.ofSeconds(10));
+	.uri(uri)
+	.accept(MediaType.APPLICATION_JSON)
+	.retrieve()
+	.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+	})
+	.block(Duration.ofSeconds(10));
 	}
 
 	protected Map<String, Object> exchangeInfo(String name) throws URISyntaxException {
 		WebClient client = createClient(brokerRunning.getAdminUser(), brokerRunning.getAdminPassword());
 		URI uri = exchangeUri(name);
 		return client.get()
-				.uri(uri)
-				.accept(MediaType.APPLICATION_JSON)
-				.retrieve()
-				.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
-				})
-				.block(Duration.ofSeconds(10));
+	.uri(uri)
+	.accept(MediaType.APPLICATION_JSON)
+	.retrieve()
+	.bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {
+	})
+	.block(Duration.ofSeconds(10));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -77,20 +77,20 @@ public abstract class NeedsManagementTests {
 
 	private URI queueUri(String queue) throws URISyntaxException {
 		URI uri = new URI(brokerRunning.getAdminUri())
-				.resolve("/api/queues/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/" + queue);
+	.resolve("/api/queues/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/" + queue);
 		return uri;
 	}
 
 	private URI exchangeUri(String queue) throws URISyntaxException {
 		URI uri = new URI(brokerRunning.getAdminUri())
-				.resolve("/api/exchanges/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/" + queue);
+	.resolve("/api/exchanges/" + UriUtils.encodePathSegment("/", StandardCharsets.UTF_8) + "/" + queue);
 		return uri;
 	}
 
 	private WebClient createClient(String adminUser, String adminPassword) {
 		return WebClient.builder()
-				.filter(ExchangeFilterFunctions.basicAuthentication(adminUser, adminPassword))
-				.build();
+	.filter(ExchangeFilterFunctions.basicAuthentication(adminUser, adminPassword))
+	.build();
 	}
 
 }

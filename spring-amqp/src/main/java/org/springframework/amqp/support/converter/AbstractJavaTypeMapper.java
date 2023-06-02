@@ -89,7 +89,7 @@ public abstract class AbstractJavaTypeMapper implements BeanClassLoaderAware {
 		String classId = retrieveHeaderAsString(properties, headerName);
 		if (classId == null) {
 			throw new MessageConversionException(
-					"failed to convert Message content. Could not resolve " + headerName + " in header");
+		"failed to convert Message content. Could not resolve " + headerName + " in header");
 		}
 		return classId;
 	}

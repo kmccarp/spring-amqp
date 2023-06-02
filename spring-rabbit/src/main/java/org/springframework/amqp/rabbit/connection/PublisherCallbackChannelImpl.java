@@ -92,10 +92,9 @@ import com.rabbitmq.client.impl.recovery.AutorecoveringChannel;
  * @since 1.0.1
  *
  */
-public class PublisherCallbackChannelImpl
-		implements PublisherCallbackChannel, ConfirmListener, ReturnCallback, ShutdownListener {
+public class PublisherCallbackChannelImplimplements PublisherCallbackChannel, ConfirmListener, ReturnCallback, ShutdownListener {
 
-	private static final MessagePropertiesConverter CONVERTER  = new DefaultMessagePropertiesConverter();
+	private static final MessagePropertiesConverter CONVERTER = new DefaultMessagePropertiesConverter();
 
 	private final Log logger = LogFactory.getLog(this.getClass());
 
@@ -206,7 +205,7 @@ public class PublisherCallbackChannelImpl
 
 	@Override
 	public void basicQos(int prefetchSize, int prefetchCount, boolean global)
-			throws IOException {
+throws IOException {
 		this.delegate.basicQos(prefetchSize, prefetchCount, global);
 	}
 
@@ -226,27 +225,27 @@ public class PublisherCallbackChannelImpl
 
 	@Override
 	public void basicPublish(String exchange, String routingKey,
-			BasicProperties props, byte[] body) throws IOException {
+BasicProperties props, byte[] body) throws IOException {
 		this.delegate.basicPublish(exchange, routingKey, props, body);
 	}
 
 	@Override
 	public void basicPublish(String exchange, String routingKey,
-			boolean mandatory, boolean immediate, BasicProperties props,
-			byte[] body) throws IOException {
+boolean mandatory, boolean immediate, BasicProperties props,
+byte[] body) throws IOException {
 		this.delegate.basicPublish(exchange, routingKey, mandatory, props, body);
 	}
 
 	@Override
 	public void basicPublish(String exchange, String routingKey,
-			boolean mandatory, BasicProperties props, byte[] body)
-			throws IOException {
+boolean mandatory, BasicProperties props, byte[] body)
+throws IOException {
 		this.delegate.basicPublish(exchange, routingKey, mandatory, props, body);
 	}
 
 	@Override
 	public DeclareOk exchangeDeclare(String exchange, String type)
-			throws IOException {
+throws IOException {
 		return this.delegate.exchangeDeclare(exchange, type);
 	}
 
@@ -257,7 +256,7 @@ public class PublisherCallbackChannelImpl
 
 	@Override
 	public DeclareOk exchangeDeclare(String exchange, String type,
-			boolean durable) throws IOException {
+boolean durable) throws IOException {
 		return this.delegate.exchangeDeclare(exchange, type, durable);
 	}
 
@@ -268,29 +267,29 @@ public class PublisherCallbackChannelImpl
 
 	@Override
 	public DeclareOk exchangeDeclare(String exchange, String type,
-			boolean durable, boolean autoDelete, Map<String, Object> arguments)
-			throws IOException {
+boolean durable, boolean autoDelete, Map<String, Object> arguments)
+throws IOException {
 		return this.delegate.exchangeDeclare(exchange, type, durable, autoDelete,
-				arguments);
+	arguments);
 	}
 
 	@Override
 	public DeclareOk exchangeDeclare(String exchange, BuiltinExchangeType type, boolean durable, boolean autoDelete,
-			Map<String, Object> arguments) throws IOException {
+Map<String, Object> arguments) throws IOException {
 		return this.delegate.exchangeDeclare(exchange, type, durable, autoDelete, arguments);
 	}
 
 	@Override
 	public DeclareOk exchangeDeclare(String exchange, String type,
-			boolean durable, boolean autoDelete, boolean internal,
-			Map<String, Object> arguments) throws IOException {
+boolean durable, boolean autoDelete, boolean internal,
+Map<String, Object> arguments) throws IOException {
 		return this.delegate.exchangeDeclare(exchange, type, durable, autoDelete,
-				internal, arguments);
+	internal, arguments);
 	}
 
 	@Override
 	public DeclareOk exchangeDeclare(String exchange, BuiltinExchangeType type, boolean durable, boolean autoDelete,
-			boolean internal, Map<String, Object> arguments) throws IOException {
+boolean internal, Map<String, Object> arguments) throws IOException {
 		return this.delegate.exchangeDeclare(exchange, type, durable, autoDelete, internal, arguments);
 	}
 
@@ -301,7 +300,7 @@ public class PublisherCallbackChannelImpl
 
 	@Override
 	public DeleteOk exchangeDelete(String exchange, boolean ifUnused)
-			throws IOException {
+throws IOException {
 		return this.delegate.exchangeDelete(exchange, ifUnused);
 	}
 
@@ -312,87 +311,87 @@ public class PublisherCallbackChannelImpl
 
 	@Override
 	public BindOk exchangeBind(String destination, String source,
-			String routingKey) throws IOException {
+String routingKey) throws IOException {
 		return this.delegate.exchangeBind(destination, source, routingKey);
 	}
 
 	@Override
 	public BindOk exchangeBind(String destination, String source,
-			String routingKey, Map<String, Object> arguments)
-			throws IOException {
+String routingKey, Map<String, Object> arguments)
+throws IOException {
 		return this.delegate
-				.exchangeBind(destination, source, routingKey, arguments);
+	.exchangeBind(destination, source, routingKey, arguments);
 	}
 
 	@Override
 	public UnbindOk exchangeUnbind(String destination, String source,
-			String routingKey) throws IOException {
+String routingKey) throws IOException {
 		return this.delegate.exchangeUnbind(destination, source, routingKey);
 	}
 
 	@Override
 	public UnbindOk exchangeUnbind(String destination, String source,
-			String routingKey, Map<String, Object> arguments)
-			throws IOException {
+String routingKey, Map<String, Object> arguments)
+throws IOException {
 		return this.delegate.exchangeUnbind(destination, source, routingKey,
-				arguments);
+	arguments);
 	}
 
 	@Override
 	public com.rabbitmq.client.AMQP.Queue.DeclareOk queueDeclare()
-			throws IOException {
+throws IOException {
 		return this.delegate.queueDeclare();
 	}
 
 	@Override
 	public com.rabbitmq.client.AMQP.Queue.DeclareOk queueDeclare(String queue,
-			boolean durable, boolean exclusive, boolean autoDelete,
-			Map<String, Object> arguments) throws IOException {
+boolean durable, boolean exclusive, boolean autoDelete,
+Map<String, Object> arguments) throws IOException {
 		return this.delegate.queueDeclare(queue, durable, exclusive, autoDelete,
-				arguments);
+	arguments);
 	}
 
 	@Override
 	public com.rabbitmq.client.AMQP.Queue.DeclareOk queueDeclarePassive(
-			String queue) throws IOException {
+String queue) throws IOException {
 		return this.delegate.queueDeclarePassive(queue);
 	}
 
 	@Override
 	public com.rabbitmq.client.AMQP.Queue.DeleteOk queueDelete(String queue)
-			throws IOException {
+throws IOException {
 		return this.delegate.queueDelete(queue);
 	}
 
 	@Override
 	public com.rabbitmq.client.AMQP.Queue.DeleteOk queueDelete(String queue,
-			boolean ifUnused, boolean ifEmpty) throws IOException {
+boolean ifUnused, boolean ifEmpty) throws IOException {
 		return this.delegate.queueDelete(queue, ifUnused, ifEmpty);
 	}
 
 	@Override
 	public com.rabbitmq.client.AMQP.Queue.BindOk queueBind(String queue,
-			String exchange, String routingKey) throws IOException {
+String exchange, String routingKey) throws IOException {
 		return this.delegate.queueBind(queue, exchange, routingKey);
 	}
 
 	@Override
 	public com.rabbitmq.client.AMQP.Queue.BindOk queueBind(String queue,
-			String exchange, String routingKey, Map<String, Object> arguments)
-			throws IOException {
+String exchange, String routingKey, Map<String, Object> arguments)
+throws IOException {
 		return this.delegate.queueBind(queue, exchange, routingKey, arguments);
 	}
 
 	@Override
 	public com.rabbitmq.client.AMQP.Queue.UnbindOk queueUnbind(String queue,
-			String exchange, String routingKey) throws IOException {
+String exchange, String routingKey) throws IOException {
 		return this.delegate.queueUnbind(queue, exchange, routingKey);
 	}
 
 	@Override
 	public com.rabbitmq.client.AMQP.Queue.UnbindOk queueUnbind(String queue,
-			String exchange, String routingKey, Map<String, Object> arguments)
-			throws IOException {
+String exchange, String routingKey, Map<String, Object> arguments)
+throws IOException {
 		return this.delegate.queueUnbind(queue, exchange, routingKey, arguments);
 	}
 
@@ -403,7 +402,7 @@ public class PublisherCallbackChannelImpl
 
 	@Override
 	public GetResponse basicGet(String queue, boolean autoAck)
-			throws IOException {
+throws IOException {
 		return this.delegate.basicGet(queue, autoAck);
 	}
 
@@ -414,19 +413,19 @@ public class PublisherCallbackChannelImpl
 
 	@Override
 	public void basicNack(long deliveryTag, boolean multiple, boolean requeue)
-			throws IOException {
+throws IOException {
 		this.delegate.basicNack(deliveryTag, multiple, requeue);
 	}
 
 	@Override
 	public void basicReject(long deliveryTag, boolean requeue)
-			throws IOException {
+throws IOException {
 		this.delegate.basicReject(deliveryTag, requeue);
 	}
 
 	@Override
 	public String basicConsume(String queue, Consumer callback)
-			throws IOException {
+throws IOException {
 		return this.delegate.basicConsume(queue, callback);
 	}
 
@@ -454,13 +453,13 @@ public class PublisherCallbackChannelImpl
 	 */
 	@Override
 	public String basicConsume(String queue, DeliverCallback deliverCallback, CancelCallback cancelCallback,
-			ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
+ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
 		return this.delegate.basicConsume(queue, deliverCallback, cancelCallback, shutdownSignalCallback);
 	}
 
 	@Override
 	public String basicConsume(String queue, boolean autoAck, Consumer callback)
-			throws IOException {
+throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, callback);
 	}
 
@@ -479,7 +478,7 @@ public class PublisherCallbackChannelImpl
 	 */
 	@Override
 	public String basicConsume(String queue, boolean autoAck, DeliverCallback deliverCallback, ConsumerShutdownSignalCallback shutdownSignalCallback)
-			throws IOException {
+throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, deliverCallback, shutdownSignalCallback);
 	}
 
@@ -489,13 +488,13 @@ public class PublisherCallbackChannelImpl
 	 */
 	@Override
 	public String basicConsume(String queue, boolean autoAck, DeliverCallback deliverCallback, CancelCallback cancelCallback,
-			ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
+ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, deliverCallback, cancelCallback, shutdownSignalCallback);
 	}
 
 	@Override
 	public String basicConsume(String queue, boolean autoAck,
-			String consumerTag, Consumer callback) throws IOException {
+String consumerTag, Consumer callback) throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, consumerTag, callback);
 	}
 
@@ -505,7 +504,7 @@ public class PublisherCallbackChannelImpl
 	 */
 	@Override
 	public String basicConsume(String queue, boolean autoAck, String consumerTag, DeliverCallback deliverCallback, CancelCallback cancelCallback)
-			throws IOException {
+throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, consumerTag, deliverCallback, cancelCallback);
 	}
 
@@ -515,7 +514,7 @@ public class PublisherCallbackChannelImpl
 	 */
 	@Override
 	public String basicConsume(String queue, boolean autoAck, String consumerTag, DeliverCallback deliverCallback,
-			ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
+ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, consumerTag, deliverCallback, shutdownSignalCallback);
 	}
 
@@ -525,7 +524,7 @@ public class PublisherCallbackChannelImpl
 	 */
 	@Override
 	public String basicConsume(String queue, boolean autoAck, String consumerTag, DeliverCallback deliverCallback, CancelCallback cancelCallback,
-			ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
+ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, consumerTag, deliverCallback, cancelCallback, shutdownSignalCallback);
 	}
 
@@ -535,7 +534,7 @@ public class PublisherCallbackChannelImpl
 	 */
 	@Override
 	public String basicConsume(String queue, boolean autoAck, Map<String, Object> arguments, Consumer callback)
-			throws IOException {
+throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, arguments, callback);
 	}
 
@@ -545,7 +544,7 @@ public class PublisherCallbackChannelImpl
 	 */
 	@Override
 	public String basicConsume(String queue, boolean autoAck, Map<String, Object> arguments, DeliverCallback deliverCallback, CancelCallback cancelCallback)
-			throws IOException {
+throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, arguments, deliverCallback, cancelCallback);
 	}
 
@@ -555,7 +554,7 @@ public class PublisherCallbackChannelImpl
 	 */
 	@Override
 	public String basicConsume(String queue, boolean autoAck, Map<String, Object> arguments, DeliverCallback deliverCallback,
-			ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
+ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, arguments, deliverCallback, shutdownSignalCallback);
 	}
 
@@ -565,17 +564,17 @@ public class PublisherCallbackChannelImpl
 	 */
 	@Override
 	public String basicConsume(String queue, boolean autoAck, Map<String, Object> arguments, DeliverCallback deliverCallback, CancelCallback cancelCallback,
-			ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
+ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, arguments, deliverCallback, cancelCallback, shutdownSignalCallback);
 	}
 
 	@Override
 	public String basicConsume(String queue, boolean autoAck,
-			String consumerTag, boolean noLocal, boolean exclusive,
-			Map<String, Object> arguments, Consumer callback)
-			throws IOException {
+String consumerTag, boolean noLocal, boolean exclusive,
+Map<String, Object> arguments, Consumer callback)
+throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, consumerTag, noLocal,
-				exclusive, arguments, callback);
+	exclusive, arguments, callback);
 	}
 
 	/**
@@ -584,7 +583,7 @@ public class PublisherCallbackChannelImpl
 	 */
 	@Override
 	public String basicConsume(String queue, boolean autoAck, String consumerTag, boolean noLocal, boolean exclusive, Map<String, Object> arguments,
-			DeliverCallback deliverCallback, CancelCallback cancelCallback) throws IOException {
+DeliverCallback deliverCallback, CancelCallback cancelCallback) throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, consumerTag, noLocal, exclusive, arguments, deliverCallback, cancelCallback);
 	}
 
@@ -594,7 +593,7 @@ public class PublisherCallbackChannelImpl
 	 */
 	@Override
 	public String basicConsume(String queue, boolean autoAck, String consumerTag, boolean noLocal, boolean exclusive, Map<String, Object> arguments,
-			DeliverCallback deliverCallback, ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
+DeliverCallback deliverCallback, ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, consumerTag, noLocal, exclusive, arguments, deliverCallback, shutdownSignalCallback);
 	}
 
@@ -604,7 +603,7 @@ public class PublisherCallbackChannelImpl
 	 */
 	@Override
 	public String basicConsume(String queue, boolean autoAck, String consumerTag, boolean noLocal, boolean exclusive, Map<String, Object> arguments,
-			DeliverCallback deliverCallback, CancelCallback cancelCallback, ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
+DeliverCallback deliverCallback, CancelCallback cancelCallback, ConsumerShutdownSignalCallback shutdownSignalCallback) throws IOException {
 		return this.delegate.basicConsume(queue, autoAck, consumerTag, noLocal, exclusive, arguments, deliverCallback, cancelCallback, shutdownSignalCallback);
 	}
 
@@ -640,7 +639,7 @@ public class PublisherCallbackChannelImpl
 
 	@Override
 	public com.rabbitmq.client.AMQP.Confirm.SelectOk confirmSelect()
-			throws IOException {
+throws IOException {
 		return this.delegate.confirmSelect();
 	}
 
@@ -656,7 +655,7 @@ public class PublisherCallbackChannelImpl
 
 	@Override
 	public boolean waitForConfirms(long timeout) throws InterruptedException,
-			TimeoutException {
+TimeoutException {
 		return this.delegate.waitForConfirms(timeout);
 	}
 
@@ -667,7 +666,7 @@ public class PublisherCallbackChannelImpl
 
 	@Override
 	public void waitForConfirmsOrDie(long timeout) throws IOException,
-			InterruptedException, TimeoutException {
+InterruptedException, TimeoutException {
 		this.delegate.waitForConfirmsOrDie(timeout);
 	}
 
@@ -727,20 +726,20 @@ public class PublisherCallbackChannelImpl
 
 	@Override
 	public void exchangeBindNoWait(String destination, String source,
-			String routingKey, Map<String, Object> arguments) throws IOException {
+String routingKey, Map<String, Object> arguments) throws IOException {
 		this.delegate.exchangeBind(destination, source, routingKey, arguments);
 	}
 
 	@Override
 	public void exchangeDeclareNoWait(String exchange, String type,
-			boolean durable, boolean autoDelete, boolean internal,
-			Map<String, Object> arguments) throws IOException {
+boolean durable, boolean autoDelete, boolean internal,
+Map<String, Object> arguments) throws IOException {
 		this.delegate.exchangeDeclareNoWait(exchange, type, durable, autoDelete, internal, arguments);
 	}
 
 	@Override
 	public void exchangeDeclareNoWait(String exchange, BuiltinExchangeType type, boolean durable, boolean autoDelete,
-			boolean internal, Map<String, Object> arguments) throws IOException {
+boolean internal, Map<String, Object> arguments) throws IOException {
 		this.delegate.exchangeDeclareNoWait(exchange, type, durable, autoDelete, internal, arguments);
 	}
 
@@ -751,28 +750,28 @@ public class PublisherCallbackChannelImpl
 
 	@Override
 	public void exchangeUnbindNoWait(String destination, String source,
-			String routingKey, Map<String, Object> arguments)
-			throws IOException {
+String routingKey, Map<String, Object> arguments)
+throws IOException {
 		this.delegate.exchangeUnbindNoWait(destination, source, routingKey, arguments);
 	}
 
 	@Override
 	public void queueBindNoWait(String queue,
-			String exchange, String routingKey, Map<String, Object> arguments) throws IOException {
+String exchange, String routingKey, Map<String, Object> arguments) throws IOException {
 		this.delegate.queueBindNoWait(queue, exchange, routingKey, arguments);
 	}
 
 	@Override
 	public void queueDeclareNoWait(String queue,
-			boolean durable, boolean exclusive, boolean autoDelete,
-			Map<String, Object> arguments)
-			throws IOException {
+boolean durable, boolean exclusive, boolean autoDelete,
+Map<String, Object> arguments)
+throws IOException {
 		this.delegate.queueDeclareNoWait(queue, durable, exclusive, autoDelete, arguments);
 	}
 
 	@Override
 	public void queueDeleteNoWait(String queue,
-			boolean ifUnused, boolean ifEmpty) throws IOException {
+boolean ifUnused, boolean ifEmpty) throws IOException {
 		this.delegate.queueDeleteNoWait(queue, ifUnused, ifEmpty);
 	}
 
@@ -858,8 +857,8 @@ public class PublisherCallbackChannelImpl
 	@Override
 	public synchronized int getPendingConfirmsCount() {
 		return this.pendingConfirms.values().stream()
-				.mapToInt(Map::size)
-				.sum();
+	.mapToInt(Map::size)
+	.sum();
 	}
 
 	/**
@@ -1013,7 +1012,7 @@ public class PublisherCallbackChannelImpl
 				if (listener.isConfirmListener()) {
 					if (pendingConfirm.isReturned() && !pendingConfirm.waitForReturnIfNeeded()) {
 						this.logger.error("Return callback failed to execute in "
-								+ PendingConfirm.RETURN_CALLBACK_TIMEOUT + " seconds");
+					+ PendingConfirm.RETURN_CALLBACK_TIMEOUT + " seconds");
 					}
 					if (this.logger.isDebugEnabled()) {
 						this.logger.debug("Sending confirm " + pendingConfirm);
@@ -1051,7 +1050,7 @@ public class PublisherCallbackChannelImpl
 	public synchronized void addPendingConfirm(Listener listener, long seq, PendingConfirm pendingConfirm) {
 		SortedMap<Long, PendingConfirm> pendingConfirmsForListener = this.pendingConfirms.get(listener);
 		Assert.notNull(pendingConfirmsForListener,
-				"Listener not registered: " + listener + " " + this.pendingConfirms.keySet());
+	"Listener not registered: " + listener + " " + this.pendingConfirms.keySet());
 		pendingConfirmsForListener.put(seq, pendingConfirm);
 		this.listenerForSeq.put(seq, listener);
 		if (pendingConfirm.getCorrelationData() != null) {
@@ -1102,18 +1101,18 @@ public class PublisherCallbackChannelImpl
 	@Nullable
 	private PendingConfirm findConfirm(Return returned) {
 		LongString returnCorrelation = (LongString) returned.getProperties().getHeaders()
-				.get(RETURNED_MESSAGE_CORRELATION_KEY);
+	.get(RETURNED_MESSAGE_CORRELATION_KEY);
 		PendingConfirm confirm = null;
 		if (returnCorrelation != null) {
 			confirm = this.pendingReturns.remove(returnCorrelation.toString());
 			if (confirm != null) {
 				MessageProperties messageProperties = CONVERTER.toMessageProperties(returned.getProperties(),
-						new Envelope(0L, false, returned.getExchange(), returned.getRoutingKey()),
-						StandardCharsets.UTF_8.name());
+			new Envelope(0L, false, returned.getExchange(), returned.getRoutingKey()),
+			StandardCharsets.UTF_8.name());
 				if (confirm.getCorrelationData() != null) {
 					confirm.getCorrelationData().setReturned(new ReturnedMessage(// NOSONAR never null
-							new Message(returned.getBody(), messageProperties), returned.getReplyCode(),
-							returned.getReplyText(), returned.getExchange(), returned.getRoutingKey()));
+				new Message(returned.getBody(), messageProperties), returned.getReplyCode(),
+				returned.getReplyText(), returned.getExchange(), returned.getRoutingKey()));
 				}
 			}
 		}

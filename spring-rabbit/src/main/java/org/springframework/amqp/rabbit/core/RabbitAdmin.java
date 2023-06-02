@@ -81,8 +81,7 @@ import com.rabbitmq.client.Channel;
  * @author Artem Bilan
  */
 @ManagedResource(description = "Admin Tasks")
-public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, ApplicationEventPublisherAware,
-		BeanNameAware, InitializingBean {
+public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, ApplicationEventPublisherAware,BeanNameAware, InitializingBean {
 
 	private static final String UNUSED = "unused";
 
@@ -265,8 +264,8 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 			while (iterator.hasNext()) {
 				Entry<String, Declarable> next = iterator.next();
 				if (next.getValue() instanceof Binding binding &&
-						((!binding.isDestinationQueue() && binding.getDestination().equals(exchangeName))
-							|| binding.getExchange().equals(exchangeName))) {
+			((!binding.isDestinationQueue() && binding.getDestination().equals(exchangeName))
+		|| binding.getExchange().equals(exchangeName))) {
 					iterator.remove();
 				}
 			}
@@ -288,7 +287,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 	 */
 	@Override
 	@ManagedOperation(description =
-			"Declare a queue on the broker (this operation is not available remotely)")
+"Declare a queue on the broker (this operation is not available remotely)")
 	@Nullable
 	public String declareQueue(final Queue queue) {
 		try {
@@ -316,7 +315,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 	 */
 	@Override
 	@ManagedOperation(description =
-			"Declare a queue with a broker-generated name (this operation is not available remotely)")
+"Declare a queue with a broker-generated name (this operation is not available remotely)")
 	@Nullable
 	public Queue declareQueue() {
 		try {
@@ -346,7 +345,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 
 	@Override
 	@ManagedOperation(description =
-			"Delete a queue from the broker if unused and empty (when corresponding arguments are true")
+"Delete a queue from the broker if unused and empty (when corresponding arguments are true")
 	public void deleteQueue(final String queueName, final boolean unused, final boolean empty) {
 		this.rabbitTemplate.execute(channel -> {
 			channel.queueDelete(queueName, unused, empty);
@@ -362,7 +361,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 			while (iterator.hasNext()) {
 				Entry<String, Declarable> next = iterator.next();
 				if (next.getValue() instanceof Binding binding &&
-						(binding.isDestinationQueue() && binding.getDestination().equals(queueName))) {
+			(binding.isDestinationQueue() && binding.getDestination().equals(queueName))) {
 					iterator.remove();
 				}
 			}
@@ -395,7 +394,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 	// Binding
 	@Override
 	@ManagedOperation(description =
-			"Declare a binding on the broker (this operation is not available remotely)")
+"Declare a binding on the broker (this operation is not available remotely)")
 	public void declareBinding(final Binding binding) {
 		try {
 			this.rabbitTemplate.execute(channel -> {
@@ -413,7 +412,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 
 	@Override
 	@ManagedOperation(description =
-			"Remove a binding from the broker (this operation is not available remotely)")
+"Remove a binding from the broker (this operation is not available remotely)")
 	public void removeBinding(final Binding binding) {
 		this.rabbitTemplate.execute(channel -> {
 			if (binding.isDestinationQueue()) {
@@ -422,11 +421,11 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 				}
 
 				channel.queueUnbind(binding.getDestination(), binding.getExchange(), binding.getRoutingKey(),
-						binding.getArguments());
+			binding.getArguments());
 			}
 			else {
 				channel.exchangeUnbind(binding.getDestination(), binding.getExchange(), binding.getRoutingKey(),
-						binding.getArguments());
+			binding.getArguments());
 			}
 			this.manualDeclarables.remove(binding.toString());
 			return null;
@@ -460,12 +459,12 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 			try {
 				DeclareOk declareOk = channel.queueDeclarePassive(queueName);
 				return new QueueInformation(declareOk.getQueue(), declareOk.getMessageCount(),
-						declareOk.getConsumerCount());
+			declareOk.getConsumerCount());
 			}
 			catch (IllegalArgumentException e) {
 				if (RabbitAdmin.this.logger.isDebugEnabled()) {
 					RabbitAdmin.this.logger.error("Exception while fetching Queue properties: '" + queueName + "'",
-							e);
+				e);
 				}
 				try {
 					if (channel instanceof ChannelProxy proxy) {
@@ -589,7 +588,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 				this.retryTemplate.setBackOffPolicy(backOffPolicy);
 			}
 			if (this.connectionFactory instanceof CachingConnectionFactory ccf &&
-					ccf.getCacheMode() == CacheMode.CONNECTION) {
+		ccf.getCacheMode() == CacheMode.CONNECTION) {
 				this.logger.warn("RabbitAdmin auto declaration is not supported with CacheMode.CONNECTION");
 				return;
 			}
@@ -647,13 +646,13 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 
 		this.logger.debug("Initializing declarations");
 		Collection<Exchange> contextExchanges = new LinkedList<Exchange>(
-				this.applicationContext.getBeansOfType(Exchange.class).values());
+	this.applicationContext.getBeansOfType(Exchange.class).values());
 		Collection<Queue> contextQueues = new LinkedList<Queue>(
-				this.applicationContext.getBeansOfType(Queue.class).values());
+	this.applicationContext.getBeansOfType(Queue.class).values());
 		Collection<Binding> contextBindings = new LinkedList<Binding>(
-				this.applicationContext.getBeansOfType(Binding.class).values());
+	this.applicationContext.getBeansOfType(Binding.class).values());
 		Collection<DeclarableCustomizer> customizers =
-				this.applicationContext.getBeansOfType(DeclarableCustomizer.class).values();
+	this.applicationContext.getBeansOfType(DeclarableCustomizer.class).values();
 
 		processDeclarables(contextExchanges, contextQueues, contextBindings);
 
@@ -664,21 +663,21 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 		for (Exchange exchange : exchanges) {
 			if ((!exchange.isDurable() || exchange.isAutoDelete())  && this.logger.isInfoEnabled()) {
 				this.logger.info("Auto-declaring a non-durable or auto-delete Exchange ("
-						+ exchange.getName()
-						+ ") durable:" + exchange.isDurable() + ", auto-delete:" + exchange.isAutoDelete() + ". "
-						+ "It will be deleted by the broker if it shuts down, and can be redeclared by closing and "
-						+ "reopening the connection.");
+			+ exchange.getName()
+			+ ") durable:" + exchange.isDurable() + ", auto-delete:" + exchange.isAutoDelete() + ". "
+			+ "It will be deleted by the broker if it shuts down, and can be redeclared by closing and "
+			+ "reopening the connection.");
 			}
 		}
 
 		for (Queue queue : queues) {
 			if ((!queue.isDurable() || queue.isAutoDelete() || queue.isExclusive()) && this.logger.isInfoEnabled()) {
 				this.logger.info("Auto-declaring a non-durable, auto-delete, or exclusive Queue ("
-						+ queue.getName()
-						+ ") durable:" + queue.isDurable() + ", auto-delete:" + queue.isAutoDelete() + ", exclusive:"
-						+ queue.isExclusive() + ". "
-						+ "It will be redeclared if the broker stops and is restarted while the connection factory is "
-						+ "alive, but all messages will be lost.");
+			+ queue.getName()
+			+ ") durable:" + queue.isDurable() + ", auto-delete:" + queue.isAutoDelete() + ", exclusive:"
+			+ queue.isExclusive() + ". "
+			+ "It will be redeclared if the broker stops and is restarted while the connection factory is "
+			+ "alive, but all messages will be lost.");
 			}
 		}
 
@@ -740,10 +739,10 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 	}
 
 	private void processDeclarables(Collection<Exchange> contextExchanges, Collection<Queue> contextQueues,
-			Collection<Binding> contextBindings) {
+Collection<Binding> contextBindings) {
 
 		Collection<Declarables> declarables = this.applicationContext.getBeansOfType(Declarables.class, false, true)
-				.values();
+	.values();
 		declarables.forEach(d -> {
 			d.getDeclarables().forEach(declarable -> {
 				if (declarable instanceof Exchange exch) {
@@ -769,25 +768,25 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 	 */
 	@SuppressWarnings("unchecked")
 	private <T extends Declarable> Collection<T> filterDeclarables(Collection<T> declarables,
-			Collection<DeclarableCustomizer> customizers) {
+Collection<DeclarableCustomizer> customizers) {
 
 		return declarables.stream()
-				.filter(dec -> dec.shouldDeclare() && declarableByMe(dec))
-				.map(dec -> {
-					if (customizers.isEmpty()) {
-						return dec;
-					}
-					AtomicReference<T> ref = new AtomicReference<>(dec);
-					customizers.forEach(cust -> ref.set((T) cust.apply(ref.get())));
-					return ref.get();
-				})
-				.collect(Collectors.toList());
+	.filter(dec -> dec.shouldDeclare() && declarableByMe(dec))
+	.map(dec -> {
+		if (customizers.isEmpty()) {
+			return dec;
+		}
+		AtomicReference<T> ref = new AtomicReference<>(dec);
+		customizers.forEach(cust -> ref.set((T) cust.apply(ref.get())));
+		return ref.get();
+	})
+	.collect(Collectors.toList());
 	}
 
 	private <T extends Declarable> boolean declarableByMe(T dec) {
 		return (dec.getDeclaringAdmins().isEmpty() && !this.explicitDeclarationsOnly) // NOSONAR boolean complexity
-				|| dec.getDeclaringAdmins().contains(this)
-				|| (this.beanName != null && dec.getDeclaringAdmins().contains(this.beanName));
+	|| dec.getDeclaringAdmins().contains(this)
+	|| (this.beanName != null && dec.getDeclaringAdmins().contains(this.beanName));
 	}
 
 	// private methods for declaring Exchanges, Queues, and Bindings on a Channel
@@ -810,11 +809,11 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 						}
 						arguments.put("x-delayed-type", exchange.getType());
 						channel.exchangeDeclare(exchange.getName(), DELAYED_MESSAGE_EXCHANGE, exchange.isDurable(),
-								exchange.isAutoDelete(), exchange.isInternal(), arguments);
+					exchange.isAutoDelete(), exchange.isInternal(), arguments);
 					}
 					else {
 						channel.exchangeDeclare(exchange.getName(), exchange.getType(), exchange.isDurable(),
-								exchange.isAutoDelete(), exchange.isInternal(), exchange.getArguments());
+					exchange.isAutoDelete(), exchange.isInternal(), exchange.getArguments());
 					}
 				}
 				catch (IOException e) {
@@ -835,7 +834,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 				try {
 					try {
 						DeclareOk declareOk = channel.queueDeclare(queue.getName(), queue.isDurable(),
-								queue.isExclusive(), queue.isAutoDelete(), queue.getArguments());
+					queue.isExclusive(), queue.isAutoDelete(), queue.getArguments());
 						if (StringUtils.hasText(declareOk.getQueue())) {
 							queue.setActualName(declareOk.getQueue());
 						}
@@ -875,20 +874,20 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 		for (Binding binding : bindings) {
 			if (this.logger.isDebugEnabled()) {
 				this.logger.debug("Binding destination [" + binding.getDestination() + " (" + binding.getDestinationType()
-						+ ")] to exchange [" + binding.getExchange() + "] with routing key [" + binding.getRoutingKey()
-						+ "]");
+			+ ")] to exchange [" + binding.getExchange() + "] with routing key [" + binding.getRoutingKey()
+			+ "]");
 			}
 
 			try {
 				if (binding.isDestinationQueue()) {
 					if (!isDeclaringImplicitQueueBinding(binding)) {
 						channel.queueBind(binding.getDestination(), binding.getExchange(), binding.getRoutingKey(),
-								binding.getArguments());
+					binding.getArguments());
 					}
 				}
 				else {
 					channel.exchangeBind(binding.getDestination(), binding.getExchange(), binding.getRoutingKey(),
-							binding.getArguments());
+				binding.getArguments());
 				}
 			}
 			catch (IOException e) {
@@ -898,14 +897,14 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 	}
 
 	private <T extends Throwable> void logOrRethrowDeclarationException(@Nullable Declarable element,
-			String elementType, T t) throws T {
+String elementType, T t) throws T {
 
 		publishDeclarationExceptionEvent(element, t);
 		if (this.ignoreDeclarationExceptions || (element != null && element.isIgnoreDeclarationExceptions())) {
 			if (this.logger.isDebugEnabled()) {
 				this.logger.debug("Failed to declare " + elementType
-						+ ": " + (element == null ? "broker-generated" : element)
-						+ ", continuing...", t);
+			+ ": " + (element == null ? "broker-generated" : element)
+			+ ", continuing...", t);
 			}
 			else if (this.logger.isWarnEnabled()) {
 				Throwable cause = t;
@@ -913,8 +912,8 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 					cause = t.getCause();
 				}
 				this.logger.warn("Failed to declare " + elementType
-						+ ": " + (element == null ? "broker-generated" : element)
-						+ ", continuing... " + cause);
+			+ ": " + (element == null ? "broker-generated" : element)
+			+ ", continuing... " + cause);
 			}
 		}
 		else {
@@ -953,7 +952,7 @@ public class RabbitAdmin implements AmqpAdmin, ApplicationContextAware, Applicat
 	private boolean isDeclaringImplicitQueueBinding(Binding binding) {
 		if (isImplicitQueueBinding(binding)) {
 			this.logger.debug("The default exchange is implicitly bound to every queue," +
-					" with a routing key equal to the queue name.");
+		" with a routing key equal to the queue name.");
 			return true;
 		}
 		return false;

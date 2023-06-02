@@ -80,7 +80,7 @@ public class SimpleBatchingStrategy implements BatchingStrategy {
 		}
 		if (this.routingKey != null) {
 			Assert.isTrue(this.routingKey.equals(routKey),
-					"Cannot send with different routing keys in the same batch");
+		"Cannot send with different routing keys in the same batch");
 		}
 		else {
 			this.routingKey = routKey;
@@ -95,7 +95,7 @@ public class SimpleBatchingStrategy implements BatchingStrategy {
 		this.currentSize += bufferUse;
 		this.messages.add(message);
 		if (batch == null && (this.messages.size() >= this.batchSize
-								|| this.currentSize >= this.bufferLimit)) {
+	|| this.currentSize >= this.bufferLimit)) {
 			batch = doReleaseBatch();
 		}
 		return batch;
@@ -151,7 +151,7 @@ public class SimpleBatchingStrategy implements BatchingStrategy {
 			bytes.put(message.getBody());
 		}
 		messageProperties.getHeaders().put(MessageProperties.SPRING_BATCH_FORMAT,
-				MessageProperties.BATCH_FORMAT_LENGTH_HEADER4);
+	MessageProperties.BATCH_FORMAT_LENGTH_HEADER4);
 		messageProperties.getHeaders().put(AmqpHeaders.BATCH_SIZE, this.messages.size());
 		return new Message(body, messageProperties);
 	}
@@ -159,8 +159,8 @@ public class SimpleBatchingStrategy implements BatchingStrategy {
 	@Override
 	public boolean canDebatch(MessageProperties properties) {
 		return MessageProperties.BATCH_FORMAT_LENGTH_HEADER4.equals(properties
-				.getHeaders()
-				.get(MessageProperties.SPRING_BATCH_FORMAT));
+	.getHeaders()
+	.get(MessageProperties.SPRING_BATCH_FORMAT));
 	}
 
 	/**
@@ -179,8 +179,8 @@ public class SimpleBatchingStrategy implements BatchingStrategy {
 			int length = byteBuffer.getInt();
 			if (length < 0 || length > byteBuffer.remaining()) {
 				throw new ListenerExecutionFailedException("Bad batched message received",
-						new MessageConversionException("Insufficient batch data at offset " + byteBuffer.position()),
-						message);
+			new MessageConversionException("Insufficient batch data at offset " + byteBuffer.position()),
+			message);
 			}
 			byte[] body = new byte[length];
 			byteBuffer.get(body);
@@ -188,7 +188,7 @@ public class SimpleBatchingStrategy implements BatchingStrategy {
 			// Caveat - shared MessageProperties, except for last
 			Message fragment;
 			if (byteBuffer.hasRemaining()) {
-				 fragment = new Message(body, messageProperties);
+				fragment = new Message(body, messageProperties);
 			}
 			else {
 				MessageProperties lastProperties = new MessageProperties();

@@ -51,9 +51,9 @@ public interface MessageConverter {
 	 * @since 2.1
 	 */
 	default Message toMessage(Object object, MessageProperties messageProperties, @Nullable Type genericType)
-			throws MessageConversionException {
+throws MessageConversionException {
 
-			return toMessage(object, messageProperties);
+		return toMessage(object, messageProperties);
 	}
 
 	/**

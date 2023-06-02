@@ -71,19 +71,19 @@ public class RabbitTemplateDirectReplyToContainerIntegrationTests extends Rabbit
 		Object reply = rabbitTemplate.convertSendAndReceive(ROUTE, "foo");
 		assertThat(reply).isNull();
 		Object container = TestUtils.getPropertyValue(rabbitTemplate, "directReplyToContainers", Map.class)
-				.get(rabbitTemplate.isUsePublisherConnection()
-						? connectionFactory.getPublisherConnectionFactory()
-						: connectionFactory);
+	.get(rabbitTemplate.isUsePublisherConnection()
+? connectionFactory.getPublisherConnectionFactory()
+: connectionFactory);
 		assertThat(TestUtils.getPropertyValue(container, "inUseConsumerChannels", Map.class)).hasSize(0);
 		assertThat(TestUtils.getPropertyValue(container, "errorHandler")).isSameAs(replyErrorHandler);
 		Message replyMessage = new Message("foo".getBytes(), new MessageProperties());
 		assertThatThrownBy(() -> rabbitTemplate.onMessage(replyMessage, mock(Channel.class)))
-			.isInstanceOf(AmqpRejectAndDontRequeueException.class)
-			.hasMessage("No correlation header in reply");
+	.isInstanceOf(AmqpRejectAndDontRequeueException.class)
+	.hasMessage("No correlation header in reply");
 		replyMessage.getMessageProperties().setCorrelationId("foo");
 		assertThatThrownBy(() -> rabbitTemplate.onMessage(replyMessage, mock(Channel.class)))
-			.isInstanceOf(AmqpRejectAndDontRequeueException.class)
-			.hasMessage("Reply received after timeout");
+	.isInstanceOf(AmqpRejectAndDontRequeueException.class)
+	.hasMessage("Reply received after timeout");
 
 		ExecutorService executor = Executors.newFixedThreadPool(1);
 		// Set up a consumer to respond to our producer
@@ -102,7 +102,7 @@ public class RabbitTemplateDirectReplyToContainerIntegrationTests extends Rabbit
 		assertThat(exception.get()).isInstanceOf(ListenerExecutionFailedException.class);
 		assertThat(exception.get().getCause().getMessage()).isEqualTo("Reply received after timeout");
 		assertThat(((ListenerExecutionFailedException) exception.get()).getFailedMessage().getBody())
-			.isEqualTo(replyMessage.getBody());
+	.isEqualTo(replyMessage.getBody());
 		assertThat(TestUtils.getPropertyValue(container, "inUseConsumerChannels", Map.class)).hasSize(0);
 		executor.shutdownNow();
 		rabbitTemplate.stop();

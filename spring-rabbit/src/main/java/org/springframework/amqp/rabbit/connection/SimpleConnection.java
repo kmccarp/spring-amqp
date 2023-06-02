@@ -47,7 +47,7 @@ public class SimpleConnection implements Connection, NetworkConnection {
 	private volatile boolean explicitlyClosed;
 
 	public SimpleConnection(com.rabbitmq.client.Connection delegate,
-			int closeTimeout) {
+int closeTimeout) {
 		this.delegate = delegate;
 		this.closeTimeout = closeTimeout;
 	}
@@ -151,8 +151,8 @@ public class SimpleConnection implements Connection, NetworkConnection {
 	@Override
 	public String toString() {
 		return "SimpleConnection@"
-				+ ObjectUtils.getIdentityHexString(this)
-				+ " [delegate=" + this.delegate + ", localPort=" + getLocalPort() + "]";
+	+ ObjectUtils.getIdentityHexString(this)
+	+ " [delegate=" + this.delegate + ", localPort=" + getLocalPort() + "]";
 	}
 
 }

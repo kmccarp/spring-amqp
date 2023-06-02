@@ -134,12 +134,12 @@ public final class RabbitNamespaceUtils {
 			connectionFactoryBeanName = containerEle.getAttribute(CONNECTION_FACTORY_ATTRIBUTE);
 			if (!StringUtils.hasText(connectionFactoryBeanName)) {
 				parserContext.getReaderContext().error(
-						"Listener container 'connection-factory' attribute contains empty value.", containerEle);
+			"Listener container 'connection-factory' attribute contains empty value.", containerEle);
 			}
 		}
 		if (StringUtils.hasText(connectionFactoryBeanName)) {
 			containerDef.getPropertyValues().add("connectionFactory",
-					new RuntimeBeanReference(connectionFactoryBeanName));
+		new RuntimeBeanReference(connectionFactoryBeanName));
 		}
 
 		if (containerEle.hasAttribute(TYPE)) {
@@ -167,7 +167,7 @@ public final class RabbitNamespaceUtils {
 		String transactionManagerBeanName = containerEle.getAttribute(TRANSACTION_MANAGER_ATTRIBUTE);
 		if (StringUtils.hasText(transactionManagerBeanName)) {
 			containerDef.getPropertyValues().add("transactionManager",
-					new RuntimeBeanReference(transactionManagerBeanName));
+		new RuntimeBeanReference(transactionManagerBeanName));
 		}
 
 		String concurrency = containerEle.getAttribute(CONCURRENCY_ATTRIBUTE);
@@ -193,7 +193,7 @@ public final class RabbitNamespaceUtils {
 		String minConsecutiveMessages = containerEle.getAttribute(MIN_CONSECUTIVE_ACTIVE_ATTRIBUTE);
 		if (StringUtils.hasText(minConsecutiveMessages)) {
 			containerDef.getPropertyValues().add("consecutiveActiveTrigger",
-					new TypedStringValue(minConsecutiveMessages));
+		new TypedStringValue(minConsecutiveMessages));
 		}
 
 		String minConsecutiveIdle = containerEle.getAttribute(MIN_CONSECUTIVE_IDLE_ATTRIBUTE);
@@ -222,7 +222,7 @@ public final class RabbitNamespaceUtils {
 			// it will be caught during container initialization
 			if (AcknowledgeMode.NONE == acknowledgeMode && channelTransacted.equalsIgnoreCase("true")) {
 				parserContext.getReaderContext().error(
-						"Listener Container - cannot set channel-transacted with acknowledge='NONE'", containerEle);
+			"Listener Container - cannot set channel-transacted with acknowledge='NONE'", containerEle);
 			}
 			containerDef.getPropertyValues().add("channelTransacted", new TypedStringValue(channelTransacted));
 		}
@@ -241,7 +241,7 @@ public final class RabbitNamespaceUtils {
 		if (StringUtils.hasText(transactionSize)) {
 			if (StringUtils.hasText(batchSize)) {
 				parserContext.getReaderContext().error(
-						"Listener Container - cannot have both 'batch-size' and 'transaction-size'", containerEle);
+			"Listener Container - cannot have both 'batch-size' and 'transaction-size'", containerEle);
 			}
 			containerDef.getPropertyValues().add("batchSize", new TypedStringValue(transactionSize));
 		}
@@ -271,8 +271,8 @@ public final class RabbitNamespaceUtils {
 		if (StringUtils.hasText(recoveryInterval)) {
 			if (StringUtils.hasText(recoveryBackOff)) {
 				parserContext.getReaderContext()
-						.error("'" + RECOVERY_INTERVAL + "' and '" + RECOVERY_BACK_OFF + "' are mutually exclusive",
-								containerEle);
+			.error("'" + RECOVERY_INTERVAL + "' and '" + RECOVERY_BACK_OFF + "' are mutually exclusive",
+		containerEle);
 			}
 			containerDef.getPropertyValues().add("recoveryInterval", new TypedStringValue(recoveryInterval));
 		}
@@ -288,7 +288,7 @@ public final class RabbitNamespaceUtils {
 		String possibleAuthenticationFailureFatal = containerEle.getAttribute(POSSIBLE_AUTHENTICATION_FAILURE_FATAL);
 		if (StringUtils.hasText(possibleAuthenticationFailureFatal)) {
 			containerDef.getPropertyValues().add("possibleAuthenticationFailureFatal",
-					new TypedStringValue(possibleAuthenticationFailureFatal));
+		new TypedStringValue(possibleAuthenticationFailureFatal));
 		}
 
 		String mismatchedQueuesFatal = containerEle.getAttribute(MISMATCHED_QUEUES_FATAL);
@@ -309,19 +309,19 @@ public final class RabbitNamespaceUtils {
 		String failedDeclarationRetryInterval = containerEle.getAttribute(FAILED_DECLARATION_RETRY_INTERVAL);
 		if (StringUtils.hasText(failedDeclarationRetryInterval)) {
 			containerDef.getPropertyValues().add("failedDeclarationRetryInterval",
-					new TypedStringValue(failedDeclarationRetryInterval));
+		new TypedStringValue(failedDeclarationRetryInterval));
 		}
 
 		String retryDeclarationInterval = containerEle.getAttribute(MISSING_QUEUE_RETRY_INTERVAL);
 		if (StringUtils.hasText(retryDeclarationInterval)) {
 			containerDef.getPropertyValues().add("retryDeclarationInterval",
-					new TypedStringValue(retryDeclarationInterval));
+		new TypedStringValue(retryDeclarationInterval));
 		}
 
 		String consumerTagStrategy = containerEle.getAttribute(CONSUMER_TAG_STRATEGY);
 		if (StringUtils.hasText(consumerTagStrategy)) {
 			containerDef.getPropertyValues().add("consumerTagStrategy",
-					new RuntimeBeanReference(consumerTagStrategy));
+		new RuntimeBeanReference(consumerTagStrategy));
 		}
 
 		String idleEventInterval = containerEle.getAttribute(IDLE_EVENT_INTERVAL);
@@ -372,8 +372,8 @@ public final class RabbitNamespaceUtils {
 			}
 			else {
 				parserContext.getReaderContext().error(
-						"Invalid listener container 'acknowledge' setting [" + acknowledge
-								+ "]: only \"auto\", \"manual\", and \"none\" supported.", ele);
+			"Invalid listener container 'acknowledge' setting [" + acknowledge
+		+ "]: only \"auto\", \"manual\", and \"none\" supported.", ele);
 			}
 			return acknowledgeMode;
 		}

@@ -50,7 +50,7 @@ import io.micrometer.tracing.test.simple.SpansAssert;
  *
  * @since 3.0
  */
-@RabbitAvailable(queues = { "int.observation.testQ1", "int.observation.testQ2" })
+@RabbitAvailable(queues = {"int.observation.testQ1", "int.observation.testQ2"})
 public class ObservationIntegrationTests extends SampleTestRunner {
 
 	@Override
@@ -68,40 +68,40 @@ public class ObservationIntegrationTests extends SampleTestRunner {
 
 			List<FinishedSpan> finishedSpans = bb.getFinishedSpans();
 			SpansAssert.assertThat(finishedSpans)
-					.haveSameTraceId()
-					.hasSize(4);
+		.haveSameTraceId()
+		.hasSize(4);
 			List<FinishedSpan> producerSpans = finishedSpans.stream()
-					.filter(span -> span.getKind().equals(Kind.PRODUCER))
-					.collect(Collectors.toList());
+		.filter(span -> span.getKind().equals(Kind.PRODUCER))
+		.collect(Collectors.toList());
 			List<FinishedSpan> consumerSpans = finishedSpans.stream()
-					.filter(span -> span.getKind().equals(Kind.CONSUMER))
-					.collect(Collectors.toList());
+		.filter(span -> span.getKind().equals(Kind.CONSUMER))
+		.collect(Collectors.toList());
 			SpanAssert.assertThat(producerSpans.get(0))
-					.hasTag("spring.rabbit.template.name", "template");
+		.hasTag("spring.rabbit.template.name", "template");
 			SpanAssert.assertThat(producerSpans.get(0))
-					.hasRemoteServiceNameEqualTo("RabbitMQ");
+		.hasRemoteServiceNameEqualTo("RabbitMQ");
 			SpanAssert.assertThat(producerSpans.get(1))
-					.hasTag("spring.rabbit.template.name", "template");
+		.hasTag("spring.rabbit.template.name", "template");
 			SpanAssert.assertThat(consumerSpans.get(0))
-					.hasTagWithKey("spring.rabbit.listener.id");
+		.hasTagWithKey("spring.rabbit.listener.id");
 			SpanAssert.assertThat(consumerSpans.get(0))
-					.hasRemoteServiceNameEqualTo("RabbitMQ");
+		.hasRemoteServiceNameEqualTo("RabbitMQ");
 			assertThat(consumerSpans.get(0).getTags().get("spring.rabbit.listener.id")).isIn("obs1", "obs2");
 			SpanAssert.assertThat(consumerSpans.get(1))
-					.hasTagWithKey("spring.rabbit.listener.id");
+		.hasTagWithKey("spring.rabbit.listener.id");
 			assertThat(consumerSpans.get(1).getTags().get("spring.rabbit.listener.id")).isIn("obs1", "obs2");
 			assertThat(consumerSpans.get(0).getTags().get("spring.rabbit.listener.id"))
-					.isNotEqualTo(consumerSpans.get(1).getTags().get("spring.rabbit.listener.id"));
+		.isNotEqualTo(consumerSpans.get(1).getTags().get("spring.rabbit.listener.id"));
 
 			MeterRegistryAssert.assertThat(getMeterRegistry())
-					.hasTimerWithNameAndTags("spring.rabbit.template",
-							KeyValues.of("spring.rabbit.template.name", "template"))
-					.hasTimerWithNameAndTags("spring.rabbit.template",
-							KeyValues.of("spring.rabbit.template.name", "template"))
-					.hasTimerWithNameAndTags("spring.rabbit.listener",
-							KeyValues.of("spring.rabbit.listener.id", "obs1"))
-					.hasTimerWithNameAndTags("spring.rabbit.listener",
-							KeyValues.of("spring.rabbit.listener.id", "obs2"));
+		.hasTimerWithNameAndTags("spring.rabbit.template",
+	KeyValues.of("spring.rabbit.template.name", "template"))
+		.hasTimerWithNameAndTags("spring.rabbit.template",
+	KeyValues.of("spring.rabbit.template.name", "template"))
+		.hasTimerWithNameAndTags("spring.rabbit.listener",
+	KeyValues.of("spring.rabbit.listener.id", "obs1"))
+		.hasTimerWithNameAndTags("spring.rabbit.listener",
+	KeyValues.of("spring.rabbit.listener.id", "obs2"));
 		};
 	}
 

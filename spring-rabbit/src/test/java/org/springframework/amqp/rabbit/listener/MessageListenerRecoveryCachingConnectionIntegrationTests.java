@@ -67,11 +67,9 @@ import com.rabbitmq.client.Channel;
  * @since 1.0
  *
  */
-@RabbitAvailable(queues = { MessageListenerRecoveryCachingConnectionIntegrationTests.TEST_QUEUE,
-		MessageListenerRecoveryCachingConnectionIntegrationTests.TEST_SEND })
+@RabbitAvailable(queues = {MessageListenerRecoveryCachingConnectionIntegrationTests.TEST_QUEUE,MessageListenerRecoveryCachingConnectionIntegrationTests.TEST_SEND})
 @LongRunning
-@LogLevels(level = "DEBUG", classes = { RabbitTemplate.class, ManualAckListener.class,
-			SimpleMessageListenerContainer.class, BlockingQueueConsumer.class, CachingConnectionFactory.class })
+@LogLevels(level = "DEBUG", classes = {RabbitTemplate.class, ManualAckListener.class,SimpleMessageListenerContainer.class, BlockingQueueConsumer.class, CachingConnectionFactory.class})
 public class MessageListenerRecoveryCachingConnectionIntegrationTests {
 
 	public static final String TEST_QUEUE = "test.queue.MessageListenerRecoveryCachingConnectionIntegrationTests";
@@ -124,7 +122,7 @@ public class MessageListenerRecoveryCachingConnectionIntegrationTests {
 
 		CountDownLatch latch = new CountDownLatch(1);
 		container = createContainer(queue.getName(), new ChannelSenderListener(sendQueue.getName(), latch, false),
-				connectionFactory);
+	connectionFactory);
 		template.convertAndSend(queue.getName(), "foo");
 
 		int timeout = getTimeout();
@@ -157,7 +155,7 @@ public class MessageListenerRecoveryCachingConnectionIntegrationTests {
 
 		CountDownLatch latch = new CountDownLatch(1);
 		container = createContainer(queue.getName(), new ChannelSenderListener(sendQueue.getName(), latch, true),
-				connectionFactory);
+	connectionFactory);
 		template.convertAndSend(queue.getName(), "foo");
 
 		int timeout = getTimeout();
@@ -239,7 +237,7 @@ public class MessageListenerRecoveryCachingConnectionIntegrationTests {
 		ConnectionFactory connectionFactory2 = createConnectionFactory();
 		container = createContainer(queue.getName(), new AbortChannelListener(latch), connectionFactory2);
 		with().pollInterval(Duration.ofMillis(50))
-				.await().until(() -> container.getActiveConsumerCount() == this.concurrentConsumers);
+	.await().until(() -> container.getActiveConsumerCount() == this.concurrentConsumers);
 
 		for (int i = 0; i < messageCount; i++) {
 			template.convertAndSend(queue.getName(), i + "foo");
@@ -272,8 +270,8 @@ public class MessageListenerRecoveryCachingConnectionIntegrationTests {
 		// this test closes the underlying connection normally; it won't automatically recover.
 		connectionFactory2.getRabbitConnectionFactory().setAutomaticRecoveryEnabled(false);
 		container = createContainer(queue.getName(),
-				new CloseConnectionListener((ConnectionProxy) connectionFactory2.createConnection(), latch),
-				connectionFactory2);
+	new CloseConnectionListener((ConnectionProxy) connectionFactory2.createConnection(), latch),
+	connectionFactory2);
 		for (int i = 0; i < messageCount; i++) {
 			template.convertAndSend(queue.getName(), i + "foo");
 		}
@@ -330,7 +328,7 @@ public class MessageListenerRecoveryCachingConnectionIntegrationTests {
 		admin.deleteQueue("nonexistent");
 
 		assertThatExceptionOfType(AmqpIllegalStateException.class).isThrownBy(() ->
-			container = createContainer("nonexistent", new VanillaListener(latch), connectionFactory));
+	container = createContainer("nonexistent", new VanillaListener(latch), connectionFactory));
 		((DisposableBean) connectionFactory).destroy();
 	}
 
@@ -347,7 +345,7 @@ public class MessageListenerRecoveryCachingConnectionIntegrationTests {
 		RabbitAdmin admin = new RabbitAdmin(connectionFactory);
 		admin.deleteQueue("nonexistent");
 		assertThatExceptionOfType(AmqpIllegalStateException.class).isThrownBy(() ->
-			container = createContainer("nonexistent", new VanillaListener(latch), connectionFactory));
+	container = createContainer("nonexistent", new VanillaListener(latch), connectionFactory));
 		((DisposableBean) connectionFactory).destroy();
 	}
 
@@ -403,7 +401,7 @@ public class MessageListenerRecoveryCachingConnectionIntegrationTests {
 	}
 
 	private void testRecoverMissingQueues(CountDownLatch latch, ConnectionFactory connectionFactory)
-			throws InterruptedException {
+throws InterruptedException {
 		RabbitAdmin admin = new RabbitAdmin(connectionFactory);
 		// queue doesn't exist during startup - verify we started, create queue and verify recovery
 		Thread.sleep(1000);
@@ -438,22 +436,21 @@ public class MessageListenerRecoveryCachingConnectionIntegrationTests {
 	}
 
 	private SimpleMessageListenerContainer createContainer(String queueName, Object listener,
-			ConnectionFactory connectionFactory) {
+ConnectionFactory connectionFactory) {
 		SimpleMessageListenerContainer container = doCreateContainer(queueName, listener, connectionFactory);
 		container.start();
 		return container;
 	}
 
 	protected SimpleMessageListenerContainer doCreateContainer(String queueName, Object listener,
-			ConnectionFactory connectionFactory) {
+ConnectionFactory connectionFactory) {
 
 		return doCreateContainer(queueName, listener, connectionFactory, null);
 	}
 
 
-
 	protected SimpleMessageListenerContainer doCreateContainer(String queueName, Object listener,
-			ConnectionFactory connectionFactory, ApplicationContext context) {
+ConnectionFactory connectionFactory, ApplicationContext context) {
 
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
 		container.setMessageListener(new MessageListenerAdapter(listener));
@@ -499,7 +496,7 @@ public class MessageListenerRecoveryCachingConnectionIntegrationTests {
 			}
 			else {
 				logger.debug(value + " already received, redelivered="
-						+ message.getMessageProperties().isRedelivered());
+			+ message.getMessageProperties().isRedelivered());
 			}
 		}
 	}

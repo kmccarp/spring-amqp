@@ -42,7 +42,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
  * @see RabbitListener
  * @see RabbitListenerAnnotationBeanPostProcessor
  */
-@Target({ ElementType.METHOD, ElementType.ANNOTATION_TYPE })
+@Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @MessageMapping
 @Documented

@@ -57,7 +57,7 @@ public class TransactionalEventListenerTests {
 
 	@Test
 	void txCommits(@Autowired Config config, @Autowired AtomicBoolean committed,
-			@Autowired Channel channel) throws IOException {
+@Autowired Channel channel) throws IOException {
 
 		config.publish();
 		assertThat(committed.get()).isTrue();

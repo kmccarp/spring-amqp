@@ -26,8 +26,7 @@ import io.micrometer.observation.ObservationConvention;
  * @since 3.0.5
  *
  */
-public interface RabbitStreamTemplateObservationConvention
-		extends ObservationConvention<RabbitStreamMessageSenderContext> {
+public interface RabbitStreamTemplateObservationConventionextends ObservationConvention<RabbitStreamMessageSenderContext> {
 
 	@Override
 	default boolean supportsContext(Context context) {

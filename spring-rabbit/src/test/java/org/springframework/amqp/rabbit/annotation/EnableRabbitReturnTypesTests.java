@@ -51,8 +51,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
  */
 @SpringJUnitConfig
 @DirtiesContext
-@RabbitAvailable(queues = { "EnableRabbitReturnTypesTests.1", "EnableRabbitReturnTypesTests.2",
-		"EnableRabbitReturnTypesTests.3", "EnableRabbitReturnTypesTests.4", "EnableRabbitReturnTypesTests.5" })
+@RabbitAvailable(queues = {"EnableRabbitReturnTypesTests.1", "EnableRabbitReturnTypesTests.2","EnableRabbitReturnTypesTests.3", "EnableRabbitReturnTypesTests.4", "EnableRabbitReturnTypesTests.5"})
 public class EnableRabbitReturnTypesTests {
 
 	@Test
@@ -89,7 +88,7 @@ public class EnableRabbitReturnTypesTests {
 	@Test
 	void testReturnContentType(@Autowired RabbitTemplate template) {
 		Message reply = template.sendAndReceive("EnableRabbitReturnTypesTests.5",
-				new Message("foo".getBytes(), new MessageProperties()));
+	new Message("foo".getBytes(), new MessageProperties()));
 		assertThat(reply.getBody()).isEqualTo("FOO".getBytes());
 		assertThat(reply.getMessageProperties().getContentType()).isEqualTo("foo/bar");
 	}
@@ -100,7 +99,7 @@ public class EnableRabbitReturnTypesTests {
 
 		@Bean
 		public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(CachingConnectionFactory cf,
-				Jackson2JsonMessageConverter converter) {
+	Jackson2JsonMessageConverter converter) {
 
 			SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
 			factory.setConnectionFactory(cf);
@@ -147,9 +146,9 @@ public class EnableRabbitReturnTypesTests {
 		}
 
 		@RabbitListener(queues = "EnableRabbitReturnTypesTests.1", admin = "#{@admin}",
-				containerFactory = "#{@rabbitListenerContainerFactory}",
-				executor = "#{@exec}", replyPostProcessor = "#{@rpp}", messageConverter = "#{@converter}",
-				errorHandler = "#{@rleh}")
+	containerFactory = "#{@rabbitListenerContainerFactory}",
+	executor = "#{@exec}", replyPostProcessor = "#{@rpp}", messageConverter = "#{@converter}",
+	errorHandler = "#{@rleh}")
 		public One listen1(String in) {
 			if ("3".equals(in)) {
 				return new Three();
@@ -188,7 +187,7 @@ public class EnableRabbitReturnTypesTests {
 		}
 
 		@RabbitListener(queues = "EnableRabbitReturnTypesTests.5", messageConverter = "delegating",
-				replyContentType = "foo/bar", converterWinsContentType = "false")
+	replyContentType = "foo/bar", converterWinsContentType = "false")
 		public String listen5(String in) {
 			return in.toUpperCase();
 		}

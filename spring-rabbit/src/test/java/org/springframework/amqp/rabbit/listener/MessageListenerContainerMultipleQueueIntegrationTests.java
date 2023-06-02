@@ -41,10 +41,8 @@ import org.springframework.amqp.support.converter.SimpleMessageConverter;
  * @author Gunnar Hillert
  * @author Gary Russell
  */
-@RabbitAvailable(queues = { MessageListenerContainerMultipleQueueIntegrationTests.TEST_QUEUE_1,
-		MessageListenerContainerMultipleQueueIntegrationTests.TEST_QUEUE_2 })
-@LogLevels(level = "INFO", classes = { RabbitTemplate.class,
-			SimpleMessageListenerContainer.class, BlockingQueueConsumer.class })
+@RabbitAvailable(queues = {MessageListenerContainerMultipleQueueIntegrationTests.TEST_QUEUE_1,MessageListenerContainerMultipleQueueIntegrationTests.TEST_QUEUE_2})
+@LogLevels(level = "INFO", classes = {RabbitTemplate.class,SimpleMessageListenerContainer.class, BlockingQueueConsumer.class})
 public class MessageListenerContainerMultipleQueueIntegrationTests {
 
 	public static final String TEST_QUEUE_1 = "test.queue.1.MessageListenerContainerMultipleQueueIntegrationTests";

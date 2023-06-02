@@ -109,7 +109,7 @@ public interface AsyncAmqpTemplate {
 	 * @return the {@link CompletableFuture}.
 	 */
 	<C> CompletableFuture<C> convertSendAndReceive(String routingKey, Object object,
-			MessagePostProcessor messagePostProcessor);
+MessagePostProcessor messagePostProcessor);
 
 	/**
 	 * Convert the object to a message and send it to the provided exchange and
@@ -123,7 +123,7 @@ public interface AsyncAmqpTemplate {
 	 * @return the {@link CompletableFuture}.
 	 */
 	<C> CompletableFuture<C> convertSendAndReceive(String exchange, String routingKey, Object object,
-			MessagePostProcessor messagePostProcessor);
+MessagePostProcessor messagePostProcessor);
 
 	/**
 	 * Convert the object to a message and send it to the default exchange with the
@@ -145,7 +145,7 @@ public interface AsyncAmqpTemplate {
 	 * @return the {@link CompletableFuture}.
 	 */
 	<C> CompletableFuture<C> convertSendAndReceiveAsType(String routingKey, Object object,
-			ParameterizedTypeReference<C> responseType);
+ParameterizedTypeReference<C> responseType);
 
 	/**
 	 * Convert the object to a message and send it to the provided exchange and
@@ -158,7 +158,7 @@ public interface AsyncAmqpTemplate {
 	 * @return the {@link CompletableFuture}.
 	 */
 	<C> CompletableFuture<C> convertSendAndReceiveAsType(String exchange, String routingKey, Object object,
-			ParameterizedTypeReference<C> responseType);
+ParameterizedTypeReference<C> responseType);
 
 	/**
 	 * Convert the object to a message and send it to the default exchange with the
@@ -171,7 +171,7 @@ public interface AsyncAmqpTemplate {
 	 * @return the {@link CompletableFuture}.
 	 */
 	<C> CompletableFuture<C> convertSendAndReceiveAsType(Object object, MessagePostProcessor messagePostProcessor,
-			ParameterizedTypeReference<C> responseType);
+ParameterizedTypeReference<C> responseType);
 
 	/**
 	 * Convert the object to a message and send it to the default exchange with the
@@ -185,7 +185,7 @@ public interface AsyncAmqpTemplate {
 	 * @return the {@link CompletableFuture}.
 	 */
 	<C> CompletableFuture<C> convertSendAndReceiveAsType(String routingKey, Object object,
-			MessagePostProcessor messagePostProcessor, ParameterizedTypeReference<C> responseType);
+MessagePostProcessor messagePostProcessor, ParameterizedTypeReference<C> responseType);
 
 	/**
 	 * Convert the object to a message and send it to the provided exchange and
@@ -200,6 +200,6 @@ public interface AsyncAmqpTemplate {
 	 * @return the {@link CompletableFuture}.
 	 */
 	<C> CompletableFuture<C> convertSendAndReceiveAsType(String exchange, String routingKey, Object object,
-			MessagePostProcessor messagePostProcessor, ParameterizedTypeReference<C> responseType);
+MessagePostProcessor messagePostProcessor, ParameterizedTypeReference<C> responseType);
 
 }

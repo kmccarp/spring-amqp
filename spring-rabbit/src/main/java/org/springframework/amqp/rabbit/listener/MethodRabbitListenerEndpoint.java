@@ -129,7 +129,7 @@ public class MethodRabbitListenerEndpoint extends AbstractRabbitListenerEndpoint
 	@Override
 	protected MessagingMessageListenerAdapter createMessageListener(MessageListenerContainer container) {
 		Assert.state(this.messageHandlerMethodFactory != null,
-				"Could not create message listener - MessageHandlerMethodFactory not set");
+	"Could not create message listener - MessageHandlerMethodFactory not set");
 		MessagingMessageListenerAdapter messageListener = createMessageListenerInstance(getBatchListener());
 		messageListener.setHandlerAdapter(configureListenerAdapter(messageListener));
 		String replyToAddress = getDefaultReplyToAddress();
@@ -153,7 +153,7 @@ public class MethodRabbitListenerEndpoint extends AbstractRabbitListenerEndpoint
 	 */
 	protected HandlerAdapter configureListenerAdapter(MessagingMessageListenerAdapter messageListener) {
 		InvocableHandlerMethod invocableHandlerMethod =
-				this.messageHandlerMethodFactory.createInvocableHandlerMethod(getBean(), getMethod());
+	this.messageHandlerMethodFactory.createInvocableHandlerMethod(getBean(), getMethod());
 		return new HandlerAdapter(invocableHandlerMethod);
 	}
 
@@ -164,7 +164,7 @@ public class MethodRabbitListenerEndpoint extends AbstractRabbitListenerEndpoint
 	 */
 	protected MessagingMessageListenerAdapter createMessageListenerInstance(@Nullable Boolean batch) {
 		return this.adapterProvider.getAdapter(batch == null ? isBatchListener() : batch, this.bean, this.method,
-				this.returnExceptions, this.errorHandler, getBatchingStrategy());
+	this.returnExceptions, this.errorHandler, getBatchingStrategy());
 	}
 
 	@Nullable
@@ -176,7 +176,7 @@ public class MethodRabbitListenerEndpoint extends AbstractRabbitListenerEndpoint
 				String[] destinations = ann.value();
 				if (destinations.length > 1) {
 					throw new IllegalStateException("Invalid @" + SendTo.class.getSimpleName() + " annotation on '"
-							+ listenerMethod + "' one destination must be set (got " + Arrays.toString(destinations) + ")");
+				+ listenerMethod + "' one destination must be set (got " + Arrays.toString(destinations) + ")");
 				}
 				return destinations.length == 1 ? resolveSendTo(destinations[0]) : "";
 			}
@@ -199,8 +199,8 @@ public class MethodRabbitListenerEndpoint extends AbstractRabbitListenerEndpoint
 	@Override
 	protected StringBuilder getEndpointDescription() {
 		return super.getEndpointDescription()
-				.append(" | bean='").append(this.bean).append("'")
-				.append(" | method='").append(this.method).append("'");
+	.append(" | bean='").append(this.bean).append("'")
+	.append(" | method='").append(this.method).append("'");
 	}
 
 	/**
@@ -221,19 +221,19 @@ public class MethodRabbitListenerEndpoint extends AbstractRabbitListenerEndpoint
 		 * @return the adapter.
 		 */
 		MessagingMessageListenerAdapter getAdapter(boolean batch, Object bean, Method method, boolean returnExceptions,
-				RabbitListenerErrorHandler errorHandler, @Nullable BatchingStrategy batchingStrategy);
+	RabbitListenerErrorHandler errorHandler, @Nullable BatchingStrategy batchingStrategy);
 	}
 
 	private static final class DefaultAdapterProvider implements AdapterProvider {
 
 		@Override
 		public MessagingMessageListenerAdapter getAdapter(boolean batch, Object bean, Method method,
-				boolean returnExceptions, RabbitListenerErrorHandler errorHandler,
-				@Nullable BatchingStrategy batchingStrategy) {
+	boolean returnExceptions, RabbitListenerErrorHandler errorHandler,
+	@Nullable BatchingStrategy batchingStrategy) {
 
 			if (batch) {
 				return new BatchMessagingMessageListenerAdapter(bean, method, returnExceptions, errorHandler,
-						batchingStrategy);
+			batchingStrategy);
 			}
 			else {
 				return new MessagingMessageListenerAdapter(bean, method, returnExceptions, errorHandler);

@@ -54,7 +54,7 @@ public class AsyncConsumerRestartedEvent extends AmqpEvent {
 	@Override
 	public String toString() {
 		return "AsyncConsumerRestartedEvent [oldConsumer=" + this.oldConsumer + ", newConsumer=" + this.newConsumer
-				+ ", container=" + this.getSource() + "]";
+	+ ", container=" + this.getSource() + "]";
 	}
 
 }

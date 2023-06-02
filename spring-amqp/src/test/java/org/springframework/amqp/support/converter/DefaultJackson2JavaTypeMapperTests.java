@@ -147,14 +147,14 @@ public class DefaultJackson2JavaTypeMapperTests {
 		JavaType javaType = javaTypeMapper.toJavaType(properties);
 
 		assertThat((CollectionType) javaType).isEqualTo(TypeFactory.defaultInstance().constructCollectionType(containerClass,
-				TypeFactory.defaultInstance().constructType(SimpleTrade.class)));
+	TypeFactory.defaultInstance().constructType(SimpleTrade.class)));
 	}
 
 	@Test
 	public void fromJavaTypeShouldPopulateWithContentTypeJavaTypeNameByDefault() {
 
 		javaTypeMapper.fromJavaType(TypeFactory.defaultInstance().constructCollectionType(containerClass,
-				TypeFactory.defaultInstance().constructType(SimpleTrade.class)), properties);
+	TypeFactory.defaultInstance().constructType(SimpleTrade.class)), properties);
 
 		String className = (String) properties.getHeaders().get(javaTypeMapper.getClassIdFieldName());
 		String contentClassName = (String) properties.getHeaders().get(javaTypeMapper.getContentClassIdFieldName());
@@ -205,16 +205,16 @@ public class DefaultJackson2JavaTypeMapperTests {
 		JavaType javaType = javaTypeMapper.toJavaType(properties);
 
 		assertThat((MapType) javaType).isEqualTo(TypeFactory.defaultInstance().constructMapType(mapClass,
-				TypeFactory.defaultInstance().constructType(SimpleTrade.class),
-				TypeFactory.defaultInstance().constructType(String.class)));
+	TypeFactory.defaultInstance().constructType(SimpleTrade.class),
+	TypeFactory.defaultInstance().constructType(String.class)));
 	}
 
 	@Test
 	public void fromJavaTypeShouldPopulateWithKeyTypeAndContentJavaTypeNameByDefault() {
 
 		javaTypeMapper.fromJavaType(TypeFactory.defaultInstance().constructMapType(mapClass,
-				TypeFactory.defaultInstance().constructType(SimpleTrade.class),
-				TypeFactory.defaultInstance().constructType(String.class)), properties);
+	TypeFactory.defaultInstance().constructType(SimpleTrade.class),
+	TypeFactory.defaultInstance().constructType(String.class)), properties);
 
 		String className = (String) properties.getHeaders().get(javaTypeMapper.getClassIdFieldName());
 		String contentClassName = (String) properties.getHeaders().get(javaTypeMapper.getContentClassIdFieldName());

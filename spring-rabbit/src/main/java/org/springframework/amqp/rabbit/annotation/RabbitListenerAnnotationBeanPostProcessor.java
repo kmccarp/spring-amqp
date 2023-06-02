@@ -130,9 +130,7 @@ import org.springframework.validation.Validator;
  * @see org.springframework.amqp.rabbit.listener.RabbitListenerEndpoint
  * @see MethodRabbitListenerEndpoint
  */
-public class RabbitListenerAnnotationBeanPostProcessor
-		implements BeanPostProcessor, Ordered, BeanFactoryAware, BeanClassLoaderAware, EnvironmentAware,
-		SmartInitializingSingleton {
+public class RabbitListenerAnnotationBeanPostProcessorimplements BeanPostProcessor, Ordered, BeanFactoryAware, BeanClassLoaderAware, EnvironmentAware,SmartInitializingSingleton {
 
 	/**
 	 * The bean name of the default {@link org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory}.
@@ -156,7 +154,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 	private ClassLoader beanClassLoader;
 
 	private final RabbitHandlerMethodFactoryAdapter messageHandlerMethodFactory =
-			new RabbitHandlerMethodFactoryAdapter();
+new RabbitHandlerMethodFactoryAdapter();
 
 	private final RabbitListenerEndpointRegistrar registrar = new RabbitListenerEndpointRegistrar();
 
@@ -259,7 +257,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 
 		if (this.beanFactory instanceof ListableBeanFactory lbf) {
 			Map<String, RabbitListenerConfigurer> instances =
-					lbf.getBeansOfType(RabbitListenerConfigurer.class);
+		lbf.getBeansOfType(RabbitListenerConfigurer.class);
 			for (RabbitListenerConfigurer configurer : instances.values()) {
 				configurer.configureRabbitListeners(this.registrar);
 			}
@@ -268,10 +266,10 @@ public class RabbitListenerAnnotationBeanPostProcessor
 		if (this.registrar.getEndpointRegistry() == null) {
 			if (this.endpointRegistry == null) {
 				Assert.state(this.beanFactory != null,
-						"BeanFactory must be set to find endpoint registry by bean name");
+			"BeanFactory must be set to find endpoint registry by bean name");
 				this.endpointRegistry = this.beanFactory.getBean(
-						RabbitListenerConfigUtils.RABBIT_LISTENER_ENDPOINT_REGISTRY_BEAN_NAME,
-						RabbitListenerEndpointRegistry.class);
+			RabbitListenerConfigUtils.RABBIT_LISTENER_ENDPOINT_REGISTRY_BEAN_NAME,
+			RabbitListenerEndpointRegistry.class);
 			}
 			this.registrar.setEndpointRegistry(this.endpointRegistry);
 		}
@@ -323,7 +321,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 			List<RabbitListener> listenerAnnotations = findListenerAnnotations(method);
 			if (listenerAnnotations.size() > 0) {
 				methods.add(new ListenerMethod(method,
-						listenerAnnotations.toArray(new RabbitListener[listenerAnnotations.size()])));
+			listenerAnnotations.toArray(new RabbitListener[listenerAnnotations.size()])));
 			}
 			if (hasClassLevelListeners) {
 				RabbitHandler rabbitHandler = AnnotationUtils.findAnnotation(method, RabbitHandler.class);
@@ -332,36 +330,36 @@ public class RabbitListenerAnnotationBeanPostProcessor
 				}
 			}
 		}, ReflectionUtils.USER_DECLARED_METHODS
-				.and(meth -> !meth.getDeclaringClass().getName().contains("$MockitoMock$")));
+	.and(meth -> !meth.getDeclaringClass().getName().contains("$MockitoMock$")));
 		if (methods.isEmpty() && multiMethods.isEmpty()) {
 			return TypeMetadata.EMPTY;
 		}
 		return new TypeMetadata(
-				methods.toArray(new ListenerMethod[methods.size()]),
-				multiMethods.toArray(new Method[multiMethods.size()]),
-				classLevelListeners.toArray(new RabbitListener[classLevelListeners.size()]));
+	methods.toArray(new ListenerMethod[methods.size()]),
+	multiMethods.toArray(new Method[multiMethods.size()]),
+	classLevelListeners.toArray(new RabbitListener[classLevelListeners.size()]));
 	}
 
 	private List<RabbitListener> findListenerAnnotations(AnnotatedElement element) {
 		return MergedAnnotations.from(element, SearchStrategy.TYPE_HIERARCHY)
-				.stream(RabbitListener.class)
-				.filter(tma -> {
-					Object source = tma.getSource();
-					String name = "";
-					if (source instanceof Class<?> clazz) {
-						name = clazz.getName();
-					}
-					else if (source instanceof Method method) {
-						name = method.getDeclaringClass().getName();
-					}
-					return !name.contains("$MockitoMock$");
-				})
-				.map(ann -> ann.synthesize())
-				.collect(Collectors.toList());
+	.stream(RabbitListener.class)
+	.filter(tma -> {
+		Object source = tma.getSource();
+		String name = "";
+		if (source instanceof Class<?> clazz) {
+			name = clazz.getName();
+		}
+		else if (source instanceof Method method) {
+			name = method.getDeclaringClass().getName();
+		}
+		return !name.contains("$MockitoMock$");
+	})
+	.map(ann -> ann.synthesize())
+	.collect(Collectors.toList());
 	}
 
 	private void processMultiMethodListeners(RabbitListener[] classLevelListeners, Method[] multiMethods,
-			Object bean, String beanName) {
+Object bean, String beanName) {
 
 		List<Method> checkedMethods = new ArrayList<Method>();
 		Method defaultMethod = null;
@@ -370,20 +368,20 @@ public class RabbitListenerAnnotationBeanPostProcessor
 			if (AnnotationUtils.findAnnotation(method, RabbitHandler.class).isDefault()) { // NOSONAR never null
 				final Method toAssert = defaultMethod;
 				Assert.state(toAssert == null, () -> "Only one @RabbitHandler can be marked 'isDefault', found: "
-						+ toAssert.toString() + " and " + method.toString());
+			+ toAssert.toString() + " and " + method.toString());
 				defaultMethod = checked;
 			}
 			checkedMethods.add(checked);
 		}
 		for (RabbitListener classLevelListener : classLevelListeners) {
 			MultiMethodRabbitListenerEndpoint endpoint =
-					new MultiMethodRabbitListenerEndpoint(checkedMethods, defaultMethod, bean);
+		new MultiMethodRabbitListenerEndpoint(checkedMethods, defaultMethod, bean);
 			processListener(endpoint, classLevelListener, bean, bean.getClass(), beanName);
 		}
 	}
 
 	protected Collection<Declarable> processAmqpListener(RabbitListener rabbitListener, Method method, Object bean,
-			String beanName) {
+String beanName) {
 		Method methodToUse = checkProxy(method, bean);
 		MethodRabbitListenerEndpoint endpoint = new MethodRabbitListenerEndpoint();
 		endpoint.setMethod(methodToUse);
@@ -412,18 +410,18 @@ public class RabbitListenerAnnotationBeanPostProcessor
 			}
 			catch (NoSuchMethodException ex) {
 				throw new IllegalStateException(String.format(
-						"@RabbitListener method '%s' found on bean target class '%s', " +
-						"but not found in any interface(s) for a bean JDK proxy. Either " +
-						"pull the method up to an interface or switch to subclass (CGLIB) " +
-						"proxies by setting proxy-target-class/proxyTargetClass " +
-						"attribute to 'true'", method.getName(), method.getDeclaringClass().getSimpleName()), ex);
+			"@RabbitListener method '%s' found on bean target class '%s', " +
+		"but not found in any interface(s) for a bean JDK proxy. Either " +
+		"pull the method up to an interface or switch to subclass (CGLIB) " +
+		"proxies by setting proxy-target-class/proxyTargetClass " +
+		"attribute to 'true'", method.getName(), method.getDeclaringClass().getSimpleName()), ex);
 			}
 		}
 		return method;
 	}
 
 	protected Collection<Declarable> processListener(MethodRabbitListenerEndpoint endpoint,
-			RabbitListener rabbitListener, Object bean, Object target, String beanName) {
+RabbitListener rabbitListener, Object bean, Object target, String beanName) {
 
 		final List<Declarable> declarables = new ArrayList<>();
 		endpoint.setBean(bean);
@@ -462,7 +460,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 			}
 			catch (NumberFormatException ex) {
 				throw new BeanInitializationException("Invalid priority value for " +
-						rabbitListener + " (must be an integer)", ex);
+			rabbitListener + " (must be an integer)", ex);
 			}
 		}
 
@@ -490,7 +488,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 			String errorHandlerBeanName = resolveExpressionAsString(rabbitListener.errorHandler(), "errorHandler");
 			if (StringUtils.hasText(errorHandlerBeanName)) {
 				endpoint.setErrorHandler(
-						this.beanFactory.getBean(errorHandlerBeanName, RabbitListenerErrorHandler.class));
+			this.beanFactory.getBean(errorHandlerBeanName, RabbitListenerErrorHandler.class));
 			}
 		}
 	}
@@ -525,8 +523,8 @@ public class RabbitListenerAnnotationBeanPostProcessor
 				}
 				catch (NoSuchBeanDefinitionException ex) {
 					throw new BeanInitializationException("Could not register rabbit listener endpoint on [" +
-							adminTarget + "], no " + RabbitAdmin.class.getSimpleName() + " with id '" +
-							rabbitAdmin + "' was found in the application context", ex);
+				adminTarget + "], no " + RabbitAdmin.class.getSimpleName() + " with id '" +
+				rabbitAdmin + "' was found in the application context", ex);
 				}
 			}
 		}
@@ -534,7 +532,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 
 	@Nullable
 	private RabbitListenerContainerFactory<?> resolveContainerFactory(RabbitListener rabbitListener,
-			Object factoryTarget, String beanName) {
+Object factoryTarget, String beanName) {
 
 		RabbitListenerContainerFactory<?> factory = null;
 		Object resolved = resolveExpression(rabbitListener.containerFactory());
@@ -542,7 +540,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 			return rlcf;
 		}
 		String containerFactoryBeanName = resolveExpressionAsString(rabbitListener.containerFactory(),
-				"containerFactory");
+	"containerFactory");
 		if (StringUtils.hasText(containerFactoryBeanName)) {
 			assertBeanFactory();
 			try {
@@ -550,15 +548,15 @@ public class RabbitListenerAnnotationBeanPostProcessor
 			}
 			catch (NoSuchBeanDefinitionException ex) {
 				throw new BeanInitializationException(
-						noBeanFoundMessage(factoryTarget, beanName, containerFactoryBeanName,
-								RabbitListenerContainerFactory.class), ex);
+			noBeanFoundMessage(factoryTarget, beanName, containerFactoryBeanName,
+		RabbitListenerContainerFactory.class), ex);
 			}
 		}
 		return factory;
 	}
 
 	private void resolveExecutor(MethodRabbitListenerEndpoint endpoint, RabbitListener rabbitListener,
-			Object execTarget, String beanName) {
+Object execTarget, String beanName) {
 
 		Object resolved = resolveExpression(rabbitListener.executor());
 		if (resolved instanceof TaskExecutor tex) {
@@ -573,14 +571,14 @@ public class RabbitListenerAnnotationBeanPostProcessor
 				}
 				catch (NoSuchBeanDefinitionException ex) {
 					throw new BeanInitializationException(
-							noBeanFoundMessage(execTarget, beanName, execBeanName, TaskExecutor.class), ex);
+				noBeanFoundMessage(execTarget, beanName, execBeanName, TaskExecutor.class), ex);
 				}
 			}
 		}
 	}
 
 	private void resolvePostProcessor(MethodRabbitListenerEndpoint endpoint, RabbitListener rabbitListener,
-			Object target, String beanName) {
+Object target, String beanName) {
 
 		Object resolved = resolveExpression(rabbitListener.replyPostProcessor());
 		if (resolved instanceof ReplyPostProcessor rpp) {
@@ -595,14 +593,14 @@ public class RabbitListenerAnnotationBeanPostProcessor
 				}
 				catch (NoSuchBeanDefinitionException ex) {
 					throw new BeanInitializationException(
-							noBeanFoundMessage(target, beanName, ppBeanName, ReplyPostProcessor.class), ex);
+				noBeanFoundMessage(target, beanName, ppBeanName, ReplyPostProcessor.class), ex);
 				}
 			}
 		}
 	}
 
 	private void resolveMessageConverter(MethodRabbitListenerEndpoint endpoint, RabbitListener rabbitListener,
-			Object target, String beanName) {
+Object target, String beanName) {
 
 		Object resolved = resolveExpression(rabbitListener.messageConverter());
 		if (resolved instanceof MessageConverter converter) {
@@ -617,7 +615,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 				}
 				catch (NoSuchBeanDefinitionException ex) {
 					throw new BeanInitializationException(
-							noBeanFoundMessage(target, beanName, mcBeanName, MessageConverter.class), ex);
+				noBeanFoundMessage(target, beanName, mcBeanName, MessageConverter.class), ex);
 				}
 			}
 		}
@@ -636,10 +634,10 @@ public class RabbitListenerAnnotationBeanPostProcessor
 	}
 
 	protected String noBeanFoundMessage(Object target, String listenerBeanName, String requestedBeanName,
-			Class<?> expectedClass) {
+Class<?> expectedClass) {
 		return "Could not register rabbit listener endpoint on ["
-				+ target + "] for bean " + listenerBeanName + ", no '" + expectedClass.getSimpleName() + "' with id '"
-				+ requestedBeanName + "' was found in the application context";
+	+ target + "] for bean " + listenerBeanName + ", no '" + expectedClass.getSimpleName() + "' with id '"
+	+ requestedBeanName + "' was found in the application context";
 	}
 
 	private String getEndpointId(RabbitListener rabbitListener) {
@@ -668,7 +666,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 		if (queuesToDeclare.length > 0) {
 			if (queues.length > 0) {
 				throw new BeanInitializationException(
-						"@RabbitListener can have only one of 'queues', 'queuesToDeclare', or 'bindings'");
+			"@RabbitListener can have only one of 'queues', 'queuesToDeclare', or 'bindings'");
 			}
 			for (org.springframework.amqp.rabbit.annotation.Queue queue : queuesToDeclare) {
 				queueNames.add(declareQueue(queue, declarables));
@@ -677,19 +675,19 @@ public class RabbitListenerAnnotationBeanPostProcessor
 		if (bindings.length > 0) {
 			if (queues.length > 0 || queuesToDeclare.length > 0) {
 				throw new BeanInitializationException(
-						"@RabbitListener can have only one of 'queues', 'queuesToDeclare', or 'bindings'");
+			"@RabbitListener can have only one of 'queues', 'queuesToDeclare', or 'bindings'");
 			}
 			return Arrays.stream(registerBeansForDeclaration(rabbitListener, declarables))
-					.map(s -> (Object) s)
-					.collect(Collectors.toList());
+		.map(s -> (Object) s)
+		.collect(Collectors.toList());
 		}
 		return queueNames.isEmpty()
-				? queueBeans.stream()
-						.map(s -> (Object) s)
-						.collect(Collectors.toList())
-				: queueNames.stream()
-						.map(s -> (Object) s)
-						.collect(Collectors.toList());
+	? queueBeans.stream()
+	.map(s -> (Object) s)
+	.collect(Collectors.toList())
+	: queueNames.stream()
+	.map(s -> (Object) s)
+	.collect(Collectors.toList());
 
 	}
 
@@ -699,7 +697,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 
 	@SuppressWarnings("unchecked")
 	private void resolveAsStringOrQueue(Object resolvedValue, List<String> names, @Nullable List<Queue> queues,
-			String what) {
+String what) {
 
 		Object resolvedValueToUse = resolvedValue;
 		if (resolvedValue instanceof String[] strings) {
@@ -724,11 +722,11 @@ public class RabbitListenerAnnotationBeanPostProcessor
 		}
 		else {
 			throw new IllegalArgumentException(String.format(
-					"@RabbitListener."
-					+ what
-					+ " can't resolve '%s' as a String[] or a String "
-					+ (queues != null ? "or a Queue" : ""),
-					resolvedValue));
+		"@RabbitListener."
+	+ what
+	+ " can't resolve '%s' as a String[] or a String "
+	+ (queues != null ? "or a Queue" : ""),
+		resolvedValue));
 		}
 	}
 
@@ -745,7 +743,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 	}
 
 	private String declareQueue(org.springframework.amqp.rabbit.annotation.Queue bindingQueue,
-			Collection<Declarable> declarables) {
+Collection<Declarable> declarables) {
 		String queueName = (String) resolveExpression(bindingQueue.value());
 		boolean isAnonymous = false;
 		if (!StringUtils.hasText(queueName)) {
@@ -754,10 +752,10 @@ public class RabbitListenerAnnotationBeanPostProcessor
 			isAnonymous = true;
 		}
 		Queue queue = new Queue(queueName,
-				resolveExpressionAsBoolean(bindingQueue.durable(), !isAnonymous),
-				resolveExpressionAsBoolean(bindingQueue.exclusive(), isAnonymous),
-				resolveExpressionAsBoolean(bindingQueue.autoDelete(), isAnonymous),
-				resolveArguments(bindingQueue.arguments()));
+	resolveExpressionAsBoolean(bindingQueue.durable(), !isAnonymous),
+	resolveExpressionAsBoolean(bindingQueue.exclusive(), isAnonymous),
+	resolveExpressionAsBoolean(bindingQueue.autoDelete(), isAnonymous),
+	resolveArguments(bindingQueue.arguments()));
 		queue.setIgnoreDeclarationExceptions(resolveExpressionAsBoolean(bindingQueue.ignoreDeclarationExceptions()));
 		((ConfigurableBeanFactory) this.beanFactory).registerSingleton(queueName + ++this.increment, queue);
 		if (bindingQueue.admins().length > 0) {
@@ -808,17 +806,17 @@ public class RabbitListenerAnnotationBeanPostProcessor
 
 
 		org.springframework.amqp.core.Exchange exchange =
-				exchangeBuilder.durable(resolveExpressionAsBoolean(bindingExchange.durable()))
-						.build();
+	exchangeBuilder.durable(resolveExpressionAsBoolean(bindingExchange.durable()))
+.build();
 
 		((ConfigurableBeanFactory) this.beanFactory)
-				.registerSingleton(exchangeName + ++this.increment, exchange);
+	.registerSingleton(exchangeName + ++this.increment, exchange);
 		registerBindings(binding, queueName, exchangeName, exchangeType, declarables);
 		declarables.add(exchange);
 	}
 
 	private void registerBindings(QueueBinding binding, String queueName, String exchangeName, String exchangeType,
-			Collection<Declarable> declarables) {
+Collection<Declarable> declarables) {
 		final List<String> routingKeys;
 		if (exchangeType.equals(ExchangeTypes.FANOUT) || binding.key().length == 0) {
 			routingKeys = Collections.singletonList("");
@@ -835,14 +833,14 @@ public class RabbitListenerAnnotationBeanPostProcessor
 		boolean declare = resolveExpressionAsBoolean(binding.declare());
 		for (String routingKey : routingKeys) {
 			final Binding actualBinding = new Binding(queueName, DestinationType.QUEUE, exchangeName, routingKey,
-					bindingArguments);
+		bindingArguments);
 			actualBinding.setIgnoreDeclarationExceptions(bindingIgnoreExceptions);
 			actualBinding.setShouldDeclare(declare);
 			if (binding.admins().length > 0) {
 				actualBinding.setAdminsThatShouldDeclare((Object[]) binding.admins());
 			}
 			((ConfigurableBeanFactory) this.beanFactory)
-					.registerSingleton(exchangeName + "." + queueName + ++this.increment, actualBinding);
+		.registerSingleton(exchangeName + "." + queueName + ++this.increment, actualBinding);
 			declarables.add(actualBinding);
 		}
 	}
@@ -862,7 +860,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 				}
 				else {
 					Assert.isTrue(type instanceof String, () -> "Type must resolve to a Class or String, but resolved to ["
-							+ type.getClass().getName() + "]");
+				+ type.getClass().getName() + "]");
 					typeName = (String) type;
 					try {
 						typeClass = ClassUtils.forName(typeName, this.beanClassLoader);
@@ -901,7 +899,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 				}
 				else {
 					throw new IllegalStateException("Cannot convert from " + value.getClass().getName()
-							+ " to " + typeName);
+				+ " to " + typeName);
 				}
 			}
 		}
@@ -940,7 +938,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 		}
 		else {
 			throw new IllegalStateException("The [" + attribute + "] must resolve to a String. "
-					+ "Resolved to [" + resolved.getClass() + "] for [" + value + "]");
+		+ "Resolved to [" + resolved.getClass() + "] for [" + value + "]");
 		}
 	}
 
@@ -957,7 +955,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 		}
 		else {
 			throw new IllegalStateException("The [" + attribute + "] must resolve to a String. "
-					+ "Resolved to [" + resolved.getClass() + "] for [" + value + "]");
+		+ "Resolved to [" + resolved.getClass() + "] for [" + value + "]");
 		}
 	}
 
@@ -989,7 +987,7 @@ public class RabbitListenerAnnotationBeanPostProcessor
 	private class RabbitHandlerMethodFactoryAdapter implements MessageHandlerMethodFactory {
 
 		private final DefaultFormattingConversionService defaultFormattingConversionService =
-				new DefaultFormattingConversionService();
+	new DefaultFormattingConversionService();
 
 		private MessageHandlerMethodFactory factory;
 
@@ -1020,11 +1018,11 @@ public class RabbitListenerAnnotationBeanPostProcessor
 			}
 			defaultFactory.setBeanFactory(RabbitListenerAnnotationBeanPostProcessor.this.beanFactory);
 			this.defaultFormattingConversionService.addConverter(
-					new BytesToStringConverter(RabbitListenerAnnotationBeanPostProcessor.this.charset));
+		new BytesToStringConverter(RabbitListenerAnnotationBeanPostProcessor.this.charset));
 			defaultFactory.setConversionService(this.defaultFormattingConversionService);
 
 			List<HandlerMethodArgumentResolver> customArgumentsResolver = new ArrayList<>(
-					RabbitListenerAnnotationBeanPostProcessor.this.registrar.getCustomMethodArgumentResolvers());
+		RabbitListenerAnnotationBeanPostProcessor.this.registrar.getCustomMethodArgumentResolvers());
 			defaultFactory.setCustomArgumentResolvers(customArgumentsResolver);
 			defaultFactory.setMessageConverter(new GenericMessageConverter(this.defaultFormattingConversionService));
 

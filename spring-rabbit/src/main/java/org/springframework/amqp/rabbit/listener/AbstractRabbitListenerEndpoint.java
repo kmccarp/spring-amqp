@@ -443,11 +443,11 @@ public abstract class AbstractRabbitListenerEndpoint implements RabbitListenerEn
 	protected StringBuilder getEndpointDescription() {
 		StringBuilder result = new StringBuilder();
 		return result.append(getClass().getSimpleName()).append("[").append(this.id).
-				append("] queues=").append(this.queues).
-				append("' | queueNames='").append(this.queueNames).
-				append("' | exclusive='").append(this.exclusive).
-				append("' | priority='").append(this.priority).
-				append("' | admin='").append(this.admin).append("'");
+	append("] queues=").append(this.queues).
+	append("' | queueNames='").append(this.queueNames).
+	append("' | exclusive='").append(this.exclusive).
+	append("' | priority='").append(this.priority).
+	append("' | admin='").append(this.admin).append("'");
 	}
 
 	@Override

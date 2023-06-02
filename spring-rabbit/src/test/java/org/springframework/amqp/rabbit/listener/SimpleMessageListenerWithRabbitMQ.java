@@ -108,7 +108,6 @@ public final class SimpleMessageListenerWithRabbitMQ {
 	}
 
 
-
 	private static class SimpleAdapter {
 
 		SimpleAdapter() {

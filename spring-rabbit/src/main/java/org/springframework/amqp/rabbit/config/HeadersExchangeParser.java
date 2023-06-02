@@ -50,7 +50,7 @@ public class HeadersExchangeParser extends AbstractExchangeParser {
 
 		if (argumentsElement != null && (hasKey || hasValue)) {
 			parserContext.getReaderContext()
-					.error("'binding-arguments' sub-element and 'key/value' attributes are mutually exclusive.", binding);
+		.error("'binding-arguments' sub-element and 'key/value' attributes are mutually exclusive.", binding);
 		}
 		parseDestination(binding, parserContext, builder);
 
@@ -61,7 +61,7 @@ public class HeadersExchangeParser extends AbstractExchangeParser {
 		if (argumentsElement == null) {
 			if (!hasKey & !hasValue) {
 				parserContext.getReaderContext()
-						.error("At least one of 'binding-arguments' sub-element or 'key/value' attributes pair have to be declared.", binding);
+			.error("At least one of 'binding-arguments' sub-element or 'key/value' attributes pair have to be declared.", binding);
 			}
 			ManagedMap<TypedStringValue, TypedStringValue> map = new ManagedMap<TypedStringValue, TypedStringValue>();
 			map.put(new TypedStringValue(key), new TypedStringValue(value));

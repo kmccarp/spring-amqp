@@ -55,7 +55,7 @@ public class ProjectingMessageConverter {
 
 	public Object convert(Message message, Type type) {
 		return this.projectionFactory.createProjection(ResolvableType.forType(type).resolve(Object.class),
-				new ByteArrayInputStream(message.getBody()));
+	new ByteArrayInputStream(message.getBody()));
 	}
 
 }

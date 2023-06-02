@@ -32,7 +32,7 @@ import org.springframework.amqp.rabbit.listener.DirectReplyToMessageListenerCont
 public class RabbitMessageFuture extends RabbitFuture<Message> {
 
 	RabbitMessageFuture(String correlationId, Message requestMessage, BiConsumer<String, ChannelHolder> canceler,
-			Function<RabbitFuture<?>, ScheduledFuture<?>> timeoutTaskFunction) {
+Function<RabbitFuture<?>, ScheduledFuture<?>> timeoutTaskFunction) {
 
 		super(correlationId, requestMessage, canceler, timeoutTaskFunction);
 	}

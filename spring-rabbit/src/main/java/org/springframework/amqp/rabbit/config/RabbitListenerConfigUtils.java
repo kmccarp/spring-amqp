@@ -28,13 +28,13 @@ public abstract class RabbitListenerConfigUtils {
 	 * The bean name of the internally managed Rabbit listener annotation processor.
 	 */
 	public static final String RABBIT_LISTENER_ANNOTATION_PROCESSOR_BEAN_NAME =
-			"org.springframework.amqp.rabbit.config.internalRabbitListenerAnnotationProcessor";
+"org.springframework.amqp.rabbit.config.internalRabbitListenerAnnotationProcessor";
 
 	/**
 	 * The bean name of the internally managed Rabbit listener endpoint registry.
 	 */
 	public static final String RABBIT_LISTENER_ENDPOINT_REGISTRY_BEAN_NAME =
-			"org.springframework.amqp.rabbit.config.internalRabbitListenerEndpointRegistry";
+"org.springframework.amqp.rabbit.config.internalRabbitListenerEndpointRegistry";
 
 	/**
 	 * The bean name of the default RabbitAdmin.

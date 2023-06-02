@@ -229,7 +229,7 @@ public abstract class MessageBuilderSupport<T> {
 
 	public MessageBuilderSupport<T> setContentTypeIfAbsentOrDefault(String contentType) {
 		if (this.properties.getContentType() == null
-				|| this.properties.getContentType().equals(MessageProperties.DEFAULT_CONTENT_TYPE)) {
+	|| this.properties.getContentType().equals(MessageProperties.DEFAULT_CONTENT_TYPE)) {
 			this.properties.setContentType(contentType);
 		}
 		return this;
@@ -251,7 +251,7 @@ public abstract class MessageBuilderSupport<T> {
 
 	public MessageBuilderSupport<T> setDeliveryModeIfAbsentOrDefault(MessageDeliveryMode deliveryMode) {
 		if (this.properties.getDeliveryMode() == null
-				|| this.properties.getDeliveryMode().equals(MessageProperties.DEFAULT_DELIVERY_MODE)) {
+	|| this.properties.getDeliveryMode().equals(MessageProperties.DEFAULT_DELIVERY_MODE)) {
 			this.properties.setDeliveryMode(deliveryMode);
 		}
 		return this;
@@ -266,7 +266,7 @@ public abstract class MessageBuilderSupport<T> {
 
 	public MessageBuilderSupport<T> setPriorityIfAbsentOrDefault(Integer priority) {
 		if (this.properties.getPriority() == null
-				|| MessageProperties.DEFAULT_PRIORITY.equals(this.properties.getPriority())) {
+	|| MessageProperties.DEFAULT_PRIORITY.equals(this.properties.getPriority())) {
 			this.properties.setPriority(priority);
 		}
 		return this;

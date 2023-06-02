@@ -30,6 +30,7 @@ public class StreamSendException extends AmqpException {
 	private static final long serialVersionUID = 1L;
 
 	private final int confirmationCode;
+
 	/**
 	 * Construct an instance with the provided message.
 	 * @param message the message.

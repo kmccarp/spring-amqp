@@ -51,7 +51,7 @@ public class DefaultClassMapperTests {
 		catch (MessageConversionException e) {
 			String classIdFieldName = classMapper.getClassIdFieldName();
 			assertThat(e.getMessage()).contains("Could not resolve "
-					+ classIdFieldName + " in header");
+		+ classIdFieldName + " in header");
 		}
 	}
 
@@ -92,7 +92,7 @@ public class DefaultClassMapperTests {
 		classMapper.fromClass(SimpleTrade.class, props);
 
 		String className = (String) props.getHeaders().get(
-				classMapper.getClassIdFieldName());
+	classMapper.getClassIdFieldName());
 		assertThat(className).isEqualTo(SimpleTrade.class.getName());
 	}
 
@@ -104,7 +104,7 @@ public class DefaultClassMapperTests {
 		classMapper.fromClass(SimpleTrade.class, props);
 
 		String className = (String) props.getHeaders().get(
-				classMapper.getClassIdFieldName());
+	classMapper.getClassIdFieldName());
 		assertThat(className).isEqualTo("daytrade");
 	}
 
@@ -113,7 +113,7 @@ public class DefaultClassMapperTests {
 		classMapper.fromClass(LinkedHashMap.class, props);
 
 		String className = (String) props.getHeaders().get(
-				classMapper.getClassIdFieldName());
+	classMapper.getClassIdFieldName());
 
 		assertThat(className).isEqualTo("Hashtable");
 	}

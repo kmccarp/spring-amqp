@@ -58,7 +58,7 @@ public class EnableRabbitCglibProxyTests {
 		Foo foo = new Foo();
 		foo.field = "foo";
 		assertThat(this.rabbitTemplate.convertSendAndReceive("auto.exch.test", "auto.rk.test", foo))
-				.isEqualTo("Reply: foo: AUTO.RK.TEST");
+	.isEqualTo("Reply: foo: AUTO.RK.TEST");
 	}
 
 	@Configuration
@@ -115,9 +115,9 @@ public class EnableRabbitCglibProxyTests {
 		@Override
 		@Transactional
 		@RabbitListener(bindings = @QueueBinding(
-				value = @Queue,
-				exchange = @Exchange(value = "auto.exch.test", autoDelete = "true"),
-				key = "auto.rk.test")
+	value = @Queue,
+	exchange = @Exchange(value = "auto.exch.test", autoDelete = "true"),
+	key = "auto.rk.test")
 		)
 		public String handle(@Payload Foo foo, @Header("amqp_receivedRoutingKey") String rk) {
 			return "Reply: " + foo.field + ": " + rk.toUpperCase();

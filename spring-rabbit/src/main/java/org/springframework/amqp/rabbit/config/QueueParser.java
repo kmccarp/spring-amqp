@@ -82,7 +82,7 @@ public class QueueParser extends AbstractSingleBeanDefinitionParser {
 	protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) { // NOSONAR complexity
 
 		if (!NamespaceUtils.isAttributeDefined(element, NAME_ATTRIBUTE)
-				&& !NamespaceUtils.isAttributeDefined(element, ID_ATTRIBUTE)) {
+	&& !NamespaceUtils.isAttributeDefined(element, ID_ATTRIBUTE)) {
 			parserContext.getReaderContext().error("Queue must have either id or name (or both)", element);
 		}
 
@@ -91,11 +91,11 @@ public class QueueParser extends AbstractSingleBeanDefinitionParser {
 		if (!NamespaceUtils.isAttributeDefined(element, NAME_ATTRIBUTE)) {
 
 			if (attributeHasIllegalOverride(element, DURABLE_ATTRIBUTE, "false")
-					|| attributeHasIllegalOverride(element, EXCLUSIVE_ATTRIBUTE, "true")
-					|| attributeHasIllegalOverride(element, AUTO_DELETE_ATTRIBUTE, "true")) {
+		|| attributeHasIllegalOverride(element, EXCLUSIVE_ATTRIBUTE, "true")
+		|| attributeHasIllegalOverride(element, AUTO_DELETE_ATTRIBUTE, "true")) {
 				parserContext.getReaderContext().error(
-						"Anonymous queue cannot specify durable='true', exclusive='false' or auto-delete='false'",
-						element);
+			"Anonymous queue cannot specify durable='true', exclusive='false' or auto-delete='false'",
+			element);
 			}
 			NamespaceUtils.addConstructorArgRefIfAttributeDefined(builder, element, NAMING_STRATEGY);
 
@@ -106,9 +106,9 @@ public class QueueParser extends AbstractSingleBeanDefinitionParser {
 			}
 			NamespaceUtils.addConstructorArgBooleanValueIfAttributeDefined(builder, element, DURABLE_ATTRIBUTE, false);
 			NamespaceUtils
-					.addConstructorArgBooleanValueIfAttributeDefined(builder, element, EXCLUSIVE_ATTRIBUTE, false);
+		.addConstructorArgBooleanValueIfAttributeDefined(builder, element, EXCLUSIVE_ATTRIBUTE, false);
 			NamespaceUtils.addConstructorArgBooleanValueIfAttributeDefined(builder, element, AUTO_DELETE_ATTRIBUTE,
-					false);
+		false);
 
 		}
 
@@ -125,18 +125,18 @@ public class QueueParser extends AbstractSingleBeanDefinitionParser {
 		if (argumentsElement != null) {
 			if (StringUtils.hasText(queueArguments)) {
 				parserContext
-						.getReaderContext()
-						.error("Queue may have either a queue-attributes attribute or element, but not both",
-								element);
+			.getReaderContext()
+			.error("Queue may have either a queue-attributes attribute or element, but not both",
+		element);
 			}
 
 			String ref = argumentsElement.getAttribute(REF_ATTRIBUTE);
 			Map<?, ?> map = parserContext.getDelegate().parseMapElement(argumentsElement,
-					builder.getRawBeanDefinition());
+		builder.getRawBeanDefinition());
 			if (StringUtils.hasText(ref)) {
 				if (map != null && map.size() > 0) {
 					parserContext.getReaderContext()
-							.error("You cannot have both a 'ref' and a nested map", element);
+				.error("You cannot have both a 'ref' and a nested map", element);
 				}
 				builder.addConstructorArgReference(ref);
 			}
@@ -152,7 +152,7 @@ public class QueueParser extends AbstractSingleBeanDefinitionParser {
 
 	private boolean attributeHasIllegalOverride(Element element, String name, String allowed) {
 		return element.getAttributeNode(name) != null && element.getAttributeNode(name).getSpecified()
-				&& !allowed.equals(element.getAttribute(name));
+	&& !allowed.equals(element.getAttribute(name));
 	}
 
 }

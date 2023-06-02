@@ -54,7 +54,7 @@ public class SimpleRabbitListenerEndpointTests {
 		endpoint.setQueues(mock(Queue.class));
 
 		assertThatIllegalStateException()
-			.isThrownBy(() -> endpoint.setupListenerContainer(container));
+	.isThrownBy(() -> endpoint.setupListenerContainer(container));
 	}
 
 }

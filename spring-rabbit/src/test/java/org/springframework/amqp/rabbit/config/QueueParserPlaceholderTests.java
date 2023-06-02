@@ -34,7 +34,7 @@ public class QueueParserPlaceholderTests extends QueueParserTests {
 	@Override
 	public void setUpDefaultBeanFactory() {
 		beanFactory = new GenericXmlApplicationContext(
-				new ClassPathResource(getClass().getSimpleName() + "-context.xml", getClass()));
+	new ClassPathResource(getClass().getSimpleName() + "-context.xml", getClass()));
 	}
 
 	@AfterEach

@@ -79,7 +79,7 @@ public class RabbitAdminDeclarationTests {
 		given(cf.createConnection()).willReturn(conn);
 		given(conn.createChannel(false)).willReturn(channel);
 		given(channel.queueDeclare("foo", true, false, false, new HashMap<>()))
-			.willReturn(new AMQImpl.Queue.DeclareOk("foo", 0, 0));
+	.willReturn(new AMQImpl.Queue.DeclareOk("foo", 0, 0));
 		final AtomicReference<ConnectionListener> listener = new AtomicReference<ConnectionListener>();
 		willAnswer(invocation -> {
 			listener.set((ConnectionListener) invocation.getArguments()[0]);
@@ -153,7 +153,7 @@ public class RabbitAdminDeclarationTests {
 		given(cf.createConnection()).willReturn(conn);
 		given(conn.createChannel(false)).willReturn(channel);
 		given(channel.queueDeclare("foo", true, false, false, new HashMap<>()))
-			.willReturn(new AMQImpl.Queue.DeclareOk("foo", 0, 0));
+	.willReturn(new AMQImpl.Queue.DeclareOk("foo", 0, 0));
 		final AtomicReference<ConnectionListener> listener = new AtomicReference<ConnectionListener>();
 		willAnswer(invocation -> {
 			listener.set(invocation.getArgument(0));
@@ -215,7 +215,7 @@ public class RabbitAdminDeclarationTests {
 
 		verify(channel, never()).queueDeclare(eq("foo"), anyBoolean(), anyBoolean(), anyBoolean(), any(Map.class));
 		verify(channel, never())
-			.exchangeDeclare(eq("bar"), eq("direct"), anyBoolean(), anyBoolean(), anyBoolean(), any(Map.class));
+	.exchangeDeclare(eq("bar"), eq("direct"), anyBoolean(), anyBoolean(), anyBoolean(), any(Map.class));
 		verify(channel, never()).queueBind(eq("foo"), eq("bar"), eq("foo"), any(Map.class));
 	}
 
@@ -252,7 +252,7 @@ public class RabbitAdminDeclarationTests {
 
 		verify(channel, never()).queueDeclare(eq("foo"), anyBoolean(), anyBoolean(), anyBoolean(), any(Map.class));
 		verify(channel, never())
-			.exchangeDeclare(eq("bar"), eq("direct"), anyBoolean(), anyBoolean(), anyBoolean(), any(Map.class));
+	.exchangeDeclare(eq("bar"), eq("direct"), anyBoolean(), anyBoolean(), anyBoolean(), any(Map.class));
 		verify(channel, never()).queueBind(eq("foo"), eq("bar"), eq("foo"), any(Map.class));
 	}
 
@@ -268,25 +268,25 @@ public class RabbitAdminDeclarationTests {
 
 		Config.listener2.onCreate(Config.conn2);
 		verify(Config.channel2, never())
-				.queueDeclare(eq("foo"), anyBoolean(), anyBoolean(), anyBoolean(), isNull());
+	.queueDeclare(eq("foo"), anyBoolean(), anyBoolean(), anyBoolean(), isNull());
 		verify(Config.channel1, never()).queueDeclare("baz", true, false, false, new HashMap<>());
 		verify(Config.channel2).queueDeclare("qux", true, false, false, new HashMap<>());
 		verify(Config.channel2, never())
-				.exchangeDeclare(eq("bar"), eq("direct"), anyBoolean(), anyBoolean(),
-								anyBoolean(), anyMap());
+	.exchangeDeclare(eq("bar"), eq("direct"), anyBoolean(), anyBoolean(),
+anyBoolean(), anyMap());
 		verify(Config.channel2, never()).queueBind(eq("foo"), eq("bar"), eq("foo"), anyMap());
 
 		Config.listener3.onCreate(Config.conn3);
 		verify(Config.channel3, never())
-				.queueDeclare(eq("foo"), anyBoolean(), anyBoolean(), anyBoolean(), isNull());
+	.queueDeclare(eq("foo"), anyBoolean(), anyBoolean(), anyBoolean(), isNull());
 		Map<String, Object> args = new HashMap<>();
 		args.put("added.by.customizer.1", true);
 		args.put("added.by.customizer.2", true);
 		verify(Config.channel3).queueDeclare("baz", true, false, false, args);
 		verify(Config.channel3, never()).queueDeclare("qux", true, false, false, new HashMap<>());
 		verify(Config.channel3, never())
-				.exchangeDeclare(eq("bar"), eq("direct"), anyBoolean(), anyBoolean(),
-								anyBoolean(), anyMap());
+	.exchangeDeclare(eq("bar"), eq("direct"), anyBoolean(), anyBoolean(),
+anyBoolean(), anyMap());
 		verify(Config.channel3, never()).queueBind(eq("foo"), eq("bar"), eq("foo"), anyMap());
 
 		context.close();
@@ -302,7 +302,7 @@ public class RabbitAdminDeclarationTests {
 		assertThat(queue.getDeclaringAdmins()).hasSize(2);
 		queue.setAdminsThatShouldDeclare(admin1);
 		assertThat(queue.getDeclaringAdmins()).hasSize(1);
-		queue.setAdminsThatShouldDeclare(new Object[] {null});
+		queue.setAdminsThatShouldDeclare(new Object[]{null});
 		assertThat(queue.getDeclaringAdmins()).hasSize(0);
 		queue.setAdminsThatShouldDeclare(admin1, admin2);
 		assertThat(queue.getDeclaringAdmins()).hasSize(2);

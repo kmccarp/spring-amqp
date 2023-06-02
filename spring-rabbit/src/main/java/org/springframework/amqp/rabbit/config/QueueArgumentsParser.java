@@ -34,9 +34,9 @@ class QueueArgumentsParser extends AbstractSingleBeanDefinitionParser {
 
 	@Override
 	protected void doParse(Element element, ParserContext parserContext,
-			BeanDefinitionBuilder builder) {
+BeanDefinitionBuilder builder) {
 		Map<?, ?> map = parserContext.getDelegate().parseMapElement(element,
-				builder.getRawBeanDefinition());
+	builder.getRawBeanDefinition());
 		builder.addPropertyValue("sourceMap", map);
 	}
 

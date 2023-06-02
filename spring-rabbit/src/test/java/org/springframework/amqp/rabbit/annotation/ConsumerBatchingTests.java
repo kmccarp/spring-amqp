@@ -60,7 +60,7 @@ import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
  */
 @SpringJUnitConfig
 @DirtiesContext
-@RabbitAvailable(queues = { "c.batch.1", "c.batch.2" })
+@RabbitAvailable(queues = {"c.batch.1", "c.batch.2"})
 public class ConsumerBatchingTests {
 
 	@Autowired
@@ -81,17 +81,17 @@ public class ConsumerBatchingTests {
 		assertThat(this.listener.foosLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.foos).hasSize(8);
 		assertThat(this.listener.foos)
-			.extracting(foo -> foo.getBar())
-			.contains("foo", "bar", "baz", "qux", "foo", "bar", "baz", "qux");
+	.extracting(foo -> foo.getBar())
+	.contains("foo", "bar", "baz", "qux", "foo", "bar", "baz", "qux");
 		Timer timer = await().until(() -> {
 			try {
 				return this.meterRegistry.get("spring.rabbitmq.listener")
-						.tag("listener.id", "batch.1")
-						.tag("queue", "[c.batch.1]")
-						.tag("result", "success")
-						.tag("exception", "none")
-						.tag("extraTag", "foo")
-						.timer();
+			.tag("listener.id", "batch.1")
+			.tag("queue", "[c.batch.1]")
+			.tag("result", "success")
+			.tag("exception", "none")
+			.tag("extraTag", "foo")
+			.timer();
 			}
 			catch (@SuppressWarnings("unused") Exception e) {
 				return null;
@@ -100,12 +100,12 @@ public class ConsumerBatchingTests {
 		assertThat(timer).isNotNull();
 		assertThat(timer.count()).isEqualTo(1L);
 		timer = this.meterRegistry.get("spring.rabbitmq.listener")
-				.tag("listener.id", "batch.1")
-				.tag("queue", "[c.batch.1]")
-				.tag("result", "failure")
-				.tag("exception", "ListenerExecutionFailedException")
-				.tag("extraTag", "foo")
-				.timer();
+	.tag("listener.id", "batch.1")
+	.tag("queue", "[c.batch.1]")
+	.tag("result", "failure")
+	.tag("exception", "ListenerExecutionFailedException")
+	.tag("extraTag", "foo")
+	.timer();
 		assertThat(timer).isNotNull();
 		assertThat(timer.count()).isEqualTo(1L);
 	}
@@ -119,8 +119,8 @@ public class ConsumerBatchingTests {
 		assertThat(this.listener.fooMessagesLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.fooMessages).hasSize(6);
 		assertThat(this.listener.fooMessages)
-			.extracting(msg -> msg.getPayload().getBar())
-			.contains("foo", "bar", "baz", "qux", "baz", "qux");
+	.extracting(msg -> msg.getPayload().getBar())
+	.contains("foo", "bar", "baz", "qux", "baz", "qux");
 	}
 
 	@Test
@@ -132,8 +132,8 @@ public class ConsumerBatchingTests {
 		assertThat(this.listener.dlqLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.dlqd).hasSize(4);
 		assertThat(this.listener.dlqd)
-			.extracting(foo -> foo.getBar())
-			.contains("foo", "bar", "baz", "qux");
+	.extracting(foo -> foo.getBar())
+	.contains("foo", "bar", "baz", "qux");
 	}
 
 	@Test
@@ -145,8 +145,8 @@ public class ConsumerBatchingTests {
 		assertThat(this.listener.dlqHalfLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.dlqHalf).hasSize(2);
 		assertThat(this.listener.dlqHalf)
-			.extracting(foo -> foo.getBar())
-			.contains("baz", "qux");
+	.extracting(foo -> foo.getBar())
+	.contains("baz", "qux");
 	}
 
 	@Test
@@ -158,12 +158,12 @@ public class ConsumerBatchingTests {
 		assertThat(this.listener.dlqOneRejectedLatch1.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.dlqOneRejectedMessages).hasSize(7);
 		assertThat(this.listener.dlqOneRejectedMessages)
-			.extracting(foo -> foo.getPayload().getBar())
-			.contains("foo", "bar", "baz", "qux", "foo", "baz", "qux");
+	.extracting(foo -> foo.getPayload().getBar())
+	.contains("foo", "bar", "baz", "qux", "foo", "baz", "qux");
 		assertThat(this.listener.dlqOneRejectedLatch2.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.dlqOneRejected)
-			.extracting(foo -> foo.getBar())
-			.contains("bar");
+	.extracting(foo -> foo.getBar())
+	.contains("bar");
 	}
 
 	@Configuration
@@ -183,7 +183,7 @@ public class ConsumerBatchingTests {
 			factory.setConsumerBatchEnabled(true);
 			factory.setBatchSize(4);
 			factory.setContainerCustomizer(
-					container -> container.setMicrometerTags(Collections.singletonMap("extraTag", "foo")));
+		container -> container.setMicrometerTags(Collections.singletonMap("extraTag", "foo")));
 			return factory;
 		}
 
@@ -215,49 +215,49 @@ public class ConsumerBatchingTests {
 		@Bean
 		public org.springframework.amqp.core.Queue batch3() {
 			return QueueBuilder.nonDurable("c.batch.3")
-					.autoDelete()
-					.deadLetterExchange("")
-					.deadLetterRoutingKey("c.batch.3.dlq")
-					.build();
+		.autoDelete()
+		.deadLetterExchange("")
+		.deadLetterRoutingKey("c.batch.3.dlq")
+		.build();
 		}
 
 		@Bean
 		public org.springframework.amqp.core.Queue batch3Dlq() {
 			return QueueBuilder.nonDurable("c.batch.3.dlq")
-					.autoDelete()
-					.build();
+		.autoDelete()
+		.build();
 		}
 
 		@Bean
 		public org.springframework.amqp.core.Queue batch4() {
 			return QueueBuilder.nonDurable("c.batch.4")
-					.autoDelete()
-					.deadLetterExchange("")
-					.deadLetterRoutingKey("c.batch.4.dlq")
-					.build();
+		.autoDelete()
+		.deadLetterExchange("")
+		.deadLetterRoutingKey("c.batch.4.dlq")
+		.build();
 		}
 
 		@Bean
 		public org.springframework.amqp.core.Queue batch4Dlq() {
 			return QueueBuilder.nonDurable("c.batch.4.dlq")
-					.autoDelete()
-					.build();
+		.autoDelete()
+		.build();
 		}
 
 		@Bean
 		public org.springframework.amqp.core.Queue batch5() {
 			return QueueBuilder.nonDurable("c.batch.5")
-					.autoDelete()
-					.deadLetterExchange("")
-					.deadLetterRoutingKey("c.batch.5.dlq")
-					.build();
+		.autoDelete()
+		.deadLetterExchange("")
+		.deadLetterRoutingKey("c.batch.5.dlq")
+		.build();
 		}
 
 		@Bean
 		public org.springframework.amqp.core.Queue batch5Dlq() {
 			return QueueBuilder.nonDurable("c.batch.5.dlq")
-					.autoDelete()
-					.build();
+		.autoDelete()
+		.build();
 		}
 
 	}

@@ -108,20 +108,20 @@ public final class SerializationUtils {
 	 * @since 2.1
 	 */
 	public static Object deserialize(InputStream inputStream, Set<String> allowedListPatterns, ClassLoader classLoader)
-			throws IOException {
+throws IOException {
 
 		try (
 				ObjectInputStream objectInputStream = new ConfigurableObjectInputStream(inputStream, classLoader) {
 
-					@Override
-					protected Class<?> resolveClass(ObjectStreamClass classDesc)
-							throws IOException, ClassNotFoundException {
-						Class<?> clazz = super.resolveClass(classDesc);
-						checkAllowedList(clazz, allowedListPatterns);
-						return clazz;
-					}
+		@Override
+		protected Class<?> resolveClass(ObjectStreamClass classDesc)
+	throws IOException, ClassNotFoundException {
+			Class<?> clazz = super.resolveClass(classDesc);
+			checkAllowedList(clazz, allowedListPatterns);
+			return clazz;
+		}
 
-				}) {
+	}) {
 
 			return objectInputStream.readObject();
 		}
@@ -141,7 +141,7 @@ public final class SerializationUtils {
 			return;
 		}
 		if (clazz.isArray() || clazz.isPrimitive() || clazz.equals(String.class)
-				|| Number.class.isAssignableFrom(clazz)) {
+	|| Number.class.isAssignableFrom(clazz)) {
 			return;
 		}
 		String className = clazz.getName();

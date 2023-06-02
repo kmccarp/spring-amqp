@@ -80,8 +80,7 @@ import com.rabbitmq.client.DefaultConsumer;
  *
  */
 @RabbitAvailable(queues = CachingConnectionFactoryIntegrationTests.CF_INTEGRATION_TEST_QUEUE)
-@LogLevels(classes = { CachingConnectionFactoryIntegrationTests.class,
-		CachingConnectionFactory.class }, categories = "com.rabbitmq", level = "DEBUG")
+@LogLevels(classes = {CachingConnectionFactoryIntegrationTests.class,CachingConnectionFactory.class}, categories = "com.rabbitmq", level = "DEBUG")
 public class CachingConnectionFactoryIntegrationTests {
 
 	public static final String CF_INTEGRATION_TEST_QUEUE = "cfIntegrationTest";
@@ -128,7 +127,7 @@ public class CachingConnectionFactoryIntegrationTests {
 		assertThat(allocatedConnections).hasSize(6);
 		assertThat(connectionFactory.getCacheProperties().get("openConnections")).isEqualTo("5");
 		BlockingQueue<?> idleConnections = TestUtils.getPropertyValue(connectionFactory, "idleConnections",
-				BlockingQueue.class);
+	BlockingQueue.class);
 		assertThat(idleConnections).hasSize(6);
 		connections.clear();
 		connections.add(connectionFactory.createConnection());
@@ -198,12 +197,12 @@ public class CachingConnectionFactoryIntegrationTests {
 		}
 		@SuppressWarnings("unchecked")
 		Map<?, List<?>> cachedChannels = TestUtils.getPropertyValue(connectionFactory,
-				"allocatedConnectionNonTransactionalChannels", Map.class);
+	"allocatedConnectionNonTransactionalChannels", Map.class);
 		assertThat(cachedChannels.get(connections.get(0))).hasSize(0);
 		assertThat(cachedChannels.get(connections.get(1))).hasSize(0);
 		@SuppressWarnings("unchecked")
 		Map<?, List<?>> cachedTxChannels = TestUtils.getPropertyValue(connectionFactory,
-				"allocatedConnectionTransactionalChannels", Map.class);
+	"allocatedConnectionTransactionalChannels", Map.class);
 		assertThat(cachedTxChannels.get(connections.get(0))).hasSize(0);
 		assertThat(cachedTxChannels.get(connections.get(1))).hasSize(0);
 		for (Channel channel : channels) {
@@ -269,16 +268,16 @@ public class CachingConnectionFactoryIntegrationTests {
 		RabbitTemplate template = new RabbitTemplate(connectionFactory);
 
 		assertThatThrownBy(() -> template.receiveAndConvert("foo"))
-			.isInstanceOfAny(
-					// Wrong vhost is very unfriendly to client - the exception has no clue (just an EOF)
-					AmqpIOException.class,
-					AmqpAuthenticationException.class,
-					/*
-					 * If localhost also resolves to an IPv6 address, the client will try that
-					 * after a failure due to an invalid vHost and, if Rabbit is not listening there,
-					 * we'll get an...
-					 */
-					AmqpConnectException.class);
+	.isInstanceOfAny(
+// Wrong vhost is very unfriendly to client - the exception has no clue (just an EOF)
+AmqpIOException.class,
+AmqpAuthenticationException.class,
+/*
+		 * If localhost also resolves to an IPv6 address, the client will try that
+		 * after a failure due to an invalid vHost and, if Rabbit is not listening there,
+		 * we'll get an...
+		 */
+AmqpConnectException.class);
 	}
 
 	@Test
@@ -295,7 +294,7 @@ public class CachingConnectionFactoryIntegrationTests {
 
 		// The queue was removed when the channel was closed
 		assertThatThrownBy(() -> template.receiveAndConvert(queue.getName()))
-			.isInstanceOf(AmqpIOException.class);
+	.isInstanceOf(AmqpIOException.class);
 		template.stop();
 	}
 
@@ -315,11 +314,11 @@ public class CachingConnectionFactoryIntegrationTests {
 
 		// The channel is not transactional
 		assertThatThrownBy(() ->
-			template2.execute(channel -> {
-				// Should be an exception because the channel is not transactional
-				channel.txRollback();
-				return null;
-			})).isInstanceOf(AmqpIOException.class);
+	template2.execute(channel -> {
+		// Should be an exception because the channel is not transactional
+		channel.txRollback();
+		return null;
+	})).isInstanceOf(AmqpIOException.class);
 
 	}
 
@@ -374,7 +373,7 @@ public class CachingConnectionFactoryIntegrationTests {
 	public void testConnectionName() {
 		Connection connection = this.connectionFactory.createConnection();
 		com.rabbitmq.client.Connection rabbitConnection = TestUtils.getPropertyValue(connection, "target.delegate",
-				com.rabbitmq.client.Connection.class);
+	com.rabbitmq.client.Connection.class);
 		assertThat(rabbitConnection.getClientProperties().get("connection_name")).isEqualTo(CF_INTEGRATION_CONNECTION_NAME);
 		this.connectionFactory.destroy();
 	}
@@ -462,7 +461,7 @@ public class CachingConnectionFactoryIntegrationTests {
 		Connection connection = this.connectionFactory.createConnection();
 		connection.createChannel(true);
 		assertThatExceptionOfType(AmqpResourceNotAvailableException.class)
-				.isThrownBy(() -> connection.createChannel(false));
+	.isThrownBy(() -> connection.createChannel(false));
 	}
 
 }

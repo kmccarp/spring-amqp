@@ -74,18 +74,18 @@ public class SimpleMessageConverter extends AllowedListDeserializingMessageConve
 				}
 				catch (UnsupportedEncodingException e) {
 					throw new MessageConversionException(
-							"failed to convert text-based Message content", e);
+				"failed to convert text-based Message content", e);
 				}
 			}
 			else if (contentType != null &&
-					contentType.equals(MessageProperties.CONTENT_TYPE_SERIALIZED_OBJECT)) {
+		contentType.equals(MessageProperties.CONTENT_TYPE_SERIALIZED_OBJECT)) {
 				try {
 					content = SerializationUtils.deserialize(
-							createObjectInputStream(new ByteArrayInputStream(message.getBody())));
+				createObjectInputStream(new ByteArrayInputStream(message.getBody())));
 				}
 				catch (IOException | IllegalArgumentException | IllegalStateException e) {
 					throw new MessageConversionException(
-							"failed to convert serialized Message content", e);
+				"failed to convert serialized Message content", e);
 				}
 			}
 		}
@@ -111,7 +111,7 @@ public class SimpleMessageConverter extends AllowedListDeserializingMessageConve
 			}
 			catch (UnsupportedEncodingException e) {
 				throw new MessageConversionException(
-						"failed to convert to Message content", e);
+			"failed to convert to Message content", e);
 			}
 			messageProperties.setContentType(MessageProperties.CONTENT_TYPE_TEXT_PLAIN);
 			messageProperties.setContentEncoding(this.defaultCharset);
@@ -122,7 +122,7 @@ public class SimpleMessageConverter extends AllowedListDeserializingMessageConve
 			}
 			catch (IllegalArgumentException e) {
 				throw new MessageConversionException(
-						"failed to convert to serialized Message content", e);
+			"failed to convert to serialized Message content", e);
 			}
 			messageProperties.setContentType(MessageProperties.CONTENT_TYPE_SERIALIZED_OBJECT);
 		}
@@ -131,7 +131,7 @@ public class SimpleMessageConverter extends AllowedListDeserializingMessageConve
 			return new Message(bytes, messageProperties);
 		}
 		throw new IllegalArgumentException(getClass().getSimpleName()
-				+ " only supports String, byte[] and Serializable payloads, received: " + object.getClass().getName());
+	+ " only supports String, byte[] and Serializable payloads, received: " + object.getClass().getName());
 	}
 
 	/**

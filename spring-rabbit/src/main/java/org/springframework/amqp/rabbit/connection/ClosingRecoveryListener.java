@@ -44,7 +44,7 @@ public final class ClosingRecoveryListener implements RecoveryListener {
 	private static final RecoveryListener INSTANCE = new ClosingRecoveryListener();
 
 	private static final ConcurrentMap<AutorecoveringChannel, Boolean> hasListener // NOSONAR - lower case
-		= new ConcurrentHashMap<>();
+= new ConcurrentHashMap<>();
 
 	private ClosingRecoveryListener() {
 	}
@@ -88,7 +88,7 @@ public final class ClosingRecoveryListener implements RecoveryListener {
 			autorecoveringChannel = auto;
 		}
 		if (autorecoveringChannel != null
-				&& hasListener.putIfAbsent(autorecoveringChannel, Boolean.TRUE) == null) {
+	&& hasListener.putIfAbsent(autorecoveringChannel, Boolean.TRUE) == null) {
 			autorecoveringChannel.addRecoveryListener(INSTANCE);
 		}
 	}

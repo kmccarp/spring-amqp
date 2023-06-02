@@ -93,7 +93,7 @@ public class ThreadChannelConnectionFactoryTests {
 		assertThat(TestUtils.getPropertyValue(conn, "txChannels", ThreadLocal.class).get()).isNull();
 		chann2 = conn.createChannel(true);
 		assertThat(((Channel) TestUtils.getPropertyValue(conn, "txChannels", ThreadLocal.class).get()).isOpen())
-				.isTrue();
+	.isTrue();
 		chann2.close();
 		chann2 = conn.createChannel(false);
 		RabbitUtils.setPhysicalCloseRequired(chann2, true);
@@ -105,9 +105,9 @@ public class ThreadChannelConnectionFactoryTests {
 		chann1.close();
 		tccf.destroy();
 		assertThat(((Channel) TestUtils.getPropertyValue(conn, "channels", ThreadLocal.class).get()).isOpen())
-				.isFalse();
+	.isFalse();
 		assertThat(((Channel) TestUtils.getPropertyValue(conn, "txChannels", ThreadLocal.class).get()).isOpen())
-				.isFalse();
+	.isFalse();
 	}
 
 	@Test
@@ -142,7 +142,7 @@ public class ThreadChannelConnectionFactoryTests {
 
 	@Test
 	void queueDeclared(@Autowired RabbitAdmin admin, @Autowired Config config,
-			@Autowired ThreadChannelConnectionFactory tccf) throws Exception {
+@Autowired ThreadChannelConnectionFactory tccf) throws Exception {
 
 		assertThat(admin.getQueueProperties("ThreadChannelConnectionFactoryTests.q")).isNotNull();
 		assertThat(config.created).isTrue();
@@ -276,7 +276,7 @@ public class ThreadChannelConnectionFactoryTests {
 		assertThat(chann4).isSameAs(tx2.get());
 		assertThat(TestUtils.getPropertyValue(tccf, "switchesInProgress", Map.class)).isEmpty();
 		assertThat(TestUtils.getPropertyValue(tccf, "publisherConnectionFactory.switchesInProgress", Map.class))
-				.isEmpty();
+	.isEmpty();
 		tccf.destroy();
 	}
 
@@ -373,7 +373,7 @@ public class ThreadChannelConnectionFactoryTests {
 
 	Channel sendChannelNameAsBody(Channel channel) throws IOException {
 		channel.basicPublish("", "ThreadChannelConnectionFactoryTests.q1", new BasicProperties(),
-				channel.toString().getBytes());
+	channel.toString().getBytes());
 		return channel;
 	}
 
@@ -391,7 +391,7 @@ public class ThreadChannelConnectionFactoryTests {
 		@Bean
 		ThreadChannelConnectionFactory tccf() {
 			ThreadChannelConnectionFactory tccf = new ThreadChannelConnectionFactory(
-					RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+		RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 			tccf.addConnectionListener(new ConnectionListener() {
 
 				@Override

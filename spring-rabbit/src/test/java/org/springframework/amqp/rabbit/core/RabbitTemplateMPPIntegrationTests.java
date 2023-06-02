@@ -42,9 +42,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
  * @since 1.7.6
  *
  */
-@RabbitAvailable(queues = {
-		RabbitTemplateMPPIntegrationTests.QUEUE,
-		RabbitTemplateMPPIntegrationTests.REPLIES })
+@RabbitAvailable(queues = {RabbitTemplateMPPIntegrationTests.QUEUE,RabbitTemplateMPPIntegrationTests.REPLIES})
 @SpringJUnitConfig
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class RabbitTemplateMPPIntegrationTests {
@@ -116,7 +114,7 @@ public class RabbitTemplateMPPIntegrationTests {
 		@Bean
 		public CachingConnectionFactory cf() {
 			return new CachingConnectionFactory(RabbitAvailableCondition.getBrokerRunning()
-					.getConnectionFactory());
+		.getConnectionFactory());
 		}
 
 		@Bean

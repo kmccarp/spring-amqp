@@ -46,8 +46,7 @@ import org.springframework.util.Assert;
  * @since 2.4
  *
  */
-public abstract class BaseRabbitListenerContainerFactory<C extends MessageListenerContainer>
-	implements RabbitListenerContainerFactory<C>, ApplicationContextAware {
+public abstract class BaseRabbitListenerContainerFactory<C extends MessageListenerContainer>implements RabbitListenerContainerFactory<C>, ApplicationContextAware {
 
 	private Boolean defaultRequeueRejected;
 
@@ -135,7 +134,7 @@ public abstract class BaseRabbitListenerContainerFactory<C extends MessageListen
 	protected void applyCommonOverrides(@Nullable RabbitListenerEndpoint endpoint, C instance) {
 		if (endpoint != null) { // endpoint settings overriding default factory settings
 			JavaUtils.INSTANCE
-				.acceptIfNotNull(endpoint.getAutoStartup(), instance::setAutoStartup);
+		.acceptIfNotNull(endpoint.getAutoStartup(), instance::setAutoStartup);
 			instance.setListenerId(endpoint.getId());
 			endpoint.setupListenerContainer(instance);
 		}
@@ -143,21 +142,21 @@ public abstract class BaseRabbitListenerContainerFactory<C extends MessageListen
 		if (iml instanceof AbstractAdaptableMessageListener) {
 			AbstractAdaptableMessageListener messageListener = (AbstractAdaptableMessageListener) iml;
 			JavaUtils.INSTANCE // NOSONAR
-					.acceptIfNotNull(this.beforeSendReplyPostProcessors,
-							messageListener::setBeforeSendReplyPostProcessors)
-					.acceptIfNotNull(this.retryTemplate, messageListener::setRetryTemplate)
-					.acceptIfCondition(this.retryTemplate != null && this.recoveryCallback != null,
-							this.recoveryCallback, messageListener::setRecoveryCallback)
-					.acceptIfNotNull(this.defaultRequeueRejected, messageListener::setDefaultRequeueRejected);
+		.acceptIfNotNull(this.beforeSendReplyPostProcessors,
+	messageListener::setBeforeSendReplyPostProcessors)
+		.acceptIfNotNull(this.retryTemplate, messageListener::setRetryTemplate)
+		.acceptIfCondition(this.retryTemplate != null && this.recoveryCallback != null,
+	this.recoveryCallback, messageListener::setRecoveryCallback)
+		.acceptIfNotNull(this.defaultRequeueRejected, messageListener::setDefaultRequeueRejected);
 			if (endpoint != null) {
 				JavaUtils.INSTANCE
-						.acceptIfNotNull(endpoint.getReplyPostProcessor(), messageListener::setReplyPostProcessor)
-						.acceptIfNotNull(endpoint.getReplyContentType(), messageListener::setReplyContentType);
+			.acceptIfNotNull(endpoint.getReplyPostProcessor(), messageListener::setReplyPostProcessor)
+			.acceptIfNotNull(endpoint.getReplyContentType(), messageListener::setReplyContentType);
 				messageListener.setConverterWinsContentType(endpoint.isConverterWinsContentType());
 				if (endpoint.getReplyPostProcessor() == null && this.replyPostProcessorProvider != null) {
 					JavaUtils.INSTANCE
-							.acceptIfNotNull(this.replyPostProcessorProvider.apply(endpoint.getId()),
-									messageListener::setReplyPostProcessor);
+				.acceptIfNotNull(this.replyPostProcessorProvider.apply(endpoint.getId()),
+			messageListener::setReplyPostProcessor);
 				}
 			}
 		}

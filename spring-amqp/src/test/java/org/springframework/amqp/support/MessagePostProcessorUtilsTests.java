@@ -40,12 +40,12 @@ public class MessagePostProcessorUtilsTests {
 
 	@Test
 	public void testOrderIng() {
-		MPP[] pps = new MPP[] {
-				new MPP(),
-				new OMPP().order(3),
-				new OMPP().order(1),
-				new POMPP().order(6),
-				new POMPP().order(2)
+		MPP[] pps = new MPP[]{
+	new MPP(),
+	new OMPP().order(3),
+	new OMPP().order(1),
+	new POMPP().order(6),
+	new POMPP().order(2)
 		};
 		Collection<MessagePostProcessor> sorted = MessagePostProcessorUtils.sort(Arrays.<MessagePostProcessor>asList(pps));
 		Iterator<MessagePostProcessor> iterator = sorted.iterator();

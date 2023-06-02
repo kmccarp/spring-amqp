@@ -106,12 +106,12 @@ public class ContentTypeDelegatingMessageConverterIntegrationTests {
 			SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
 			factory.setConnectionFactory(cf());
 			ContentTypeDelegatingMessageConverter converter =
-					new ContentTypeDelegatingMessageConverter(new SimpleMessageConverter());
+		new ContentTypeDelegatingMessageConverter(new SimpleMessageConverter());
 			converter.addDelegate("foo/bar", new MessageConverter() {
 
 				@Override
 				public Message toMessage(Object object, MessageProperties messageProperties)
-						throws MessageConversionException {
+			throws MessageConversionException {
 
 					return new Message("foo".getBytes(), messageProperties);
 				}
@@ -126,7 +126,7 @@ public class ContentTypeDelegatingMessageConverterIntegrationTests {
 
 				@Override
 				public Message toMessage(Object object, MessageProperties messageProperties)
-						throws MessageConversionException {
+			throws MessageConversionException {
 
 					Config.this.replyContentType = messageProperties.getContentType();
 					messageProperties.setContentType("foo/bar");
@@ -167,7 +167,7 @@ public class ContentTypeDelegatingMessageConverterIntegrationTests {
 		@SendTo("#{@queue2.name}")
 		public org.springframework.messaging.Message<String> listen1(String in) {
 			MessageBuilder<String> builder = MessageBuilder.withPayload(in)
-					.setHeader(MessageHeaders.CONTENT_TYPE, MimeType.valueOf("baz/qux"));
+		.setHeader(MessageHeaders.CONTENT_TYPE, MimeType.valueOf("baz/qux"));
 			if ("bar".equals(in)) {
 				builder.setHeader(AmqpHeaders.CONTENT_TYPE_CONVERTER_WINS, true);
 			}

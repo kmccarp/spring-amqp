@@ -213,10 +213,10 @@ public abstract class RetryInterceptorBuilder<B extends RetryInterceptorBuilder<
 	 * Builder for a stateful interceptor.
 	 */
 	public static final class StatefulRetryInterceptorBuilder
-			extends RetryInterceptorBuilder<StatefulRetryInterceptorBuilder, StatefulRetryOperationsInterceptor> {
+extends RetryInterceptorBuilder<StatefulRetryInterceptorBuilder, StatefulRetryOperationsInterceptor> {
 
 		private final StatefulRetryOperationsInterceptorFactoryBean factoryBean =
-				new StatefulRetryOperationsInterceptorFactoryBean();
+	new StatefulRetryOperationsInterceptorFactoryBean();
 
 		private MessageKeyGenerator messageKeyGenerator;
 
@@ -265,10 +265,10 @@ public abstract class RetryInterceptorBuilder<B extends RetryInterceptorBuilder<
 	 * Builder for a stateless interceptor.
 	 */
 	public static final class StatelessRetryInterceptorBuilder
-			extends RetryInterceptorBuilder<StatelessRetryInterceptorBuilder, RetryOperationsInterceptor> {
+extends RetryInterceptorBuilder<StatelessRetryInterceptorBuilder, RetryOperationsInterceptor> {
 
 		private final StatelessRetryOperationsInterceptorFactoryBean factoryBean =
-				new StatelessRetryOperationsInterceptorFactoryBean();
+	new StatelessRetryOperationsInterceptorFactoryBean();
 
 		StatelessRetryInterceptorBuilder() {
 		}

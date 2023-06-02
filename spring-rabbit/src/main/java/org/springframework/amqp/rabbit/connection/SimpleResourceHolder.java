@@ -56,10 +56,10 @@ public final class SimpleResourceHolder {
 	private static final Log LOGGER = LogFactory.getLog(SimpleResourceHolder.class);
 
 	private static final ThreadLocal<Map<Object, Object>> RESOURCES =
-			new NamedThreadLocal<Map<Object, Object>>("Simple resources");
+new NamedThreadLocal<Map<Object, Object>>("Simple resources");
 
 	private static final ThreadLocal<Map<Object, Deque<Object>>> STACK =
-			new NamedThreadLocal<Map<Object, Deque<Object>>>("Simple resources");
+new NamedThreadLocal<Map<Object, Deque<Object>>>("Simple resources");
 
 	/**
 	 * Return all resources that are bound to the current thread.
@@ -96,7 +96,7 @@ public final class SimpleResourceHolder {
 		Object value = doGet(key);
 		if (value != null && LOGGER.isTraceEnabled()) {
 			LOGGER.trace("Retrieved value [" + value + FOR_KEY + key + BOUND_TO_THREAD
-					+ Thread.currentThread().getName() + "]");
+		+ Thread.currentThread().getName() + "]");
 		}
 		return value;
 	}
@@ -131,11 +131,11 @@ public final class SimpleResourceHolder {
 		}
 		Object oldValue = map.put(key, value);
 		Assert.isNull(oldValue, () -> "Already value [" + oldValue + FOR_KEY + key + BOUND_TO_THREAD
-				+ Thread.currentThread().getName() + "]");
+	+ Thread.currentThread().getName() + "]");
 
 		if (LOGGER.isTraceEnabled()) {
 			LOGGER.trace(
-					"Bound value [" + value + FOR_KEY + key + "] to thread [" + Thread.currentThread().getName() + "]");
+		"Bound value [" + value + FOR_KEY + key + "] to thread [" + Thread.currentThread().getName() + "]");
 		}
 	}
 
@@ -197,7 +197,7 @@ public final class SimpleResourceHolder {
 	public static Object unbind(Object key) throws IllegalStateException {
 		Object value = unbindIfPossible(key);
 		Assert.notNull(value,
-				() -> "No value for key [" + key + BOUND_TO_THREAD + Thread.currentThread().getName() + "]");
+	() -> "No value for key [" + key + BOUND_TO_THREAD + Thread.currentThread().getName() + "]");
 		return value;
 	}
 
@@ -220,7 +220,7 @@ public final class SimpleResourceHolder {
 
 		if (value != null && LOGGER.isTraceEnabled()) {
 			LOGGER.trace("Removed value [" + value + FOR_KEY + key + "] from thread ["
-					+ Thread.currentThread().getName() + "]");
+		+ Thread.currentThread().getName() + "]");
 		}
 		return value;
 	}

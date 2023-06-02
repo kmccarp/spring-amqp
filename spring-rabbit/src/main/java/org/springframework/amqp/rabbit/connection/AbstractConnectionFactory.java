@@ -70,9 +70,7 @@ import com.rabbitmq.client.impl.recovery.AutorecoveringConnection;
  * @author Will Droste
  *
  */
-public abstract class AbstractConnectionFactory implements ConnectionFactory, DisposableBean, BeanNameAware,
-		ApplicationContextAware, ApplicationEventPublisherAware, ApplicationListener<ContextClosedEvent>,
-		ShutdownListener {
+public abstract class AbstractConnectionFactory implements ConnectionFactory, DisposableBean, BeanNameAware,ApplicationContextAware, ApplicationEventPublisherAware, ApplicationListener<ContextClosedEvent>,ShutdownListener {
 
 	/**
 	 * The mode used to shuffle the addresses.
@@ -145,9 +143,7 @@ public abstract class AbstractConnectionFactory implements ConnectionFactory, Di
 	private int closeTimeout = DEFAULT_CLOSE_TIMEOUT;
 
 	private ConnectionNameStrategy connectionNameStrategy =
-			connectionFactory -> (this.beanName != null ? this.beanName : "SpringAMQP") +
-					"#" + ObjectUtils.getIdentityHexString(this) + ":" +
-					this.defaultConnectionNameStrategyCounter.getAndIncrement();
+connectionFactory -> (this.beanName != null ? this.beanName : "SpringAMQP") +"#" + ObjectUtils.getIdentityHexString(this) + ":" +this.defaultConnectionNameStrategyCounter.getAndIncrement();
 
 	private String beanName;
 
@@ -176,13 +172,13 @@ public abstract class AbstractConnectionFactory implements ConnectionFactory, Di
 	 * @since 2.3.2
 	 */
 	public void setPublisherConnectionFactory(
-			@Nullable AbstractConnectionFactory publisherConnectionFactory) {
+@Nullable AbstractConnectionFactory publisherConnectionFactory) {
 
 		doSetPublisherConnectionFactory(publisherConnectionFactory);
 	}
 
 	protected final void doSetPublisherConnectionFactory(
-			@Nullable AbstractConnectionFactory publisherConnectionFactory) {
+@Nullable AbstractConnectionFactory publisherConnectionFactory) {
 
 		this.publisherConnectionFactory = publisherConnectionFactory;
 	}
@@ -352,7 +348,7 @@ public abstract class AbstractConnectionFactory implements ConnectionFactory, Di
 			}
 		}
 		this.logger.info("setAddresses() called with an empty value, will be using the host+port "
-				+ " or addressResolver properties for connections");
+	+ " or addressResolver properties for connections");
 		this.addresses = null;
 	}
 
@@ -445,7 +441,7 @@ public abstract class AbstractConnectionFactory implements ConnectionFactory, Di
 		boolean isExecutorService = executor instanceof ExecutorService;
 		boolean isThreadPoolTaskExecutor = executor instanceof ThreadPoolTaskExecutor;
 		Assert.isTrue(isExecutorService || isThreadPoolTaskExecutor,
-				"'executor' must be an 'ExecutorService' or a 'ThreadPoolTaskExecutor'");
+	"'executor' must be an 'ExecutorService' or a 'ThreadPoolTaskExecutor'");
 		if (isExecutorService) {
 			this.executorService = (ExecutorService) executor;
 		}
@@ -488,7 +484,7 @@ public abstract class AbstractConnectionFactory implements ConnectionFactory, Di
 		this.connectionNameStrategy = connectionNameStrategy;
 		if (this.publisherConnectionFactory != null) {
 			this.publisherConnectionFactory.setConnectionNameStrategy(
-					cf -> connectionNameStrategy.obtainNewConnectionName(cf) + PUBLISHER_SUFFIX);
+		cf -> connectionNameStrategy.obtainNewConnectionName(cf) + PUBLISHER_SUFFIX);
 		}
 	}
 
@@ -598,7 +594,7 @@ public abstract class AbstractConnectionFactory implements ConnectionFactory, Di
 	}
 
 	private synchronized com.rabbitmq.client.Connection connect(String connectionName)
-			throws IOException, TimeoutException {
+throws IOException, TimeoutException {
 
 		if (this.addressResolver != null) {
 			return connectResolver(connectionName);
@@ -616,11 +612,11 @@ public abstract class AbstractConnectionFactory implements ConnectionFactory, Di
 			this.logger.info("Attempting to connect with: " + this.addressResolver);
 		}
 		return this.rabbitConnectionFactory.newConnection(this.executorService, this.addressResolver,
-				connectionName);
+	connectionName);
 	}
 
 	private synchronized com.rabbitmq.client.Connection connectAddresses(String connectionName)
-			throws IOException, TimeoutException {
+throws IOException, TimeoutException {
 
 		List<Address> addressesToConnect = new ArrayList<>(this.addresses);
 		if (addressesToConnect.size() > 1 && AddressShuffleMode.RANDOM.equals(this.addressShuffleMode)) {
@@ -630,7 +626,7 @@ public abstract class AbstractConnectionFactory implements ConnectionFactory, Di
 			this.logger.info("Attempting to connect to: " + addressesToConnect);
 		}
 		com.rabbitmq.client.Connection connection = this.rabbitConnectionFactory.newConnection(this.executorService,
-				addressesToConnect, connectionName);
+	addressesToConnect, connectionName);
 		if (addressesToConnect.size() > 1 && AddressShuffleMode.INORDER.equals(this.addressShuffleMode)) {
 			this.addresses.add(this.addresses.remove(0));
 		}
@@ -640,7 +636,7 @@ public abstract class AbstractConnectionFactory implements ConnectionFactory, Di
 	private com.rabbitmq.client.Connection connectHostPort(String connectionName) throws IOException, TimeoutException {
 		if (this.logger.isInfoEnabled()) {
 			this.logger.info("Attempting to connect to: " + this.rabbitConnectionFactory.getHost()
-					+ ":" + this.rabbitConnectionFactory.getPort());
+		+ ":" + this.rabbitConnectionFactory.getPort());
 		}
 		return this.rabbitConnectionFactory.newConnection(this.executorService, connectionName);
 	}

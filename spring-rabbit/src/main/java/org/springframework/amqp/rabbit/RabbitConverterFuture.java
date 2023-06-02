@@ -37,8 +37,8 @@ public class RabbitConverterFuture<C> extends RabbitFuture<C> {
 	private volatile ParameterizedTypeReference<C> returnType;
 
 	RabbitConverterFuture(String correlationId, Message requestMessage,
-			BiConsumer<String, ChannelHolder> canceler,
-			Function<RabbitFuture<?>, ScheduledFuture<?>> timeoutTaskFunction) {
+BiConsumer<String, ChannelHolder> canceler,
+Function<RabbitFuture<?>, ScheduledFuture<?>> timeoutTaskFunction) {
 
 		super(correlationId, requestMessage, canceler, timeoutTaskFunction);
 	}

@@ -51,34 +51,34 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 @SpringJUnitConfig
-@RabbitAvailable(queues = { "op.1", "op.2" })
+@RabbitAvailable(queues = {"op.1", "op.2"})
 public class OptionalPayloadTests {
 
 	@Test
 	void optionals(@Autowired RabbitTemplate template, @Autowired Listener listener)
-			throws JsonProcessingException, AmqpException, InterruptedException {
+throws JsonProcessingException, AmqpException, InterruptedException {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		template.send("op.1", MessageBuilder.withBody(objectMapper.writeValueAsBytes("foo"))
-				.andProperties(MessagePropertiesBuilder.newInstance()
-						.setContentType("application/json")
-						.build())
-				.build());
+	.andProperties(MessagePropertiesBuilder.newInstance()
+.setContentType("application/json")
+.build())
+	.build());
 		template.send("op.1", MessageBuilder.withBody(objectMapper.writeValueAsBytes(null))
-				.andProperties(MessagePropertiesBuilder.newInstance()
-						.setContentType("application/json")
-						.build())
-				.build());
+	.andProperties(MessagePropertiesBuilder.newInstance()
+.setContentType("application/json")
+.build())
+	.build());
 		template.send("op.2", MessageBuilder.withBody(objectMapper.writeValueAsBytes("bar"))
-				.andProperties(MessagePropertiesBuilder.newInstance()
-						.setContentType("application/json")
-						.build())
-				.build());
+	.andProperties(MessagePropertiesBuilder.newInstance()
+.setContentType("application/json")
+.build())
+	.build());
 		template.send("op.2", MessageBuilder.withBody(objectMapper.writeValueAsBytes(null))
-				.andProperties(MessagePropertiesBuilder.newInstance()
-						.setContentType("application/json")
-						.build())
-				.build());
+	.andProperties(MessagePropertiesBuilder.newInstance()
+.setContentType("application/json")
+.build())
+	.build());
 		assertThat(listener.latch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(listener.deOptionaled).containsExactlyInAnyOrder("foo", null, "bar", "baz");
 	}

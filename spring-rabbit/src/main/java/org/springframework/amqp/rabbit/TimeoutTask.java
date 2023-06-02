@@ -38,7 +38,7 @@ public class TimeoutTask implements Runnable {
 	private final DirectReplyToMessageListenerContainer container;
 
 	TimeoutTask(RabbitFuture<?> future, ConcurrentMap<String, RabbitFuture<?>> pending,
-			@Nullable DirectReplyToMessageListenerContainer container) {
+@Nullable DirectReplyToMessageListenerContainer container) {
 
 		this.future = future;
 		this.pending = pending;
@@ -53,7 +53,7 @@ public class TimeoutTask implements Runnable {
 			this.container.releaseConsumerFor(holder, false, null); // NOSONAR
 		}
 		this.future.completeExceptionally(
-				new AmqpReplyTimeoutException("Reply timed out", this.future.getRequestMessage()));
+	new AmqpReplyTimeoutException("Reply timed out", this.future.getRequestMessage()));
 	}
 
 }

@@ -51,9 +51,9 @@ public class DelegatingInvocableHandlerTests {
 		BeanExpressionContext context = mock(BeanExpressionContext.class);
 		DelegatingInvocableHandler handler = new DelegatingInvocableHandler(methods, bean, resolver, context);
 		assertThatExceptionOfType(UndeclaredThrowableException.class).isThrownBy(() ->
-				handler.getHandlerForPayload(Long.class))
-				.withCauseExactlyInstanceOf(NoSuchMethodException.class)
-				.withStackTraceContaining("No listener method found in");
+	handler.getHandlerForPayload(Long.class))
+	.withCauseExactlyInstanceOf(NoSuchMethodException.class)
+	.withStackTraceContaining("No listener method found in");
 	}
 
 	private MessageHandlerMethodFactory messageHandlerFactory() {

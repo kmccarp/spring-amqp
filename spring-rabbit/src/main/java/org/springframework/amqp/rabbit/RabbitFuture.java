@@ -50,7 +50,7 @@ public abstract class RabbitFuture<T> extends CompletableFuture<T> {
 	private ChannelHolder channelHolder;
 
 	protected RabbitFuture(String correlationId, Message requestMessage, BiConsumer<String, ChannelHolder> canceler,
-			Function<RabbitFuture<?>, ScheduledFuture<?>> timeoutTaskFunction) {
+Function<RabbitFuture<?>, ScheduledFuture<?>> timeoutTaskFunction) {
 
 		this.correlationId = correlationId;
 		this.requestMessage = requestMessage;

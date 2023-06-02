@@ -68,9 +68,7 @@ import org.springframework.retry.support.RetryTemplate;
  *
  */
 @RabbitAvailable
-@LogLevels(classes = {BlockingQueueConsumer.class,
-		MissingIdRetryTests.class,
-		RetryTemplate.class, SimpleRetryPolicy.class})
+@LogLevels(classes = {BlockingQueueConsumer.class,MissingIdRetryTests.class,RetryTemplate.class, SimpleRetryPolicy.class})
 public class MissingIdRetryTests {
 
 	private final Log logger = LogFactory.getLog(MissingIdRetryTests.class);
@@ -124,7 +122,7 @@ public class MissingIdRetryTests {
 		}
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Test
 	public void testWithId() throws Exception {
 		// 2 messages; each retried twice by retry interceptor
@@ -145,7 +143,7 @@ public class MissingIdRetryTests {
 		retryTemplate.setRetryContextCache(cache);
 		fb.setRetryOperations(retryTemplate);
 		fb.setMessageRecoverer(new RejectAndDontRequeueRecoverer(() ->
-			"Don't requeue after " + RetrySynchronizationManager.getContext().getRetryCount() + " attempts"));
+	"Don't requeue after " + RetrySynchronizationManager.getContext().getRetryCount() + " attempts"));
 
 		Advice retryInterceptor = fb.getObject();
 		container.setAdviceChain(retryInterceptor);
@@ -178,7 +176,7 @@ public class MissingIdRetryTests {
 		}
 	}
 
-	@SuppressWarnings({ "rawtypes", "resource", "unchecked" })
+	@SuppressWarnings({"rawtypes", "resource", "unchecked"})
 	@Test
 	public void testWithIdAndSuccess() throws Exception {
 		// 2 messages; each retried twice by retry interceptor

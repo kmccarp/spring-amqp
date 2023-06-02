@@ -64,8 +64,7 @@ import org.springframework.util.Assert;
  * @author Dave Syer
  */
 @SuppressWarnings("serial")
-public class RabbitTransactionManager extends AbstractPlatformTransactionManager
-		implements ResourceTransactionManager, InitializingBean {
+public class RabbitTransactionManager extends AbstractPlatformTransactionManagerimplements ResourceTransactionManager, InitializingBean {
 
 	private ConnectionFactory connectionFactory;
 
@@ -125,7 +124,7 @@ public class RabbitTransactionManager extends AbstractPlatformTransactionManager
 	protected Object doGetTransaction() {
 		RabbitTransactionObject txObject = new RabbitTransactionObject();
 		txObject.setResourceHolder((RabbitResourceHolder) TransactionSynchronizationManager
-				.getResource(getConnectionFactory()));
+	.getResource(getConnectionFactory()));
 		return txObject;
 	}
 

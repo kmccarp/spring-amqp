@@ -39,7 +39,7 @@ import com.rabbitmq.stream.MessageHandler.Context;
  *
  * @author Gary Russell
  *
- * @see RetryOperations#execute(org.springframework.retry.RetryCallback,org.springframework.retry.RecoveryCallback)
+ * @see RetryOperations#execute(org.springframework.retry.RetryCallback, org.springframework.retry.RecoveryCallback)
  */
 public class StreamRetryOperationsInterceptorFactoryBean extends StatelessRetryOperationsInterceptorFactoryBean {
 

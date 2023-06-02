@@ -65,7 +65,7 @@ public class AmqpRejectAndDontRequeueException extends AmqpException {
 	 * @since 2.1.9
 	 */
 	public AmqpRejectAndDontRequeueException(@Nullable String message, boolean rejectManual,
-			@Nullable Throwable cause) {
+@Nullable Throwable cause) {
 
 		super(message, cause);
 		this.rejectManual = rejectManual;

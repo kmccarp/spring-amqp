@@ -129,11 +129,11 @@ public abstract class AbstractExchange extends AbstractDeclarable implements Exc
 	@Override
 	public String toString() {
 		return "Exchange [name=" + this.name +
-						 ", type=" + getType() +
-						 ", durable=" + this.durable +
-						 ", autoDelete=" + this.autoDelete +
-						 ", internal=" + this.internal +
-						 ", arguments="	+ getArguments() + "]";
+	", type=" + getType() +
+	", durable=" + this.durable +
+	", autoDelete=" + this.autoDelete +
+	", internal=" + this.internal +
+	", arguments="	+ getArguments() + "]";
 	}
 
 }

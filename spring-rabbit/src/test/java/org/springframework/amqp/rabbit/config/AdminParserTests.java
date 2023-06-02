@@ -96,7 +96,7 @@ public final class AdminParserTests {
 		}
 		assertThat(admin.isAutoStartup()).isEqualTo(this.expectedAutoStartup);
 		assertThat(admin.getRabbitTemplate().getConnectionFactory())
-				.isEqualTo(beanFactory.getBean(ConnectionFactory.class));
+	.isEqualTo(beanFactory.getBean(ConnectionFactory.class));
 
 		if (this.initialisedWithTemplate) {
 			assertThat(admin.getRabbitTemplate()).isEqualTo(beanFactory.getBean(RabbitTemplate.class));
@@ -113,7 +113,7 @@ public final class AdminParserTests {
 		try {
 			// Resource file name template: <class-name>-<contextIndex>-context.xml
 			ClassPathResource resource = new ClassPathResource(getClass().getSimpleName() + "-" + contextIndex
-					+ "-context.xml", getClass());
+		+ "-context.xml", getClass());
 			beanFactory = new DefaultListableBeanFactory();
 			XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 			reader.loadBeanDefinitions(resource);

@@ -35,7 +35,7 @@ public class AnnotationDrivenNamespaceTests extends AbstractRabbitAnnotationDriv
 	@Test
 	public void rabbitListenerIsRepeatable() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"annotation-driven-no-rabbit-admin-repeatable-config.xml", getClass());
+	"annotation-driven-no-rabbit-admin-repeatable-config.xml", getClass());
 		testRabbitListenerRepeatable(context);
 	}
 

@@ -36,7 +36,7 @@ public class RabbitListenerTestSelector extends RabbitListenerConfigurationSelec
 
 	@Override
 	public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-		return new String[] { RabbitListenerTestBootstrap.class.getName() };
+		return new String[]{RabbitListenerTestBootstrap.class.getName()};
 	}
 
 }

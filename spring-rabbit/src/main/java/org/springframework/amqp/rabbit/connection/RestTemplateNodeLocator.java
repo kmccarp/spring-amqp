@@ -52,11 +52,11 @@ public class RestTemplateNodeLocator implements NodeLocator<RestTemplateHolder> 
 		return new RestTemplateHolder(userName, password);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	@Nullable
 	public Map<String, Object> restCall(RestTemplateHolder client, String baseUri, String vhost, String queue)
-			throws URISyntaxException {
+throws URISyntaxException {
 
 		if (client.template == null) {
 			URI uri = new URI(baseUri);
@@ -78,7 +78,7 @@ public class RestTemplateNodeLocator implements NodeLocator<RestTemplateHolder> 
 			client.template.getInterceptors().add(new BasicAuthenticationInterceptor(client.userName, client.password));
 		}
 		URI uri = new URI(baseUri)
-				.resolve("/api/queues/" + UriUtils.encodePathSegment(vhost, StandardCharsets.UTF_8) + "/" + queue);
+	.resolve("/api/queues/" + UriUtils.encodePathSegment(vhost, StandardCharsets.UTF_8) + "/" + queue);
 		ResponseEntity<Map> response = client.template.exchange(uri, HttpMethod.GET, null, Map.class);
 		return response.getStatusCode().equals(HttpStatus.OK) ? response.getBody() : null;
 	}

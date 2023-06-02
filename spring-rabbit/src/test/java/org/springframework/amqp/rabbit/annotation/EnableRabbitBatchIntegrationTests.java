@@ -53,7 +53,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
  */
 @SpringJUnitConfig
 @DirtiesContext
-@RabbitAvailable(queues = { "batch.1", "batch.2", "batch.3", "batch.4", "batch.5" })
+@RabbitAvailable(queues = {"batch.1", "batch.2", "batch.3", "batch.4", "batch.5"})
 public class EnableRabbitBatchIntegrationTests {
 
 	@Autowired
@@ -80,12 +80,12 @@ public class EnableRabbitBatchIntegrationTests {
 		assertThat(this.listener.fooMessages).hasSize(2);
 		assertThat(this.listener.fooMessages.get(0).getPayload().getBar()).isEqualTo("foo");
 		assertThat(this.listener.fooMessages.get(0).getHeaders().get(AmqpHeaders.LAST_IN_BATCH, Boolean.class))
-				.isFalse();
+	.isFalse();
 		assertThat(this.listener.fooMessages.get(1).getPayload().getBar()).isEqualTo("bar");
 		assertThat(this.listener.fooMessages.get(1).getHeaders().get(AmqpHeaders.LAST_IN_BATCH, Boolean.class))
-				.isTrue();
+	.isTrue();
 		assertThat(this.listener.fooMessages.get(1).getHeaders().get(AmqpHeaders.BATCH_SIZE, Integer.class))
-				.isEqualTo(2);
+	.isEqualTo(2);
 	}
 
 	@Test
@@ -111,9 +111,9 @@ public class EnableRabbitBatchIntegrationTests {
 		Foo payload = (Foo) new SimpleMessageConverter().fromMessage(this.listener.nativeMessages.get(0));
 		assertThat(payload.getBar()).isEqualTo("foo");
 		assertThat(this.listener.nativeMessages.get(1).getMessageProperties()
-				.getHeaders()
-				.get(AmqpHeaders.BATCH_SIZE))
-				.isEqualTo(2);
+	.getHeaders()
+	.get(AmqpHeaders.BATCH_SIZE))
+	.isEqualTo(2);
 	}
 
 	@Test
@@ -164,7 +164,7 @@ public class EnableRabbitBatchIntegrationTests {
 		@Bean
 		public BatchingRabbitTemplate template() {
 			return new BatchingRabbitTemplate(connectionFactory(), new SimpleBatchingStrategy(2, 10_000, 10_000L),
-					scheduler());
+		scheduler());
 		}
 
 		@Bean

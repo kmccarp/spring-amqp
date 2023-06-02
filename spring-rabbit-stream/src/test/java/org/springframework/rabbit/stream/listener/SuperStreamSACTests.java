@@ -61,8 +61,8 @@ public class SuperStreamSACTests extends AbstractTestContainerTests {
 
 	@Test
 	void superStream(@Autowired ApplicationContext context, @Autowired RabbitTemplate template,
-			@Autowired Environment env, @Autowired Config config, @Autowired RabbitAdmin admin,
-			@Autowired Declarables declarables) throws InterruptedException {
+@Autowired Environment env, @Autowired Config config, @Autowired RabbitAdmin admin,
+@Autowired Declarables declarables) throws InterruptedException {
 
 		template.getConnectionFactory().createConnection();
 		StreamListenerContainer container1 = context.getBean(StreamListenerContainer.class, env, "one");
@@ -115,15 +115,15 @@ public class SuperStreamSACTests extends AbstractTestContainerTests {
 		@Bean
 		SuperStream superStream() {
 			return new SuperStream("ss.sac.test", 3, (q, i) -> IntStream.range(0, i)
-					.mapToObj(j -> "rk-" + j)
-					.collect(Collectors.toList()));
+		.mapToObj(j -> "rk-" + j)
+		.collect(Collectors.toList()));
 		}
 
 		@Bean
 		static Environment environment() {
 			return Environment.builder()
-					.addressResolver(add -> new Address("localhost", streamPort()))
-					.build();
+		.addressResolver(add -> new Address("localhost", streamPort()))
+		.build();
 		}
 
 		@Bean

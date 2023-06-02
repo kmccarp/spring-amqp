@@ -94,11 +94,11 @@ public class LocalizedQueueConnectionFactory implements ConnectionFactory, Routi
 	 * @param sslPropertiesLocation the SSL properties location.
 	 */
 	public LocalizedQueueConnectionFactory(ConnectionFactory defaultConnectionFactory,
-			Map<String, String> nodeToAddress, String[] adminUris, String vhost, String username, String password,
-			boolean useSSL, Resource sslPropertiesLocation) {
+Map<String, String> nodeToAddress, String[] adminUris, String vhost, String username, String password,
+boolean useSSL, Resource sslPropertiesLocation) {
 
 		this(defaultConnectionFactory, adminUris, nodeToAddress, vhost, username, password, useSSL,
-				sslPropertiesLocation, null, null, null, null);
+	sslPropertiesLocation, null, null, null, null);
 	}
 
 	/**
@@ -116,12 +116,12 @@ public class LocalizedQueueConnectionFactory implements ConnectionFactory, Routi
 	 * @param trustStorePassPhrase the pass phrase for the trust store.
 	 */
 	public LocalizedQueueConnectionFactory(ConnectionFactory defaultConnectionFactory,
-			Map<String, String> nodeToAddress, String[] adminUris, String vhost, String username, String password,
-			boolean useSSL, String keyStore, String trustStore,
-			String keyStorePassPhrase, String trustStorePassPhrase) {
+Map<String, String> nodeToAddress, String[] adminUris, String vhost, String username, String password,
+boolean useSSL, String keyStore, String trustStore,
+String keyStorePassPhrase, String trustStorePassPhrase) {
 
 		this(defaultConnectionFactory, adminUris, nodeToAddress, vhost, username, password, useSSL, null,
-				keyStore, trustStore, keyStorePassPhrase, trustStorePassPhrase);
+	keyStore, trustStore, keyStorePassPhrase, trustStorePassPhrase);
 	}
 
 	/**
@@ -138,11 +138,11 @@ public class LocalizedQueueConnectionFactory implements ConnectionFactory, Routi
 	 * @param sslPropertiesLocation the SSL properties location.
 	 */
 	public LocalizedQueueConnectionFactory(ConnectionFactory defaultConnectionFactory, String[] addresses,
-			String[] adminUris, String[] nodes, String vhost, String username, String password, boolean useSSL,
-			@Nullable Resource sslPropertiesLocation) {
+String[] adminUris, String[] nodes, String vhost, String username, String password, boolean useSSL,
+@Nullable Resource sslPropertiesLocation) {
 
 		this(defaultConnectionFactory, adminUris, nodesAddressesToMap(nodes, addresses), vhost, username, password,
-				useSSL, sslPropertiesLocation, null, null, null, null);
+	useSSL, sslPropertiesLocation, null, null, null, null);
 	}
 
 	/**
@@ -161,18 +161,18 @@ public class LocalizedQueueConnectionFactory implements ConnectionFactory, Routi
 	 * @param trustStorePassPhrase the pass phrase for the trust store.
 	 */
 	public LocalizedQueueConnectionFactory(ConnectionFactory defaultConnectionFactory,
-			String[] addresses, String[] adminUris, String[] nodes, String vhost,
-			String username, String password, boolean useSSL, String keyStore, String trustStore,
-			String keyStorePassPhrase, String trustStorePassPhrase) {
+String[] addresses, String[] adminUris, String[] nodes, String vhost,
+String username, String password, boolean useSSL, String keyStore, String trustStore,
+String keyStorePassPhrase, String trustStorePassPhrase) {
 
 		this(defaultConnectionFactory, adminUris, nodesAddressesToMap(nodes, addresses), vhost, username, password,
-				useSSL, null, keyStore, trustStore, keyStorePassPhrase, trustStorePassPhrase);
+	useSSL, null, keyStore, trustStore, keyStorePassPhrase, trustStorePassPhrase);
 	}
 
 	private LocalizedQueueConnectionFactory(ConnectionFactory defaultConnectionFactory, String[] adminUris,
-			Map<String, String> nodeToAddress, String vhost, String username, String password, boolean useSSL,
-			@Nullable Resource sslPropertiesLocation, @Nullable String keyStore, @Nullable String trustStore,
-			@Nullable String keyStorePassPhrase, @Nullable String trustStorePassPhrase) {
+Map<String, String> nodeToAddress, String vhost, String username, String password, boolean useSSL,
+@Nullable Resource sslPropertiesLocation, @Nullable String keyStore, @Nullable String trustStore,
+@Nullable String keyStorePassPhrase, @Nullable String trustStorePassPhrase) {
 
 		Assert.notNull(defaultConnectionFactory, "'defaultConnectionFactory' cannot be null");
 		this.defaultConnectionFactory = defaultConnectionFactory;
@@ -192,10 +192,10 @@ public class LocalizedQueueConnectionFactory implements ConnectionFactory, Routi
 
 	private static Map<String, String> nodesAddressesToMap(String[] nodes, String[] addresses) {
 		Assert.isTrue(addresses.length == nodes.length,
-				"'addresses' and 'nodes' properties must have equal length");
+	"'addresses' and 'nodes' properties must have equal length");
 		return IntStream.range(0, addresses.length)
-			.mapToObj(i -> new SimpleImmutableEntry<>(nodes[i], addresses[i]))
-			.collect(Collectors.toMap(SimpleImmutableEntry::getKey, SimpleImmutableEntry::getValue));
+	.mapToObj(i -> new SimpleImmutableEntry<>(nodes[i], addresses[i]))
+	.collect(Collectors.toMap(SimpleImmutableEntry::getKey, SimpleImmutableEntry::getValue));
 	}
 
 	/**
@@ -253,7 +253,7 @@ public class LocalizedQueueConnectionFactory implements ConnectionFactory, Routi
 		String queue = ((String) key);
 		queue = queue.substring(1, queue.length() - 1);
 		Assert.isTrue(!queue.contains(","),
-				() -> "Cannot use LocalizedQueueConnectionFactory with more than one queue: " + key);
+	() -> "Cannot use LocalizedQueueConnectionFactory with more than one queue: " + key);
 		ConnectionFactory connectionFactory = determineConnectionFactory(queue);
 		if (connectionFactory == null) {
 			return this.defaultConnectionFactory;
@@ -266,14 +266,14 @@ public class LocalizedQueueConnectionFactory implements ConnectionFactory, Routi
 	@Nullable
 	private ConnectionFactory determineConnectionFactory(String queue) {
 		ConnectionFactory cf = this.nodeLocator.locate(this.adminUris, this.nodeToAddress, this.vhost, this.username,
-				this.password, queue, this::nodeConnectionFactory);
+	this.password, queue, this::nodeConnectionFactory);
 		if (cf == null) {
 			this.logger.warn("Failed to determine queue location for: " + queue + ", using default connection factory");
 		}
 		return cf;
 	}
 
-	private synchronized ConnectionFactory nodeConnectionFactory(String queue, String node, String address)  {
+	private synchronized ConnectionFactory nodeConnectionFactory(String queue, String node, String address) {
 		if (this.logger.isInfoEnabled()) {
 			this.logger.info("Queue: " + queue + " is on node: " + node + " at: " + address);
 		}

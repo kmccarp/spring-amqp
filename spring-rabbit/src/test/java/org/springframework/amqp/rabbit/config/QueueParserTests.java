@@ -182,8 +182,8 @@ public class QueueParserTests {
 		DefaultListableBeanFactory bf = new DefaultListableBeanFactory();
 		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(bf);
 		assertThatExceptionOfType(BeanDefinitionStoreException.class).isThrownBy(() ->
-			reader.loadBeanDefinitions(new ClassPathResource(getClass().getSimpleName()
-				+ "IllegalAnonymous-context.xml", getClass())));
+	reader.loadBeanDefinitions(new ClassPathResource(getClass().getSimpleName()
++ "IllegalAnonymous-context.xml", getClass())));
 	}
 
 }

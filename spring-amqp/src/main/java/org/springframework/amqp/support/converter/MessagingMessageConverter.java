@@ -102,16 +102,16 @@ public class MessagingMessageConverter implements MessageConverter, Initializing
 
 	@Override
 	public org.springframework.amqp.core.Message toMessage(Object object, MessageProperties messageProperties)
-			throws MessageConversionException {
+throws MessageConversionException {
 
 		if (!(object instanceof Message)) {
 			throw new IllegalArgumentException("Could not convert [" + object + "] - only [" +
-					Message.class.getName() + "] is handled by this converter");
+		Message.class.getName() + "] is handled by this converter");
 		}
 		Message<?> input = (Message<?>) object;
 		this.headerMapper.fromHeaders(input.getHeaders(), messageProperties);
 		org.springframework.amqp.core.Message amqpMessage = this.payloadConverter.toMessage(
-				input.getPayload(), messageProperties);
+	input.getPayload(), messageProperties);
 		// Default previous behavior of mapper wins for backwards compatibility.
 		if (!Boolean.TRUE.equals(input.getHeaders().get(AmqpHeaders.CONTENT_TYPE_CONVERTER_WINS))) {
 			Object contentType = input.getHeaders().get(MessageHeaders.CONTENT_TYPE);
@@ -134,8 +134,8 @@ public class MessagingMessageConverter implements MessageConverter, Initializing
 			throw new MessageConversionException("Message converter returned null");
 		}
 		MessageBuilder<Object> builder = (convertedObject instanceof org.springframework.messaging.Message) ?
-				MessageBuilder.fromMessage((org.springframework.messaging.Message<Object>) convertedObject) : // NOSONAR
-				MessageBuilder.withPayload(convertedObject);
+	MessageBuilder.fromMessage((org.springframework.messaging.Message<Object>) convertedObject) : // NOSONAR
+	MessageBuilder.withPayload(convertedObject);
 		return builder.copyHeadersIfAbsent(mappedHeaders).build();
 	}
 

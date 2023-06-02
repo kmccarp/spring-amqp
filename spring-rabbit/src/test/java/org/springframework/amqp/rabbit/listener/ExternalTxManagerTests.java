@@ -103,8 +103,8 @@ public abstract class ExternalTxManagerTests {
 			consumerLatch.countDown();
 			return "consumerTag";
 		}).given(onlyChannel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-						any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
+any(Consumer.class));
 
 		final AtomicReference<CountDownLatch> commitLatch = new AtomicReference<>(new CountDownLatch(1));
 		willAnswer(invocation -> {
@@ -136,7 +136,7 @@ public abstract class ExternalTxManagerTests {
 		container.setTransactionManager(transactionManager);
 		RuleBasedTransactionAttribute transactionAttribute = new ListenerFailedRuleBasedTransactionAttribute();
 		List<RollbackRuleAttribute> rollbackRules =
-				Collections.singletonList(new NoRollbackRuleAttribute(IllegalStateException.class));
+	Collections.singletonList(new NoRollbackRuleAttribute(IllegalStateException.class));
 		transactionAttribute.setRollbackRules(rollbackRules);
 		container.setTransactionAttribute(transactionAttribute);
 		container.afterPropertiesSet();
@@ -144,7 +144,7 @@ public abstract class ExternalTxManagerTests {
 		assertThat(consumerLatch.await(10, TimeUnit.SECONDS)).isTrue();
 
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 
 		assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
 
@@ -158,7 +158,7 @@ public abstract class ExternalTxManagerTests {
 		verify(onlyChannel).basicAck(anyLong(), anyBoolean());
 		verify(onlyChannel).txCommit();
 		verify(onlyChannel).basicPublish(anyString(), anyString(), anyBoolean(),
-				any(BasicProperties.class), any(byte[].class));
+	any(BasicProperties.class), any(byte[].class));
 
 		// verify close() was never called on the channel
 		DirectFieldAccessor dfa = new DirectFieldAccessor(cachingConnectionFactory);
@@ -173,7 +173,7 @@ public abstract class ExternalTxManagerTests {
 		});
 		commitLatch.set(new CountDownLatch(1));
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 		assertThat(transactionManager.latch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(commitLatch.get().await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(transactionManager.rolledBack).isTrue();
@@ -188,7 +188,7 @@ public abstract class ExternalTxManagerTests {
 		});
 		commitLatch.set(new CountDownLatch(1));
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 		assertThat(transactionManager.latch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(commitLatch.get().await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(transactionManager.committed).isTrue();
@@ -203,7 +203,7 @@ public abstract class ExternalTxManagerTests {
 		commitLatch.set(new CountDownLatch(1));
 		rollbackLatch.set(new CountDownLatch(1));
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 		assertThat(transactionManager.latch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(transactionManager.rolledBack).isTrue();
 		assertThat(rollbackLatch.get().await(10, TimeUnit.SECONDS)).isTrue();
@@ -219,7 +219,7 @@ public abstract class ExternalTxManagerTests {
 		});
 		commitLatch.set(new CountDownLatch(1));
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 		assertThat(transactionManager.latch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(commitLatch.get().await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(transactionManager.committed).isTrue();
@@ -277,8 +277,8 @@ public abstract class ExternalTxManagerTests {
 			consumerLatch.countDown();
 			return "consumerTag";
 		}).given(channel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-						any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
+any(Consumer.class));
 
 		final CountDownLatch rollbackLatch = new CountDownLatch(1);
 		willAnswer(invocation -> {
@@ -303,8 +303,8 @@ public abstract class ExternalTxManagerTests {
 		container.setMessageListener(message -> {
 			latch.countDown();
 			throw expectRequeue
-					? new RuntimeException("force rollback")
-					: new AmqpRejectAndDontRequeueException("force rollback");
+		? new RuntimeException("force rollback")
+		: new AmqpRejectAndDontRequeueException("force rollback");
 		});
 		container.setQueueNames("queue");
 		container.setChannelTransacted(true);
@@ -315,7 +315,7 @@ public abstract class ExternalTxManagerTests {
 		assertThat(consumerLatch.await(10, TimeUnit.SECONDS)).isTrue();
 
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 
 		assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
 
@@ -375,8 +375,8 @@ public abstract class ExternalTxManagerTests {
 			consumerLatch.countDown();
 			return "consumerTag";
 		}).given(channel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-						any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
+any(Consumer.class));
 
 		final CountDownLatch commitLatch = new CountDownLatch(1);
 		willAnswer(invocation -> {
@@ -404,7 +404,7 @@ public abstract class ExternalTxManagerTests {
 		assertThat(consumerLatch.await(10, TimeUnit.SECONDS)).isTrue();
 
 		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(),
-				new byte[] { 0 });
+	new byte[]{0});
 
 		assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
 
@@ -437,18 +437,18 @@ public abstract class ExternalTxManagerTests {
 		given(templateChannel.isOpen()).willReturn(true);
 
 		final CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(
-				listenerConnectionFactory);
+	listenerConnectionFactory);
 		ExecutorService mockExec = mock(ExecutorService.class);
 		cachingConnectionFactory.setExecutor(mockExec);
 		final CachingConnectionFactory cachingTemplateConnectionFactory = new CachingConnectionFactory(
-				templateConnectionFactory);
+	templateConnectionFactory);
 		cachingTemplateConnectionFactory.setExecutor(mockExec);
 
 		given(listenerConnectionFactory.newConnection(any(ExecutorService.class), anyString()))
-				.willReturn(listenerConnection);
+	.willReturn(listenerConnection);
 		given(listenerConnection.isOpen()).willReturn(true);
 		given(templateConnectionFactory.newConnection(any(ExecutorService.class), anyString()))
-				.willReturn(templateConnection);
+	.willReturn(templateConnection);
 		given(templateConnection.isOpen()).willReturn(true);
 		given(templateConnection.createChannel()).willReturn(templateChannel);
 
@@ -464,7 +464,7 @@ public abstract class ExternalTxManagerTests {
 			consumerLatch.countDown();
 			return "consumerTag";
 		}).given(listenerChannel)
-			.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(), any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(), any(Consumer.class));
 
 		final CountDownLatch commitLatch = new CountDownLatch(2);
 		willAnswer(invocation -> {
@@ -493,7 +493,7 @@ public abstract class ExternalTxManagerTests {
 		container.start();
 		assertThat(consumerLatch.await(10, TimeUnit.SECONDS)).isTrue();
 
-		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(), new byte[] {0});
+		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(), new byte[]{0});
 
 		assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
 
@@ -507,7 +507,7 @@ public abstract class ExternalTxManagerTests {
 		assertThat(commitLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		verify(listenerChannel).txCommit();
 		verify(templateChannel).basicPublish(Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
-				Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
+	Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
 		verify(templateChannel).txCommit();
 
 		// verify close() was never called on the channel
@@ -548,7 +548,7 @@ public abstract class ExternalTxManagerTests {
 			consumerLatch.countDown();
 			return "consumerTag";
 		}).given(onlyChannel)
-			.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(), any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(), any(Consumer.class));
 
 		final CountDownLatch commitLatch = new CountDownLatch(1);
 		willAnswer(invocation -> {
@@ -575,7 +575,7 @@ public abstract class ExternalTxManagerTests {
 		container.start();
 		assertThat(consumerLatch.await(10, TimeUnit.SECONDS)).isTrue();
 
-		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(), new byte[] {0});
+		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(), new byte[]{0});
 
 		assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
 
@@ -588,7 +588,7 @@ public abstract class ExternalTxManagerTests {
 		assertThat(commitLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		verify(onlyChannel).txCommit();
 		verify(onlyChannel).basicPublish(Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
-				Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
+	Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
 
 		// verify close() was never called on the channel
 		verify(onlyChannel, Mockito.never()).close();
@@ -628,7 +628,7 @@ public abstract class ExternalTxManagerTests {
 			consumerLatch.countDown();
 			return "consumerTag";
 		}).given(onlyChannel)
-			.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(), any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(), any(Consumer.class));
 
 		final CountDownLatch commitLatch = new CountDownLatch(1);
 		willAnswer(invocation -> {
@@ -656,7 +656,7 @@ public abstract class ExternalTxManagerTests {
 		container.start();
 		assertThat(consumerLatch.await(10, TimeUnit.SECONDS)).isTrue();
 
-		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(), new byte[] {0});
+		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(), new byte[]{0});
 
 		assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
 
@@ -669,7 +669,7 @@ public abstract class ExternalTxManagerTests {
 		assertThat(commitLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		verify(onlyChannel).txCommit();
 		verify(onlyChannel).basicPublish(Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
-				Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
+	Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
 
 		// verify close() was never called on the channel
 		verify(onlyChannel, Mockito.never()).close();
@@ -709,8 +709,8 @@ public abstract class ExternalTxManagerTests {
 			consumerLatch.countDown();
 			return "consumerTag";
 		}).given(onlyChannel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
-						any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(), anyMap(),
+any(Consumer.class));
 
 		final CountDownLatch commitLatch = new CountDownLatch(1);
 		willAnswer(invocation -> {
@@ -735,7 +735,7 @@ public abstract class ExternalTxManagerTests {
 		container.start();
 		assertThat(consumerLatch.await(10, TimeUnit.SECONDS)).isTrue();
 
-		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(), new byte[] {0});
+		consumer.get().handleDelivery("qux", new Envelope(1, false, "foo", "bar"), new BasicProperties(), new byte[]{0});
 
 		assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
 
@@ -748,7 +748,7 @@ public abstract class ExternalTxManagerTests {
 		assertThat(commitLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		verify(onlyChannel).txCommit();
 		verify(onlyChannel).basicPublish(Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean(),
-				Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
+	Mockito.any(BasicProperties.class), Mockito.any(byte[].class));
 
 		// verify close() was never called on the channel
 		DirectFieldAccessor dfa = new DirectFieldAccessor(cachingConnectionFactory);
@@ -759,7 +759,7 @@ public abstract class ExternalTxManagerTests {
 	}
 
 	private Answer<Channel> ensureOneChannelAnswer(final Channel onlyChannel,
-			final AtomicReference<Exception> tooManyChannels) {
+final AtomicReference<Exception> tooManyChannels) {
 		final AtomicBoolean done = new AtomicBoolean();
 		return invocation -> {
 			if (!done.get()) {

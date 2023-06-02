@@ -44,7 +44,7 @@ public class ListenerContainerConsumerFailedEvent extends AmqpEvent {
 	 * @param fatal true if the startup failure was fatal (will not be retried).
 	 */
 	public ListenerContainerConsumerFailedEvent(Object source, String reason,
-			@Nullable Throwable throwable, boolean fatal) {
+@Nullable Throwable throwable, boolean fatal) {
 		super(source);
 		this.reason = reason;
 		this.fatal = fatal;
@@ -66,7 +66,7 @@ public class ListenerContainerConsumerFailedEvent extends AmqpEvent {
 	@Override
 	public String toString() {
 		return "ListenerContainerConsumerFailedEvent [reason=" + this.reason + ", fatal=" + this.fatal + ", throwable="
-				+ this.throwable + ", container=" + this.source + "]";
+	+ this.throwable + ", container=" + this.source + "]";
 	}
 
 }

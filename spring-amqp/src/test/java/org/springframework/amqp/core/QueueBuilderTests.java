@@ -64,9 +64,9 @@ public class QueueBuilderTests {
 	@Test
 	public void addsArguments() {
 		Queue queue = QueueBuilder.durable("name")
-				.withArgument("key1", "value1")
-				.withArgument("key2", "value2")
-				.build();
+	.withArgument("key1", "value1")
+	.withArgument("key2", "value2")
+	.build();
 
 		assertThat(queue.getArguments()).containsEntry("key1", "value1");
 		assertThat(queue.getArguments()).containsEntry("key2", "value2");

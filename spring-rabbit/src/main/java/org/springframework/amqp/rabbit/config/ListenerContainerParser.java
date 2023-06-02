@@ -72,7 +72,7 @@ class ListenerContainerParser implements BeanDefinitionParser {
 	@Override
 	public BeanDefinition parse(Element element, ParserContext parserContext) {
 		CompositeComponentDefinition compositeDef = new CompositeComponentDefinition(element.getTagName(),
-				parserContext.extractSource(element));
+	parserContext.extractSource(element));
 		parserContext.pushContainingComponent(compositeDef);
 
 		String group = element.getAttribute(GROUP_ATTRIBUTE);
@@ -91,12 +91,12 @@ class ListenerContainerParser implements BeanDefinitionParser {
 			}
 			ConstructorArgumentValues constructorArgumentValues = groupDef.getConstructorArgumentValues();
 			if (!ArrayList.class.getName().equals(groupDef.getBeanClassName())
-					|| constructorArgumentValues.getArgumentCount() != 1
-					|| constructorArgumentValues.getIndexedArgumentValue(0, ManagedList.class) == null) {
+		|| constructorArgumentValues.getArgumentCount() != 1
+		|| constructorArgumentValues.getIndexedArgumentValue(0, ManagedList.class) == null) {
 				parserContext.getReaderContext().error("Unexpected configuration for bean " + group, element);
 			}
 			containerList = (ManagedList<RuntimeBeanReference>) constructorArgumentValues
-					.getIndexedArgumentValue(0, ManagedList.class).getValue(); // NOSONAR never null
+		.getIndexedArgumentValue(0, ManagedList.class).getValue(); // NOSONAR never null
 		}
 
 		List<Element> childElements = DomUtils.getChildElementsByTagName(element, LISTENER_ELEMENT);
@@ -109,7 +109,7 @@ class ListenerContainerParser implements BeanDefinitionParser {
 	}
 
 	private void parseListener(Element listenerEle, Element containerEle, ParserContext parserContext, // NOSONAR complexity
-			ManagedList<RuntimeBeanReference> containerList) {
+ManagedList<RuntimeBeanReference> containerList) {
 		RootBeanDefinition listenerDef = new RootBeanDefinition();
 		listenerDef.setSource(parserContext.extractSource(listenerEle));
 
@@ -126,7 +126,7 @@ class ListenerContainerParser implements BeanDefinitionParser {
 			method = listenerEle.getAttribute(METHOD_ATTRIBUTE);
 			if (!StringUtils.hasText(method)) {
 				parserContext.getReaderContext()
-						.error("Listener 'method' attribute contains empty value.", listenerEle);
+			.error("Listener 'method' attribute contains empty value.", listenerEle);
 			}
 		}
 		listenerDef.getPropertyValues().add("defaultListenerMethod", method);
@@ -135,7 +135,7 @@ class ListenerContainerParser implements BeanDefinitionParser {
 			String messageConverter = containerEle.getAttribute(MESSAGE_CONVERTER_ATTRIBUTE);
 			if (!StringUtils.hasText(messageConverter)) {
 				parserContext.getReaderContext().error(
-						"Listener container 'message-converter' attribute contains empty value.", containerEle);
+			"Listener container 'message-converter' attribute contains empty value.", containerEle);
 			}
 			else {
 				listenerDef.getPropertyValues().add("messageConverter", new RuntimeBeanReference(messageConverter));
@@ -164,17 +164,17 @@ class ListenerContainerParser implements BeanDefinitionParser {
 
 		String childElementId = listenerEle.getAttribute(ID_ATTRIBUTE);
 		String containerBeanName = StringUtils.hasText(childElementId) ? childElementId :
-			BeanDefinitionReaderUtils.generateBeanName(containerDef, parserContext.getRegistry());
+	BeanDefinitionReaderUtils.generateBeanName(containerDef, parserContext.getRegistry());
 
 		if (!NamespaceUtils.isAttributeDefined(listenerEle, QUEUE_NAMES_ATTRIBUTE)
-				&& !NamespaceUtils.isAttributeDefined(listenerEle, QUEUES_ATTRIBUTE)) {
+	&& !NamespaceUtils.isAttributeDefined(listenerEle, QUEUES_ATTRIBUTE)) {
 			parserContext.getReaderContext().error("Listener 'queue-names' or 'queues' attribute must be provided.",
-					listenerEle);
+		listenerEle);
 		}
 		if (NamespaceUtils.isAttributeDefined(listenerEle, QUEUE_NAMES_ATTRIBUTE)
-				&& NamespaceUtils.isAttributeDefined(listenerEle, QUEUES_ATTRIBUTE)) {
+	&& NamespaceUtils.isAttributeDefined(listenerEle, QUEUES_ATTRIBUTE)) {
 			parserContext.getReaderContext().error("Listener 'queue-names' or 'queues' attribute must be provided but not both.",
-					listenerEle);
+		listenerEle);
 		}
 
 		String queueNames = listenerEle.getAttribute(QUEUE_NAMES_ATTRIBUTE);

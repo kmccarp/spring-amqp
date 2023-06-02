@@ -67,7 +67,7 @@ public class RepublishMessageRecovererWithConfirms extends RepublishMessageRecov
 	 * @param errorExchange the exchange.
 	 */
 	public RepublishMessageRecovererWithConfirms(RabbitTemplate errorTemplate, String errorExchange,
-			ConfirmType confirmType) {
+ConfirmType confirmType) {
 
 		this(errorTemplate, errorExchange, null, confirmType);
 	}
@@ -82,7 +82,7 @@ public class RepublishMessageRecovererWithConfirms extends RepublishMessageRecov
 	 * @param errorRoutingKey the routing key.
 	 */
 	public RepublishMessageRecovererWithConfirms(RabbitTemplate errorTemplate, String errorExchange,
-			String errorRoutingKey, ConfirmType confirmType) {
+String errorRoutingKey, ConfirmType confirmType) {
 
 		super(errorTemplate, errorExchange, errorRoutingKey);
 		this.template = errorTemplate;

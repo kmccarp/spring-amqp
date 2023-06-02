@@ -42,7 +42,7 @@ public class MultiRabbitListenerAnnotationBeanPostProcessor extends RabbitListen
 
 	@Override
 	protected Collection<Declarable> processAmqpListener(RabbitListener rabbitListener, Method method,
-			Object bean, String beanName) {
+Object bean, String beanName) {
 		final String rabbitAdmin = resolveMultiRabbitAdminName(rabbitListener);
 		final RabbitListener rabbitListenerRef = proxyIfAdminNotPresent(rabbitListener, rabbitAdmin);
 		final Collection<Declarable> declarables = super.processAmqpListener(rabbitListenerRef, method, bean, beanName);
@@ -59,8 +59,8 @@ public class MultiRabbitListenerAnnotationBeanPostProcessor extends RabbitListen
 			return rabbitListener;
 		}
 		return (RabbitListener) Proxy.newProxyInstance(
-				RabbitListener.class.getClassLoader(), new Class<?>[]{RabbitListener.class},
-				new RabbitListenerAdminReplacementInvocationHandler(rabbitListener, rabbitAdmin));
+	RabbitListener.class.getClassLoader(), new Class<?>[]{RabbitListener.class},
+	new RabbitListenerAdminReplacementInvocationHandler(rabbitListener, rabbitAdmin));
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class MultiRabbitListenerAnnotationBeanPostProcessor extends RabbitListen
 
 		@Override
 		public Object invoke(final Object proxy, final Method method, final Object[] args)
-				throws InvocationTargetException, IllegalAccessException {
+	throws InvocationTargetException, IllegalAccessException {
 			if (method.getName().equals("admin")) {
 				return this.admin;
 			}

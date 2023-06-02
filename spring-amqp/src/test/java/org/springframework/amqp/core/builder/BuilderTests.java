@@ -61,7 +61,7 @@ public class BuilderTests {
 	@Test
 	public void testExchangeBuilder() {
 		Exchange exchange = ExchangeBuilder.directExchange("foo").autoDelete().delayed().internal()
-				.withArgument("foo", "bar").build();
+	.withArgument("foo", "bar").build();
 		assertThat(exchange).isInstanceOf(DirectExchange.class);
 		assertThat(exchange.isAutoDelete()).isTrue();
 		assertThat(exchange.isDurable()).isTrue();

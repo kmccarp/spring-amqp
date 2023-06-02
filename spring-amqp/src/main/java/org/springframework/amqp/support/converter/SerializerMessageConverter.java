@@ -105,7 +105,7 @@ public class SerializerMessageConverter extends AllowedListDeserializingMessageC
 		if (this.deserializer.getClass().equals(DefaultDeserializer.class)) {
 			try {
 				this.defaultDeserializerClassLoader = (ClassLoader) new DirectFieldAccessor(deserializer)
-						.getPropertyValue("classLoader");
+			.getPropertyValue("classLoader");
 			}
 			catch (Exception e) {
 				// no-op
@@ -130,7 +130,7 @@ public class SerializerMessageConverter extends AllowedListDeserializingMessageC
 				content = asString(message, properties);
 			}
 			else if (contentType != null && contentType.equals(MessageProperties.CONTENT_TYPE_SERIALIZED_OBJECT)
-					|| this.ignoreContentType) {
+		|| this.ignoreContentType) {
 				content = deserialize(message);
 			}
 		}
@@ -170,17 +170,17 @@ public class SerializerMessageConverter extends AllowedListDeserializingMessageC
 
 	private Object deserialize(ByteArrayInputStream inputStream) throws IOException {
 		try (ObjectInputStream objectInputStream = new ConfigurableObjectInputStream(inputStream,
-					this.defaultDeserializerClassLoader) {
+	this.defaultDeserializerClassLoader) {
 
-				@Override
-				protected Class<?> resolveClass(ObjectStreamClass classDesc)
-						throws IOException, ClassNotFoundException {
-					Class<?> clazz = super.resolveClass(classDesc);
-					checkAllowedList(clazz);
-					return clazz;
-				}
+			@Override
+			protected Class<?> resolveClass(ObjectStreamClass classDesc)
+		throws IOException, ClassNotFoundException {
+				Class<?> clazz = super.resolveClass(classDesc);
+				checkAllowedList(clazz);
+				return clazz;
+			}
 
-			}) {
+		}) {
 			return objectInputStream.readObject();
 		}
 		catch (ClassNotFoundException ex) {
@@ -193,7 +193,7 @@ public class SerializerMessageConverter extends AllowedListDeserializingMessageC
 	 */
 	@Override
 	protected Message createMessage(Object object, MessageProperties messageProperties)
-			throws MessageConversionException {
+throws MessageConversionException {
 		byte[] bytes;
 		if (object instanceof String) {
 			try {

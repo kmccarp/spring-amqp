@@ -67,7 +67,7 @@ public class BatchingRabbitTemplate extends RabbitTemplate {
 	 * @since 2.2
 	 */
 	public BatchingRabbitTemplate(ConnectionFactory connectionFactory, BatchingStrategy batchingStrategy,
-			TaskScheduler scheduler) {
+TaskScheduler scheduler) {
 
 		super(connectionFactory);
 		this.batchingStrategy = batchingStrategy;
@@ -76,7 +76,7 @@ public class BatchingRabbitTemplate extends RabbitTemplate {
 
 	@Override
 	public synchronized void send(String exchange, String routingKey, Message message,
-			@Nullable CorrelationData correlationData) throws AmqpException {
+@Nullable CorrelationData correlationData) throws AmqpException {
 
 		if (correlationData != null) {
 			if (this.logger.isDebugEnabled()) {

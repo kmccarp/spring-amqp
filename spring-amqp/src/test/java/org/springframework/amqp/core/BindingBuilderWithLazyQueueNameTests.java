@@ -114,10 +114,10 @@ public class BindingBuilderWithLazyQueueNameTests {
 		CustomExchange customExchange = new CustomExchange("c");
 		String routingKey = "r";
 		Binding binding = BindingBuilder.//
-				bind(queue).//
-				to(customExchange).//
-				with(routingKey).//
-				and(Collections.<String, Object>singletonMap("k", argumentObject));
+	bind(queue).//
+	to(customExchange).//
+	with(routingKey).//
+	and(Collections.<String, Object>singletonMap("k", argumentObject));
 		assertThat(binding).isNotNull();
 		assertThat(binding.getArguments().get("k")).isEqualTo(argumentObject);
 		assertThat(binding.getExchange()).isEqualTo(customExchange.getName());

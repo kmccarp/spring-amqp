@@ -49,11 +49,11 @@ class RepublishMessageRecovererWithConfirmsIntegrationTests {
 	@Test
 	void testSimple() {
 		CachingConnectionFactory ccf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		ccf.setPublisherConfirmType(ConfirmType.SIMPLE);
 		RabbitTemplate template = new RabbitTemplate(ccf);
 		RepublishMessageRecovererWithConfirms recoverer = new RepublishMessageRecovererWithConfirms(template, "",
-				QUEUE, ConfirmType.SIMPLE);
+	QUEUE, ConfirmType.SIMPLE);
 		recoverer.recover(MessageBuilder.withBody("foo".getBytes()).build(), new RuntimeException());
 		Message received = template.receive(QUEUE, 10_000);
 		assertThat(received.getBody()).isEqualTo("foo".getBytes());
@@ -63,11 +63,11 @@ class RepublishMessageRecovererWithConfirmsIntegrationTests {
 	@Test
 	void testCorrelated() {
 		CachingConnectionFactory ccf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		ccf.setPublisherConfirmType(ConfirmType.CORRELATED);
 		RabbitTemplate template = new RabbitTemplate(ccf);
 		RepublishMessageRecovererWithConfirms recoverer = new RepublishMessageRecovererWithConfirms(template, "",
-				QUEUE, ConfirmType.CORRELATED);
+	QUEUE, ConfirmType.CORRELATED);
 		recoverer.recover(MessageBuilder.withBody("foo".getBytes()).build(), new RuntimeException());
 		Message received = template.receive(QUEUE, 10_000);
 		assertThat(received.getBody()).isEqualTo("foo".getBytes());
@@ -77,13 +77,13 @@ class RepublishMessageRecovererWithConfirmsIntegrationTests {
 	@Test
 	void testCorrelatedNotRoutable() {
 		CachingConnectionFactory ccf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		ccf.setPublisherConfirmType(ConfirmType.CORRELATED);
 		ccf.setPublisherReturns(true);
 		RabbitTemplate template = new RabbitTemplate(ccf);
 		template.setMandatory(true);
 		RepublishMessageRecovererWithConfirms recoverer = new RepublishMessageRecovererWithConfirms(template, "",
-				"bad.route", ConfirmType.CORRELATED);
+	"bad.route", ConfirmType.CORRELATED);
 		try {
 			recoverer.recover(MessageBuilder.withBody("foo".getBytes()).build(), new RuntimeException());
 			fail("Expected exception");
@@ -98,20 +98,20 @@ class RepublishMessageRecovererWithConfirmsIntegrationTests {
 	@Test
 	void testCorrelatedWithNack() {
 		CachingConnectionFactory ccf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		ccf.setPublisherConfirmType(ConfirmType.CORRELATED);
 		RabbitTemplate template = new RabbitTemplate(ccf);
 		RabbitAdmin admin = new RabbitAdmin(ccf);
 		Queue queue = QueueBuilder.durable(QUEUE + ".nack")
-				.maxLength(1)
-				.overflow(Overflow.rejectPublish)
-				.build();
+	.maxLength(1)
+	.overflow(Overflow.rejectPublish)
+	.build();
 		admin.declareQueue(queue);
 		RepublishMessageRecovererWithConfirms recoverer = new RepublishMessageRecovererWithConfirms(template, "",
-				queue.getName(), ConfirmType.CORRELATED);
+	queue.getName(), ConfirmType.CORRELATED);
 		recoverer.recover(MessageBuilder.withBody("foo".getBytes()).build(), new RuntimeException());
 		assertThatExceptionOfType(AmqpNackReceivedException.class).isThrownBy(() ->
-			recoverer.recover(MessageBuilder.withBody("foo".getBytes()).build(), new RuntimeException()));
+	recoverer.recover(MessageBuilder.withBody("foo".getBytes()).build(), new RuntimeException()));
 		admin.deleteQueue(queue.getName());
 		ccf.destroy();
 	}

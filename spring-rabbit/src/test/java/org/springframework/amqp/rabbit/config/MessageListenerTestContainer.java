@@ -27,8 +27,7 @@ import org.springframework.lang.Nullable;
  * @author Stephane Nicoll
  * @author Gary Russell
  */
-public class MessageListenerTestContainer
-		implements MessageListenerContainer, InitializingBean, DisposableBean {
+public class MessageListenerTestContainerimplements MessageListenerContainer, InitializingBean, DisposableBean {
 
 	private final RabbitListenerEndpoint endpoint;
 
@@ -127,7 +126,7 @@ public class MessageListenerTestContainer
 	public void destroy() {
 		if (!stopInvoked) {
 			throw new IllegalStateException("Stop should have been invoked before " +
-					"destroy on " + this);
+		"destroy on " + this);
 		}
 		destroyInvoked = true;
 	}

@@ -44,32 +44,32 @@ public class MessageBuilderTests {
 	public void fromBodyAndMessage() {
 		byte[] bytes = "foo".getBytes();
 		MessageProperties properties = this.setAll(MessagePropertiesBuilder.newInstance())
-				.setReplyTo("replyTo")
-				.setReplyToIfAbsent("foo")
-				.build();
+	.setReplyTo("replyTo")
+	.setReplyToIfAbsent("foo")
+	.build();
 		Message message1 = MessageBuilder.withBody(bytes)
-				.andProperties(properties)
-				.build();
+	.andProperties(properties)
+	.build();
 		assertThat(message1.getBody()).isSameAs(bytes);
 		assertThat(message1.getMessageProperties().getReplyTo()).isEqualTo("replyTo");
 
 		Message message2 = MessageBuilder.fromMessage(message1)
-				.setReplyTo("foo")
-				.build();
+	.setReplyTo("foo")
+	.build();
 		assertThat(message2.getBody()).isSameAs(bytes);
 		assertThat(message2.getMessageProperties()).isNotSameAs(message1.getMessageProperties());
 		assertThat(MessageBuilder.fromMessage(message2).setReplyTo("replyTo").build().getMessageProperties()).isEqualTo(message1.getMessageProperties());
 		assertThat(message2.getMessageProperties().getReplyTo()).isEqualTo("foo");
 
 		Message message3 = MessageBuilder.fromClonedMessage(message1)
-				.setReplyToIfAbsent("foo")
-				.build();
+	.setReplyToIfAbsent("foo")
+	.build();
 		assertThat(message3.getMessageProperties().getReplyTo()).isEqualTo("replyTo");
 
 		Message message4 = MessageBuilder.fromClonedMessage(message1)
-				.setReplyTo(null)
-				.setReplyToIfAbsent("foo")
-				.build();
+	.setReplyTo(null)
+	.setReplyToIfAbsent("foo")
+	.build();
 		assertThat(message4.getMessageProperties().getReplyTo()).isEqualTo("foo");
 
 	}
@@ -80,34 +80,34 @@ public class MessageBuilderTests {
 		MessageProperties properties = new MessageProperties();
 		Address replyTo = new Address("address");
 		Message message1 = MessageBuilder.withClonedBody(bytes)
-				.andProperties(this.setAll(MessagePropertiesBuilder.fromClonedProperties(properties))
-						.setReplyToAddress(replyTo)
-						.setReplyToAddressIfAbsent(new Address("addressxxxx"))
-						.build())
-				.build();
+	.andProperties(this.setAll(MessagePropertiesBuilder.fromClonedProperties(properties))
+.setReplyToAddress(replyTo)
+.setReplyToAddressIfAbsent(new Address("addressxxxx"))
+.build())
+	.build();
 		assertThat(message1.getBody()).isNotSameAs(bytes);
 		assertThat(Arrays.equals(bytes, message1.getBody())).isTrue();
 		assertThat(message1.getMessageProperties().getReplyToAddress().toString()).isEqualTo(replyTo.toString());
 
 		Address foo = new Address("foo");
 		Message message2 = MessageBuilder.fromClonedMessage(message1)
-				.setReplyToAddress(foo)
-				.build();
+	.setReplyToAddress(foo)
+	.build();
 		assertThat(message2.getBody()).isNotSameAs(message1.getBody());
 		assertThat(Arrays.equals(bytes, message2.getBody())).isTrue();
 		assertThat(MessageBuilder.fromMessage(message2)
-				.setReplyToAddress(replyTo).build().getMessageProperties()).isEqualTo(message1.getMessageProperties());
+	.setReplyToAddress(replyTo).build().getMessageProperties()).isEqualTo(message1.getMessageProperties());
 		assertThat(message2.getMessageProperties().getReplyToAddress().toString()).isEqualTo(foo.toString());
 
 		Message message3 = MessageBuilder.fromClonedMessage(message1)
-				.setReplyToAddressIfAbsent(foo)
-				.build();
+	.setReplyToAddressIfAbsent(foo)
+	.build();
 		assertThat(message3.getMessageProperties().getReplyToAddress().toString()).isEqualTo(replyTo.toString());
 
 		Message message4 = MessageBuilder.fromClonedMessage(message1)
-				.setReplyToAddress(null)
-				.setReplyToAddressIfAbsent(foo)
-				.build();
+	.setReplyToAddress(null)
+	.setReplyToAddressIfAbsent(foo)
+	.build();
 		assertThat(message4.getMessageProperties().getReplyToAddress().toString()).isEqualTo(foo.toString());
 	}
 
@@ -115,9 +115,9 @@ public class MessageBuilderTests {
 	public void fromBodyAndMessageRange() {
 		byte[] bytes = "foobar".getBytes();
 		Message message1 = MessageBuilder.withBody(bytes, 2, 5)
-				.andProperties(this.setAll(MessagePropertiesBuilder.newInstance())
-						.build())
-				.build();
+	.andProperties(this.setAll(MessagePropertiesBuilder.newInstance())
+.build())
+	.build();
 		assertThat(Arrays.equals("oba".getBytes(), message1.getBody())).isTrue();
 
 		Message message2 = MessageBuilder.fromClonedMessage(message1).build();
@@ -130,28 +130,28 @@ public class MessageBuilderTests {
 	public void copyProperties() {
 		byte[] bytes = "foo".getBytes();
 		Message message1 = MessageBuilder.withBody(bytes)
-				.andProperties(this.setAll(MessagePropertiesBuilder.newInstance())
-					.setReplyTo("replyTo")
-					.build())
-				.build();
+	.andProperties(this.setAll(MessagePropertiesBuilder.newInstance())
+.setReplyTo("replyTo")
+.build())
+	.build();
 		assertThat(message1.getBody()).isSameAs(bytes);
 
 		Message message2 = MessageBuilder.withBody("bar".getBytes())
-				.copyProperties(message1.getMessageProperties())
-				.build();
+	.copyProperties(message1.getMessageProperties())
+	.build();
 		assertThat(message2.getMessageProperties()).isNotSameAs(message1.getMessageProperties());
 		assertThat(message2.getMessageProperties()).isEqualTo(message1.getMessageProperties());
 
 		Message message3 = MessageBuilder.withBody("bar".getBytes())
-				.copyProperties(message1.getMessageProperties())
-				.removeHeader("foo")
-				.build();
+	.copyProperties(message1.getMessageProperties())
+	.removeHeader("foo")
+	.build();
 		assertThat(message3.getMessageProperties().getHeaders()).hasSize(2);
 
 		Message message4 = MessageBuilder.withBody("bar".getBytes())
-				.copyProperties(message1.getMessageProperties())
-				.removeHeaders()
-				.build();
+	.copyProperties(message1.getMessageProperties())
+	.removeHeaders()
+	.build();
 		assertThat(message4.getMessageProperties().getHeaders()).hasSize(0);
 	}
 
@@ -211,101 +211,101 @@ public class MessageBuilderTests {
 
 	private MessagePropertiesBuilder setAll(MessagePropertiesBuilder builder) {
 		builder.setAppId("appId")
-			.setClusterId("clusterId")
-			.setContentEncoding("contentEncoding")
-			.setContentType(MessageProperties.CONTENT_TYPE_TEXT_PLAIN)
-			.setContentLength(1)
-			.setCorrelationId("correlationId")
-			.setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT)
-			.setDeliveryTag(2L)
-			.setExpiration("expiration")
-			.setHeader("foo", "bar")
-			.copyHeaders(Collections.<String, Object>singletonMap("qux", "fiz"))
-			.copyHeaders(Collections.<String, Object>singletonMap("baz", "fuz"))
-			.setMessageCount(3)
-			.setMessageId("messageId")
-			.setPriority(4)
-			.setReceivedExchange("receivedExchange")
-			.setReceivedRoutingKey("receivedRoutingKey")
-			.setRedelivered(true)
-			.setTimestamp(new Date())
-			.setType("type")
-			.setUserId("userId");
+	.setClusterId("clusterId")
+	.setContentEncoding("contentEncoding")
+	.setContentType(MessageProperties.CONTENT_TYPE_TEXT_PLAIN)
+	.setContentLength(1)
+	.setCorrelationId("correlationId")
+	.setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT)
+	.setDeliveryTag(2L)
+	.setExpiration("expiration")
+	.setHeader("foo", "bar")
+	.copyHeaders(Collections.<String, Object>singletonMap("qux", "fiz"))
+	.copyHeaders(Collections.<String, Object>singletonMap("baz", "fuz"))
+	.setMessageCount(3)
+	.setMessageId("messageId")
+	.setPriority(4)
+	.setReceivedExchange("receivedExchange")
+	.setReceivedRoutingKey("receivedRoutingKey")
+	.setRedelivered(true)
+	.setTimestamp(new Date())
+	.setType("type")
+	.setUserId("userId");
 		return builder;
 	}
 
 	private MessagePropertiesBuilder setAllIfAbsent(MessagePropertiesBuilder builder) {
 		builder.setAppIdIfAbsent("APPID")
-			.setClusterIdIfAbsent("CLUSTERID")
-			.setContentEncodingIfAbsent("CONTENTENCODING")
-			.setContentTypeIfAbsentOrDefault(MessageProperties.CONTENT_TYPE_BYTES)
-			.setContentLengthIfAbsent(10)
-			.setCorrelationIdIfAbsent("CORRELATIONID")
-			.setDeliveryModeIfAbsentOrDefault(MessageDeliveryMode.PERSISTENT)
-			.setDeliveryTagIfAbsent(20L)
-			.setExpirationIfAbsent("EXPIRATION")
-			.setHeaderIfAbsent("foo", "BAR")
-			.copyHeadersIfAbsent(Collections.<String, Object>singletonMap("qux", "FIZ"))
-			.copyHeadersIfAbsent(Collections.<String, Object>singletonMap("baz", "FUZ"))
-			.setMessageCountIfAbsent(30)
-			.setMessageIdIfAbsent("MESSAGEID")
-			.setPriorityIfAbsentOrDefault(40)
-			.setReceivedExchangeIfAbsent("RECEIVEDEXCHANGE")
-			.setReceivedRoutingKeyIfAbsent("RECEIVEDROUTINGKEY")
-			.setRedeliveredIfAbsent(false)
-			.setTimestampIfAbsent(new Date(0))
-			.setTypeIfAbsent("TYPE")
-			.setUserIdIfAbsent("USERID");
+	.setClusterIdIfAbsent("CLUSTERID")
+	.setContentEncodingIfAbsent("CONTENTENCODING")
+	.setContentTypeIfAbsentOrDefault(MessageProperties.CONTENT_TYPE_BYTES)
+	.setContentLengthIfAbsent(10)
+	.setCorrelationIdIfAbsent("CORRELATIONID")
+	.setDeliveryModeIfAbsentOrDefault(MessageDeliveryMode.PERSISTENT)
+	.setDeliveryTagIfAbsent(20L)
+	.setExpirationIfAbsent("EXPIRATION")
+	.setHeaderIfAbsent("foo", "BAR")
+	.copyHeadersIfAbsent(Collections.<String, Object>singletonMap("qux", "FIZ"))
+	.copyHeadersIfAbsent(Collections.<String, Object>singletonMap("baz", "FUZ"))
+	.setMessageCountIfAbsent(30)
+	.setMessageIdIfAbsent("MESSAGEID")
+	.setPriorityIfAbsentOrDefault(40)
+	.setReceivedExchangeIfAbsent("RECEIVEDEXCHANGE")
+	.setReceivedRoutingKeyIfAbsent("RECEIVEDROUTINGKEY")
+	.setRedeliveredIfAbsent(false)
+	.setTimestampIfAbsent(new Date(0))
+	.setTypeIfAbsent("TYPE")
+	.setUserIdIfAbsent("USERID");
 		return builder;
 	}
 
 	private MessageBuilder setAll(MessageBuilder builder) {
 		builder.setAppId("appId")
-			.setClusterId("clusterId")
-			.setContentEncoding("contentEncoding")
-			.setContentType(MessageProperties.CONTENT_TYPE_TEXT_PLAIN)
-			.setContentLength(1)
-			.setCorrelationId("correlationId")
-			.setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT)
-			.setDeliveryTag(2L)
-			.setExpiration("expiration")
-			.setHeader("foo", "bar")
-			.copyHeaders(Collections.<String, Object>singletonMap("qux", "fiz"))
-			.copyHeaders(Collections.<String, Object>singletonMap("baz", "fuz"))
-			.setMessageCount(3)
-			.setMessageId("messageId")
-			.setPriority(4)
-			.setReceivedExchange("receivedExchange")
-			.setReceivedRoutingKey("receivedRoutingKey")
-			.setRedelivered(true)
-			.setTimestamp(new Date())
-			.setType("type")
-			.setUserId("userId");
+	.setClusterId("clusterId")
+	.setContentEncoding("contentEncoding")
+	.setContentType(MessageProperties.CONTENT_TYPE_TEXT_PLAIN)
+	.setContentLength(1)
+	.setCorrelationId("correlationId")
+	.setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT)
+	.setDeliveryTag(2L)
+	.setExpiration("expiration")
+	.setHeader("foo", "bar")
+	.copyHeaders(Collections.<String, Object>singletonMap("qux", "fiz"))
+	.copyHeaders(Collections.<String, Object>singletonMap("baz", "fuz"))
+	.setMessageCount(3)
+	.setMessageId("messageId")
+	.setPriority(4)
+	.setReceivedExchange("receivedExchange")
+	.setReceivedRoutingKey("receivedRoutingKey")
+	.setRedelivered(true)
+	.setTimestamp(new Date())
+	.setType("type")
+	.setUserId("userId");
 		return builder;
 	}
 
 	private MessageBuilder setAllIfAbsent(MessageBuilder builder) {
 		builder.setAppIdIfAbsent("APPID")
-			.setClusterIdIfAbsent("CLUSTERID")
-			.setContentEncodingIfAbsent("CONTENTENCODING")
-			.setContentTypeIfAbsentOrDefault(MessageProperties.CONTENT_TYPE_BYTES)
-			.setContentLengthIfAbsent(10)
-			.setCorrelationIdIfAbsent("CORRELATIONID")
-			.setDeliveryModeIfAbsentOrDefault(MessageDeliveryMode.PERSISTENT)
-			.setDeliveryTagIfAbsent(20L)
-			.setExpirationIfAbsent("EXPIRATION")
-			.setHeaderIfAbsent("foo", "BAR")
-			.copyHeadersIfAbsent(Collections.<String, Object>singletonMap("qux", "FIZ"))
-			.copyHeadersIfAbsent(Collections.<String, Object>singletonMap("baz", "FUZ"))
-			.setMessageCountIfAbsent(30)
-			.setMessageIdIfAbsent("MESSAGEID")
-			.setPriorityIfAbsentOrDefault(40)
-			.setReceivedExchangeIfAbsent("RECEIVEDEXCHANGE")
-			.setReceivedRoutingKeyIfAbsent("RECEIVEDROUTINGKEY")
-			.setRedeliveredIfAbsent(false)
-			.setTimestampIfAbsent(new Date(0))
-			.setTypeIfAbsent("TYPE")
-			.setUserIdIfAbsent("USERID");
+	.setClusterIdIfAbsent("CLUSTERID")
+	.setContentEncodingIfAbsent("CONTENTENCODING")
+	.setContentTypeIfAbsentOrDefault(MessageProperties.CONTENT_TYPE_BYTES)
+	.setContentLengthIfAbsent(10)
+	.setCorrelationIdIfAbsent("CORRELATIONID")
+	.setDeliveryModeIfAbsentOrDefault(MessageDeliveryMode.PERSISTENT)
+	.setDeliveryTagIfAbsent(20L)
+	.setExpirationIfAbsent("EXPIRATION")
+	.setHeaderIfAbsent("foo", "BAR")
+	.copyHeadersIfAbsent(Collections.<String, Object>singletonMap("qux", "FIZ"))
+	.copyHeadersIfAbsent(Collections.<String, Object>singletonMap("baz", "FUZ"))
+	.setMessageCountIfAbsent(30)
+	.setMessageIdIfAbsent("MESSAGEID")
+	.setPriorityIfAbsentOrDefault(40)
+	.setReceivedExchangeIfAbsent("RECEIVEDEXCHANGE")
+	.setReceivedRoutingKeyIfAbsent("RECEIVEDROUTINGKEY")
+	.setRedeliveredIfAbsent(false)
+	.setTimestampIfAbsent(new Date(0))
+	.setTypeIfAbsent("TYPE")
+	.setUserIdIfAbsent("USERID");
 		return builder;
 	}
 

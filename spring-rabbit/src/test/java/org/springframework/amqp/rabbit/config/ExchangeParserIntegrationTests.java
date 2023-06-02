@@ -69,7 +69,7 @@ public final class ExchangeParserIntegrationTests {
 	@AfterAll
 	public static void clean() {
 		RabbitAvailableCondition.getBrokerRunning().deleteExchanges("fanoutTest", "directTest", "topicTest",
-				"headersTest", "headersTestMulti");
+	"headersTest", "headersTestMulti");
 	}
 
 	@Test

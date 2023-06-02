@@ -39,9 +39,9 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 	@Test
 	public void rabbitListenerIsRepeatable() {
 		ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(
-				EnableRabbitDefaultContainerFactoryConfig.class,
-				RabbitListenerRepeatableBean.class,
-				ClassLevelRepeatableBean.class);
+	EnableRabbitDefaultContainerFactoryConfig.class,
+	RabbitListenerRepeatableBean.class,
+	ClassLevelRepeatableBean.class);
 		testRabbitListenerRepeatable(context);
 	}
 

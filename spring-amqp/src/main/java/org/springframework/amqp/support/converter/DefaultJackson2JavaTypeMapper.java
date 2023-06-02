@@ -40,10 +40,8 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 public class DefaultJackson2JavaTypeMapper extends AbstractJavaTypeMapper implements Jackson2JavaTypeMapper {
 
 	private static final List<String> TRUSTED_PACKAGES =
-			Arrays.asList(
-					"java.util",
-					"java.lang"
-			);
+Arrays.asList("java.util","java.lang"
+);
 
 	private final Set<String> trustedPackages = new LinkedHashSet<String>(TRUSTED_PACKAGES);
 
@@ -151,12 +149,12 @@ public class DefaultJackson2JavaTypeMapper extends AbstractJavaTypeMapper implem
 		JavaType contentClassType = getClassIdType(retrieveHeader(properties, getContentClassIdFieldName()));
 		if (classType.getKeyType() == null) {
 			return TypeFactory.defaultInstance()
-					.constructCollectionLikeType(classType.getRawClass(), contentClassType);
+		.constructCollectionLikeType(classType.getRawClass(), contentClassType);
 		}
 
 		JavaType keyClassType = getClassIdType(retrieveHeader(properties, getKeyClassIdFieldName()));
 		return TypeFactory.defaultInstance()
-				.constructMapLikeType(classType.getRawClass(), keyClassType, contentClassType);
+	.constructMapLikeType(classType.getRawClass(), keyClassType, contentClassType);
 	}
 
 	@Override
@@ -176,13 +174,13 @@ public class DefaultJackson2JavaTypeMapper extends AbstractJavaTypeMapper implem
 			try {
 				if (!isTrustedPackage(classId)) {
 					throw new IllegalArgumentException("The class '" + classId + "' is not in the trusted packages: " +
-							this.trustedPackages + ". " +
-							"If you believe this class is safe to deserialize, please provide its name. " +
-							"If the serialization is only done by a trusted source, you can also enable trust all (*).");
+				this.trustedPackages + ". " +
+				"If you believe this class is safe to deserialize, please provide its name. " +
+				"If the serialization is only done by a trusted source, you can also enable trust all (*).");
 				}
 				else {
 					return TypeFactory.defaultInstance()
-							.constructType(ClassUtils.forName(classId, getClassLoader()));
+				.constructType(ClassUtils.forName(classId, getClassLoader()));
 				}
 			}
 			catch (ClassNotFoundException e) {

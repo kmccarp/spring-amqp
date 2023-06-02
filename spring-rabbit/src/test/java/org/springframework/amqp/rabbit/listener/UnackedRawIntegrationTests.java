@@ -146,7 +146,7 @@ public class UnackedRawIntegrationTests {
 
 		@Override
 		public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties, byte[] body)
-				throws IOException {
+	throws IOException {
 			try {
 				this.queue.put(new Delivery(consumerTag, envelope, properties, body, "test.queue"));
 			}

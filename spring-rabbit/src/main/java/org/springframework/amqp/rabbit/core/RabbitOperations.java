@@ -74,7 +74,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 */
 	@Nullable
 	<T> T invoke(OperationsCallback<T> action, @Nullable com.rabbitmq.client.ConfirmCallback acks,
-			@Nullable com.rabbitmq.client.ConfirmCallback nacks);
+@Nullable com.rabbitmq.client.ConfirmCallback nacks);
 
 	/**
 	 * Delegate to the underlying dedicated channel to wait for confirms. The connection
@@ -118,7 +118,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 * @since 2.3
 	 */
 	default void send(String routingKey, Message message, CorrelationData correlationData)
-			throws AmqpException {
+throws AmqpException {
 
 		throw new UnsupportedOperationException("This implementation does not support this method");
 	}
@@ -133,7 +133,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 * @throws AmqpException if there is a problem
 	 */
 	void send(String exchange, String routingKey, Message message, CorrelationData correlationData)
-			throws AmqpException;
+throws AmqpException;
 
 	/**
 	 * Convert a Java object to an Amqp {@link Message} and send it to a default exchange
@@ -167,7 +167,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 * @throws AmqpException if there is a problem
 	 */
 	void convertAndSend(String exchange, String routingKey, Object message, CorrelationData correlationData)
-			throws AmqpException;
+throws AmqpException;
 
 	/**
 	 * Convert a Java object to an Amqp {@link Message} and send it to a default exchange
@@ -179,7 +179,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 * @throws AmqpException if there is a problem
 	 */
 	void convertAndSend(Object message, MessagePostProcessor messagePostProcessor, CorrelationData correlationData)
-			throws AmqpException;
+throws AmqpException;
 
 	/**
 	 * Convert a Java object to an Amqp {@link Message} and send it to a default exchange
@@ -192,7 +192,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 * @throws AmqpException if there is a problem
 	 */
 	void convertAndSend(String routingKey, Object message, MessagePostProcessor messagePostProcessor,
-			CorrelationData correlationData) throws AmqpException;
+CorrelationData correlationData) throws AmqpException;
 
 	/**
 	 * Convert a Java object to an Amqp {@link Message} and send it to a specific exchange
@@ -206,7 +206,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 * @throws AmqpException if there is a problem
 	 */
 	void convertAndSend(String exchange, String routingKey, Object message, MessagePostProcessor messagePostProcessor,
-			CorrelationData correlationData) throws AmqpException;
+CorrelationData correlationData) throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -236,7 +236,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 */
 	@Nullable
 	Object convertSendAndReceive(String routingKey, Object message, CorrelationData correlationData)
-			throws AmqpException;
+throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -253,7 +253,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 */
 	@Nullable
 	Object convertSendAndReceive(String exchange, String routingKey, Object message,
-			CorrelationData correlationData) throws AmqpException;
+CorrelationData correlationData) throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -269,7 +269,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 */
 	@Nullable
 	Object convertSendAndReceive(Object message, MessagePostProcessor messagePostProcessor,
-			CorrelationData correlationData) throws AmqpException;
+CorrelationData correlationData) throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -286,7 +286,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 */
 	@Nullable
 	Object convertSendAndReceive(String routingKey, Object message,
-			MessagePostProcessor messagePostProcessor, CorrelationData correlationData) throws AmqpException;
+MessagePostProcessor messagePostProcessor, CorrelationData correlationData) throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -304,8 +304,8 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 */
 	@Nullable
 	Object convertSendAndReceive(String exchange, String routingKey, Object message,
-			MessagePostProcessor messagePostProcessor, CorrelationData correlationData)
-			throws AmqpException;
+MessagePostProcessor messagePostProcessor, CorrelationData correlationData)
+throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -324,7 +324,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 */
 	@Nullable
 	<T> T convertSendAndReceiveAsType(Object message, CorrelationData correlationData,
-			ParameterizedTypeReference<T> responseType) throws AmqpException;
+ParameterizedTypeReference<T> responseType) throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -344,7 +344,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 */
 	@Nullable
 	<T> T convertSendAndReceiveAsType(String routingKey, Object message, CorrelationData correlationData,
-			ParameterizedTypeReference<T> responseType) throws AmqpException;
+ParameterizedTypeReference<T> responseType) throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -365,8 +365,8 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 */
 	@Nullable
 	default <T> T convertSendAndReceiveAsType(String exchange, String routingKey, Object message,
-			@Nullable CorrelationData correlationData, ParameterizedTypeReference<T> responseType)
-					throws AmqpException {
+@Nullable CorrelationData correlationData, ParameterizedTypeReference<T> responseType)
+throws AmqpException {
 
 		return convertSendAndReceiveAsType(exchange, routingKey, message, null, correlationData, responseType);
 	}
@@ -389,7 +389,7 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 */
 	@Nullable
 	<T> T convertSendAndReceiveAsType(Object message, MessagePostProcessor messagePostProcessor,
-			CorrelationData correlationData, ParameterizedTypeReference<T> responseType) throws AmqpException;
+CorrelationData correlationData, ParameterizedTypeReference<T> responseType) throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -410,8 +410,8 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 */
 	@Nullable
 	<T> T convertSendAndReceiveAsType(String routingKey, Object message,
-			MessagePostProcessor messagePostProcessor, CorrelationData correlationData,
-			ParameterizedTypeReference<T> responseType) throws AmqpException;
+MessagePostProcessor messagePostProcessor, CorrelationData correlationData,
+ParameterizedTypeReference<T> responseType) throws AmqpException;
 
 	/**
 	 * Basic RPC pattern with conversion. Send a Java object converted to a message to a
@@ -433,9 +433,9 @@ public interface RabbitOperations extends AmqpTemplate, Lifecycle {
 	 */
 	@Nullable
 	<T> T convertSendAndReceiveAsType(String exchange, String routingKey, Object message,
-			@Nullable MessagePostProcessor messagePostProcessor,
-			@Nullable CorrelationData correlationData,
-			ParameterizedTypeReference<T> responseType) throws AmqpException;
+@Nullable MessagePostProcessor messagePostProcessor,
+@Nullable CorrelationData correlationData,
+ParameterizedTypeReference<T> responseType) throws AmqpException;
 
 
 	@Override

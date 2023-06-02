@@ -52,7 +52,7 @@ public final class JUnitUtils {
 	 * @return the parsed property value if it exists, false otherwise.
 	 */
 	public static boolean parseBooleanProperty(String property) {
-		for (String value : new String[] { System.getenv(property), System.getProperty(property) }) {
+		for (String value : new String[]{System.getenv(property), System.getProperty(property)}) {
 			if (Boolean.parseBoolean(value)) {
 				return true;
 			}
@@ -61,7 +61,7 @@ public final class JUnitUtils {
 	}
 
 	public static LevelsContainer adjustLogLevels(String methodName, List<Class<?>> classes, List<String> categories,
-			Level level) {
+Level level) {
 
 		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
 		Configuration config = ctx.getConfiguration();
@@ -115,18 +115,18 @@ public final class JUnitUtils {
 //			lbLogger.setLevel(ch.qos.logback.classic.Level.toLevel(level.name()));
 //		});
 		LOGGER.info("++++++++++++++++++++++++++++ "
-				+ "Overridden log level setting for: "
-				+ classes.stream()
-				.map(Class::getSimpleName)
-				.collect(Collectors.toList())
-				+ " and " + categories.toString()
-				+ " for test " + methodName);
+	+ "Overridden log level setting for: "
+	+ classes.stream()
+	.map(Class::getSimpleName)
+	.collect(Collectors.toList())
+	+ " and " + categories.toString()
+	+ " for test " + methodName);
 		return new LevelsContainer(classLevels, categoryLevels, oldLbLevels);
 	}
 
 	public static void revertLevels(String methodName, LevelsContainer container) {
 		LOGGER.info("++++++++++++++++++++++++++++ "
-				+ "Restoring log level setting for test " + methodName);
+	+ "Restoring log level setting for test " + methodName);
 		container.oldCatLevels.forEach((key, value) -> {
 			if (!key.contains("BrokerRunning")) {
 				((Logger) LogManager.getLogger(key)).setLevel(value);
@@ -150,7 +150,7 @@ public final class JUnitUtils {
 		private final Map<String, ch.qos.logback.classic.Level> oldLbLevels;
 
 		public LevelsContainer(Map<Class<?>, Level> oldLevels, Map<String, Level> oldCatLevels,
-				Map<String, ch.qos.logback.classic.Level> oldLbLevels) {
+	Map<String, ch.qos.logback.classic.Level> oldLbLevels) {
 
 			this.oldLevels = oldLevels;
 			this.oldCatLevels = oldCatLevels;

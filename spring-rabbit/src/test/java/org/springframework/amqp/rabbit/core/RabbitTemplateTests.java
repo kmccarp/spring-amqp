@@ -209,7 +209,7 @@ public class RabbitTemplateTests {
 			consumer.set(invocation.getArgument(6));
 			return null;
 		}).given(mockChannel).basicConsume(anyString(), anyBoolean(), anyString(),
-				anyBoolean(), anyBoolean(), isNull(), any(Consumer.class));
+	anyBoolean(), anyBoolean(), isNull(), any(Consumer.class));
 		SingleConnectionFactory connectionFactory = new SingleConnectionFactory(mockConnectionFactory);
 		connectionFactory.setExecutor(mock(ExecutorService.class));
 		RabbitTemplate template = new RabbitTemplate(connectionFactory);
@@ -246,7 +246,7 @@ public class RabbitTemplateTests {
 	@Test
 	public void testEvaluateDirectReplyToWithConnectException() throws Exception {
 		org.springframework.amqp.rabbit.connection.ConnectionFactory mockConnectionFactory =
-				mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
+	mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
 		willThrow(new AmqpConnectException(null)).given(mockConnectionFactory).createConnection();
 		RabbitTemplate template = new RabbitTemplate(mockConnectionFactory);
 		assertThatThrownBy(() -> template.convertSendAndReceive("foo")).isInstanceOf(AmqpConnectException.class);
@@ -256,7 +256,7 @@ public class RabbitTemplateTests {
 	@Test
 	public void testEvaluateDirectReplyToWithIOException() throws Exception {
 		org.springframework.amqp.rabbit.connection.ConnectionFactory mockConnectionFactory =
-				mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
+	mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
 		willThrow(new AmqpIOException(null)).given(mockConnectionFactory).createConnection();
 		RabbitTemplate template = new RabbitTemplate(mockConnectionFactory);
 		assertThatThrownBy(() -> template.convertSendAndReceive("foo")).isInstanceOf(AmqpIOException.class);
@@ -277,7 +277,7 @@ public class RabbitTemplateTests {
 		given(mockMethod.getClassId()).willReturn(RabbitUtils.QUEUE_CLASS_ID_50);
 		given(mockMethod.getMethodId()).willReturn(RabbitUtils.DECLARE_METHOD_ID_10);
 		willThrow(new ShutdownSignalException(true, false, mockMethod, null)).given(mockChannel)
-				.queueDeclarePassive(Address.AMQ_RABBITMQ_REPLY_TO);
+	.queueDeclarePassive(Address.AMQ_RABBITMQ_REPLY_TO);
 		given(mockChannel.queueDeclare()).willReturn(new AMQImpl.Queue.DeclareOk("foo", 0, 0));
 		SingleConnectionFactory connectionFactory = new SingleConnectionFactory(mockConnectionFactory);
 		connectionFactory.setExecutor(mock(ExecutorService.class));
@@ -299,7 +299,7 @@ public class RabbitTemplateTests {
 		given(mockConnection.isOpen()).willReturn(true);
 		given(mockConnection.createChannel()).willReturn(mockChannel);
 		given(mockChannel.queueDeclarePassive(Address.AMQ_RABBITMQ_REPLY_TO))
-				.willReturn(new AMQImpl.Queue.DeclareOk(Address.AMQ_RABBITMQ_REPLY_TO, 0, 0));
+	.willReturn(new AMQImpl.Queue.DeclareOk(Address.AMQ_RABBITMQ_REPLY_TO, 0, 0));
 		SingleConnectionFactory connectionFactory = new SingleConnectionFactory(mockConnectionFactory);
 		connectionFactory.setExecutor(mock(ExecutorService.class));
 		RabbitTemplate template = new RabbitTemplate(connectionFactory);
@@ -337,11 +337,11 @@ public class RabbitTemplateTests {
 	@Test
 	public void testPublisherConfirmsReturnsSetup() {
 		org.springframework.amqp.rabbit.connection.ConnectionFactory cf =
-				mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
+	mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
 		given(cf.isPublisherConfirms()).willReturn(true);
 		given(cf.isPublisherReturns()).willReturn(true);
 		org.springframework.amqp.rabbit.connection.Connection conn =
-				mock(org.springframework.amqp.rabbit.connection.Connection.class);
+	mock(org.springframework.amqp.rabbit.connection.Connection.class);
 		given(cf.createConnection()).willReturn(conn);
 		PublisherCallbackChannel channel = mock(PublisherCallbackChannel.class);
 		given(conn.createChannel(false)).willReturn(channel);
@@ -354,7 +354,7 @@ public class RabbitTemplateTests {
 	public void testNoListenerAllowed1() {
 		RabbitTemplate template = new RabbitTemplate();
 		assertThatIllegalStateException()
-			.isThrownBy(() -> template.expectedQueueNames());
+	.isThrownBy(() -> template.expectedQueueNames());
 	}
 
 	@Test
@@ -362,7 +362,7 @@ public class RabbitTemplateTests {
 		RabbitTemplate template = new RabbitTemplate();
 		template.setReplyAddress(Address.AMQ_RABBITMQ_REPLY_TO);
 		assertThatIllegalStateException()
-			.isThrownBy(() -> template.expectedQueueNames());
+	.isThrownBy(() -> template.expectedQueueNames());
 	}
 
 	public final static AtomicInteger LOOKUP_KEY_COUNT = new AtomicInteger();
@@ -371,15 +371,15 @@ public class RabbitTemplateTests {
 	@SuppressWarnings("unchecked")
 	public void testRoutingConnectionFactory() throws Exception {
 		org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory1 =
-				mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
+	mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
 		org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory2 =
-				mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
+	mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
 		org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory3 =
-				mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
+	mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
 		org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory4 =
-				mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
+	mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
 		Map<Object, org.springframework.amqp.rabbit.connection.ConnectionFactory> factories =
-				new HashMap<Object, org.springframework.amqp.rabbit.connection.ConnectionFactory>(2);
+	new HashMap<Object, org.springframework.amqp.rabbit.connection.ConnectionFactory>(2);
 		factories.put("foo", connectionFactory1);
 		factories.put("bar", connectionFactory2);
 		factories.put("baz", connectionFactory3);
@@ -391,12 +391,12 @@ public class RabbitTemplateTests {
 
 		final RabbitTemplate template = new RabbitTemplate(connectionFactory);
 		Expression sendExpression = new SpelExpressionParser()
-				.parseExpression("T(org.springframework.amqp.rabbit.core.RabbitTemplateTests)" +
-						".LOOKUP_KEY_COUNT.getAndIncrement() % 2 == 0 ? 'foo' : 'bar'");
+	.parseExpression("T(org.springframework.amqp.rabbit.core.RabbitTemplateTests)" +
+".LOOKUP_KEY_COUNT.getAndIncrement() % 2 == 0 ? 'foo' : 'bar'");
 		template.setSendConnectionFactorySelectorExpression(sendExpression);
 		Expression receiveExpression = new SpelExpressionParser()
-				.parseExpression("T(org.springframework.amqp.rabbit.core.RabbitTemplateTests)" +
-						".LOOKUP_KEY_COUNT.getAndIncrement() % 2 == 0 ? 'baz' : 'qux'");
+	.parseExpression("T(org.springframework.amqp.rabbit.core.RabbitTemplateTests)" +
+".LOOKUP_KEY_COUNT.getAndIncrement() % 2 == 0 ? 'baz' : 'qux'");
 		template.setReceiveConnectionFactorySelectorExpression(receiveExpression);
 
 		for (int i = 0; i < 3; i++) {
@@ -515,7 +515,7 @@ public class RabbitTemplateTests {
 		boolean removed = rabbitTemplate.removeBeforePublishPostProcessor(mpp1);
 		@SuppressWarnings("unchecked")
 		Collection<Object> beforePublishPostProcessors =
-				(Collection<Object>) ReflectionTestUtils.getField(rabbitTemplate, "beforePublishPostProcessors");
+	(Collection<Object>) ReflectionTestUtils.getField(rabbitTemplate, "beforePublishPostProcessors");
 
 		assertThat(removed).isEqualTo(true);
 		assertThat(beforePublishPostProcessors).containsExactly(mpp2, mpp3);
@@ -533,7 +533,7 @@ public class RabbitTemplateTests {
 		boolean removed = rabbitTemplate.removeAfterReceivePostProcessor(mpp1);
 		@SuppressWarnings("unchecked")
 		Collection<Object> afterReceivePostProcessors =
-				(Collection<Object>) ReflectionTestUtils.getField(rabbitTemplate, "afterReceivePostProcessors");
+	(Collection<Object>) ReflectionTestUtils.getField(rabbitTemplate, "afterReceivePostProcessors");
 
 		assertThat(removed).isEqualTo(true);
 		assertThat(afterReceivePostProcessors).containsExactly(mpp2, mpp3);
@@ -542,14 +542,14 @@ public class RabbitTemplateTests {
 	@Test
 	public void testPublisherConnWithInvoke() {
 		org.springframework.amqp.rabbit.connection.ConnectionFactory cf = mock(
-				org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
+	org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
 		org.springframework.amqp.rabbit.connection.ConnectionFactory pcf = mock(
-				org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
+	org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
 		given(cf.getPublisherConnectionFactory()).willReturn(pcf);
 		RabbitTemplate template = new RabbitTemplate(cf);
 		template.setUsePublisherConnection(true);
 		org.springframework.amqp.rabbit.connection.Connection conn = mock(
-				org.springframework.amqp.rabbit.connection.Connection.class);
+	org.springframework.amqp.rabbit.connection.Connection.class);
 		Channel channel = mock(Channel.class);
 		given(pcf.createConnection()).willReturn(conn);
 		given(conn.isOpen()).willReturn(true);
@@ -562,15 +562,15 @@ public class RabbitTemplateTests {
 	@Test
 	public void testPublisherConnWithInvokeInTx() {
 		org.springframework.amqp.rabbit.connection.ConnectionFactory cf = mock(
-				org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
+	org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
 		org.springframework.amqp.rabbit.connection.ConnectionFactory pcf = mock(
-				org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
+	org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
 		given(cf.getPublisherConnectionFactory()).willReturn(pcf);
 		RabbitTemplate template = new RabbitTemplate(cf);
 		template.setUsePublisherConnection(true);
 		template.setChannelTransacted(true);
 		org.springframework.amqp.rabbit.connection.Connection conn = mock(
-				org.springframework.amqp.rabbit.connection.Connection.class);
+	org.springframework.amqp.rabbit.connection.Connection.class);
 		Channel channel = mock(Channel.class);
 		given(pcf.createConnection()).willReturn(conn);
 		given(conn.isOpen()).willReturn(true);
@@ -597,15 +597,15 @@ public class RabbitTemplateTests {
 		template.setChannelTransacted(true);
 		TransactionTemplate tt = new TransactionTemplate(new RabbitTransactionManager(connectionFactory));
 		assertThatIllegalStateException()
-			.isThrownBy(() ->
-				tt.execute(status -> {
-					template.convertAndSend("foo", "bar");
-					return null;
-				}));
+	.isThrownBy(() ->
+tt.execute(status -> {
+	template.convertAndSend("foo", "bar");
+	return null;
+}));
 		assertThat(TransactionSynchronizationManager.hasResource(connectionFactory)).isFalse();
 		assertThatIllegalStateException()
-			.isThrownBy(() -> (TransactionSynchronizationManager.getSynchronizations()).isEmpty())
-			.withMessage("Transaction synchronization is not active");
+	.isThrownBy(() -> (TransactionSynchronizationManager.getSynchronizations()).isEmpty())
+	.withMessage("Transaction synchronization is not active");
 	}
 
 	@Test
@@ -631,10 +631,10 @@ public class RabbitTemplateTests {
 		});
 		assertThat(TransactionSynchronizationManager.hasResource(connectionFactory)).isFalse();
 		assertThatIllegalStateException()
-			.isThrownBy(() -> (TransactionSynchronizationManager.getSynchronizations()).isEmpty())
-			.withMessage("Transaction synchronization is not active");
+	.isThrownBy(() -> (TransactionSynchronizationManager.getSynchronizations()).isEmpty())
+	.withMessage("Transaction synchronization is not active");
 		assertThatExceptionOfType(AfterCompletionFailedException.class)
-			.isThrownBy(() -> ConnectionFactoryUtils.checkAfterCompletion());
+	.isThrownBy(() -> ConnectionFactoryUtils.checkAfterCompletion());
 		ConnectionFactoryUtils.enableAfterCompletionFailureCapture(false);
 	}
 

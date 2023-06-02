@@ -39,15 +39,14 @@ import com.rabbitmq.client.Channel;
  * @since 2.2
  *
  */
-public class BatchMessagingMessageListenerAdapter extends MessagingMessageListenerAdapter
-			implements ChannelAwareBatchMessageListener {
+public class BatchMessagingMessageListenerAdapter extends MessagingMessageListenerAdapterimplements ChannelAwareBatchMessageListener {
 
 	private final MessagingMessageConverterAdapter converterAdapter;
 
 	private final BatchingStrategy batchingStrategy;
 
 	public BatchMessagingMessageListenerAdapter(Object bean, Method method, boolean returnExceptions,
-			RabbitListenerErrorHandler errorHandler, @Nullable BatchingStrategy batchingStrategy) {
+RabbitListenerErrorHandler errorHandler, @Nullable BatchingStrategy batchingStrategy) {
 
 		super(bean, method, returnExceptions, errorHandler, true);
 		this.converterAdapter = (MessagingMessageConverterAdapter) getMessagingMessageConverter();
@@ -101,10 +100,10 @@ public class BatchMessagingMessageListenerAdapter extends MessagingMessageListen
 					list.add(this.converterAdapter.extractPayload(fragment));
 				});
 				return MessageBuilder.withPayload(list)
-						.copyHeaders(this.converterAdapter
-								.getHeaderMapper()
-								.toHeaders(amqpMessage.getMessageProperties()))
-						.build();
+			.copyHeaders(this.converterAdapter
+		.getHeaderMapper()
+		.toHeaders(amqpMessage.getMessageProperties()))
+			.build();
 			}
 		}
 		return super.toMessagingMessage(amqpMessage);

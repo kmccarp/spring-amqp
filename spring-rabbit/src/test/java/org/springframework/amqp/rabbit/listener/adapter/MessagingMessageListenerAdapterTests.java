@@ -78,10 +78,10 @@ public class MessagingMessageListenerAdapterTests {
 	@Test
 	public void buildMessageWithStandardMessage() {
 		Message<String> result = MessageBuilder.withPayload("Response")
-				.setHeader("foo", "bar")
-				.setHeader(AmqpHeaders.TYPE, "msg_type")
-				.setHeader(AmqpHeaders.REPLY_TO, "reply")
-				.build();
+	.setHeader("foo", "bar")
+	.setHeader(AmqpHeaders.TYPE, "msg_type")
+	.setHeader(AmqpHeaders.REPLY_TO, "reply")
+	.build();
 
 		Channel session = mock(Channel.class);
 		MessagingMessageListenerAdapter listener = getSimpleInstance("echo", Message.class);
@@ -136,7 +136,7 @@ public class MessagingMessageListenerAdapterTests {
 		org.springframework.amqp.core.Message message = MessageTestUtils.createTextMessage("foo");
 		Channel channel = mock(Channel.class);
 		MessagingMessageListenerAdapter listener = getMultiInstance("fail", "failWithReturn", true, String.class,
-				Integer.class);
+	Integer.class);
 		try {
 			listener.onMessage(message, channel);
 			fail("Should have thrown an exception");
@@ -193,9 +193,9 @@ public class MessagingMessageListenerAdapterTests {
 		listener.onMessage(message, channel);
 		assertThat(this.sample.payload.getClass()).isEqualTo(String.class);
 		message = org.springframework.amqp.core.MessageBuilder
-				.withBody("{ \"foo\" : \"bar\" }".getBytes())
-				.andProperties(message.getMessageProperties())
-				.build();
+	.withBody("{ \"foo\" : \"bar\" }".getBytes())
+	.andProperties(message.getMessageProperties())
+	.build();
 		listener.onMessage(message, channel);
 		assertThat(this.sample.payload.getClass()).isEqualTo(LinkedHashMap.class);
 	}
@@ -204,7 +204,7 @@ public class MessagingMessageListenerAdapterTests {
 	void headers() throws Exception {
 		MessagingMessageListenerAdapter listener = getSimpleInstance("withHeaders", Foo.class, Map.class);
 		assertThat(TestUtils.getPropertyValue(listener, "messagingMessageConverter.inferredArgumentType"))
-				.isEqualTo(Foo.class);
+	.isEqualTo(Foo.class);
 	}
 
 	@Test
@@ -284,22 +284,22 @@ public class MessagingMessageListenerAdapterTests {
 		Channel channel = mock(Channel.class);
 		AtomicBoolean ehCalled = new AtomicBoolean();
 		MessagingMessageListenerAdapter listener = getSimpleInstance("fail",
-				new RabbitListenerErrorHandler() {
+	new RabbitListenerErrorHandler() {
 
-			@Override
-			public Object handleError(org.springframework.amqp.core.Message amqpMessage, Message<?> message,
-					ListenerExecutionFailedException exception) throws Exception {
+		@Override
+		public Object handleError(org.springframework.amqp.core.Message amqpMessage, Message<?> message,
+	ListenerExecutionFailedException exception) throws Exception {
 
-				ehCalled.set(true);
-				return null;
-			}
+			ehCalled.set(true);
+			return null;
+		}
 
-		}, false, String.class);
+	}, false, String.class);
 		listener.setMessageConverter(new MessageConverter() {
 
 			@Override
 			public org.springframework.amqp.core.Message toMessage(Object object, MessageProperties messageProperties)
-					throws MessageConversionException {
+		throws MessageConversionException {
 
 				return null;
 			}
@@ -319,22 +319,22 @@ public class MessagingMessageListenerAdapterTests {
 		Channel channel = mock(Channel.class);
 		AtomicBoolean ehCalled = new AtomicBoolean();
 		MessagingMessageListenerAdapter listener = getSimpleInstance("fail",
-				new RabbitListenerErrorHandler() {
+	new RabbitListenerErrorHandler() {
 
-			@Override
-			public Object handleError(org.springframework.amqp.core.Message amqpMessage, Message<?> message,
-					ListenerExecutionFailedException exception) throws Exception {
+		@Override
+		public Object handleError(org.springframework.amqp.core.Message amqpMessage, Message<?> message,
+	ListenerExecutionFailedException exception) throws Exception {
 
-				ehCalled.set(true);
-				return "foo";
-			}
+			ehCalled.set(true);
+			return "foo";
+		}
 
-		}, false, String.class);
+	}, false, String.class);
 		listener.setMessageConverter(new MessageConverter() {
 
 			@Override
 			public org.springframework.amqp.core.Message toMessage(Object object, MessageProperties messageProperties)
-					throws MessageConversionException {
+		throws MessageConversionException {
 
 				return new org.springframework.amqp.core.Message(((String) object).getBytes(), messageProperties);
 			}
@@ -374,14 +374,14 @@ public class MessagingMessageListenerAdapterTests {
 	}
 
 	protected MessagingMessageListenerAdapter getSimpleInstance(String methodName, RabbitListenerErrorHandler eh,
-			boolean returnEx, Class<?>... parameterTypes) {
+boolean returnEx, Class<?>... parameterTypes) {
 
 		Method m = ReflectionUtils.findMethod(SampleBean.class, methodName, parameterTypes);
 		return createInstance(m, returnEx, eh);
 	}
 
 	protected MessagingMessageListenerAdapter getSimpleInstance(String methodName, boolean returnExceptions,
-			Class<?>... parameterTypes) {
+Class<?>... parameterTypes) {
 		Method m = ReflectionUtils.findMethod(SampleBean.class, methodName, parameterTypes);
 		return createInstance(m, returnExceptions);
 	}
@@ -391,7 +391,7 @@ public class MessagingMessageListenerAdapterTests {
 	}
 
 	protected MessagingMessageListenerAdapter createInstance(Method m, boolean returnExceptions,
-			RabbitListenerErrorHandler eh) {
+RabbitListenerErrorHandler eh) {
 
 		MessagingMessageListenerAdapter adapter = new MessagingMessageListenerAdapter(null, m, returnExceptions, eh);
 		adapter.setHandlerAdapter(new HandlerAdapter(factory.createInvocableHandlerMethod(sample, m)));
@@ -399,7 +399,7 @@ public class MessagingMessageListenerAdapterTests {
 	}
 
 	protected MessagingMessageListenerAdapter getMultiInstance(String methodName1, String methodName2,
-			boolean returnExceptions, Class<?> m1ParameterType, Class<?> m2ParameterType) {
+boolean returnExceptions, Class<?> m1ParameterType, Class<?> m2ParameterType) {
 		Method m1 = ReflectionUtils.findMethod(SampleBean.class, methodName1, m1ParameterType);
 		Method m2 = ReflectionUtils.findMethod(SampleBean.class, methodName2, m2ParameterType);
 		return createMultiInstance(m1, m2, returnExceptions);
@@ -442,8 +442,8 @@ public class MessagingMessageListenerAdapterTests {
 		@SuppressWarnings("unused")
 		public Message<String> echo(Message<String> input) {
 			return MessageBuilder.withPayload(input.getPayload())
-					.setHeader(AmqpHeaders.TYPE, "reply")
-					.build();
+		.setHeader(AmqpHeaders.TYPE, "reply")
+		.build();
 		}
 
 		@SuppressWarnings("unused")

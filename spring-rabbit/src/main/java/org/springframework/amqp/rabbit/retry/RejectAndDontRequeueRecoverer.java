@@ -74,7 +74,7 @@ public class RejectAndDontRequeueRecoverer implements MessageRecoverer {
 			this.logger.warn("Retries exhausted for message " + message, cause);
 		}
 		throw new ListenerExecutionFailedException(this.messageSupplier.get(),
-					new AmqpRejectAndDontRequeueException(cause), message);
+	new AmqpRejectAndDontRequeueException(cause), message);
 	}
 
 }

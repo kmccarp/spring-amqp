@@ -34,8 +34,7 @@ import org.springframework.messaging.core.MessageSendingOperations;
  * @since 1.4
  * @see org.springframework.amqp.rabbit.core.RabbitTemplate
  */
-public interface RabbitMessageOperations extends MessageSendingOperations<String>,
-		MessageReceivingOperations<String>, MessageRequestReplyOperations<String> {
+public interface RabbitMessageOperations extends MessageSendingOperations<String>,MessageReceivingOperations<String>, MessageRequestReplyOperations<String> {
 
 	/**
 	 * Send a message to a specific exchange with a specific routing key.
@@ -70,7 +69,7 @@ public interface RabbitMessageOperations extends MessageSendingOperations<String
 	 * @throws MessagingException a messaging exception.
 	 */
 	void convertAndSend(String exchange, String routingKey, Object payload, Map<String, Object> headers)
-			throws MessagingException;
+throws MessagingException;
 
 	/**
 	 * Convert the given Object to serialized form, possibly using a
@@ -85,7 +84,7 @@ public interface RabbitMessageOperations extends MessageSendingOperations<String
 	 * @throws MessagingException a messaging exception.
 	 */
 	void convertAndSend(String exchange, String routingKey, Object payload, MessagePostProcessor postProcessor)
-			throws MessagingException;
+throws MessagingException;
 
 	/**
 	 * Convert the given Object to serialized form, possibly using a
@@ -101,7 +100,7 @@ public interface RabbitMessageOperations extends MessageSendingOperations<String
 	 * @throws MessagingException a messaging exception.
 	 */
 	void convertAndSend(String exchange, String routingKey, Object payload, Map<String,
-			Object> headers, MessagePostProcessor postProcessor) throws MessagingException;
+Object> headers, MessagePostProcessor postProcessor) throws MessagingException;
 
 	/**
 	 * Send a request message to a specific exchange with a specific routing key and
@@ -130,7 +129,7 @@ public interface RabbitMessageOperations extends MessageSendingOperations<String
 	 * @throws MessagingException a messaging exception.
 	 */
 	<T> T convertSendAndReceive(String exchange, String routingKey, Object request, Class<T> targetClass)
-			throws MessagingException;
+throws MessagingException;
 
 	/**
 	 * Convert the given request Object to serialized form, possibly using a
@@ -149,7 +148,7 @@ public interface RabbitMessageOperations extends MessageSendingOperations<String
 	 * @throws MessagingException a messaging exception.
 	 */
 	<T> T convertSendAndReceive(String exchange, String routingKey, Object request, Map<String, Object> headers,
-			Class<T> targetClass) throws MessagingException;
+Class<T> targetClass) throws MessagingException;
 
 	/**
 	 * Convert the given request Object to serialized form, possibly using a
@@ -168,7 +167,7 @@ public interface RabbitMessageOperations extends MessageSendingOperations<String
 	 * @throws MessagingException a messaging exception.
 	 */
 	<T> T convertSendAndReceive(String exchange, String routingKey, Object request, Class<T> targetClass,
-			MessagePostProcessor requestPostProcessor) throws MessagingException;
+MessagePostProcessor requestPostProcessor) throws MessagingException;
 
 	/**
 	 * Convert the given request Object to serialized form, possibly using a
@@ -189,6 +188,6 @@ public interface RabbitMessageOperations extends MessageSendingOperations<String
 	 * @throws MessagingException a messaging exception.
 	 */
 	<T> T convertSendAndReceive(String exchange, String routingKey, Object request, Map<String, Object> headers,
-			Class<T> targetClass, MessagePostProcessor requestPostProcessor) throws MessagingException;
+Class<T> targetClass, MessagePostProcessor requestPostProcessor) throws MessagingException;
 
 }

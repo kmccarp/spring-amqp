@@ -120,9 +120,9 @@ public class DirectReplyToMessageListenerContainer extends DirectMessageListener
 		long now = System.currentTimeMillis();
 		synchronized (this.consumersMonitor) {
 			long reduce = this.consumers.stream()
-				.filter(c -> this.whenUsed.containsKey(c) && !this.inUseConsumerChannels.containsValue(c)
-						&& this.whenUsed.get(c) < now - getIdleEventInterval())
-				.count();
+		.filter(c -> this.whenUsed.containsKey(c) && !this.inUseConsumerChannels.containsValue(c)
+	&& this.whenUsed.get(c) < now - getIdleEventInterval())
+		.count();
 			if (reduce > 0) {
 				if (logger.isDebugEnabled()) {
 					logger.debug("Reducing idle consumes by " + reduce);

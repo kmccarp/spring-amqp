@@ -41,7 +41,7 @@ public class ExtendAmqpAppender extends AmqpAppender {
 	private final String bar;
 
 	public ExtendAmqpAppender(String name, Filter filter, Layout<? extends Serializable> layout,
-			boolean ignoreExceptions, AmqpManager manager, BlockingQueue<Event> eventQueue, String foo, String bar) {
+boolean ignoreExceptions, AmqpManager manager, BlockingQueue<Event> eventQueue, String foo, String bar) {
 		super(name, filter, layout, ignoreExceptions, Property.EMPTY_ARRAY, manager, eventQueue);
 		this.foo = foo;
 		this.bar = bar;
@@ -78,7 +78,7 @@ public class ExtendAmqpAppender extends AmqpAppender {
 
 		@Override
 		protected AmqpAppender buildInstance(String name, Filter filter, Layout<? extends Serializable> layout,
-				boolean ignoreExceptions, AmqpManager manager, BlockingQueue<Event> eventQueue) {
+	boolean ignoreExceptions, AmqpManager manager, BlockingQueue<Event> eventQueue) {
 			return new ExtendAmqpAppender(name, filter, layout, ignoreExceptions, manager, eventQueue, this.foo, this.bar);
 		}
 	}

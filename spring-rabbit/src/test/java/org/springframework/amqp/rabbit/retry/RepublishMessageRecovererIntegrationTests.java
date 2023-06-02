@@ -51,45 +51,45 @@ class RepublishMessageRecovererIntegrationTests {
 	@Test
 	void testBigHeader() {
 		CachingConnectionFactory ccf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		RabbitTemplate template = new RabbitTemplate(ccf);
 		this.maxHeaderSize = RabbitUtils.getMaxFrame(template.getConnectionFactory())
-				- RepublishMessageRecoverer.DEFAULT_FRAME_MAX_HEADROOM;
+	- RepublishMessageRecoverer.DEFAULT_FRAME_MAX_HEADROOM;
 		assertThat(this.maxHeaderSize).isGreaterThan(0);
 		RepublishMessageRecoverer recoverer = new RepublishMessageRecoverer(template, "", BIG_HEADER_QUEUE);
 		recoverer.recover(new Message("foo".getBytes(), new MessageProperties()),
-				new ListenerExecutionFailedException("Listener failed",
-						bigCause(new RuntimeException(BIG_EXCEPTION_MESSAGE1))));
+	new ListenerExecutionFailedException("Listener failed",
+bigCause(new RuntimeException(BIG_EXCEPTION_MESSAGE1))));
 		Message received = template.receive(BIG_HEADER_QUEUE, 10_000);
 		assertThat(received).isNotNull();
 		String trace = received.getMessageProperties().getHeaders()
-				.get(RepublishMessageRecoverer.X_EXCEPTION_STACKTRACE).toString();
+	.get(RepublishMessageRecoverer.X_EXCEPTION_STACKTRACE).toString();
 		assertThat(trace.length()).isEqualTo(this.maxHeaderSize - 100);
 		String truncatedMessage =
-				"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...";
+	"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...";
 		assertThat(trace).contains(truncatedMessage);
 		assertThat((String) received.getMessageProperties().getHeader(RepublishMessageRecoverer.X_EXCEPTION_MESSAGE))
-			.isEqualTo(truncatedMessage);
+	.isEqualTo(truncatedMessage);
 		ccf.destroy();
 	}
 
 	@Test
 	void testSmallException() {
 		CachingConnectionFactory ccf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		RabbitTemplate template = new RabbitTemplate(ccf);
 		this.maxHeaderSize = RabbitUtils.getMaxFrame(template.getConnectionFactory())
-				- RepublishMessageRecoverer.DEFAULT_FRAME_MAX_HEADROOM;
+	- RepublishMessageRecoverer.DEFAULT_FRAME_MAX_HEADROOM;
 		assertThat(this.maxHeaderSize).isGreaterThan(0);
 		RepublishMessageRecoverer recoverer = new RepublishMessageRecoverer(template, "", BIG_HEADER_QUEUE);
 		ListenerExecutionFailedException cause = new ListenerExecutionFailedException("Listener failed",
-				new RuntimeException(new String(new byte[200]).replace('\u0000', 'x')));
+	new RuntimeException(new String(new byte[200]).replace('\u0000', 'x')));
 		recoverer.recover(new Message("foo".getBytes(), new MessageProperties()),
-				cause);
+	cause);
 		Message received = template.receive(BIG_HEADER_QUEUE, 10_000);
 		assertThat(received).isNotNull();
 		String trace = received.getMessageProperties().getHeaders()
-				.get(RepublishMessageRecoverer.X_EXCEPTION_STACKTRACE).toString();
+	.get(RepublishMessageRecoverer.X_EXCEPTION_STACKTRACE).toString();
 		assertThat(trace).isEqualTo(getStackTraceAsString(cause));
 		ccf.destroy();
 	}
@@ -97,24 +97,24 @@ class RepublishMessageRecovererIntegrationTests {
 	@Test
 	void testBigMessageSmallTrace() {
 		CachingConnectionFactory ccf = new CachingConnectionFactory(
-				RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		RabbitTemplate template = new RabbitTemplate(ccf);
 		this.maxHeaderSize = RabbitUtils.getMaxFrame(template.getConnectionFactory())
-				- RepublishMessageRecoverer.DEFAULT_FRAME_MAX_HEADROOM;
+	- RepublishMessageRecoverer.DEFAULT_FRAME_MAX_HEADROOM;
 		assertThat(this.maxHeaderSize).isGreaterThan(0);
 		RepublishMessageRecoverer recoverer = new RepublishMessageRecoverer(template, "", BIG_HEADER_QUEUE);
 		ListenerExecutionFailedException cause = new ListenerExecutionFailedException("Listener failed",
-				new RuntimeException(new String(new byte[this.maxHeaderSize]).replace('\u0000', 'x'),
-						new IllegalStateException("foo")));
+	new RuntimeException(new String(new byte[this.maxHeaderSize]).replace('\u0000', 'x'),
+new IllegalStateException("foo")));
 		recoverer.recover(new Message("foo".getBytes(), new MessageProperties()),
-				cause);
+	cause);
 		Message received = template.receive(BIG_HEADER_QUEUE, 10_000);
 		assertThat(received).isNotNull();
 		String trace = received.getMessageProperties().getHeaders()
-				.get(RepublishMessageRecoverer.X_EXCEPTION_STACKTRACE).toString();
+	.get(RepublishMessageRecoverer.X_EXCEPTION_STACKTRACE).toString();
 		assertThat(trace).contains("Caused by: java.lang.IllegalStateException");
 		String exceptionMessage = received.getMessageProperties()
-				.getHeader(RepublishMessageRecoverer.X_EXCEPTION_MESSAGE).toString();
+	.getHeader(RepublishMessageRecoverer.X_EXCEPTION_MESSAGE).toString();
 		assertThat(trace.length() + exceptionMessage.length()).isEqualTo(this.maxHeaderSize);
 		assertThat(exceptionMessage).endsWith("...");
 		ccf.destroy();
@@ -127,8 +127,8 @@ class RepublishMessageRecovererIntegrationTests {
 			return cause;
 		}
 		String msg = length + BIG_EXCEPTION_MESSAGE1.length() > wantThisSize
-				? BIG_EXCEPTION_MESSAGE1
-				: BIG_EXCEPTION_MESSAGE2;
+	? BIG_EXCEPTION_MESSAGE1
+	: BIG_EXCEPTION_MESSAGE2;
 		return bigCause(new RuntimeException(msg, cause));
 	}
 

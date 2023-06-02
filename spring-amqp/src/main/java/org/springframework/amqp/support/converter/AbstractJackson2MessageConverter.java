@@ -53,8 +53,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * @since 2.1
  */
-public abstract class AbstractJackson2MessageConverter extends AbstractMessageConverter
-		implements BeanClassLoaderAware, SmartMessageConverter {
+public abstract class AbstractJackson2MessageConverter extends AbstractMessageConverterimplements BeanClassLoaderAware, SmartMessageConverter {
 
 	protected final Log log = LogFactory.getLog(getClass()); // NOSONAR protected
 
@@ -111,7 +110,7 @@ public abstract class AbstractJackson2MessageConverter extends AbstractMessageCo
 	 * @see DefaultJackson2JavaTypeMapper#setTrustedPackages(String...)
 	 */
 	protected AbstractJackson2MessageConverter(ObjectMapper objectMapper, MimeType contentType,
-			String... trustedPackages) {
+String... trustedPackages) {
 
 		Assert.notNull(objectMapper, "'objectMapper' must not be null");
 		Assert.notNull(contentType, "'contentType' must not be null");
@@ -177,7 +176,7 @@ public abstract class AbstractJackson2MessageConverter extends AbstractMessageCo
 	 */
 	public void setDefaultCharset(@Nullable String defaultCharset) {
 		this.defaultCharset = (defaultCharset != null) ? Charset.forName(defaultCharset)
-				: DEFAULT_CHARSET;
+	: DEFAULT_CHARSET;
 		this.charsetIsUtf8 = this.defaultCharset.equals(StandardCharsets.UTF_8);
 	}
 
@@ -315,15 +314,15 @@ public abstract class AbstractJackson2MessageConverter extends AbstractMessageCo
 		if (properties != null) {
 			String contentType = properties.getContentType();
 			if ((this.assumeSupportedContentType // NOSONAR Boolean complexity
-					&& (contentType == null || contentType.equals(MessageProperties.DEFAULT_CONTENT_TYPE)))
-					|| (contentType != null && contentType.contains(this.supportedContentType.getSubtype()))) {
+		&& (contentType == null || contentType.equals(MessageProperties.DEFAULT_CONTENT_TYPE)))
+		|| (contentType != null && contentType.contains(this.supportedContentType.getSubtype()))) {
 				String encoding = determineEncoding(properties, contentType);
 				content = doFromMessage(message, conversionHint, properties, encoding);
 			}
 			else {
 				if (this.log.isWarnEnabled()) {
 					this.log.warn("Could not convert incoming message with content-type ["
-							+ contentType + "], '" + this.supportedContentType.getSubtype() + "' keyword missing.");
+				+ contentType + "], '" + this.supportedContentType.getSubtype() + "' keyword missing.");
 				}
 			}
 		}
@@ -357,7 +356,7 @@ public abstract class AbstractJackson2MessageConverter extends AbstractMessageCo
 	}
 
 	private Object doFromMessage(Message message, Object conversionHint, MessageProperties properties,
-			String encoding) {
+String encoding) {
 
 		Object content = null;
 		try {
@@ -365,18 +364,18 @@ public abstract class AbstractJackson2MessageConverter extends AbstractMessageCo
 		}
 		catch (IOException e) {
 			throw new MessageConversionException(
-					"Failed to convert Message content", e);
+		"Failed to convert Message content", e);
 		}
 		return content;
 	}
 
 	private Object convertContent(Message message, Object conversionHint, MessageProperties properties, String encoding)
-			throws IOException {
+throws IOException {
 
 		Object content = null;
 		JavaType inferredType = this.javaTypeMapper.getInferredType(properties);
 		if (inferredType != null && this.useProjectionForInterfaces && inferredType.isInterface()
-				&& !inferredType.getRawClass().getPackage().getName().startsWith("java.util")) { // List etc
+	&& !inferredType.getRawClass().getPackage().getName().startsWith("java.util")) { // List etc
 			content = this.projectingConverter.convert(message, inferredType.getRawClass());
 			properties.setProjectionUsed(true);
 		}
@@ -386,20 +385,20 @@ public abstract class AbstractJackson2MessageConverter extends AbstractMessageCo
 		if (content == null) {
 			if (conversionHint instanceof ParameterizedTypeReference) {
 				content = convertBytesToObject(message.getBody(), encoding,
-						this.objectMapper.getTypeFactory().constructType(
-								((ParameterizedTypeReference<?>) conversionHint).getType()));
+			this.objectMapper.getTypeFactory().constructType(
+		((ParameterizedTypeReference<?>) conversionHint).getType()));
 			}
 			else if (getClassMapper() == null) {
 				JavaType targetJavaType = getJavaTypeMapper()
-						.toJavaType(message.getMessageProperties());
+			.toJavaType(message.getMessageProperties());
 				content = convertBytesToObject(message.getBody(),
-						encoding, targetJavaType);
+			encoding, targetJavaType);
 			}
 			else {
 				Class<?> targetClass = getClassMapper().toClass(// NOSONAR never null
-						message.getMessageProperties());
+			message.getMessageProperties());
 				content = convertBytesToObject(message.getBody(),
-						encoding, targetClass);
+			encoding, targetClass);
 			}
 		}
 		return content;
@@ -438,14 +437,14 @@ public abstract class AbstractJackson2MessageConverter extends AbstractMessageCo
 
 	@Override
 	protected Message createMessage(Object objectToConvert, MessageProperties messageProperties)
-			throws MessageConversionException {
+throws MessageConversionException {
 
 		return createMessage(objectToConvert, messageProperties, null);
 	}
 
 	@Override
 	protected Message createMessage(Object objectToConvert, MessageProperties messageProperties,
-			@Nullable Type genericType) throws MessageConversionException {
+@Nullable Type genericType) throws MessageConversionException {
 
 		byte[] bytes;
 		try {
@@ -454,7 +453,7 @@ public abstract class AbstractJackson2MessageConverter extends AbstractMessageCo
 			}
 			else {
 				String jsonString = this.objectMapper
-						.writeValueAsString(objectToConvert);
+			.writeValueAsString(objectToConvert);
 				String encoding = this.supportedCTCharset != null ? this.supportedCTCharset : getDefaultCharset();
 				bytes = jsonString.getBytes(encoding);
 			}
@@ -470,9 +469,9 @@ public abstract class AbstractJackson2MessageConverter extends AbstractMessageCo
 
 		if (getClassMapper() == null) {
 			JavaType type = this.objectMapper.constructType(
-					genericType == null ? objectToConvert.getClass() : genericType);
+		genericType == null ? objectToConvert.getClass() : genericType);
 			if (genericType != null && !type.isContainerType()
-					&& Modifier.isAbstract(type.getRawClass().getModifiers())) {
+		&& Modifier.isAbstract(type.getRawClass().getModifiers())) {
 				type = this.objectMapper.constructType(objectToConvert.getClass());
 			}
 			getJavaTypeMapper().fromJavaType(type, messageProperties);

@@ -58,7 +58,7 @@ public class DeclarationExceptionEvent extends RabbitAdminEvent {
 	@Override
 	public String toString() {
 		return "DeclarationExceptionEvent [declarable=" + this.declarable + ", throwable=" + this.throwable + ", source="
-				+ getSource() + "]";
+	+ getSource() + "]";
 	}
 
 }

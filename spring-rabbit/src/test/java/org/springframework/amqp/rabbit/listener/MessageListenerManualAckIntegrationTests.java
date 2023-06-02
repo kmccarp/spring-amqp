@@ -50,8 +50,7 @@ import com.rabbitmq.client.Channel;
  *
  */
 @RabbitAvailable(queues = MessageListenerManualAckIntegrationTests.TEST_QUEUE)
-@LogLevels(level = "ERROR", classes = { RabbitTemplate.class,
-			SimpleMessageListenerContainer.class, BlockingQueueConsumer.class })
+@LogLevels(level = "ERROR", classes = {RabbitTemplate.class,SimpleMessageListenerContainer.class, BlockingQueueConsumer.class})
 public class MessageListenerManualAckIntegrationTests {
 
 	public static final String TEST_QUEUE = "test.queue.MessageListenerManualAckIntegrationTests";

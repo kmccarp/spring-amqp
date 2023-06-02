@@ -59,7 +59,7 @@ public class SpringRabbitTestTests {
 	@Test
 	void testAutowiring() {
 		assertThat(((CachingConnectionFactory) template.getConnectionFactory()).getRabbitConnectionFactory())
-			.isSameAs(RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	.isSameAs(RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 	}
 
 	@Configuration

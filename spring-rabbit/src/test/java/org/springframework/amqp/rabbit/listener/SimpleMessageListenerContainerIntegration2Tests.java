@@ -93,8 +93,7 @@ import com.rabbitmq.client.Channel;
  * @since 1.3
  *
  */
-@RabbitAvailable(queues = { SimpleMessageListenerContainerIntegration2Tests.TEST_QUEUE,
-		SimpleMessageListenerContainerIntegration2Tests.TEST_QUEUE_1 })
+@RabbitAvailable(queues = {SimpleMessageListenerContainerIntegration2Tests.TEST_QUEUE,SimpleMessageListenerContainerIntegration2Tests.TEST_QUEUE_1})
 @LongRunning
 public class SimpleMessageListenerContainerIntegration2Tests {
 
@@ -140,7 +139,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 		CountDownLatch latch = new CountDownLatch(30);
 		AtomicInteger restarts = new AtomicInteger();
 		container = spy(createContainer(new MessageListenerAdapter(new PojoListener(latch)), false, queue.getName(),
-				queue1.getName()));
+	queue1.getName()));
 		willAnswer(invocation -> {
 			restarts.incrementAndGet();
 			invocation.callRealMethod();
@@ -173,7 +172,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 	public void testChangeQueues2() throws Exception { // addQueues instead of addQueueNames
 		CountDownLatch latch = new CountDownLatch(30);
 		container =
-				createContainer(new MessageListenerAdapter(new PojoListener(latch)), queue.getName(), queue1.getName());
+	createContainer(new MessageListenerAdapter(new PojoListener(latch)), queue.getName(), queue1.getName());
 		final CountDownLatch consumerLatch = new CountDownLatch(1);
 		this.container.setApplicationEventPublisher(e -> {
 			if (e instanceof AsyncConsumerStoppedEvent) {
@@ -234,7 +233,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 	public void testDeleteOneQueue() throws Exception {
 		CountDownLatch latch = new CountDownLatch(20);
 		container = createContainer(new MessageListenerAdapter(new PojoListener(latch)), false,
-				queue.getName(), queue1.getName());
+	queue.getName(), queue1.getName());
 		container.setFailedDeclarationRetryInterval(100);
 		final List<AmqpEvent> events = new ArrayList<>();
 		final AtomicReference<ListenerContainerConsumerFailedEvent> eventRef = new AtomicReference<>();
@@ -276,8 +275,8 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 		}, newCon -> newCon != consumer);
 		Set<?> missingQueues = TestUtils.getPropertyValue(newConsumer, "missingQueues", Set.class);
 		with().pollInterval(Duration.ofMillis(200)).await("Failed to detect missing queue")
-				.atMost(Duration.ofSeconds(20))
-				.until(() -> missingQueues.size() > 0);
+	.atMost(Duration.ofSeconds(20))
+	.until(() -> missingQueues.size() > 0);
 		assertThat(eventRef.get().getThrowable()).isInstanceOf(ConsumerCancelledException.class);
 		assertThat(eventRef.get().isFatal()).isFalse();
 		DirectFieldAccessor dfa = new DirectFieldAccessor(newConsumer);
@@ -350,7 +349,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 		new DirectFieldAccessor(this.template.getConnectionFactory()).setPropertyValue("logger", logger);
 		CountDownLatch latch1 = new CountDownLatch(1000);
 		SimpleMessageListenerContainer container1 =
-				new SimpleMessageListenerContainer(template.getConnectionFactory());
+	new SimpleMessageListenerContainer(template.getConnectionFactory());
 		container1.setMessageListener(new MessageListenerAdapter(new PojoListener(latch1)));
 		container1.setQueueNames(queue.getName());
 		GenericApplicationContext context = new GenericApplicationContext();
@@ -369,7 +368,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 		assertThat(consumeLatch1.await(10, TimeUnit.SECONDS)).isTrue();
 		CountDownLatch latch2 = new CountDownLatch(1000);
 		SimpleMessageListenerContainer container2 =
-				new SimpleMessageListenerContainer(template.getConnectionFactory());
+	new SimpleMessageListenerContainer(template.getConnectionFactory());
 		container2.setMessageListener(new MessageListenerAdapter(new PojoListener(latch2)));
 		container2.setQueueNames(queue.getName());
 		container2.setApplicationContext(context);
@@ -447,7 +446,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 
 		Connection connection = spy(connectionFactory.createConnection());
 		given(connection.createChannel(anyBoolean()))
-			.willAnswer(invocation -> new MockChannel((Channel) invocation.callRealMethod()));
+	.willAnswer(invocation -> new MockChannel((Channel) invocation.callRealMethod()));
 
 		DirectFieldAccessor dfa = new DirectFieldAccessor(connectionFactory);
 		dfa.setPropertyValue("connection", connection);
@@ -474,7 +473,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 		this.template.convertAndSend(queue.getName(), "foo");
 
 		CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost",
-				BrokerTestUtils.getPort());
+	BrokerTestUtils.getPort());
 		// this test closes the underlying connection normally; it will never be recovered
 		connectionFactory.getRabbitConnectionFactory().setAutomaticRecoveryEnabled(false);
 
@@ -499,7 +498,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 
 		Connection connection = spy(connectionFactory.createConnection());
 		given(connection.createChannel(anyBoolean()))
-				.willAnswer(invocation -> new MockChannel((Channel) invocation.callRealMethod()));
+	.willAnswer(invocation -> new MockChannel((Channel) invocation.callRealMethod()));
 
 		DirectFieldAccessor dfa = new DirectFieldAccessor(connectionFactory);
 		dfa.setPropertyValue("connection", connection);
@@ -553,7 +552,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 
 		// verify properties propagated to consumer
 		BlockingQueueConsumer consumer = (BlockingQueueConsumer) TestUtils
-				.getPropertyValue(container, "consumers", Set.class).iterator().next();
+	.getPropertyValue(container, "consumers", Set.class).iterator().next();
 		assertThat(TestUtils.getPropertyValue(consumer, "declarationRetries")).isEqualTo(1);
 		assertThat(TestUtils.getPropertyValue(consumer, "failedDeclarationRetryInterval")).isEqualTo(100L);
 		assertThat(TestUtils.getPropertyValue(consumer, "retryDeclarationInterval")).isEqualTo(30000L);
@@ -593,7 +592,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 	public void testTransientBadMessageDoesntStopContainer() throws Exception {
 		CountDownLatch latch = new CountDownLatch(3);
 		this.container =
-				createContainer(new MessageListenerAdapter(new PojoListener(latch, false)), this.queue.getName());
+	createContainer(new MessageListenerAdapter(new PojoListener(latch, false)), this.queue.getName());
 		this.template.convertAndSend(this.queue.getName(), "foo");
 		this.template.convertAndSend(this.queue.getName(), new Foo());
 		this.template.convertAndSend(this.queue.getName(), new Bar());
@@ -607,10 +606,10 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 	public void testTransientBadMessageDoesntStopContainerLambda() throws Exception {
 		final CountDownLatch latch = new CountDownLatch(2);
 		this.container = createContainer(new MessageListenerAdapter(
-				(ReplyingMessageListener<String, Void>) m -> {
-					latch.countDown();
-					return null;
-				}), this.queue.getName());
+	(ReplyingMessageListener<String, Void>) m -> {
+		latch.countDown();
+		return null;
+	}), this.queue.getName());
 		this.template.convertAndSend(this.queue.getName(), "foo");
 		this.template.convertAndSend(this.queue.getName(), new Foo());
 		this.template.convertAndSend(this.queue.getName(), "foo");
@@ -635,7 +634,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 		ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
 		verify(logger).error(captor.capture());
 		assertThat(captor.getValue()).isEqualTo("Consumer failed to start in 100 milliseconds; does the task "
-				+ "executor have enough threads to support the container concurrency?");
+	+ "executor have enough threads to support the container concurrency?");
 	}
 
 	@Test
@@ -643,7 +642,8 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 		this.container = createContainer((m) -> {
 			throw new Error("testError");
 		}, false, this.queue.getName());
-		this.container.setjavaLangErrorHandler(error -> { });
+		this.container.setjavaLangErrorHandler(error -> {
+		});
 		final CountDownLatch latch = new CountDownLatch(1);
 		this.container.setApplicationEventPublisher(event -> {
 			if (event instanceof ListenerContainerConsumerFailedEvent) {
@@ -763,7 +763,7 @@ public class SimpleMessageListenerContainerIntegration2Tests {
 	}
 
 	private SimpleMessageListenerContainer createContainer(MessageListener listener, boolean start,
-			String... queueNames) {
+String... queueNames) {
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(template.getConnectionFactory());
 		if (listener != null) {
 			container.setMessageListener(listener);

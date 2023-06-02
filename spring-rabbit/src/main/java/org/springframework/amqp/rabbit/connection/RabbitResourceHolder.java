@@ -34,6 +34,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.rabbitmq.client.Channel;
+
 /**
  * Rabbit resource holder, wrapping a RabbitMQ Connection and Channel.
  * RabbitTransactionManager binds instances of this

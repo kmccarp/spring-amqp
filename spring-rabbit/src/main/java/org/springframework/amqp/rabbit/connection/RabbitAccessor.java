@@ -121,7 +121,7 @@ public abstract class RabbitAccessor implements InitializingBean {
 	protected void obtainObservationRegistry(@Nullable ApplicationContext appContext) {
 		if (appContext != null) {
 			ObjectProvider<ObservationRegistry> registry =
-					appContext.getBeanProvider(ObservationRegistry.class);
+		appContext.getBeanProvider(ObservationRegistry.class);
 			this.observationRegistry = registry.getIfUnique();
 		}
 	}

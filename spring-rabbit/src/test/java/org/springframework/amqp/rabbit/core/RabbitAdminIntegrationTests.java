@@ -119,7 +119,7 @@ public class RabbitAdminIntegrationTests extends NeedsManagementTests {
 		new RabbitAdmin(connectionFactory1).declareQueue(queue);
 		try {
 			assertThatThrownBy((() -> new RabbitAdmin(connectionFactory2).declareQueue((Queue) queue.clone())))
-				.isInstanceOf(AmqpIOException.class);
+		.isInstanceOf(AmqpIOException.class);
 		}
 		finally {
 			// Need to release the connection so the exclusive queue is deleted
@@ -381,7 +381,7 @@ public class RabbitAdminIntegrationTests extends NeedsManagementTests {
 		}
 		catch (AmqpIOException e) {
 			if (RabbitUtils.isExchangeDeclarationFailure(e)
-					&& e.getCause().getCause().getMessage().contains("exchange type 'x-delayed-message'")) {
+		&& e.getCause().getCause().getMessage().contains("exchange type 'x-delayed-message'")) {
 				return;
 			}
 			else {
@@ -403,7 +403,7 @@ public class RabbitAdminIntegrationTests extends NeedsManagementTests {
 		MessageProperties properties = new MessageProperties();
 		properties.setDelay(500);
 		template.send(exchangeName, queue.getName(),
-				MessageBuilder.withBody("foo".getBytes()).andProperties(properties).build());
+	MessageBuilder.withBody("foo".getBytes()).andProperties(properties).build());
 		long t1 = System.currentTimeMillis();
 		Message received = template.receive(queue.getName());
 		assertThat(received).isNotNull();
@@ -423,7 +423,7 @@ public class RabbitAdminIntegrationTests extends NeedsManagementTests {
 
 	private Map<String, Object> getExchange(String exchangeName) throws Exception {
 		return await().pollDelay(Duration.ZERO)
-				.until(() -> exchangeInfo(exchangeName), exch -> exch != null);
+	.until(() -> exchangeInfo(exchangeName), exch -> exch != null);
 	}
 
 	/**

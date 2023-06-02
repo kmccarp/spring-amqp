@@ -102,7 +102,7 @@ public class ThreadChannelConnectionFactory extends AbstractConnectionFactory im
 		this.simplePublisherConfirms = simplePublisherConfirms;
 		if (this.defaultPublisherFactory) {
 			((ThreadChannelConnectionFactory) getPublisherConnectionFactory())
-				.setSimplePublisherConfirms(simplePublisherConfirms); // NOSONAR
+		.setSimplePublisherConfirms(simplePublisherConfirms); // NOSONAR
 		}
 	}
 
@@ -155,10 +155,10 @@ public class ThreadChannelConnectionFactory extends AbstractConnectionFactory im
 		}
 		if (this.switchesInProgress.size() > 0 && this.logger.isWarnEnabled()) {
 			this.logger.warn("Unclaimed context switches from threads:" +
-					this.switchesInProgress.values()
-							.stream()
-							.map(t -> t.getName())
-							.collect(Collectors.toList()));
+		this.switchesInProgress.values()
+	.stream()
+	.map(t -> t.getName())
+	.collect(Collectors.toList()));
 		}
 		this.contextSwitches.clear();
 		this.switchesInProgress.clear();
@@ -189,7 +189,7 @@ public class ThreadChannelConnectionFactory extends AbstractConnectionFactory im
 		}
 		if (this.switchesInProgress.values().contains(Thread.currentThread())) {
 			this.logger
-					.warn("A previous context switch from this thread has not been claimed yet; possible memory leak?");
+		.warn("A previous context switch from this thread has not been claimed yet; possible memory leak?");
 		}
 		this.contextSwitches.put(uuid, context);
 		this.switchesInProgress.put(uuid, Thread.currentThread());
@@ -274,26 +274,26 @@ public class ThreadChannelConnectionFactory extends AbstractConnectionFactory im
 			ProxyFactory pf = new ProxyFactory(channel);
 			AtomicBoolean confirmSelected = new AtomicBoolean();
 			Advice advice =
-					(MethodInterceptor) invocation -> {
-						String method = invocation.getMethod().getName();
-						switch (method) {
-							case "close":
-								handleClose(channel, transactional);
-								return null;
-							case "getTargetChannel":
-								return channel;
-							case "isTransactional":
-								return transactional;
-							case "confirmSelect":
-								confirmSelected.set(true);
-								return channel.confirmSelect();
-							case "isConfirmSelected":
-								return confirmSelected.get();
-							case "isPublisherConfirms":
-								return false;
-						}
-						return null;
-					};
+		(MethodInterceptor) invocation -> {
+			String method = invocation.getMethod().getName();
+			switch (method) {
+				case "close":
+					handleClose(channel, transactional);
+					return null;
+				case "getTargetChannel":
+					return channel;
+				case "isTransactional":
+					return transactional;
+				case "confirmSelect":
+					confirmSelected.set(true);
+					return channel.confirmSelect();
+				case "isConfirmSelected":
+					return confirmSelected.get();
+				case "isPublisherConfirms":
+					return false;
+			}
+			return null;
+		};
 			NameMatchMethodPointcutAdvisor advisor = new NameMatchMethodPointcutAdvisor(advice);
 			advisor.addMethodName("close");
 			advisor.addMethodName("getTargetChannel");

@@ -45,11 +45,8 @@ import org.springframework.amqp.rabbit.support.DefaultMessagePropertiesConverter
  * @since 1.0
  *
  */
-@RabbitAvailable(queues = { BlockingQueueConsumerIntegrationTests.QUEUE1_NAME,
-		BlockingQueueConsumerIntegrationTests.QUEUE2_NAME })
-@LogLevels(classes = {RabbitTemplate.class,
-			SimpleMessageListenerContainer.class, BlockingQueueConsumer.class,
-			BlockingQueueConsumerIntegrationTests.class }, level = "INFO")
+@RabbitAvailable(queues = {BlockingQueueConsumerIntegrationTests.QUEUE1_NAME,BlockingQueueConsumerIntegrationTests.QUEUE2_NAME})
+@LogLevels(classes = {RabbitTemplate.class,SimpleMessageListenerContainer.class, BlockingQueueConsumer.class,BlockingQueueConsumerIntegrationTests.class}, level = "INFO")
 public class BlockingQueueConsumerIntegrationTests {
 
 	public static final String QUEUE1_NAME = "test.queue1.BlockingQueueConsumerIntegrationTests";
@@ -70,8 +67,8 @@ public class BlockingQueueConsumerIntegrationTests {
 		template.setConnectionFactory(connectionFactory);
 
 		BlockingQueueConsumer blockingQueueConsumer = new BlockingQueueConsumer(connectionFactory,
-				new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
-				AcknowledgeMode.AUTO, true, 1, queue1.getName(), queue2.getName());
+	new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
+	AcknowledgeMode.AUTO, true, 1, queue1.getName(), queue2.getName());
 		final String consumerTagPrefix = UUID.randomUUID().toString();
 		blockingQueueConsumer.setTagStrategy(queue -> consumerTagPrefix + '#' + queue);
 		CountDownLatch latch = new CountDownLatch(2);
@@ -96,8 +93,8 @@ public class BlockingQueueConsumerIntegrationTests {
 		CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
 		String longName = new String(new byte[300]).replace('\u0000', 'x');
 		BlockingQueueConsumer blockingQueueConsumer = new BlockingQueueConsumer(connectionFactory,
-				new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
-				AcknowledgeMode.AUTO, true, 1, longName, "foobar");
+	new DefaultMessagePropertiesConverter(), new ActiveObjectCounter<BlockingQueueConsumer>(),
+	AcknowledgeMode.AUTO, true, 1, longName, "foobar");
 		try {
 			blockingQueueConsumer.start();
 			fail("expected exception");

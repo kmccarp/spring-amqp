@@ -38,7 +38,7 @@ public class RabbitListenerContainerTestFactory implements RabbitListenerContain
 	private static final AtomicInteger counter = new AtomicInteger();
 
 	private final Map<String, MessageListenerTestContainer> listenerContainers =
-			new LinkedHashMap<String, MessageListenerTestContainer>();
+new LinkedHashMap<String, MessageListenerTestContainer>();
 
 	public List<MessageListenerTestContainer> getListenerContainers() {
 		return new ArrayList<MessageListenerTestContainer>(this.listenerContainers.values());
@@ -58,7 +58,7 @@ public class RabbitListenerContainerTestFactory implements RabbitListenerContain
 		}
 		String id = endpoint.getId();
 		assertThat(id).as(this.getClass().getSimpleName() + " does not support " + endpoint.getClass().getSimpleName()
-				+ " without an id").isNotNull();
+	+ " without an id").isNotNull();
 		this.listenerContainers.put(id, container);
 		return container;
 	}

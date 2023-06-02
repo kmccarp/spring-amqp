@@ -76,9 +76,9 @@ public class DirectMessageListenerContainerMockTests {
 		final AtomicBoolean isOpen = new AtomicBoolean(true);
 		willAnswer(i -> isOpen.get()).given(channel).isOpen();
 		given(channel.queueDeclarePassive(Mockito.anyString()))
-				.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
+	.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
 		given(channel.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-						anyMap(), any(Consumer.class))).willReturn("consumerTag");
+	anyMap(), any(Consumer.class))).willReturn("consumerTag");
 
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		final AtomicInteger qos = new AtomicInteger();
@@ -119,7 +119,7 @@ public class DirectMessageListenerContainerMockTests {
 		given(connection.createChannel(anyBoolean())).willReturn(channel);
 		given(channel.isOpen()).willReturn(true);
 		given(channel.queueDeclarePassive(Mockito.anyString()))
-				.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
+	.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
 		final AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		willAnswer(i -> {
@@ -128,8 +128,8 @@ public class DirectMessageListenerContainerMockTests {
 			latch1.countDown();
 			return "consumerTag";
 		}).given(channel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-						anyMap(), any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
+anyMap(), any(Consumer.class));
 
 		final AtomicInteger qos = new AtomicInteger();
 		willAnswer(i -> {
@@ -216,7 +216,7 @@ public class DirectMessageListenerContainerMockTests {
 		final AtomicBoolean isOpen = new AtomicBoolean(true);
 		willAnswer(i -> isOpen.get()).given(channel).isOpen();
 		given(channel.queueDeclarePassive(Mockito.anyString()))
-				.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
+	.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
 
 		final CountDownLatch latch1 = new CountDownLatch(2);
 		final CountDownLatch latch3 = new CountDownLatch(3);
@@ -225,8 +225,8 @@ public class DirectMessageListenerContainerMockTests {
 			latch3.countDown();
 			return "consumerTag";
 		}).given(channel)
-				.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-						anyMap(), any(Consumer.class));
+	.basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
+anyMap(), any(Consumer.class));
 
 		final AtomicInteger qos = new AtomicInteger();
 		willAnswer(i -> {
@@ -259,9 +259,9 @@ public class DirectMessageListenerContainerMockTests {
 		assertThat(latch3.await(10, TimeUnit.SECONDS)).isTrue();
 
 		verify(channel, times(1)).basicConsume(eq("test1"), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-				anyMap(), any(Consumer.class));
+	anyMap(), any(Consumer.class));
 		verify(channel, times(2)).basicConsume(eq("test2"), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-				anyMap(), any(Consumer.class));
+	anyMap(), any(Consumer.class));
 
 		container.stop();
 	}
@@ -278,7 +278,7 @@ public class DirectMessageListenerContainerMockTests {
 		given(connection.createChannel(anyBoolean())).willReturn(channel);
 		given(channel.isOpen()).willReturn(true);
 		given(channel.queueDeclarePassive(Mockito.anyString()))
-				.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
+	.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
 		AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		final CountDownLatch latch2 = new CountDownLatch(1);
@@ -287,7 +287,7 @@ public class DirectMessageListenerContainerMockTests {
 			latch1.countDown();
 			return "consumerTag";
 		}).given(channel).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-						anyMap(), any(Consumer.class));
+	anyMap(), any(Consumer.class));
 
 		willThrow(new RuntimeException("bad ack")).given(channel).basicAck(1L, false);
 		willAnswer(inv -> {
@@ -326,7 +326,7 @@ public class DirectMessageListenerContainerMockTests {
 		given(connection.createChannel(anyBoolean())).willReturn(channel);
 		given(channel.isOpen()).willReturn(true);
 		given(channel.queueDeclarePassive(Mockito.anyString()))
-				.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
+	.willAnswer(invocation -> mock(AMQP.Queue.DeclareOk.class));
 		AtomicReference<Consumer> consumer = new AtomicReference<>();
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		final CountDownLatch latch2 = new CountDownLatch(1);
@@ -335,7 +335,7 @@ public class DirectMessageListenerContainerMockTests {
 			latch1.countDown();
 			return "consumerTag";
 		}).given(channel).basicConsume(anyString(), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-						anyMap(), any(Consumer.class));
+	anyMap(), any(Consumer.class));
 
 		willAnswer(inv -> {
 			consumer.get().handleCancelOk("consumerTag");
@@ -370,17 +370,17 @@ public class DirectMessageListenerContainerMockTests {
 		assertThat(container.getListenerId()).isEqualTo("id");
 		container.afterPropertiesSet();
 		assertThat(container).extracting("taskScheduler")
-				.extracting("threadNamePrefix")
-				.asString()
-				.startsWith("id-consumerMonitor");
+	.extracting("threadNamePrefix")
+	.asString()
+	.startsWith("id-consumerMonitor");
 
 		container = new DirectMessageListenerContainer(mock(ConnectionFactory.class));
 		container.setBeanName("aBean");
 		container.afterPropertiesSet();
 		assertThat(container).extracting("taskScheduler")
-				.extracting("threadNamePrefix")
-				.asString()
-				.startsWith("aBean-consumerMonitor");
+	.extracting("threadNamePrefix")
+	.asString()
+	.startsWith("aBean-consumerMonitor");
 	}
 
 	private Envelope envelope(long tag) {

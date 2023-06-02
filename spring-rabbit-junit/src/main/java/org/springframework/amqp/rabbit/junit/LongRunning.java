@@ -34,7 +34,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  *
  */
 @ExtendWith(LongRunningIntegrationTestCondition.class)
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface LongRunning {

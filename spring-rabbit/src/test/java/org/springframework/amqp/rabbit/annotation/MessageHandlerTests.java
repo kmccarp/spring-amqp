@@ -59,15 +59,15 @@ public class MessageHandlerTests {
 		Foo foo = new Foo();
 		Map<String, Method> methods = new HashMap<>();
 		ReflectionUtils.doWithMethods(Foo.class,
-				method -> methods.put(method.getName(), method),
-				method -> method.getName().equals("listen1"));
+	method -> methods.put(method.getName(), method),
+	method -> method.getName().equals("listen1"));
 		ReflectionUtils.doWithMethods(Foo.class,
-				method -> methods.put(method.getName(), method),
-				method -> method.getName().equals("listen2"));
+	method -> methods.put(method.getName(), method),
+	method -> method.getName().equals("listen2"));
 		InvocableHandlerMethod invMethod = factory.createInvocableHandlerMethod(foo, methods.get("listen1"));
 		List<GenericMessage<String>> messagingMessages = Collections.singletonList(new GenericMessage<>("foo"));
 		List<org.springframework.amqp.core.Message> amqpMessages = Collections.singletonList(
-				new org.springframework.amqp.core.Message("bar".getBytes(), new MessageProperties()));
+	new org.springframework.amqp.core.Message("bar".getBytes(), new MessageProperties()));
 		HandlerAdapter adapter = new HandlerAdapter(invMethod);
 		adapter.invoke(new GenericMessage<>(messagingMessages), null, mock(Channel.class));
 		assertThat(foo.messagingMessages).isSameAs(messagingMessages);

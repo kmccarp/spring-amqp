@@ -94,12 +94,12 @@ public class RabbitTemplateHeaderTests {
 				correlationId.set((String) basicProps.getHeaders().get(CORRELATION_HEADER));
 			}
 			MessageProperties springProps = new DefaultMessagePropertiesConverter()
-					.toMessageProperties(basicProps, null, "UTF-8");
+		.toMessageProperties(basicProps, null, "UTF-8");
 			Message replyMessage = new Message("!dlrow olleH".getBytes(), springProps);
 			template.onMessage(replyMessage, mock(Channel.class));
 			return null;
 		}).given(mockChannel).basicPublish(any(String.class), any(String.class), Mockito.anyBoolean(),
-				any(BasicProperties.class), any(byte[].class));
+	any(BasicProperties.class), any(byte[].class));
 		Message reply = template.sendAndReceive(message);
 		assertThat(reply).isNotNull();
 
@@ -144,12 +144,12 @@ public class RabbitTemplateHeaderTests {
 			replyTo.set(basicProps.getReplyTo());
 			correlationId.set(basicProps.getCorrelationId());
 			MessageProperties springProps = new DefaultMessagePropertiesConverter()
-					.toMessageProperties(basicProps, null, "UTF-8");
+		.toMessageProperties(basicProps, null, "UTF-8");
 			Message replyMessage = new Message("!dlrow olleH".getBytes(), springProps);
 			template.onMessage(replyMessage, mock(Channel.class));
 			return null;
 		}).given(mockChannel).basicPublish(any(String.class), any(String.class), Mockito.anyBoolean(),
-				any(BasicProperties.class), any(byte[].class));
+	any(BasicProperties.class), any(byte[].class));
 		Message reply = template.sendAndReceive(message);
 		assertThat(reply).isNotNull();
 
@@ -192,7 +192,7 @@ public class RabbitTemplateHeaderTests {
 			nestedReplyTo.add(basicProps.getReplyTo());
 			nestedCorrelation.add(basicProps.getCorrelationId());
 			MessageProperties springProps = new DefaultMessagePropertiesConverter()
-					.toMessageProperties(basicProps, null, "UTF-8");
+		.toMessageProperties(basicProps, null, "UTF-8");
 			Message replyMessage = new Message("!dlrow olleH".getBytes(), springProps);
 			if (count.incrementAndGet() < 2) {
 				Message anotherMessage = new Message("Second".getBytes(), springProps);
@@ -204,7 +204,7 @@ public class RabbitTemplateHeaderTests {
 			template.onMessage(replyMessage, mock(Channel.class));
 			return null;
 		}).given(mockChannel).basicPublish(any(String.class), any(String.class), Mockito.anyBoolean(),
-				any(BasicProperties.class), any(byte[].class));
+	any(BasicProperties.class), any(byte[].class));
 		Message reply = template.sendAndReceive(message);
 		assertThat(reply).isNotNull();
 
@@ -249,12 +249,12 @@ public class RabbitTemplateHeaderTests {
 			correlationId.set((String) basicProps.getHeaders().get(CORRELATION_HEADER));
 
 			MessageProperties springProps = new DefaultMessagePropertiesConverter()
-					.toMessageProperties(basicProps, null, "UTF-8");
+		.toMessageProperties(basicProps, null, "UTF-8");
 			Message replyMessage = new Message("!dlrow olleH".getBytes(), springProps);
 			template.onMessage(replyMessage, mock(Channel.class));
 			return null;
 		}).given(mockChannel).basicPublish(any(String.class), any(String.class), Mockito.anyBoolean(),
-				any(BasicProperties.class), any(byte[].class));
+	any(BasicProperties.class), any(byte[].class));
 		Message reply = template.sendAndReceive(message);
 		assertThat(reply).isNotNull();
 
@@ -299,7 +299,7 @@ public class RabbitTemplateHeaderTests {
 			nestedReplyTo.add(basicProps.getReplyTo());
 			nestedCorrelation.add(basicProps.getCorrelationId());
 			MessageProperties springProps = new DefaultMessagePropertiesConverter()
-					.toMessageProperties(basicProps, null, "UTF-8");
+		.toMessageProperties(basicProps, null, "UTF-8");
 			Message replyMessage = new Message("!dlrow olleH".getBytes(), springProps);
 			if (count.incrementAndGet() < 2) {
 				Message anotherMessage = new Message("Second".getBytes(), springProps);
@@ -311,7 +311,7 @@ public class RabbitTemplateHeaderTests {
 			template.onMessage(replyMessage, mock(Channel.class));
 			return null;
 		}).given(mockChannel).basicPublish(any(String.class), any(String.class), Mockito.anyBoolean(),
-				any(BasicProperties.class), any(byte[].class));
+	any(BasicProperties.class), any(byte[].class));
 		Message reply = template.sendAndReceive(message);
 		assertThat(reply).isNotNull();
 

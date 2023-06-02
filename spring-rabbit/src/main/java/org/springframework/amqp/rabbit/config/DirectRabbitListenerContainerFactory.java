@@ -29,8 +29,7 @@ import org.springframework.scheduling.TaskScheduler;
  * @author Sud Ramasamy
  * @since 2.0
  */
-public class DirectRabbitListenerContainerFactory
-		extends AbstractRabbitListenerContainerFactory<DirectMessageListenerContainer> {
+public class DirectRabbitListenerContainerFactoryextends AbstractRabbitListenerContainerFactory<DirectMessageListenerContainer> {
 
 	private TaskScheduler taskScheduler;
 
@@ -106,9 +105,9 @@ public class DirectRabbitListenerContainerFactory
 		super.initializeContainer(instance, endpoint);
 
 		JavaUtils javaUtils = JavaUtils.INSTANCE.acceptIfNotNull(this.taskScheduler, instance::setTaskScheduler)
-			.acceptIfNotNull(this.monitorInterval, instance::setMonitorInterval)
-			.acceptIfNotNull(this.messagesPerAck, instance::setMessagesPerAck)
-			.acceptIfNotNull(this.ackTimeout, instance::setAckTimeout);
+	.acceptIfNotNull(this.monitorInterval, instance::setMonitorInterval)
+	.acceptIfNotNull(this.messagesPerAck, instance::setMessagesPerAck)
+	.acceptIfNotNull(this.ackTimeout, instance::setAckTimeout);
 		if (endpoint != null && endpoint.getConcurrency() != null) {
 			try {
 				instance.setConsumersPerQueue(Integer.parseInt(endpoint.getConcurrency()));

@@ -31,8 +31,8 @@ public class DeclarablesTests {
 	@Test
 	public void getDeclarables() {
 		List<Queue> queues = List.of(
-				new Queue("q1", false, false, true),
-				new Queue("q2", false, false, true));
+	new Queue("q1", false, false, true),
+	new Queue("q2", false, false, true));
 		Declarables declarables = new Declarables(queues);
 
 		assertThat(declarables.getDeclarables()).hasSameElementsAs(queues);
@@ -49,7 +49,7 @@ public class DeclarablesTests {
 		assertThat(declarables.getDeclarablesByType(Exchange.class)).containsExactlyInAnyOrder(exchange);
 		assertThat(declarables.getDeclarablesByType(Binding.class)).containsExactlyInAnyOrder(binding);
 		assertThat(declarables.getDeclarablesByType(Declarable.class)).containsExactlyInAnyOrder(
-				queue, exchange, binding);
+	queue, exchange, binding);
 	}
 
 }

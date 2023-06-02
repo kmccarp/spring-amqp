@@ -44,7 +44,7 @@ import com.rabbitmq.client.impl.LongStringHelper;
 public class DefaultMessagePropertiesConverterTests {
 
 	private final DefaultMessagePropertiesConverter messagePropertiesConverter =
-			new DefaultMessagePropertiesConverter();
+new DefaultMessagePropertiesConverter();
 
 	private final Envelope envelope = new Envelope(0, false, null, null);
 
@@ -62,8 +62,8 @@ public class DefaultMessagePropertiesConverterTests {
 		Map<String, Object> headers = new HashMap<String, Object>();
 		headers.put("longString", longString);
 		BasicProperties source = new BasicProperties.Builder()
-				.headers(headers)
-				.build();
+	.headers(headers)
+	.build();
 		MessageProperties messageProperties = messagePropertiesConverter.toMessageProperties(source, envelope, "UTF-8");
 		assertThat(messageProperties.getHeaders().get("longString")).as("LongString not converted to String").isEqualTo(longStringString);
 	}
@@ -73,8 +73,8 @@ public class DefaultMessagePropertiesConverterTests {
 		Map<String, Object> headers = new HashMap<String, Object>();
 		headers.put("list", Arrays.asList(longString));
 		BasicProperties source = new BasicProperties.Builder()
-				.headers(headers)
-				.build();
+	.headers(headers)
+	.build();
 		MessageProperties messageProperties = messagePropertiesConverter.toMessageProperties(source, envelope, "UTF-8");
 		assertThat(((List<?>) messageProperties.getHeaders().get("list")).get(0)).as("LongString nested in List not converted to String").isEqualTo(longStringString);
 	}
@@ -84,8 +84,8 @@ public class DefaultMessagePropertiesConverterTests {
 		Map<String, Object> headers = new HashMap<String, Object>();
 		headers.put("list", Arrays.asList(Arrays.asList(longString)));
 		BasicProperties source = new BasicProperties.Builder()
-				.headers(headers)
-				.build();
+	.headers(headers)
+	.build();
 		MessageProperties messageProperties = messagePropertiesConverter.toMessageProperties(source, envelope, "UTF-8");
 		assertThat(((List<?>) ((List<?>) messageProperties.getHeaders().get("list")).get(0)).get(0)).as("LongString deeply nested in List not converted to String").isEqualTo(longStringString);
 	}
@@ -98,8 +98,8 @@ public class DefaultMessagePropertiesConverterTests {
 		Map<String, Object> headers = new HashMap<String, Object>();
 		headers.put("map", mapWithLongString);
 		BasicProperties source = new BasicProperties.Builder()
-				.headers(headers)
-				.build();
+	.headers(headers)
+	.build();
 		MessageProperties messageProperties = messagePropertiesConverter.toMessageProperties(source, envelope, "UTF-8");
 		assertThat(((Map<String, Object>) messageProperties.getHeaders().get("map")).get("longString")).as("LongString nested in Map not converted to String").isEqualTo(longStringString);
 	}
@@ -115,8 +115,8 @@ public class DefaultMessagePropertiesConverterTests {
 		LongString longString1026 = LongStringHelper.asLongString(longBytes);
 		headers.put("string1026", longString1026);
 		BasicProperties source = new BasicProperties.Builder()
-				.headers(headers)
-				.build();
+	.headers(headers)
+	.build();
 		MessagePropertiesConverter converter = new DefaultMessagePropertiesConverter(1024, true);
 		MessageProperties messageProperties = converter.toMessageProperties(source, envelope, "UTF-8");
 		assertThat(messageProperties.getHeaders().get("longString")).isInstanceOf(String.class);
@@ -180,9 +180,9 @@ public class DefaultMessagePropertiesConverterTests {
 	public void testInboundDeliveryMode() {
 		DefaultMessagePropertiesConverter converter = new DefaultMessagePropertiesConverter();
 		MessageProperties props = new MessageProperties();
-		String[] strings = new String[] { "1", "2" };
+		String[] strings = new String[]{"1", "2"};
 		props.getHeaders().put("strings", strings);
-		props.getHeaders().put("objects", new Object[] { new Foo() });
+		props.getHeaders().put("objects", new Object[]{new Foo()});
 		props.setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT);
 		BasicProperties bProps = converter.fromMessageProperties(props, "UTF-8");
 		assertThat(bProps.getDeliveryMode().intValue()).isEqualTo(MessageDeliveryMode.toInt(MessageDeliveryMode.NON_PERSISTENT));

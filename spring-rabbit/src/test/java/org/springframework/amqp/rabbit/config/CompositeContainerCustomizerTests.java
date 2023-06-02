@@ -38,7 +38,7 @@ public class CompositeContainerCustomizerTests {
 		ContainerCustomizer<MessageListenerContainer> mock1 = mock(ContainerCustomizer.class);
 		ContainerCustomizer<MessageListenerContainer> mock2 = mock(ContainerCustomizer.class);
 		CompositeContainerCustomizer<MessageListenerContainer> cust = new CompositeContainerCustomizer<>(
-				List.of(mock1, mock2));
+	List.of(mock1, mock2));
 		MessageListenerContainer mlc = mock(MessageListenerContainer.class);
 		cust.configure(mlc);
 		verify(mock1).configure(mlc);

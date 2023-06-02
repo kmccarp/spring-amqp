@@ -144,7 +144,7 @@ public class BlockingQueueConsumer {
 	private long retryDeclarationInterval = DEFAULT_RETRY_DECLARATION_INTERVAL;
 
 	private long failedDeclarationRetryInterval =
-			AbstractMessageListenerContainer.DEFAULT_FAILED_DECLARATION_RETRY_INTERVAL;
+AbstractMessageListenerContainer.DEFAULT_FAILED_DECLARATION_RETRY_INTERVAL;
 
 	private int declarationRetries = DEFAULT_DECLARATION_RETRIES;
 
@@ -162,7 +162,8 @@ public class BlockingQueueConsumer {
 
 	private long consumeDelay;
 
-	private java.util.function.Consumer<String> missingQueuePublisher = str -> { };
+	private java.util.function.Consumer<String> missingQueuePublisher = str -> {
+	};
 
 	private boolean globalQos;
 
@@ -189,12 +190,12 @@ public class BlockingQueueConsumer {
 	 * @param queues The queues.
 	 */
 	public BlockingQueueConsumer(ConnectionFactory connectionFactory,
-			MessagePropertiesConverter messagePropertiesConverter,
-			ActiveObjectCounter<BlockingQueueConsumer> activeObjectCounter, AcknowledgeMode acknowledgeMode,
-			boolean transactional, int prefetchCount, String... queues) {
+MessagePropertiesConverter messagePropertiesConverter,
+ActiveObjectCounter<BlockingQueueConsumer> activeObjectCounter, AcknowledgeMode acknowledgeMode,
+boolean transactional, int prefetchCount, String... queues) {
 
 		this(connectionFactory, messagePropertiesConverter, activeObjectCounter,
-				acknowledgeMode, transactional, prefetchCount, true, queues);
+	acknowledgeMode, transactional, prefetchCount, true, queues);
 	}
 
 	/**
@@ -211,11 +212,11 @@ public class BlockingQueueConsumer {
 	 * @param queues The queues.
 	 */
 	public BlockingQueueConsumer(ConnectionFactory connectionFactory,
-			MessagePropertiesConverter messagePropertiesConverter,
-			ActiveObjectCounter<BlockingQueueConsumer> activeObjectCounter, AcknowledgeMode acknowledgeMode,
-			boolean transactional, int prefetchCount, boolean defaultRequeueRejected, String... queues) {
+MessagePropertiesConverter messagePropertiesConverter,
+ActiveObjectCounter<BlockingQueueConsumer> activeObjectCounter, AcknowledgeMode acknowledgeMode,
+boolean transactional, int prefetchCount, boolean defaultRequeueRejected, String... queues) {
 		this(connectionFactory, messagePropertiesConverter, activeObjectCounter, acknowledgeMode, transactional,
-				prefetchCount, defaultRequeueRejected, null, queues);
+	prefetchCount, defaultRequeueRejected, null, queues);
 	}
 
 	/**
@@ -233,12 +234,12 @@ public class BlockingQueueConsumer {
 	 * @param queues The queues.
 	 */
 	public BlockingQueueConsumer(ConnectionFactory connectionFactory,
-			MessagePropertiesConverter messagePropertiesConverter,
-			ActiveObjectCounter<BlockingQueueConsumer> activeObjectCounter, AcknowledgeMode acknowledgeMode,
-			boolean transactional, int prefetchCount, boolean defaultRequeueRejected,
-			@Nullable Map<String, Object> consumerArgs, String... queues) {
+MessagePropertiesConverter messagePropertiesConverter,
+ActiveObjectCounter<BlockingQueueConsumer> activeObjectCounter, AcknowledgeMode acknowledgeMode,
+boolean transactional, int prefetchCount, boolean defaultRequeueRejected,
+@Nullable Map<String, Object> consumerArgs, String... queues) {
 		this(connectionFactory, messagePropertiesConverter, activeObjectCounter, acknowledgeMode, transactional,
-				prefetchCount, defaultRequeueRejected, consumerArgs, false, queues);
+	prefetchCount, defaultRequeueRejected, consumerArgs, false, queues);
 	}
 
 	/**
@@ -257,12 +258,12 @@ public class BlockingQueueConsumer {
 	 * @param queues The queues.
 	 */
 	public BlockingQueueConsumer(ConnectionFactory connectionFactory,
-			MessagePropertiesConverter messagePropertiesConverter,
-			ActiveObjectCounter<BlockingQueueConsumer> activeObjectCounter, AcknowledgeMode acknowledgeMode,
-			boolean transactional, int prefetchCount, boolean defaultRequeueRejected,
-			@Nullable Map<String, Object> consumerArgs, boolean exclusive, String... queues) {
+MessagePropertiesConverter messagePropertiesConverter,
+ActiveObjectCounter<BlockingQueueConsumer> activeObjectCounter, AcknowledgeMode acknowledgeMode,
+boolean transactional, int prefetchCount, boolean defaultRequeueRejected,
+@Nullable Map<String, Object> consumerArgs, boolean exclusive, String... queues) {
 		this(connectionFactory, messagePropertiesConverter, activeObjectCounter, acknowledgeMode, transactional,
-				prefetchCount, defaultRequeueRejected, consumerArgs, false, exclusive, queues);
+	prefetchCount, defaultRequeueRejected, consumerArgs, false, exclusive, queues);
 	}
 
 	/**
@@ -283,10 +284,10 @@ public class BlockingQueueConsumer {
 	 * @since 1.7.4
 	 */
 	public BlockingQueueConsumer(ConnectionFactory connectionFactory,
-			MessagePropertiesConverter messagePropertiesConverter,
-			ActiveObjectCounter<BlockingQueueConsumer> activeObjectCounter, AcknowledgeMode acknowledgeMode,
-			boolean transactional, int prefetchCount, boolean defaultRequeueRejected,
-			@Nullable Map<String, Object> consumerArgs, boolean noLocal, boolean exclusive, String... queues) {
+MessagePropertiesConverter messagePropertiesConverter,
+ActiveObjectCounter<BlockingQueueConsumer> activeObjectCounter, AcknowledgeMode acknowledgeMode,
+boolean transactional, int prefetchCount, boolean defaultRequeueRejected,
+@Nullable Map<String, Object> consumerArgs, boolean noLocal, boolean exclusive, String... queues) {
 		this.connectionFactory = connectionFactory;
 		this.messagePropertiesConverter = messagePropertiesConverter;
 		this.activeObjectCounter = activeObjectCounter;
@@ -309,9 +310,9 @@ public class BlockingQueueConsumer {
 
 	public Collection<String> getConsumerTags() {
 		return this.consumers.values().stream()
-				.map(c -> c.getConsumerTag())
-				.filter(tag -> tag != null)
-				.collect(Collectors.toList());
+	.map(c -> c.getConsumerTag())
+	.filter(tag -> tag != null)
+	.collect(Collectors.toList());
 	}
 
 	public void setShutdownTimeout(long shutdownTimeout) {
@@ -470,8 +471,8 @@ public class BlockingQueueConsumer {
 
 	protected boolean cancelled() {
 		return this.cancelled.get() || (this.abortStarted > 0 &&
-				this.abortStarted + this.shutdownTimeout > System.currentTimeMillis())
-				|| !this.activeObjectCounter.isActive();
+	this.abortStarted + this.shutdownTimeout > System.currentTimeMillis())
+	|| !this.activeObjectCounter.isActive();
 	}
 
 	/**
@@ -503,7 +504,7 @@ public class BlockingQueueConsumer {
 		Envelope envelope = delivery.getEnvelope();
 
 		MessageProperties messageProperties = this.messagePropertiesConverter.toMessageProperties(
-				delivery.getProperties(), envelope, "UTF-8");
+	delivery.getProperties(), envelope, "UTF-8");
 		messageProperties.setConsumerTag(delivery.getConsumerTag());
 		messageProperties.setConsumerQueue(delivery.getQueue());
 		Message message = new Message(body, messageProperties);
@@ -513,7 +514,7 @@ public class BlockingQueueConsumer {
 		this.deliveryTags.add(messageProperties.getDeliveryTag());
 		if (this.transactional && !this.locallyTransacted) {
 			ConnectionFactoryUtils.registerDeliveryTag(this.connectionFactory, this.channel,
-					delivery.getEnvelope().getDeliveryTag());
+		delivery.getEnvelope().getDeliveryTag());
 		}
 		return message;
 	}
@@ -611,7 +612,7 @@ public class BlockingQueueConsumer {
 
 		try {
 			this.resourceHolder = ConnectionFactoryUtils.getTransactionalResourceHolder(this.connectionFactory,
-					this.transactional);
+		this.transactional);
 			this.channel = this.resourceHolder.getChannel();
 			ClosingRecoveryListener.addRecoveryListenerIfNecessary(this.channel); // NOSONAR never null here
 		}
@@ -699,7 +700,7 @@ public class BlockingQueueConsumer {
 		else if (e.getFailedQueues().size() < this.queues.length) {
 			if (logger.isWarnEnabled()) {
 				logger.warn("Not all queues are available; only listening on those that are - configured: "
-						+ Arrays.asList(this.queues) + "; not available: " + e.getFailedQueues());
+			+ Arrays.asList(this.queues) + "; not available: " + e.getFailedQueues());
 			}
 			this.missingQueues.addAll(e.getFailedQueues());
 			this.lastRetryDeclaration = System.currentTimeMillis();
@@ -708,16 +709,16 @@ public class BlockingQueueConsumer {
 			this.declaring = false;
 			this.activeObjectCounter.release(this);
 			throw new QueuesNotAvailableException("Cannot prepare queue for listener. "
-					+ "Either the queue doesn't exist or the broker will not allow us to use it.", e);
+		+ "Either the queue doesn't exist or the broker will not allow us to use it.", e);
 		}
 	}
 
 	private void consumeFromQueue(String queue) throws IOException {
 		InternalConsumer consumer = new InternalConsumer(this.channel, queue);
 		String consumerTag = this.channel.basicConsume(queue, this.acknowledgeMode.isAutoAck(),
-				(this.tagStrategy != null ? this.tagStrategy.createConsumerTag(queue) : ""), this.noLocal,
-				this.exclusive, this.consumerArgs,
-				consumer);
+	(this.tagStrategy != null ? this.tagStrategy.createConsumerTag(queue) : ""), this.noLocal,
+	this.exclusive, this.consumerArgs,
+	consumer);
 
 		if (consumerTag != null) {
 			this.consumers.put(queue, consumer);
@@ -809,7 +810,7 @@ public class BlockingQueueConsumer {
 	public void rollbackOnExceptionIfNecessary(Throwable ex, long tag) {
 
 		boolean ackRequired = !this.acknowledgeMode.isAutoAck()
-				&& (!this.acknowledgeMode.isManual() || ContainerUtils.isRejectManual(ex));
+	&& (!this.acknowledgeMode.isManual() || ContainerUtils.isRejectManual(ex));
 		try {
 			if (this.transactional) {
 				if (logger.isDebugEnabled()) {
@@ -822,7 +823,7 @@ public class BlockingQueueConsumer {
 					OptionalLong deliveryTag = this.deliveryTags.stream().mapToLong(l -> l).max();
 					if (deliveryTag.isPresent()) {
 						this.channel.basicNack(deliveryTag.getAsLong(), true,
-								ContainerUtils.shouldRequeue(this.defaultRequeueRejected, ex, logger));
+					ContainerUtils.shouldRequeue(this.defaultRequeueRejected, ex, logger));
 					}
 					if (this.transactional) {
 						// Need to commit the reject (=nack)
@@ -831,7 +832,7 @@ public class BlockingQueueConsumer {
 				}
 				else {
 					this.channel.basicNack(tag, false,
-							ContainerUtils.shouldRequeue(this.defaultRequeueRejected, ex, logger));
+				ContainerUtils.shouldRequeue(this.defaultRequeueRejected, ex, logger));
 				}
 			}
 		}
@@ -864,8 +865,8 @@ public class BlockingQueueConsumer {
 		 * If we have a TX Manager, but no TX, act like we are locally transacted.
 		 */
 		boolean isLocallyTransacted = localTx
-				|| (this.transactional
-				&& TransactionSynchronizationManager.getResource(this.connectionFactory) == null);
+	|| (this.transactional
+	&& TransactionSynchronizationManager.getResource(this.connectionFactory) == null);
 		try {
 
 			boolean ackRequired = !this.acknowledgeMode.isAutoAck() && !this.acknowledgeMode.isManual();
@@ -915,9 +916,9 @@ public class BlockingQueueConsumer {
 	@Override
 	public String toString() {
 		return "Consumer@" + ObjectUtils.getIdentityHexString(this) + ": "
-				+ "tags=[" + getConsumerTags()
-				+ "], channel=" + this.channel
-				+ ", acknowledgeMode=" + this.acknowledgeMode + " local queue size=" + this.queue.size();
+	+ "tags=[" + getConsumerTags()
+	+ "], channel=" + this.channel
+	+ ", acknowledgeMode=" + this.acknowledgeMode + " local queue size=" + this.queue.size();
 	}
 
 	private final class InternalConsumer extends DefaultConsumer {
@@ -939,7 +940,7 @@ public class BlockingQueueConsumer {
 			}
 			if (BlockingQueueConsumer.this.applicationEventPublisher != null) {
 				BlockingQueueConsumer.this.applicationEventPublisher
-						.publishEvent(new ConsumeOkEvent(this, this.queueName, consumerTag));
+			.publishEvent(new ConsumeOkEvent(this, this.queueName, consumerTag));
 			}
 		}
 
@@ -963,8 +964,8 @@ public class BlockingQueueConsumer {
 		public void handleCancel(String consumerTag) {
 			if (logger.isWarnEnabled()) {
 				logger.warn("Cancel received for " + consumerTag + " ("
-						+ this.queueName
-						+ "); " + BlockingQueueConsumer.this);
+			+ this.queueName
+			+ "); " + BlockingQueueConsumer.this);
 			}
 			BlockingQueueConsumer.this.consumers.remove(this.queueName);
 			if (!BlockingQueueConsumer.this.consumers.isEmpty()) {
@@ -979,25 +980,25 @@ public class BlockingQueueConsumer {
 		public void handleCancelOk(String consumerTag) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Received cancelOk for tag " + consumerTag + " ("
-						+ this.queueName
-						+ "); " + BlockingQueueConsumer.this);
+			+ this.queueName
+			+ "); " + BlockingQueueConsumer.this);
 			}
 			this.canceled = true;
 		}
 
 		@Override
 		public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
-				byte[] body) {
+	byte[] body) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Storing delivery for consumerTag: '"
-						+ consumerTag + "' with deliveryTag: '" + envelope.getDeliveryTag() + "' in "
-						+ BlockingQueueConsumer.this);
+			+ consumerTag + "' with deliveryTag: '" + envelope.getDeliveryTag() + "' in "
+			+ BlockingQueueConsumer.this);
 			}
 			try {
 				if (BlockingQueueConsumer.this.abortStarted > 0) {
 					if (!BlockingQueueConsumer.this.queue.offer(
-							new Delivery(consumerTag, envelope, properties, body, this.queueName),
-							BlockingQueueConsumer.this.shutdownTimeout, TimeUnit.MILLISECONDS)) {
+				new Delivery(consumerTag, envelope, properties, body, this.queueName),
+				BlockingQueueConsumer.this.shutdownTimeout, TimeUnit.MILLISECONDS)) {
 
 						Channel channelToClose = super.getChannel();
 						RabbitUtils.setPhysicalCloseRequired(channelToClose, true);
@@ -1016,7 +1017,7 @@ public class BlockingQueueConsumer {
 				}
 				else {
 					BlockingQueueConsumer.this.queue
-							.put(new Delivery(consumerTag, envelope, properties, body, this.queueName));
+				.put(new Delivery(consumerTag, envelope, properties, body, this.queueName));
 				}
 			}
 			catch (@SuppressWarnings("unused") InterruptedException e) {
@@ -1030,8 +1031,8 @@ public class BlockingQueueConsumer {
 		@Override
 		public String toString() {
 			return "InternalConsumer{" + "queue='" + this.queueName + '\'' +
-					", consumerTag='" + getConsumerTag() + '\'' +
-					'}';
+		", consumerTag='" + getConsumerTag() + '\'' +
+		'}';
 		}
 
 	}

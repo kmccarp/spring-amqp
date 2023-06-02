@@ -66,7 +66,8 @@ public class StreamListenerContainer extends ObservableListenerContainer {
 
 	private StreamMessageConverter streamConverter;
 
-	private ConsumerCustomizer consumerCustomizer = (id, con) -> { };
+	private ConsumerCustomizer consumerCustomizer = (id, con) -> {
+	};
 
 	private boolean simpleStream;
 
@@ -145,8 +146,8 @@ public class StreamListenerContainer extends ObservableListenerContainer {
 		Assert.isTrue(!this.simpleStream, "setQueueNames() and superStream() are mutually exclusive");
 		Assert.notNull(streamName, "'superStream' cannot be null");
 		this.builder.superStream(streamName)
-				.singleActiveConsumer()
-				.name(name);
+	.singleActiveConsumer()
+	.name(name);
 		this.superStream = true;
 		this.streamName = streamName;
 	}
@@ -268,10 +269,10 @@ public class StreamListenerContainer extends ObservableListenerContainer {
 				sample = micrometerHolder.start();
 			}
 			Observation observation =
-					RabbitStreamListenerObservation.STREAM_LISTENER_OBSERVATION.observation(this.observationConvention,
-							DefaultRabbitStreamListenerObservationConvention.INSTANCE,
-							() -> new RabbitStreamMessageReceiverContext(message, getListenerId(), this.streamName),
-							registry);
+		RabbitStreamListenerObservation.STREAM_LISTENER_OBSERVATION.observation(this.observationConvention,
+	DefaultRabbitStreamListenerObservationConvention.INSTANCE,
+	() -> new RabbitStreamMessageReceiverContext(message, getListenerId(), this.streamName),
+	registry);
 			Object finalSample = sample;
 			if (this.streamListener != null) {
 				observation.observe(() -> {
@@ -309,7 +310,7 @@ public class StreamListenerContainer extends ObservableListenerContainer {
 							catch (RuntimeException rtex) {
 								if (finalSample != null) {
 									micrometerHolder.failure(finalSample, this.streamName,
-											rtex.getClass().getSimpleName());
+								rtex.getClass().getSimpleName());
 								}
 								throw rtex;
 							}

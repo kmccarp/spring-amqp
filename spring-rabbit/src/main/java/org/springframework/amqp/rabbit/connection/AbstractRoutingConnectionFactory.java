@@ -38,11 +38,10 @@ import org.springframework.util.Assert;
  * @author Leonardo Ferreira
  * @since 1.3
  */
-public abstract class AbstractRoutingConnectionFactory implements ConnectionFactory, RoutingConnectionFactory,
-		InitializingBean, DisposableBean {
+public abstract class AbstractRoutingConnectionFactory implements ConnectionFactory, RoutingConnectionFactory,InitializingBean, DisposableBean {
 
 	private final Map<Object, ConnectionFactory> targetConnectionFactories =
-			new ConcurrentHashMap<Object, ConnectionFactory>();
+new ConcurrentHashMap<Object, ConnectionFactory>();
 
 	private final List<ConnectionListener> connectionListeners = new ArrayList<ConnectionListener>();
 
@@ -66,7 +65,7 @@ public abstract class AbstractRoutingConnectionFactory implements ConnectionFact
 	public void setTargetConnectionFactories(Map<Object, ConnectionFactory> targetConnectionFactories) {
 		Assert.notNull(targetConnectionFactories, "'targetConnectionFactories' must not be null.");
 		Assert.noNullElements(targetConnectionFactories.values().toArray(),
-				"'targetConnectionFactories' cannot have null values.");
+	"'targetConnectionFactories' cannot have null values.");
 		this.targetConnectionFactories.putAll(targetConnectionFactories);
 		targetConnectionFactories.values().stream().forEach(cf -> checkConfirmsAndReturns(cf));
 	}
@@ -130,9 +129,9 @@ public abstract class AbstractRoutingConnectionFactory implements ConnectionFact
 
 		if (this.consistentConfirmsReturns) {
 			Assert.isTrue(this.confirms.booleanValue() == cf.isPublisherConfirms(),
-					"Target connection factories must have the same setting for publisher confirms");
+		"Target connection factories must have the same setting for publisher confirms");
 			Assert.isTrue(this.returns.booleanValue() == cf.isPublisherReturns(),
-					"Target connection factories must have the same setting for publisher returns");
+		"Target connection factories must have the same setting for publisher returns");
 		}
 	}
 
@@ -161,7 +160,7 @@ public abstract class AbstractRoutingConnectionFactory implements ConnectionFact
 		}
 		if (connectionFactory == null) {
 			throw new IllegalStateException("Cannot determine target ConnectionFactory for lookup key ["
-					+ lookupKey + "]");
+		+ lookupKey + "]");
 		}
 		return connectionFactory;
 	}

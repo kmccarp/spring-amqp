@@ -683,7 +683,7 @@ public class AmqpAppender extends AppenderBase<ILoggingEvent> {
 		if (rabbitConnectionFactory != null) {
 			super.start();
 			this.routingKeyLayout.setPattern(this.routingKeyLayout.getPattern()
-					.replaceAll("%property\\{applicationId}", this.applicationId));
+		.replaceAll("%property\\{applicationId}", this.applicationId));
 			this.routingKeyLayout.setContext(getContext());
 			this.routingKeyLayout.start();
 			this.locationLayout.setContext(getContext());
@@ -697,7 +697,7 @@ public class AmqpAppender extends AppenderBase<ILoggingEvent> {
 				this.connectionFactory.setAddresses(this.addresses);
 			}
 			ConnectionFactoryConfigurationUtils.updateClientConnectionProperties(this.connectionFactory,
-					this.clientConnectionProperties);
+		this.clientConnectionProperties);
 			updateConnectionClientProperties(this.connectionFactory.getRabbitConnectionFactory().getClientProperties());
 			setUpExchangeDeclaration();
 			this.senderPool = Executors.newCachedThreadPool();
@@ -731,13 +731,13 @@ public class AmqpAppender extends AppenderBase<ILoggingEvent> {
 	 */
 	protected void configureRabbitConnectionFactory(RabbitConnectionFactoryBean factoryBean) {
 		JavaUtils.INSTANCE
-				.acceptIfNotNull(this.host, factoryBean::setHost)
-				.acceptIfNotNull(this.port, factoryBean::setPort)
-				.acceptIfNotNull(this.username, factoryBean::setUsername)
-				.acceptIfNotNull(this.password, factoryBean::setPassword)
-				.acceptIfNotNull(this.virtualHost, factoryBean::setVirtualHost)
-				// overrides all preceding items when set
-				.acceptIfNotNull(this.uri, factoryBean::setUri);
+	.acceptIfNotNull(this.host, factoryBean::setHost)
+	.acceptIfNotNull(this.port, factoryBean::setPort)
+	.acceptIfNotNull(this.username, factoryBean::setUsername)
+	.acceptIfNotNull(this.password, factoryBean::setPassword)
+	.acceptIfNotNull(this.virtualHost, factoryBean::setVirtualHost)
+	// overrides all preceding items when set
+	.acceptIfNotNull(this.uri, factoryBean::setUri);
 
 		if (this.useSsl) {
 			factoryBean.setUseSSL(true);
@@ -758,15 +758,15 @@ public class AmqpAppender extends AppenderBase<ILoggingEvent> {
 				factoryBean.setTrustStorePassphrase(this.trustStorePassphrase);
 				factoryBean.setTrustStoreType(this.trustStoreType);
 				JavaUtils.INSTANCE
-						.acceptIfNotNull(this.saslConfig, config -> {
-							try {
-								factoryBean.setSaslConfig(RabbitUtils.stringToSaslConfig(config,
-										factoryBean.getRabbitConnectionFactory()));
-							}
-							catch (Exception e) {
-								throw RabbitExceptionTranslator.convertRabbitAccessException(e);
-							}
-						});
+			.acceptIfNotNull(this.saslConfig, config -> {
+				try {
+					factoryBean.setSaslConfig(RabbitUtils.stringToSaslConfig(config,
+				factoryBean.getRabbitConnectionFactory()));
+				}
+				catch (Exception e) {
+					throw RabbitExceptionTranslator.convertRabbitAccessException(e);
+				}
+			});
 			}
 		}
 		if (this.layout == null && this.encoder == null) {
@@ -879,8 +879,8 @@ public class AmqpAppender extends AppenderBase<ILoggingEvent> {
 		String[] location = this.locationLayout.doLayout(logEvent).split("\\|");
 		if (!"?".equals(location[0])) {
 			amqpProps.setHeader(
-					"location",
-					String.format("%s.%s()[%s]", location[0], location[1], location[2]));
+		"location",
+		String.format("%s.%s()[%s]", location[0], location[1], location[2]));
 		}
 
 		// Set applicationId, if we're using one
@@ -936,7 +936,7 @@ public class AmqpAppender extends AppenderBase<ILoggingEvent> {
 			 * If the encoder provides its pattern, send it as an additional one-time message.
 			 */
 			if (AmqpAppender.this.encoder != null
-					&& AmqpAppender.this.headerWritten.compareAndSet(false, true)) {
+		&& AmqpAppender.this.headerWritten.compareAndSet(false, true)) {
 				byte[] header = AmqpAppender.this.encoder.headerBytes();
 				if (header != null && header.length > 0) {
 					rabbitTemplate.convertAndSend(AmqpAppender.this.exchangeName, routingKey, header, m -> {
@@ -950,7 +950,7 @@ public class AmqpAppender extends AppenderBase<ILoggingEvent> {
 		}
 
 		private void doSend(RabbitTemplate rabbitTemplate, final Event event, ILoggingEvent logEvent, String name,
-				MessageProperties amqpProps, String routingKey) {
+	MessageProperties amqpProps, String routingKey) {
 			byte[] msgBody;
 			if (AmqpAppender.this.abbreviator != null && logEvent instanceof LoggingEvent logEv) {
 				logEv.setLoggerName(AmqpAppender.this.abbreviator.abbreviate(name));
@@ -986,7 +986,7 @@ public class AmqpAppender extends AppenderBase<ILoggingEvent> {
 				}
 				else {
 					addError("Could not send log message " + logEvent.getMessage()
-							+ " after " + AmqpAppender.this.maxSenderRetries + " retries", e);
+				+ " after " + AmqpAppender.this.maxSenderRetries + " retries", e);
 				}
 			}
 		}

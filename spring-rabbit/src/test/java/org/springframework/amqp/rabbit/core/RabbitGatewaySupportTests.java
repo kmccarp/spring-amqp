@@ -35,7 +35,7 @@ public class RabbitGatewaySupportTests {
 	public void testRabbitGatewaySupportWithConnectionFactory() throws Exception {
 
 		org.springframework.amqp.rabbit.connection.ConnectionFactory mockConnectionFactory =
-				mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
+	mock(org.springframework.amqp.rabbit.connection.ConnectionFactory.class);
 		final List<String> test = new ArrayList<String>();
 		RabbitGatewaySupport gateway = new RabbitGatewaySupport() {
 			@Override

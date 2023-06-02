@@ -68,9 +68,7 @@ import com.rabbitmq.client.Channel;
  *
  */
 @RabbitAvailable(queues = SimpleMessageListenerContainerIntegrationTests.TEST_QUEUE)
-@LogLevels(level = "OFF", classes = { RabbitTemplate.class,
-		ConditionalRejectingErrorHandler.class,
-		SimpleMessageListenerContainer.class, BlockingQueueConsumer.class, CachingConnectionFactory.class })
+@LogLevels(level = "OFF", classes = {RabbitTemplate.class,ConditionalRejectingErrorHandler.class,SimpleMessageListenerContainer.class, BlockingQueueConsumer.class, CachingConnectionFactory.class})
 public class SimpleMessageListenerContainerIntegrationTests {
 
 	public static final String TEST_QUEUE = "test.queue.SimpleMessageListenerContainerIntegrationTests";
@@ -103,25 +101,25 @@ public class SimpleMessageListenerContainerIntegrationTests {
 
 	public static List<Object[]> getParameters() {
 		return Arrays.asList(
-				params(1, 1, AcknowledgeMode.AUTO),
-				params(1, 1, AcknowledgeMode.NONE),
-				params(4, 1, AcknowledgeMode.AUTO),
-				extern(4, 1, AcknowledgeMode.AUTO),
-				params(4, 1, AcknowledgeMode.AUTO, false),
-				params(2, 2, AcknowledgeMode.AUTO),
-				params(2, 2, AcknowledgeMode.NONE),
-				params(20, 4, AcknowledgeMode.AUTO),
-				params(20, 4, AcknowledgeMode.NONE),
-				params(300, 4, AcknowledgeMode.AUTO),
-				params(300, 4, AcknowledgeMode.NONE),
-				params(300, 4, AcknowledgeMode.AUTO, 10)
-				);
+	params(1, 1, AcknowledgeMode.AUTO),
+	params(1, 1, AcknowledgeMode.NONE),
+	params(4, 1, AcknowledgeMode.AUTO),
+	extern(4, 1, AcknowledgeMode.AUTO),
+	params(4, 1, AcknowledgeMode.AUTO, false),
+	params(2, 2, AcknowledgeMode.AUTO),
+	params(2, 2, AcknowledgeMode.NONE),
+	params(20, 4, AcknowledgeMode.AUTO),
+	params(20, 4, AcknowledgeMode.NONE),
+	params(300, 4, AcknowledgeMode.AUTO),
+	params(300, 4, AcknowledgeMode.NONE),
+	params(300, 4, AcknowledgeMode.AUTO, 10)
+		);
 	}
 
 	private static Object[] params(int messageCount, int concurrency, AcknowledgeMode acknowledgeMode,
-			boolean transactional, int txSize) {
+boolean transactional, int txSize) {
 
-		return new Object[] { messageCount, concurrency, acknowledgeMode, transactional, txSize, false };
+		return new Object[]{messageCount, concurrency, acknowledgeMode, transactional, txSize, false};
 	}
 
 	private static Object[] params(int messageCount, int concurrency, AcknowledgeMode acknowledgeMode, int txSize) {
@@ -130,7 +128,7 @@ public class SimpleMessageListenerContainerIntegrationTests {
 	}
 
 	private static Object[] params(int messageCount, int concurrency, AcknowledgeMode acknowledgeMode,
-			boolean transactional) {
+boolean transactional) {
 
 		return params(messageCount, concurrency, acknowledgeMode, transactional, 1);
 	}
@@ -140,14 +138,14 @@ public class SimpleMessageListenerContainerIntegrationTests {
 	}
 
 	private static Object[] extern(int messageCount, int concurrency, AcknowledgeMode acknowledgeMode) {
-		return new Object[] { messageCount, concurrency, acknowledgeMode, true, 1, true };
+		return new Object[]{messageCount, concurrency, acknowledgeMode, true, 1, true};
 	}
 
 	@BeforeAll
 	public static void debugLog() {
 		levelsContainer = JUnitUtils.adjustLogLevels("SimpleMessageListenerContainerIntegrationTests",
-				Collections.singletonList(SimpleMessageListenerContainerIntegrationTests.class),
-				Collections.emptyList(), Level.DEBUG);
+	Collections.singletonList(SimpleMessageListenerContainerIntegrationTests.class),
+	Collections.emptyList(), Level.DEBUG);
 	}
 
 	@AfterAll
@@ -179,7 +177,7 @@ public class SimpleMessageListenerContainerIntegrationTests {
 	@ParameterizedTest
 	@MethodSource("getParameters")
 	public void testPojoListenerSunnyDay(int count, int concurrency, AcknowledgeMode ackMode, boolean tx, int txSz,
-			boolean externalTx) throws Exception {
+boolean externalTx) throws Exception {
 
 		loadParams(count, concurrency, ackMode, tx, txSz, externalTx);
 		CountDownLatch latch = new CountDownLatch(messageCount);
@@ -189,7 +187,7 @@ public class SimpleMessageListenerContainerIntegrationTests {
 	@ParameterizedTest
 	@MethodSource("getParameters")
 	public void testListenerSunnyDay(int count, int concurrency, AcknowledgeMode ackMode, boolean tx, int txSz,
-			boolean externalTx) throws Exception {
+boolean externalTx) throws Exception {
 
 		loadParams(count, concurrency, ackMode, tx, txSz, externalTx);
 		CountDownLatch latch = new CountDownLatch(messageCount);
@@ -199,7 +197,7 @@ public class SimpleMessageListenerContainerIntegrationTests {
 	@ParameterizedTest
 	@MethodSource("getParameters")
 	public void testChannelAwareListenerSunnyDay(int count, int concurrency, AcknowledgeMode ackMode, boolean tx, int txSz,
-			boolean externalTx) throws Exception {
+boolean externalTx) throws Exception {
 
 		loadParams(count, concurrency, ackMode, tx, txSz, externalTx);
 		CountDownLatch latch = new CountDownLatch(messageCount);
@@ -209,7 +207,7 @@ public class SimpleMessageListenerContainerIntegrationTests {
 	@ParameterizedTest
 	@MethodSource("getParameters")
 	public void testPojoListenerWithException(int count, int concurrency, AcknowledgeMode ackMode, boolean tx, int txSz,
-			boolean externalTx) throws Exception {
+boolean externalTx) throws Exception {
 
 		loadParams(count, concurrency, ackMode, tx, txSz, externalTx);
 		CountDownLatch latch = new CountDownLatch(messageCount);
@@ -219,7 +217,7 @@ public class SimpleMessageListenerContainerIntegrationTests {
 	@ParameterizedTest
 	@MethodSource("getParameters")
 	public void testListenerWithException(int count, int concurrency, AcknowledgeMode ackMode, boolean tx, int txSz,
-			boolean externalTx) throws Exception {
+boolean externalTx) throws Exception {
 
 		loadParams(count, concurrency, ackMode, tx, txSz, externalTx);
 		CountDownLatch latch = new CountDownLatch(messageCount);
@@ -229,7 +227,7 @@ public class SimpleMessageListenerContainerIntegrationTests {
 	@ParameterizedTest
 	@MethodSource("getParameters")
 	public void testChannelAwareListenerWithException(int count, int concurrency, AcknowledgeMode ackMode, boolean tx, int txSz,
-			boolean externalTx) throws Exception {
+boolean externalTx) throws Exception {
 
 		loadParams(count, concurrency, ackMode, tx, txSz, externalTx);
 		CountDownLatch latch = new CountDownLatch(messageCount);
@@ -239,27 +237,29 @@ public class SimpleMessageListenerContainerIntegrationTests {
 	@ParameterizedTest
 	@MethodSource("getParameters")
 	public void testNullQueue(int count, int concurrency, AcknowledgeMode ackMode, boolean tx, int txSz,
-			boolean externalTx) {
+boolean externalTx) {
 
 		loadParams(count, concurrency, ackMode, tx, txSz, externalTx);
 		assertThatIllegalArgumentException()
-			.isThrownBy(() -> container = createContainer(m -> { }, (Queue) null));
+	.isThrownBy(() -> container = createContainer(m -> {
+	}, (Queue) null));
 	}
 
 	@ParameterizedTest
 	@MethodSource("getParameters")
 	public void testNullQueueName(int count, int concurrency, AcknowledgeMode ackMode, boolean tx, int txSz,
-			boolean externalTx) {
+boolean externalTx) {
 
 		loadParams(count, concurrency, ackMode, tx, txSz, externalTx);
 		assertThatIllegalArgumentException()
-			.isThrownBy(() -> container = createContainer(m -> { }, (String) null));
+	.isThrownBy(() -> container = createContainer(m -> {
+	}, (String) null));
 	}
 
 	@ParameterizedTest
 	@MethodSource("getParameters")
 	public void testConsumerBatching(int count, int concurrency, AcknowledgeMode ackMode, boolean tx, int txSz,
-			boolean externalTx) throws InterruptedException {
+boolean externalTx) throws InterruptedException {
 
 		loadParams(count, concurrency, ackMode, tx, txSz, externalTx);
 		AtomicReference<List<Message>> received = new AtomicReference<>(new ArrayList<>());
@@ -359,7 +359,7 @@ public class SimpleMessageListenerContainerIntegrationTests {
 	}
 
 	private void loadParams(int count, int concurrency, AcknowledgeMode ackMode, boolean tx, int txSz,
-			boolean externalTx) {
+boolean externalTx) {
 
 		this.messageCount = count;
 		this.concurrentConsumers = concurrency;

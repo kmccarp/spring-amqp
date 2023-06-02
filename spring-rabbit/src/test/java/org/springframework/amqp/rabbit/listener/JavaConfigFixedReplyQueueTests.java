@@ -83,8 +83,8 @@ public class JavaConfigFixedReplyQueueTests {
 	public void testReplyContainer() {
 		assertThat(this.fixedReplyQRabbitTemplate.convertSendAndReceive("foo")).isEqualTo("FOO");
 		Message message = MessageBuilder.withBody("foo".getBytes())
-				.setContentType("text/plain")
-				.build();
+	.setContentType("text/plain")
+	.build();
 		Message reply = this.fixedReplyQRabbitTemplate.sendAndReceive(message);
 		assertThat(reply.getMessageProperties().getReceivedExchange()).isEqualTo(this.replyExchange.getName());
 	}
@@ -97,7 +97,7 @@ public class JavaConfigFixedReplyQueueTests {
 		}
 		catch (IllegalStateException e) {
 			assertThat(e.getMessage()).contains("RabbitTemplate is not configured as MessageListener - "
-					+ "cannot use a 'replyAddress'");
+		+ "cannot use a 'replyAddress'");
 		}
 	}
 
@@ -111,8 +111,8 @@ public class JavaConfigFixedReplyQueueTests {
 			Throwable t = e.getCause();
 			assertThat(t).isInstanceOf(IllegalStateException.class);
 			assertThat(t.getMessage()).contains("Listener expects us to be listening on '["
-					+ TestUtils.getPropertyValue(this.fixedReplyQRabbitTemplateWrongQueue, "replyAddress")
-					+ "]'; our queues: " + Arrays.asList(this.replyListenerContainerWrongQueue.getQueueNames()));
+		+ TestUtils.getPropertyValue(this.fixedReplyQRabbitTemplateWrongQueue, "replyAddress")
+		+ "]'; our queues: " + Arrays.asList(this.replyListenerContainerWrongQueue.getQueueNames()));
 		}
 	}
 
@@ -215,8 +215,8 @@ public class JavaConfigFixedReplyQueueTests {
 		@Bean
 		public Binding replyBinding() {
 			return BindingBuilder.bind(replyQueue())
-					.to(replyExchange())
-					.with(replyQueue().getName());
+		.to(replyExchange())
+		.with(replyQueue().getName());
 		}
 
 		/**

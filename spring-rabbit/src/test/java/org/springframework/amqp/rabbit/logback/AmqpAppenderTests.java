@@ -217,29 +217,29 @@ public class AmqpAppenderTests {
 		ArgumentCaptor<SaslConfig> captor = ArgumentCaptor.forClass(SaslConfig.class);
 		verify(bean).setSaslConfig(captor.capture());
 		assertThat(captor.getValue())
-				.isInstanceOf(DefaultSaslConfig.class)
-				.hasFieldOrPropertyWithValue("mechanism", "PLAIN");
+	.isInstanceOf(DefaultSaslConfig.class)
+	.hasFieldOrPropertyWithValue("mechanism", "PLAIN");
 		appender.setSaslConfig("DefaultSaslConfig.EXTERNAL");
 		appender.configureRabbitConnectionFactory(bean);
 		verify(bean, times(2)).setSaslConfig(captor.capture());
 		assertThat(captor.getValue())
-				.isInstanceOf(DefaultSaslConfig.class)
-				.hasFieldOrPropertyWithValue("mechanism", "EXTERNAL");
+	.isInstanceOf(DefaultSaslConfig.class)
+	.hasFieldOrPropertyWithValue("mechanism", "EXTERNAL");
 		appender.setSaslConfig("JDKSaslConfig");
 		appender.configureRabbitConnectionFactory(bean);
 		verify(bean, times(3)).setSaslConfig(captor.capture());
 		assertThat(captor.getValue())
-				.isInstanceOf(JDKSaslConfig.class);
+	.isInstanceOf(JDKSaslConfig.class);
 		appender.setSaslConfig("CRDemoSaslConfig");
 		appender.configureRabbitConnectionFactory(bean);
 		verify(bean, times(4)).setSaslConfig(captor.capture());
 		assertThat(captor.getValue())
-				.isInstanceOf(CRDemoMechanism.CRDemoSaslConfig.class);
+	.isInstanceOf(CRDemoMechanism.CRDemoSaslConfig.class);
 		appender.setSaslConfig("junk");
 		assertThatThrownBy(() -> appender.configureRabbitConnectionFactory(bean))
-			.isInstanceOf(UncategorizedAmqpException.class)
-			.hasCauseInstanceOf(IllegalStateException.class)
-			.withFailMessage("Unrecognized SaslConfig: junk");
+	.isInstanceOf(UncategorizedAmqpException.class)
+	.hasCauseInstanceOf(IllegalStateException.class)
+	.withFailMessage("Unrecognized SaslConfig: junk");
 	}
 
 

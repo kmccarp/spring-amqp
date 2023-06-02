@@ -91,7 +91,7 @@ public class BrokerDeclaredQueueNameTests {
 	@BeforeAll
 	public static void setUp() {
 		Logger logger = (Logger) LogManager
-				.getLogger("org.springframework.amqp.rabbit.listener.DirectMessageListenerContainer");
+	.getLogger("org.springframework.amqp.rabbit.listener.DirectMessageListenerContainer");
 		savedLevel = logger.getLevel();
 		logger.setLevel(Level.DEBUG);
 	}
@@ -99,7 +99,7 @@ public class BrokerDeclaredQueueNameTests {
 	@AfterAll
 	public static void tearDown() {
 		Logger logger = (Logger) LogManager
-				.getLogger("org.springframework.amqp.rabbit.listener.DirectMessageListenerContainer");
+	.getLogger("org.springframework.amqp.rabbit.listener.DirectMessageListenerContainer");
 		logger.setLevel(savedLevel);
 	}
 
@@ -114,7 +114,7 @@ public class BrokerDeclaredQueueNameTests {
 	}
 
 	private void testBrokerNamedQueue(AbstractMessageListenerContainer container,
-			CountDownLatch firstLatch, CountDownLatch secondLatch, Queue queue) throws Exception {
+CountDownLatch firstLatch, CountDownLatch secondLatch, Queue queue) throws Exception {
 
 		container.start();
 		String firstActualName = queue.getActualName();
@@ -161,7 +161,7 @@ public class BrokerDeclaredQueueNameTests {
 		@Bean
 		public CachingConnectionFactory cf() {
 			return new CachingConnectionFactory(
-					RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+		RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		}
 
 		@Bean

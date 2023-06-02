@@ -75,10 +75,10 @@ public class RabbitReconnectProblemTests {
 		}
 
 		int availablePermits = ((Semaphore) TestUtils.getPropertyValue(this.connFactory, "checkoutPermits", Map.class)
-				.values()
-				.iterator()
-				.next())
-				.availablePermits();
+	.values()
+	.iterator()
+	.next())
+	.availablePermits();
 		System .out .println("Permits after test: " + availablePermits);
 		assertThat(availablePermits).isEqualTo(2);
 	}

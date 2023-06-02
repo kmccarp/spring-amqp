@@ -62,13 +62,12 @@ import org.springframework.util.StringUtils;
  * @see MessageListenerContainer
  * @see RabbitListenerContainerFactory
  */
-public class RabbitListenerEndpointRegistry implements DisposableBean, SmartLifecycle, ApplicationContextAware,
-		ApplicationListener<ContextRefreshedEvent> {
+public class RabbitListenerEndpointRegistry implements DisposableBean, SmartLifecycle, ApplicationContextAware,ApplicationListener<ContextRefreshedEvent> {
 
 	protected final Log logger = LogFactory.getLog(getClass()); // NOSONAR protected
 
 	private final Map<String, MessageListenerContainer> listenerContainers =
-			new ConcurrentHashMap<String, MessageListenerContainer>();
+new ConcurrentHashMap<String, MessageListenerContainer>();
 
 	private int phase = Integer.MAX_VALUE;
 
@@ -140,7 +139,7 @@ public class RabbitListenerEndpointRegistry implements DisposableBean, SmartLife
 	 */
 	@SuppressWarnings("unchecked")
 	public void registerListenerContainer(RabbitListenerEndpoint endpoint, RabbitListenerContainerFactory<?> factory,
-				boolean startImmediately) {
+boolean startImmediately) {
 		Assert.notNull(endpoint, "Endpoint must not be null");
 		Assert.notNull(factory, "Factory must not be null");
 
@@ -148,7 +147,7 @@ public class RabbitListenerEndpointRegistry implements DisposableBean, SmartLife
 		Assert.hasText(id, "Endpoint id must not be empty");
 		synchronized (this.listenerContainers) {
 			Assert.state(!this.listenerContainers.containsKey(id),
-					"Another endpoint is already registered with id '" + id + "'");
+		"Another endpoint is already registered with id '" + id + "'");
 			MessageListenerContainer container = createListenerContainer(endpoint, factory);
 			this.listenerContainers.put(id, container);
 			if (StringUtils.hasText(endpoint.getGroup()) && this.applicationContext != null) {
@@ -178,7 +177,7 @@ public class RabbitListenerEndpointRegistry implements DisposableBean, SmartLife
 	 * @return the {@link MessageListenerContainer}.
 	 */
 	protected MessageListenerContainer createListenerContainer(RabbitListenerEndpoint endpoint,
-			RabbitListenerContainerFactory<?> factory) {
+RabbitListenerContainerFactory<?> factory) {
 
 		MessageListenerContainer listenerContainer = factory.createListenerContainer(endpoint);
 		listenerContainer.afterPropertiesSet();
@@ -187,7 +186,7 @@ public class RabbitListenerEndpointRegistry implements DisposableBean, SmartLife
 		if (containerPhase < Integer.MAX_VALUE) {  // a custom phase value
 			if (this.phase < Integer.MAX_VALUE && this.phase != containerPhase) {
 				throw new IllegalStateException("Encountered phase mismatch between container factory definitions: " +
-						this.phase + " vs " + containerPhase);
+			this.phase + " vs " + containerPhase);
 			}
 			this.phase = listenerContainer.getPhase();
 		}

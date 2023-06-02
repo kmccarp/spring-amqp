@@ -96,7 +96,7 @@ public class MessageListenerContainerTxSynchTests {
 		mlc.start();
 		assertThat(latch1.await(10, TimeUnit.SECONDS)).isTrue();
 		consumer.get().handleDelivery(tag.get(), new Envelope(1, false, "", ""), new AMQP.BasicProperties(),
-				new byte[0]);
+	new byte[0]);
 		assertThat(latch2.await(10, TimeUnit.SECONDS)).isTrue();
 		mlc.stop();
 		Future<Exception> exception = exec.submit(() -> {
@@ -104,8 +104,8 @@ public class MessageListenerContainerTxSynchTests {
 				// verify no lingering resources bound to the executor's single thread
 				assertThat(TransactionSynchronizationManager.hasResource(connectionFactory)).isFalse();
 				assertThatIllegalStateException()
-						.isThrownBy(() -> (TransactionSynchronizationManager.getSynchronizations()).isEmpty())
-						.withMessage("Transaction synchronization is not active");
+			.isThrownBy(() -> (TransactionSynchronizationManager.getSynchronizations()).isEmpty())
+			.withMessage("Transaction synchronization is not active");
 				return null;
 			}
 			catch (Exception e) {

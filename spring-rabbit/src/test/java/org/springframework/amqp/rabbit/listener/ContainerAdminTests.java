@@ -39,7 +39,7 @@ public class ContainerAdminTests {
 	void findAdminInParentContext() {
 		GenericApplicationContext parent = new GenericApplicationContext();
 		CachingConnectionFactory cf =
-				new CachingConnectionFactory(RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
+	new CachingConnectionFactory(RabbitAvailableCondition.getBrokerRunning().getConnectionFactory());
 		RabbitAdmin admin = new RabbitAdmin(cf);
 		parent.registerBean(RabbitAdmin.class, () -> admin);
 		parent.refresh();

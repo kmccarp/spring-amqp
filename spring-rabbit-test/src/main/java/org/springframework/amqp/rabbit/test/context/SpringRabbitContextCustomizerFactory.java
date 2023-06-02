@@ -37,9 +37,9 @@ class SpringRabbitContextCustomizerFactory implements ContextCustomizerFactory {
 
 	@Override
 	public ContextCustomizer createContextCustomizer(Class<?> testClass,
-			List<ContextConfigurationAttributes> configAttributes) {
+List<ContextConfigurationAttributes> configAttributes) {
 		SpringRabbitTest test =
-				AnnotatedElementUtils.findMergedAnnotation(testClass, SpringRabbitTest.class);
+	AnnotatedElementUtils.findMergedAnnotation(testClass, SpringRabbitTest.class);
 		return test != null ? new SpringRabbitContextCustomizer(test) : null;
 	}
 

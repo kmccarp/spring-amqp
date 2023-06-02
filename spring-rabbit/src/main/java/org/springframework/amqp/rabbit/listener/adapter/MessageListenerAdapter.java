@@ -284,8 +284,8 @@ public class MessageListenerAdapter extends AbstractAdaptableMessageListener {
 		String methodName = getListenerMethodName(message, convertedMessage);
 		if (methodName == null) {
 			throw new AmqpIllegalStateException("No default listener method specified: "
-					+ "Either specify a non-null value for the 'defaultListenerMethod' property or "
-					+ "override the 'getListenerMethodName' method.");
+		+ "Either specify a non-null value for the 'defaultListenerMethod' property or "
+		+ "override the 'getListenerMethodName' method.");
 		}
 
 		// Invoke the handler method with appropriate arguments.
@@ -344,7 +344,7 @@ public class MessageListenerAdapter extends AbstractAdaptableMessageListener {
 	 * a distinct method argument)
 	 */
 	protected Object[] buildListenerArguments(Object extractedMessage, Channel channel, Message message) {
-		return new Object[] { extractedMessage };
+		return new Object[]{extractedMessage};
 	}
 
 	/**
@@ -372,7 +372,7 @@ public class MessageListenerAdapter extends AbstractAdaptableMessageListener {
 			}
 			else {
 				throw new ListenerExecutionFailedException("Listener method '" // NOSONAR lost stack trace
-						+ methodName + "' threw exception", targetEx, originalMessage);
+			+ methodName + "' threw exception", targetEx, originalMessage);
 			}
 		}
 		catch (Exception ex) {
@@ -383,8 +383,8 @@ public class MessageListenerAdapter extends AbstractAdaptableMessageListener {
 				}
 			}
 			throw new ListenerExecutionFailedException("Failed to invoke target method '" + methodName
-					+ "' with argument type = [" + StringUtils.collectionToCommaDelimitedString(arrayClass)
-					+ "], value = [" + ObjectUtils.nullSafeToString(arguments) + "]", ex, originalMessage);
+		+ "' with argument type = [" + StringUtils.collectionToCommaDelimitedString(arrayClass)
+		+ "], value = [" + ObjectUtils.nullSafeToString(arguments) + "]", ex, originalMessage);
 		}
 	}
 

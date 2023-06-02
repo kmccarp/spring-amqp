@@ -86,7 +86,7 @@ public class ReturnedMessage {
 	@Override
 	public String toString() {
 		return "ReturnedMessage [message=" + this.message + ", replyCode=" + this.replyCode + ", replyText="
-				+ this.replyText + ", exchange=" + this.exchange + ", routingKey=" + this.routingKey + "]";
+	+ this.replyText + ", exchange=" + this.exchange + ", routingKey=" + this.routingKey + "]";
 	}
 
 }

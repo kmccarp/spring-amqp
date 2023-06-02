@@ -120,7 +120,7 @@ public class ExtendAmqpAppenderTests {
 	public void testProperties() {
 		Logger logger = LogManager.getLogger("foo");
 		AmqpAppender appender = (AmqpAppender) TestUtils.getPropertyValue(logger, "context.configuration.appenders",
-				Map.class).get("rabbitmq");
+	Map.class).get("rabbitmq");
 		Object manager = TestUtils.getPropertyValue(appender, "manager");
 		// <RabbitMQ name="rabbitmq"
 		// addresses="localhost:5672"
@@ -179,7 +179,7 @@ public class ExtendAmqpAppenderTests {
 	public void testAmqpAppenderEventQueueTypeDefaultsToLinkedBlockingQueue() {
 		Logger logger = LogManager.getLogger("default_queue_logger");
 		AmqpAppender appender = (AmqpAppender) TestUtils.getPropertyValue(logger, "context.configuration.appenders",
-				Map.class).get("rabbitmq_default_queue");
+	Map.class).get("rabbitmq_default_queue");
 
 		Object events = TestUtils.getPropertyValue(appender, "events");
 
@@ -196,10 +196,10 @@ public class ExtendAmqpAppenderTests {
 	public void testUriProperties() {
 		Logger logger = LogManager.getLogger("bar");
 		AmqpAppender appender = (AmqpAppender) TestUtils.getPropertyValue(logger, "context.configuration.appenders",
-				Map.class).get("rabbitmq_uri");
+	Map.class).get("rabbitmq_uri");
 		Object manager = TestUtils.getPropertyValue(appender, "manager");
 		assertThat(TestUtils.getPropertyValue(manager, "uri").toString())
-				.isEqualTo("amqp://guest:guest@localhost:5672/");
+	.isEqualTo("amqp://guest:guest@localhost:5672/");
 
 		assertThat(TestUtils.getPropertyValue(manager, "host")).isNull();
 		assertThat(TestUtils.getPropertyValue(manager, "port")).isNull();

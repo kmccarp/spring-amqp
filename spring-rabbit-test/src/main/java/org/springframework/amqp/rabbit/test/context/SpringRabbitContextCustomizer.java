@@ -74,9 +74,9 @@ class SpringRabbitContextCustomizer implements ContextCustomizer {
 		}
 		factory.setConnectionFactory(cf);
 		applicationContext.registerBean("autoContainerFactory", AbstractRabbitListenerContainerFactory.class,
-				() -> factory);
+	() -> factory);
 		new RabbitBootstrapConfiguration().registerBeanDefinitions(null,
-				(BeanDefinitionRegistry) applicationContext.getBeanFactory());
+	(BeanDefinitionRegistry) applicationContext.getBeanFactory());
 	}
 
 }

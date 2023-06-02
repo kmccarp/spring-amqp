@@ -64,8 +64,7 @@ import com.rabbitmq.client.Envelope;
  * @since 2.0
  *
  */
-public class TestRabbitTemplate extends RabbitTemplate
-		implements ApplicationContextAware, ApplicationListener<ContextRefreshedEvent> {
+public class TestRabbitTemplate extends RabbitTemplateimplements ApplicationContextAware, ApplicationListener<ContextRefreshedEvent> {
 
 	private static final String REPLY_QUEUE = "testRabbitTemplateReplyTo";
 
@@ -90,17 +89,17 @@ public class TestRabbitTemplate extends RabbitTemplate
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		if (event.getApplicationContext().equals(this.applicationContext)) {
 			Stream<AbstractMessageListenerContainer> registryListenerContainers =
-					this.registry.getListenerContainers()
-							.stream()
-							.map(AbstractMessageListenerContainer.class::cast);
+		this.registry.getListenerContainers()
+	.stream()
+	.map(AbstractMessageListenerContainer.class::cast);
 
 			Stream<AbstractMessageListenerContainer> listenerContainerBeans =
-					this.applicationContext.getBeansOfType(AbstractMessageListenerContainer.class).values().stream();
+		this.applicationContext.getBeansOfType(AbstractMessageListenerContainer.class).values().stream();
 
 			Stream.concat(registryListenerContainers, listenerContainerBeans)
-					.forEach(container ->
-							Arrays.stream(container.getQueueNames())
-									.forEach(queue -> setupListener(container, queue)));
+		.forEach(container ->
+	Arrays.stream(container.getQueueNames())
+.forEach(queue -> setupListener(container, queue)));
 		}
 	}
 
@@ -115,7 +114,7 @@ public class TestRabbitTemplate extends RabbitTemplate
 
 	@Override
 	protected void sendToRabbit(Channel channel, String exchange, String routingKey, boolean mandatory,
-			Message message) {
+Message message) {
 
 		Listeners listenersForRoute = this.listeners.get(routingKey);
 		if (listenersForRoute == null) {
@@ -131,7 +130,7 @@ public class TestRabbitTemplate extends RabbitTemplate
 
 	@Override
 	protected Message doSendAndReceiveWithFixed(String exchange, String routingKey, Message message,
-			CorrelationData correlationData) {
+CorrelationData correlationData) {
 
 		Listeners listenersForRoute = this.listeners.get(routingKey);
 		if (listenersForRoute == null) {
@@ -146,13 +145,13 @@ public class TestRabbitTemplate extends RabbitTemplate
 				willAnswer(i -> {
 					Envelope envelope = new Envelope(1, false, "", REPLY_QUEUE);
 					reply.set(MessageBuilder.withBody(i.getArgument(4)) // NOSONAR magic #
-							.andProperties(getMessagePropertiesConverter()
-									.toMessageProperties(i.getArgument(3), envelope, // NOSONAR magic #
-											adapter.getEncoding()))
-							.build());
+				.andProperties(getMessagePropertiesConverter()
+			.toMessageProperties(i.getArgument(3), envelope, // NOSONAR magic #
+		adapter.getEncoding()))
+				.build());
 					return null;
 				}).given(channel).basicPublish(anyString(), anyString(), anyBoolean(), any(BasicProperties.class),
-						any(byte[].class));
+			any(byte[].class));
 				message.getMessageProperties().setReplyTo(REPLY_QUEUE);
 				adapter.onMessage(message, channel);
 			}

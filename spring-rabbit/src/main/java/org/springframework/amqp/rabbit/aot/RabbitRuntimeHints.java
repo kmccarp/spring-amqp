@@ -42,9 +42,9 @@ public class RabbitRuntimeHints implements RuntimeHintsRegistrar {
 		proxyHints.registerJdkProxy(ChannelProxy.class);
 		proxyHints.registerJdkProxy(ChannelProxy.class, PublisherCallbackChannel.class);
 		proxyHints.registerJdkProxy(builder ->
-				builder.proxiedInterfaces(TypeReference.of(
-						"org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer$ContainerDelegate"))
-						.proxiedInterfaces(SpringProxy.class, Advised.class, DecoratingProxy.class));
+	builder.proxiedInterfaces(TypeReference.of(
+"org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer$ContainerDelegate"))
+.proxiedInterfaces(SpringProxy.class, Advised.class, DecoratingProxy.class));
 	}
 
 }

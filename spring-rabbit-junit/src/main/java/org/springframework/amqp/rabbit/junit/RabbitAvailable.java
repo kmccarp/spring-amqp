@@ -34,7 +34,7 @@ import org.springframework.core.annotation.AliasFor;
  *
  */
 @ExtendWith(RabbitAvailableCondition.class)
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface RabbitAvailable {

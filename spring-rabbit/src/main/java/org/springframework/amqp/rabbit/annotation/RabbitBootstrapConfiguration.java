@@ -46,18 +46,18 @@ public class RabbitBootstrapConfiguration implements ImportBeanDefinitionRegistr
 
 	@Override
 	public void registerBeanDefinitions(@Nullable AnnotationMetadata importingClassMetadata,
-			BeanDefinitionRegistry registry) {
+BeanDefinitionRegistry registry) {
 
 		if (!registry.containsBeanDefinition(
-				RabbitListenerConfigUtils.RABBIT_LISTENER_ANNOTATION_PROCESSOR_BEAN_NAME)) {
+	RabbitListenerConfigUtils.RABBIT_LISTENER_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 
 			registry.registerBeanDefinition(RabbitListenerConfigUtils.RABBIT_LISTENER_ANNOTATION_PROCESSOR_BEAN_NAME,
-					new RootBeanDefinition(RabbitListenerAnnotationBeanPostProcessor.class));
+		new RootBeanDefinition(RabbitListenerAnnotationBeanPostProcessor.class));
 		}
 
 		if (!registry.containsBeanDefinition(RabbitListenerConfigUtils.RABBIT_LISTENER_ENDPOINT_REGISTRY_BEAN_NAME)) {
 			registry.registerBeanDefinition(RabbitListenerConfigUtils.RABBIT_LISTENER_ENDPOINT_REGISTRY_BEAN_NAME,
-					new RootBeanDefinition(RabbitListenerEndpointRegistry.class));
+		new RootBeanDefinition(RabbitListenerEndpointRegistry.class));
 		}
 	}
 

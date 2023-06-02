@@ -58,7 +58,7 @@ class AdminParser extends AbstractSingleBeanDefinitionParser {
 		// At least one of 'templateRef' or 'connectionFactoryRef' attribute must be set.
 		if (!StringUtils.hasText(connectionFactoryRef)) {
 			parserContext.getReaderContext().error("A '" + CONNECTION_FACTORY_ATTRIBUTE + "' attribute must be set.",
-					element);
+		element);
 		}
 
 		if (StringUtils.hasText(connectionFactoryRef)) {

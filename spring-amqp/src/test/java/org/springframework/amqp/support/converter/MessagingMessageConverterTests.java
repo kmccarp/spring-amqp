@@ -37,13 +37,13 @@ public class MessagingMessageConverterTests {
 	@Test
 	public void onlyHandlesMessage() {
 		assertThatIllegalArgumentException()
-				.isThrownBy(() -> converter.toMessage(new Object(), new MessageProperties()));
+	.isThrownBy(() -> converter.toMessage(new Object(), new MessageProperties()));
 	}
 
 	@Test
 	public void toMessageWithTextMessage() {
 		org.springframework.amqp.core.Message message = converter
-				.toMessage(MessageBuilder.withPayload("Hello World").build(), new MessageProperties());
+	.toMessage(MessageBuilder.withPayload("Hello World").build(), new MessageProperties());
 
 		assertThat(message.getMessageProperties().getContentType()).isEqualTo(MessageProperties.CONTENT_TYPE_TEXT_PLAIN);
 		assertThat(new String(message.getBody())).isEqualTo("Hello World");

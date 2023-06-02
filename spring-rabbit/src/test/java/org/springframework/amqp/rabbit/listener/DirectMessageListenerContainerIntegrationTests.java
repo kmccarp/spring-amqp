@@ -88,14 +88,8 @@ import com.rabbitmq.client.Consumer;
  * @since 2.0
  *
  */
-@RabbitAvailable(queues = { DirectMessageListenerContainerIntegrationTests.Q1,
-		DirectMessageListenerContainerIntegrationTests.Q2,
-		DirectMessageListenerContainerIntegrationTests.EQ1,
-		DirectMessageListenerContainerIntegrationTests.EQ2,
-		DirectMessageListenerContainerIntegrationTests.DLQ1 })
-@LogLevels(classes = { CachingConnectionFactory.class, DirectReplyToMessageListenerContainer.class,
-			DirectMessageListenerContainer.class, DirectMessageListenerContainerIntegrationTests.class,
-			BrokerRunning.class }, level = "DEBUG")
+@RabbitAvailable(queues = {DirectMessageListenerContainerIntegrationTests.Q1,DirectMessageListenerContainerIntegrationTests.Q2,DirectMessageListenerContainerIntegrationTests.EQ1,DirectMessageListenerContainerIntegrationTests.EQ2,DirectMessageListenerContainerIntegrationTests.DLQ1})
+@LogLevels(classes = {CachingConnectionFactory.class, DirectReplyToMessageListenerContainer.class,DirectMessageListenerContainer.class, DirectMessageListenerContainerIntegrationTests.class,BrokerRunning.class}, level = "DEBUG")
 public class DirectMessageListenerContainerIntegrationTests {
 
 	public static final String Q1 = "testQ1.DirectMessageListenerContainerIntegrationTests";
@@ -385,7 +379,8 @@ public class DirectMessageListenerContainerIntegrationTests {
 				latch2.countDown();
 			}
 		});
-		container.setMessageListener(m -> { });
+		container.setMessageListener(m -> {
+		});
 		container.setIdleEventInterval(50L);
 		container.setBeanName("events");
 		container.setConsumerTagStrategy(new Tag());
@@ -404,9 +399,9 @@ public class DirectMessageListenerContainerIntegrationTests {
 	public void testErrorHandler(BrokerRunningSupport brokerRunning) throws Exception {
 		brokerRunning.deleteQueues(Q1);
 		Queue q1 = new Queue(Q1, true, false, false, new ArgumentBuilder()
-				.put("x-dead-letter-exchange", "")
-				.put("x-dead-letter-routing-key", DLQ1)
-				.get());
+	.put("x-dead-letter-exchange", "")
+	.put("x-dead-letter-routing-key", DLQ1)
+	.get());
 		CachingConnectionFactory cf = new CachingConnectionFactory("localhost");
 		RabbitAdmin rabbitAdmin = new RabbitAdmin(cf);
 		rabbitAdmin.declareQueue(q1);
@@ -470,7 +465,7 @@ public class DirectMessageListenerContainerIntegrationTests {
 			latch2.countDown();
 			return tag;
 		}).given(channel).basicConsume(eq("foo"), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-				anyMap(), consumerCaptor.capture());
+	anyMap(), consumerCaptor.capture());
 		DirectMessageListenerContainer container = new DirectMessageListenerContainer(mockCF);
 		container.setQueueNames("foo");
 		container.setBeanName("brokerLost");
@@ -504,7 +499,7 @@ public class DirectMessageListenerContainerIntegrationTests {
 			latch1.countDown();
 			return tag;
 		}).given(channel).basicConsume(eq("foo"), anyBoolean(), anyString(), anyBoolean(), anyBoolean(),
-				anyMap(), consumerCaptor.capture());
+	anyMap(), consumerCaptor.capture());
 		DirectMessageListenerContainer container = new DirectMessageListenerContainer(mockCF);
 		container.setQueueNames("foo");
 		container.setBeanName("backOff");
@@ -556,7 +551,8 @@ public class DirectMessageListenerContainerIntegrationTests {
 		container.setQueueNames(Q1, Q2);
 		container.setConsumersPerQueue(2);
 		container.setConsumersPerQueue(2);
-		container.setMessageListener(m -> { });
+		container.setMessageListener(m -> {
+		});
 		container.setFailedDeclarationRetryInterval(500);
 		container.setBeanName("deleteQauto=" + autoDeclare);
 		container.setConsumerTagStrategy(new Tag());
@@ -643,7 +639,8 @@ public class DirectMessageListenerContainerIntegrationTests {
 		});
 
 		DirectMessageListenerContainer container = new DirectMessageListenerContainer(cf);
-		container.setMessageListener(m -> { });
+		container.setMessageListener(m -> {
+		});
 		container.setQueueNames(Q1);
 		container.setBeanName("stopAfterDestroyBeforeStart");
 		container.afterPropertiesSet();
@@ -828,22 +825,22 @@ public class DirectMessageListenerContainerIntegrationTests {
 
 	private boolean consumersOnQueue(String queue, int expected) throws Exception {
 		await().with().pollDelay(Duration.ZERO).atMost(Duration.ofSeconds(60))
-				.until(() -> admin.getQueueProperties(queue),
-						props -> props != null && props.get(RabbitAdmin.QUEUE_CONSUMER_COUNT).equals(expected));
+	.until(() -> admin.getQueueProperties(queue),
+props -> props != null && props.get(RabbitAdmin.QUEUE_CONSUMER_COUNT).equals(expected));
 		return true;
 	}
 
 	private boolean activeConsumerCount(AbstractMessageListenerContainer container, int expected) throws Exception {
 		List<?> consumers = TestUtils.getPropertyValue(container, "consumers", List.class);
 		await().with().pollDelay(Duration.ZERO).atMost(Duration.ofSeconds(60))
-				.until(() -> consumers.size() == expected);
+	.until(() -> consumers.size() == expected);
 		return true;
 	}
 
 	private boolean restartConsumerCount(AbstractMessageListenerContainer container, int expected) throws Exception {
 		Set<?> consumers = TestUtils.getPropertyValue(container, "consumersToRestart", Set.class);
 		await().with().pollDelay(Duration.ZERO).atMost(Duration.ofSeconds(60))
-				.until(() -> consumers.size() == expected);
+	.until(() -> consumers.size() == expected);
 		return true;
 	}
 

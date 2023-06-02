@@ -80,7 +80,7 @@ public abstract class AbstractAdaptableMessageListener implements ChannelAwareMe
 	private static final ParserContext PARSER_CONTEXT = new TemplateParserContext("!{", "}");
 
 	static final boolean monoPresent = // NOSONAR - lower case, protected
-			ClassUtils.isPresent("reactor.core.publisher.Mono", ChannelAwareMessageListener.class.getClassLoader());
+ClassUtils.isPresent("reactor.core.publisher.Mono", ChannelAwareMessageListener.class.getClassLoader());
 
 	/**
 	 * Logger available to subclasses.
@@ -213,7 +213,7 @@ public abstract class AbstractAdaptableMessageListener implements ChannelAwareMe
 	public void setBeforeSendReplyPostProcessors(MessagePostProcessor... beforeSendReplyPostProcessors) {
 		Assert.noNullElements(beforeSendReplyPostProcessors, "'replyPostProcessors' must not have any null elements");
 		this.beforeSendReplyPostProcessors = Arrays.copyOf(beforeSendReplyPostProcessors,
-				beforeSendReplyPostProcessors.length);
+	beforeSendReplyPostProcessors.length);
 	}
 
 	/**
@@ -377,27 +377,27 @@ public abstract class AbstractAdaptableMessageListener implements ChannelAwareMe
 			if (resultArg.getReturnValue() instanceof CompletableFuture<?> completable) {
 				if (!this.isManualAck) {
 					this.logger.warn("Container AcknowledgeMode must be MANUAL for a Future<?> return type; "
-							+ "otherwise the container will ack the message immediately");
+				+ "otherwise the container will ack the message immediately");
 				}
 				completable.whenComplete((r, t) -> {
-						if (t == null) {
-							asyncSuccess(resultArg, request, channel, source, r);
-							basicAck(request, channel);
-						}
-						else {
-							asyncFailure(request, channel, t, source);
-						}
+					if (t == null) {
+						asyncSuccess(resultArg, request, channel, source, r);
+						basicAck(request, channel);
+					}
+					else {
+						asyncFailure(request, channel, t, source);
+					}
 				});
 			}
 			else if (monoPresent && MonoHandler.isMono(resultArg.getReturnValue())) {
 				if (!this.isManualAck) {
 					this.logger.warn("Container AcknowledgeMode must be MANUAL for a Mono<?> return type" +
-							"(or Kotlin suspend function); otherwise the container will ack the message immediately");
+				"(or Kotlin suspend function); otherwise the container will ack the message immediately");
 				}
 				MonoHandler.subscribe(resultArg.getReturnValue(),
-						r -> asyncSuccess(resultArg, request, channel, source, r),
-						t -> asyncFailure(request, channel, t, source),
-						() -> basicAck(request, channel));
+			r -> asyncSuccess(resultArg, request, channel, source, r),
+			t -> asyncFailure(request, channel, t, source),
+			() -> basicAck(request, channel));
 			}
 			else {
 				doHandleResult(resultArg, request, channel, source);
@@ -405,12 +405,12 @@ public abstract class AbstractAdaptableMessageListener implements ChannelAwareMe
 		}
 		else if (this.logger.isWarnEnabled()) {
 			this.logger.warn("Listener method returned result [" + resultArg
-					+ "]: not generating response message for it because no Rabbit Channel given");
+		+ "]: not generating response message for it because no Rabbit Channel given");
 		}
 	}
 
 	private void asyncSuccess(InvocationResult resultArg, Message request, Channel channel, Object source,
-			Object deferredResult) {
+Object deferredResult) {
 
 		if (deferredResult == null) {
 			if (this.logger.isDebugEnabled()) {
@@ -432,9 +432,9 @@ public abstract class AbstractAdaptableMessageListener implements ChannelAwareMe
 				}
 			}
 			doHandleResult(
-					new InvocationResult(deferredResult, resultArg.getSendTo(), returnType, resultArg.getBean(),
-							resultArg.getMethod()),
-					request, channel, source);
+		new InvocationResult(deferredResult, resultArg.getSendTo(), returnType, resultArg.getBean(),
+	resultArg.getMethod()),
+		request, channel, source);
 		}
 	}
 
@@ -451,7 +451,7 @@ public abstract class AbstractAdaptableMessageListener implements ChannelAwareMe
 		this.logger.error("Future, Mono, or suspend function was completed with an exception for " + request, t);
 		try {
 			channel.basicNack(request.getMessageProperties().getDeliveryTag(), false,
-					ContainerUtils.shouldRequeue(this.defaultRequeueRejected, t, this.logger));
+		ContainerUtils.shouldRequeue(this.defaultRequeueRejected, t, this.logger));
 		}
 		catch (IOException e) {
 			this.logger.error("Failed to nack message", e);
@@ -461,7 +461,7 @@ public abstract class AbstractAdaptableMessageListener implements ChannelAwareMe
 	protected void doHandleResult(InvocationResult resultArg, Message request, Channel channel, Object source) {
 		if (this.logger.isDebugEnabled()) {
 			this.logger.debug("Listener method returned result [" + resultArg
-					+ "] - generating response message for it");
+		+ "] - generating response message for it");
 		}
 		try {
 			Message response = buildMessage(channel, resultArg.getReturnValue(), resultArg.getReturnType());
@@ -503,7 +503,7 @@ public abstract class AbstractAdaptableMessageListener implements ChannelAwareMe
 			}
 			else {
 				throw new MessageConversionException("No MessageConverter specified - cannot handle message ["
-						+ result + "]");
+			+ result + "]");
 			}
 		}
 	}
@@ -579,9 +579,9 @@ public abstract class AbstractAdaptableMessageListener implements ChannelAwareMe
 			}
 			else if (this.responseAddress == null) {
 				throw new AmqpException(
-						"Cannot determine ReplyTo message property value: " +
-								"Request message does not contain reply-to property, " +
-								"and no default response Exchange was set.");
+			"Cannot determine ReplyTo message property value: " +
+		"Request message does not contain reply-to property, " +
+		"and no default response Exchange was set.");
 			}
 			else {
 				replyTo = this.responseAddress;
@@ -594,7 +594,7 @@ public abstract class AbstractAdaptableMessageListener implements ChannelAwareMe
 		Address replyTo;
 		Object value = expression.getValue(this.evalContext, new ReplyExpressionRoot(request, source, result));
 		Assert.state(value instanceof String || value instanceof Address,
-				"response expression must evaluate to a String or Address");
+	"response expression must evaluate to a String or Address");
 		if (value instanceof String sValue) {
 			replyTo = new Address(sValue);
 		}
@@ -623,7 +623,7 @@ public abstract class AbstractAdaptableMessageListener implements ChannelAwareMe
 
 		try {
 			this.logger.debug("Publishing response to exchange = [" + replyTo.getExchangeName() + "], routingKey = ["
-					+ replyTo.getRoutingKey() + "]");
+		+ replyTo.getRoutingKey() + "]");
 			if (this.retryTemplate == null) {
 				doPublish(channel, replyTo, message);
 			}
@@ -652,8 +652,8 @@ public abstract class AbstractAdaptableMessageListener implements ChannelAwareMe
 
 	protected void doPublish(Channel channel, Address replyTo, Message message) throws IOException {
 		channel.basicPublish(replyTo.getExchangeName(), replyTo.getRoutingKey(), this.mandatoryPublish,
-				this.messagePropertiesConverter.fromMessageProperties(message.getMessageProperties(), this.encoding),
-				message.getBody());
+	this.messagePropertiesConverter.fromMessageProperties(message.getMessageProperties(), this.encoding),
+	message.getBody());
 	}
 
 	/**

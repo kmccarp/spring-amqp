@@ -51,11 +51,11 @@ class AnnotationDrivenParser implements BeanDefinitionParser {
 
 		if (registry.containsBeanDefinition(RabbitListenerConfigUtils.RABBIT_LISTENER_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 			parserContext.getReaderContext().error(
-					"Only one RabbitListenerAnnotationBeanPostProcessor may exist within the context.", source);
+		"Only one RabbitListenerAnnotationBeanPostProcessor may exist within the context.", source);
 		}
 		else {
 			BeanDefinitionBuilder builder =
-					BeanDefinitionBuilder.genericBeanDefinition(RabbitListenerAnnotationBeanPostProcessor.class);
+		BeanDefinitionBuilder.genericBeanDefinition(RabbitListenerAnnotationBeanPostProcessor.class);
 			builder.getRawBeanDefinition().setSource(source);
 			String endpointRegistry = element.getAttribute("registry");
 			if (StringUtils.hasText(endpointRegistry)) {
@@ -76,7 +76,7 @@ class AnnotationDrivenParser implements BeanDefinitionParser {
 			}
 
 			registerInfrastructureBean(parserContext, builder,
-					RabbitListenerConfigUtils.RABBIT_LISTENER_ANNOTATION_PROCESSOR_BEAN_NAME);
+		RabbitListenerConfigUtils.RABBIT_LISTENER_ANNOTATION_PROCESSOR_BEAN_NAME);
 		}
 
 		// Finally register the composite component.
@@ -89,11 +89,11 @@ class AnnotationDrivenParser implements BeanDefinitionParser {
 		BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RabbitListenerEndpointRegistry.class);
 		builder.getRawBeanDefinition().setSource(source);
 		registerInfrastructureBean(parserContext, builder,
-				RabbitListenerConfigUtils.RABBIT_LISTENER_ENDPOINT_REGISTRY_BEAN_NAME);
+	RabbitListenerConfigUtils.RABBIT_LISTENER_ENDPOINT_REGISTRY_BEAN_NAME);
 	}
 
 	private static void registerInfrastructureBean(
-			ParserContext parserContext, BeanDefinitionBuilder builder, String beanName) {
+ParserContext parserContext, BeanDefinitionBuilder builder, String beanName) {
 
 		builder.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
 		parserContext.getRegistry().registerBeanDefinition(beanName, builder.getBeanDefinition());

@@ -77,7 +77,8 @@ public class RabbitStreamTemplate implements RabbitStreamOperations, Application
 
 	private String beanName;
 
-	private ProducerCustomizer producerCustomizer = (name, builder) -> { };
+	private ProducerCustomizer producerCustomizer = (name, builder) -> {
+	};
 
 	private boolean observationEnabled;
 
@@ -109,13 +110,13 @@ public class RabbitStreamTemplate implements RabbitStreamOperations, Application
 			}
 			else {
 				builder.superStream(this.streamName)
-						.routing(this.superStreamRouting);
+			.routing(this.superStreamRouting);
 			}
 			this.producerCustomizer.accept(this.beanName, builder);
 			this.producer = builder.build();
 			if (!this.streamConverterSet) {
 				((DefaultStreamMessageConverter) this.streamConverter).setBuilderSupplier(
-						() ->  this.producer.messageBuilder());
+			() -> this.producer.messageBuilder());
 			}
 		}
 		return this.producer;
@@ -230,9 +231,9 @@ public class RabbitStreamTemplate implements RabbitStreamOperations, Application
 
 	private void observeSend(com.rabbitmq.stream.Message message, CompletableFuture<Boolean> future) {
 		Observation observation = RabbitStreamTemplateObservation.STREAM_TEMPLATE_OBSERVATION.observation(
-				this.observationConvention, DefaultRabbitStreamTemplateObservationConvention.INSTANCE,
-				() -> new RabbitStreamMessageSenderContext(message, this.beanName, this.streamName),
-					obtainObservationRegistry());
+	this.observationConvention, DefaultRabbitStreamTemplateObservationConvention.INSTANCE,
+	() -> new RabbitStreamMessageSenderContext(message, this.beanName, this.streamName),
+	obtainObservationRegistry());
 		observation.start();
 		try {
 			createOrGetProducer().send(message, handleConfirm(future, observation));
@@ -249,7 +250,7 @@ public class RabbitStreamTemplate implements RabbitStreamOperations, Application
 		if (!this.observationRegistryObtained && this.observationEnabled) {
 			if (this.applicationContext != null) {
 				ObjectProvider<ObservationRegistry> registry =
-						this.applicationContext.getBeanProvider(ObservationRegistry.class);
+			this.applicationContext.getBeanProvider(ObservationRegistry.class);
 				this.observationRegistry = registry.getIfUnique();
 			}
 			this.observationRegistryObtained = true;
@@ -272,21 +273,21 @@ public class RabbitStreamTemplate implements RabbitStreamOperations, Application
 				int code = confStatus.getCode();
 				String errorMessage;
 				switch (code) {
-				case Constants.CODE_MESSAGE_ENQUEUEING_FAILED:
-					errorMessage = "Message Enqueueing Failed";
-					break;
-				case Constants.CODE_PRODUCER_CLOSED:
-					errorMessage = "Producer Closed";
-					break;
-				case Constants.CODE_PRODUCER_NOT_AVAILABLE:
-					errorMessage = "Producer Not Available";
-					break;
-				case Constants.CODE_PUBLISH_CONFIRM_TIMEOUT:
-					errorMessage = "Publish Confirm Timeout";
-					break;
-				default:
-					errorMessage = "Unknown code: " + code;
-					break;
+					case Constants.CODE_MESSAGE_ENQUEUEING_FAILED:
+						errorMessage = "Message Enqueueing Failed";
+						break;
+					case Constants.CODE_PRODUCER_CLOSED:
+						errorMessage = "Producer Closed";
+						break;
+					case Constants.CODE_PRODUCER_NOT_AVAILABLE:
+						errorMessage = "Producer Not Available";
+						break;
+					case Constants.CODE_PUBLISH_CONFIRM_TIMEOUT:
+						errorMessage = "Publish Confirm Timeout";
+						break;
+					default:
+						errorMessage = "Unknown code: " + code;
+						break;
 				}
 				StreamSendException ex = new StreamSendException(errorMessage, code);
 				observation.error(ex);

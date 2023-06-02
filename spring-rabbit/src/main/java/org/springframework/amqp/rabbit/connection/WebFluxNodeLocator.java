@@ -42,17 +42,17 @@ public class WebFluxNodeLocator implements NodeLocator<WebClient> {
 	@Override
 	@Nullable
 	public Map<String, Object> restCall(WebClient client, String baseUri, String vhost, String queue)
-			throws URISyntaxException {
+throws URISyntaxException {
 
 		URI uri = new URI(baseUri)
-				.resolve("/api/queues/" + UriUtils.encodePathSegment(vhost, StandardCharsets.UTF_8) + "/" + queue);
+	.resolve("/api/queues/" + UriUtils.encodePathSegment(vhost, StandardCharsets.UTF_8) + "/" + queue);
 		HashMap<String, Object> queueInfo = client.get()
-				.uri(uri)
-				.accept(MediaType.APPLICATION_JSON)
-				.retrieve()
-				.bodyToMono(new ParameterizedTypeReference<HashMap<String, Object>>() {
-				})
-				.block(Duration.ofSeconds(10)); // NOSONAR magic#
+	.uri(uri)
+	.accept(MediaType.APPLICATION_JSON)
+	.retrieve()
+	.bodyToMono(new ParameterizedTypeReference<HashMap<String, Object>>() {
+	})
+	.block(Duration.ofSeconds(10)); // NOSONAR magic#
 		return queueInfo != null ? queueInfo : null;
 	}
 
@@ -65,8 +65,8 @@ public class WebFluxNodeLocator implements NodeLocator<WebClient> {
 	@Override
 	public WebClient createClient(String username, String password) {
 		return WebClient.builder()
-				.filter(ExchangeFilterFunctions.basicAuthentication(username, password))
-				.build();
+	.filter(ExchangeFilterFunctions.basicAuthentication(username, password))
+	.build();
 	}
 
 }

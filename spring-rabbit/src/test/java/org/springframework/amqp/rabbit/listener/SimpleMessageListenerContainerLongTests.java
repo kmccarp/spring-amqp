@@ -45,11 +45,7 @@ import com.rabbitmq.client.ConnectionFactory;
  * @since 1.2.1
  *
  */
-@RabbitAvailable(queues = {
-		SimpleMessageListenerContainerLongTests.QUEUE,
-		SimpleMessageListenerContainerLongTests.QUEUE2,
-		SimpleMessageListenerContainerLongTests.QUEUE3,
-		SimpleMessageListenerContainerLongTests.QUEUE4
+@RabbitAvailable(queues = {SimpleMessageListenerContainerLongTests.QUEUE,SimpleMessageListenerContainerLongTests.QUEUE2,SimpleMessageListenerContainerLongTests.QUEUE3,SimpleMessageListenerContainerLongTests.QUEUE4
 })
 @LongRunning
 public class SimpleMessageListenerContainerLongTests {
@@ -83,7 +79,7 @@ public class SimpleMessageListenerContainerLongTests {
 
 	private void testChangeConsumerCountGuts(boolean transacted) throws Exception {
 		SimpleMessageListenerContainer container =
-				new SimpleMessageListenerContainer(this.connectionFactory);
+	new SimpleMessageListenerContainer(this.connectionFactory);
 		try {
 			container.setMessageListener(new MessageListenerAdapter(this));
 			container.setQueueNames(QUEUE);
@@ -117,8 +113,9 @@ public class SimpleMessageListenerContainerLongTests {
 	@Test
 	public void testAddQueuesAndStartInCycle() throws Exception {
 		final SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(
-				this.connectionFactory);
-		container.setMessageListener((MessageListener) message -> { });
+	this.connectionFactory);
+		container.setMessageListener((MessageListener) message -> {
+		});
 		container.setConcurrentConsumers(2);
 		container.afterPropertiesSet();
 

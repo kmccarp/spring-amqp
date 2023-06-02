@@ -43,8 +43,7 @@ import com.rabbitmq.stream.Environment;
  * @since 2.4
  *
  */
-public class StreamRabbitListenerContainerFactory
-		extends BaseRabbitListenerContainerFactory<StreamListenerContainer> {
+public class StreamRabbitListenerContainerFactoryextends BaseRabbitListenerContainerFactory<StreamListenerContainer> {
 
 	private final Environment environment;
 
@@ -97,7 +96,7 @@ public class StreamRabbitListenerContainerFactory
 	 * @since 3.0.5
 	 */
 	public void setStreamListenerObservationConvention(
-			RabbitStreamListenerObservationConvention streamListenerObservationConvention) {
+RabbitStreamListenerObservationConvention streamListenerObservationConvention) {
 
 		this.streamListenerObservationConvention = streamListenerObservationConvention;
 	}
@@ -106,22 +105,22 @@ public class StreamRabbitListenerContainerFactory
 	public StreamListenerContainer createListenerContainer(RabbitListenerEndpoint endpoint) {
 		if (endpoint instanceof MethodRabbitListenerEndpoint && this.nativeListener) {
 			((MethodRabbitListenerEndpoint) endpoint).setAdapterProvider(
-					(boolean batch, Object bean, Method method, boolean returnExceptions,
-							RabbitListenerErrorHandler errorHandler, @Nullable BatchingStrategy batchingStrategy) -> {
+		(boolean batch, Object bean, Method method, boolean returnExceptions,
+	RabbitListenerErrorHandler errorHandler, @Nullable BatchingStrategy batchingStrategy) -> {
 
-								Assert.isTrue(!batch, "Batch listeners are not supported by the stream container");
-								return new StreamMessageListenerAdapter(bean, method, returnExceptions, errorHandler);
-							});
+			Assert.isTrue(!batch, "Batch listeners are not supported by the stream container");
+			return new StreamMessageListenerAdapter(bean, method, returnExceptions, errorHandler);
+		});
 		}
 		StreamListenerContainer container = createContainerInstance();
 		Advice[] adviceChain = getAdviceChain();
 		JavaUtils.INSTANCE
-				.acceptIfNotNull(getApplicationContext(), container::setApplicationContext)
-				.acceptIfNotNull(this.consumerCustomizer, container::setConsumerCustomizer)
-				.acceptIfNotNull(adviceChain, container::setAdviceChain)
-				.acceptIfNotNull(getMicrometerEnabled(), container::setMicrometerEnabled)
-				.acceptIfNotNull(getObservationEnabled(), container::setObservationEnabled)
-				.acceptIfNotNull(this.streamListenerObservationConvention, container::setObservationConvention);
+	.acceptIfNotNull(getApplicationContext(), container::setApplicationContext)
+	.acceptIfNotNull(this.consumerCustomizer, container::setConsumerCustomizer)
+	.acceptIfNotNull(adviceChain, container::setAdviceChain)
+	.acceptIfNotNull(getMicrometerEnabled(), container::setMicrometerEnabled)
+	.acceptIfNotNull(getObservationEnabled(), container::setObservationEnabled)
+	.acceptIfNotNull(this.streamListenerObservationConvention, container::setObservationConvention);
 		applyCommonOverrides(endpoint, container);
 		if (this.containerCustomizer != null) {
 			this.containerCustomizer.configure(container);

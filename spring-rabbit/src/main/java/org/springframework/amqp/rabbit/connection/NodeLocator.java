@@ -50,7 +50,7 @@ public interface NodeLocator<T> {
 	 */
 	@Nullable
 	default ConnectionFactory locate(String[] adminUris, Map<String, String> nodeToAddress, String vhost,
-			String username, String password, String queue, FactoryFinder factoryFunction) {
+String username, String password, String queue, FactoryFinder factoryFunction) {
 
 		T client = createClient(username, password);
 
@@ -61,7 +61,7 @@ public interface NodeLocator<T> {
 			}
 			try {
 				String uri = new URI(adminUri)
-						.resolve("/api/queues/").toString();
+			.resolve("/api/queues/").toString();
 				Map<String, Object> queueInfo = restCall(client, uri, vhost, queue);
 				if (queueInfo != null) {
 					String node = (String) queueInfo.get("node");
@@ -82,7 +82,7 @@ public interface NodeLocator<T> {
 			}
 			catch (Exception e) {
 				LOGGER.warn("Failed to determine queue location for: " + queue + " at: " +
-						adminUri + ": " + e.getMessage());
+			adminUri + ": " + e.getMessage());
 			}
 		}
 		LOGGER.warn("Failed to determine queue location for: " + queue + ", using default connection factory");
@@ -116,6 +116,6 @@ public interface NodeLocator<T> {
 	 */
 	@Nullable
 	Map<String, Object> restCall(T client, String baseUri, String vhost, String queue)
-			throws URISyntaxException;
+throws URISyntaxException;
 
 }

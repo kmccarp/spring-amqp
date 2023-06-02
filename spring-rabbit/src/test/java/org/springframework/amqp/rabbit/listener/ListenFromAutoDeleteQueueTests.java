@@ -67,7 +67,7 @@ public class ListenFromAutoDeleteQueueTests {
 	@BeforeEach
 	public void setup() {
 		this.context = new ClassPathXmlApplicationContext(this.getClass().getSimpleName() + "-context.xml",
-				this.getClass());
+	this.getClass());
 		this.listenerContainer1 = context.getBean("container1", SimpleMessageListenerContainer.class);
 		this.listenerContainer2 = context.getBean("container2", SimpleMessageListenerContainer.class);
 		this.expiringQueue = context.getBean("xExpires", Queue.class);
@@ -112,7 +112,7 @@ public class ListenFromAutoDeleteQueueTests {
 		template.convertAndSend(this.expiringQueue.getName(), "foo");
 		assertThat(queue.poll(10, TimeUnit.SECONDS)).isNotNull();
 		SimpleMessageListenerContainer listenerContainer = context.getBean("container3",
-				SimpleMessageListenerContainer.class);
+	SimpleMessageListenerContainer.class);
 		listenerContainer.stop();
 		RabbitAdmin admin = spy(TestUtils.getPropertyValue(listenerContainer, "amqpAdmin", RabbitAdmin.class));
 		new DirectFieldAccessor(listenerContainer).setPropertyValue("amqpAdmin", admin);
@@ -129,7 +129,7 @@ public class ListenFromAutoDeleteQueueTests {
 		template.convertAndSend("testContainerWithAutoDeleteQueues", "anon2", "foo");
 		assertThat(queue.poll(10, TimeUnit.SECONDS)).isNotNull();
 		SimpleMessageListenerContainer listenerContainer = context.getBean("container4",
-				SimpleMessageListenerContainer.class);
+	SimpleMessageListenerContainer.class);
 		listenerContainer.stop();
 		RabbitAdmin admin = spy(TestUtils.getPropertyValue(listenerContainer, "amqpAdmin", RabbitAdmin.class));
 		new DirectFieldAccessor(listenerContainer).setPropertyValue("amqpAdmin", admin);

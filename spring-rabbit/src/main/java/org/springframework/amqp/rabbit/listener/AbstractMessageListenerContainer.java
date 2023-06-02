@@ -108,8 +108,7 @@ import io.micrometer.observation.ObservationRegistry;
  * @author Mohammad Hewedy
  * @author Mat Jaggard
  */
-public abstract class AbstractMessageListenerContainer extends ObservableListenerContainer
-		implements ApplicationEventPublisherAware {
+public abstract class AbstractMessageListenerContainer extends ObservableListenerContainerimplements ApplicationEventPublisherAware {
 
 	private static final int EXIT_99 = 99;
 
@@ -240,7 +239,8 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 
 	private boolean asyncReplies;
 
-	private MessageAckListener messageAckListener = (success, deliveryTag, cause) -> { };
+	private MessageAckListener messageAckListener = (success, deliveryTag, cause) -> {
+	};
 
 	@Nullable
 	private RabbitListenerObservationConvention observationConvention;
@@ -291,8 +291,8 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	public void setQueueNames(String... queueName) {
 		Assert.noNullElements(queueName, "Queue name(s) cannot be null");
 		setQueues(Arrays.stream(queueName)
-				.map(Queue::new)
-				.toArray(Queue[]::new));
+	.map(Queue::new)
+	.toArray(Queue[]::new));
 	}
 
 	/**
@@ -329,13 +329,13 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	 */
 	protected Map<String, Queue> getQueueNamesToQueues() {
 		return this.queues.stream()
-				.collect(Collectors.toMap(Queue::getActualName, q -> q));
+	.collect(Collectors.toMap(Queue::getActualName, q -> q));
 	}
 
 	private List<String> queuesToNames() {
 		return this.queues.stream()
-				.map(Queue::getActualName)
-				.collect(Collectors.toList());
+	.map(Queue::getActualName)
+	.collect(Collectors.toList());
 	}
 
 	/**
@@ -346,8 +346,8 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 		Assert.notNull(queueNames, "'queueNames' cannot be null");
 		Assert.noNullElements(queueNames, "'queueNames' cannot contain null elements");
 		addQueues(Arrays.stream(queueNames)
-				.map(Queue::new)
-				.toArray(Queue[]::new));
+	.map(Queue::new)
+	.toArray(Queue[]::new));
 	}
 
 	/**
@@ -376,7 +376,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 		if (this.queues.size() > 0) {
 			Set<String> toRemove = new HashSet<>(Arrays.asList(queueNames));
 			return this.queues.removeIf(
-					q -> toRemove.contains(q.getActualName()));
+		q -> toRemove.contains(q.getActualName()));
 		}
 		return false;
 	}
@@ -390,8 +390,8 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 		Assert.notNull(queues, "'queues' cannot be null");
 		Assert.noNullElements(queues, "'queues' cannot contain null elements");
 		return removeQueueNames(Arrays.stream(queues)
-				.map(Queue::getActualName)
-				.toArray(String[]::new));
+	.map(Queue::getActualName)
+	.toArray(String[]::new));
 	}
 
 	/**
@@ -428,7 +428,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	public void setMessageListener(MessageListener messageListener) {
 		this.messageListener = messageListener;
 		this.isBatchListener = messageListener instanceof BatchMessageListener
-				|| messageListener instanceof ChannelAwareBatchMessageListener;
+	|| messageListener instanceof ChannelAwareBatchMessageListener;
 		this.asyncReplies = messageListener.isAsyncReplies();
 	}
 
@@ -443,7 +443,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	protected void checkMessageListener(Object listener) {
 		if (!(listener instanceof MessageListener)) {
 			throw new IllegalArgumentException("Message listener needs to be of type ["
-					+ MessageListener.class.getName() + "] or [" + ChannelAwareMessageListener.class.getName() + "]");
+		+ MessageListener.class.getName() + "] or [" + ChannelAwareMessageListener.class.getName() + "]");
 		}
 	}
 
@@ -587,7 +587,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 		ConnectionFactory connectionFactory = super.getConnectionFactory();
 		if (connectionFactory instanceof RoutingConnectionFactory rcf) {
 			ConnectionFactory targetConnectionFactory = rcf
-					.getTargetConnectionFactory(getRoutingLookupKey()); // NOSONAR never null
+		.getTargetConnectionFactory(getRoutingLookupKey()); // NOSONAR never null
 			if (targetConnectionFactory != null) {
 				return targetConnectionFactory;
 			}
@@ -636,14 +636,14 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	@Nullable
 	protected String getRoutingLookupKey() {
 		return super.getConnectionFactory() instanceof RoutingConnectionFactory
-				? this.lookupKeyQualifier + queuesAsListString()
-				: null;
+	? this.lookupKeyQualifier + queuesAsListString()
+	: null;
 	}
 
 	private String queuesAsListString() {
 		return "[" + this.queues.stream()
-				.map(Queue::getName)
-				.collect(Collectors.joining(",")) + "]";
+	.map(Queue::getName)
+	.collect(Collectors.joining(",")) + "]";
 	}
 
 	/**
@@ -654,7 +654,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	 */
 	@Nullable
 	protected RoutingConnectionFactory getRoutingConnectionFactory() {
-		return super.getConnectionFactory() instanceof RoutingConnectionFactory rcf ? rcf  : null;
+		return super.getConnectionFactory() instanceof RoutingConnectionFactory rcf ? rcf : null;
 	}
 
 	/**
@@ -976,6 +976,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	protected boolean isPossibleAuthenticationFailureFatalSet() {
 		return this.possibleAuthenticationFailureFatalSet;
 	}
+
 	protected boolean isAsyncReplies() {
 		return this.asyncReplies;
 	}
@@ -1160,15 +1161,15 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
 		Assert.state(
-				this.exposeListenerChannel || !getAcknowledgeMode().isManual(),
-				"You cannot acknowledge messages manually if the channel is not exposed to the listener "
-						+ "(please check your configuration and set exposeListenerChannel=true or " +
-						"acknowledgeMode!=MANUAL)");
+	this.exposeListenerChannel || !getAcknowledgeMode().isManual(),
+	"You cannot acknowledge messages manually if the channel is not exposed to the listener "
++ "(please check your configuration and set exposeListenerChannel=true or " +
+"acknowledgeMode!=MANUAL)");
 		Assert.state(
-				!(getAcknowledgeMode().isAutoAck() && isChannelTransacted()),
-				"The acknowledgeMode is NONE (autoack in Rabbit terms) which is not consistent with having a "
-						+ "transactional channel. Either use a different AcknowledgeMode or make sure " +
-						"channelTransacted=false");
+	!(getAcknowledgeMode().isAutoAck() && isChannelTransacted()),
+	"The acknowledgeMode is NONE (autoack in Rabbit terms) which is not consistent with having a "
++ "transactional channel. Either use a different AcknowledgeMode or make sure " +
+"channelTransacted=false");
 		validateConfiguration();
 		initialize();
 		checkMicrometer();
@@ -1407,7 +1408,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 			}
 			catch (Exception e) {
 				LogFactory.getLog(this.errorHandlerLoggerName).error(
-						"Execution of Rabbit message listener failed, and the error handler threw an exception", e);
+			"Execution of Rabbit message listener failed, and the error handler threw an exception", e);
 				throw e;
 			}
 		}
@@ -1432,8 +1433,8 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 		ObservationRegistry registry = getObservationRegistry();
 		if (data instanceof Message message) {
 			observation = RabbitListenerObservation.LISTENER_OBSERVATION.observation(this.observationConvention,
-					DefaultRabbitListenerObservationConvention.INSTANCE,
-						() -> new RabbitMessageReceiverContext(message, getListenerId()), registry);
+		DefaultRabbitListenerObservationConvention.INSTANCE,
+		() -> new RabbitMessageReceiverContext(message, getListenerId()), registry);
 			observation.observe(() -> executeListenerAndHandleException(channel, data));
 		}
 		else {
@@ -1446,7 +1447,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 		if (!isRunning()) {
 			if (logger.isWarnEnabled()) {
 				logger.warn(
-						"Rejecting received message(s) because the listener container has been stopped: " + data);
+			"Rejecting received message(s) because the listener container has been stopped: " + data);
 			}
 			throw new MessageRejectedWhileStoppingException();
 		}
@@ -1459,15 +1460,15 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 			doExecuteListener(channel, data);
 			if (sample != null) {
 				micrometerHolder.success(sample, data instanceof Message message
-						? message.getMessageProperties().getConsumerQueue()
-						: queuesAsListString());
+			? message.getMessageProperties().getConsumerQueue()
+			: queuesAsListString());
 			}
 		}
 		catch (RuntimeException ex) {
 			if (sample != null) {
 				micrometerHolder.failure(sample, data instanceof Message message
-						? message.getMessageProperties().getConsumerQueue()
-						: queuesAsListString(), ex.getClass().getSimpleName());
+			? message.getMessageProperties().getConsumerQueue()
+			: queuesAsListString(), ex.getClass().getSimpleName());
 			}
 			Message message;
 			if (data instanceof Message msg) {
@@ -1486,12 +1487,12 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 		if (message.getMessageProperties().isFinalRetryForMessageWithNoId()) {
 			if (this.statefulRetryFatalWithNullMessageId) {
 				throw new FatalListenerExecutionException(
-						"Illegal null id in message. Failed to manage retry for message: " + message, ex);
+			"Illegal null id in message. Failed to manage retry for message: " + message, ex);
 			}
 			else {
 				throw new ListenerExecutionFailedException("Cannot retry message more than once without an ID",
-						new AmqpRejectAndDontRequeueException("Not retryable; rejecting and not requeuing", ex),
-						message);
+			new AmqpRejectAndDontRequeueException("Not retryable; rejecting and not requeuing", ex),
+			message);
 			}
 		}
 	}
@@ -1503,7 +1504,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 					message = processor.postProcessMessage(message);
 					if (message == null) {
 						throw new ImmediateAcknowledgeAmqpException(
-								"Message Post Processor returned 'null', discarding message");
+					"Message Post Processor returned 'null', discarding message");
 					}
 				}
 			}
@@ -1540,7 +1541,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 				RabbitResourceHolder resourceHolder = new RabbitResourceHolder(channel, false);
 				resourceHolder.setSynchronizedWithTransaction(true);
 				TransactionSynchronizationManager.bindResource(this.getConnectionFactory(),
-						resourceHolder);
+			resourceHolder);
 			}
 			try {
 				doInvokeListener(msgListener, data);
@@ -1554,7 +1555,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 		}
 		else if (listener != null) {
 			throw new FatalListenerExecutionException("Only MessageListener and SessionAwareMessageListener supported: "
-					+ listener);
+		+ listener);
 		}
 		else {
 			throw new FatalListenerExecutionException("No message listener specified - see property 'messageListener'");
@@ -1589,10 +1590,10 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 				 * will be committed in the finally block.
 				 */
 				if (isChannelLocallyTransacted() &&
-						!TransactionSynchronizationManager.isActualTransactionActive()) {
+			!TransactionSynchronizationManager.isActualTransactionActive()) {
 					resourceHolder.setSynchronizedWithTransaction(true);
 					TransactionSynchronizationManager.bindResource(this.getConnectionFactory(),
-							resourceHolder);
+				resourceHolder);
 					boundHere = true;
 				}
 			}
@@ -1602,7 +1603,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 					RabbitResourceHolder localResourceHolder = new RabbitResourceHolder(channelToUse, false);
 					localResourceHolder.setSynchronizedWithTransaction(true);
 					TransactionSynchronizationManager.bindResource(this.getConnectionFactory(),
-							localResourceHolder);
+				localResourceHolder);
 					boundHere = true;
 				}
 			}
@@ -1626,7 +1627,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	}
 
 	private void cleanUpAfterInvoke(@Nullable RabbitResourceHolder resourceHolder, Channel channelToUse,
-			boolean boundHere) {
+boolean boundHere) {
 
 		if (resourceHolder != null && boundHere) {
 			// so the channel exposed (because exposeListenerChannel is false) will be closed
@@ -1718,13 +1719,13 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	 */
 	@SuppressWarnings(UNCHECKED)
 	protected ListenerExecutionFailedException wrapToListenerExecutionFailedExceptionIfNeeded(Exception e,
-			Object data) {
+Object data) {
 
 		if (!(e instanceof ListenerExecutionFailedException)) {
 			// Wrap exception to ListenerExecutionFailedException.
 			if (data instanceof List) {
 				return new ListenerExecutionFailedException("Listener threw exception", e,
-						((List<Message>) data).toArray(new Message[0]));
+			((List<Message>) data).toArray(new Message[0]));
 			}
 			else {
 				return new ListenerExecutionFailedException("Listener threw exception", e, (Message) data);
@@ -1736,22 +1737,22 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	protected void publishConsumerFailedEvent(String reason, boolean fatal, @Nullable Throwable t) {
 		if (this.applicationEventPublisher != null) {
 			this.applicationEventPublisher
-					.publishEvent(t == null ? new ListenerContainerConsumerTerminatedEvent(this, reason) :
-							new ListenerContainerConsumerFailedEvent(this, reason, t, fatal));
+		.publishEvent(t == null ? new ListenerContainerConsumerTerminatedEvent(this, reason) :
+	new ListenerContainerConsumerFailedEvent(this, reason, t, fatal));
 		}
 	}
 
 	protected void publishMissingQueueEvent(String queue) {
 		if (this.applicationEventPublisher != null) {
 			this.applicationEventPublisher
-					.publishEvent(new MissingQueueEvent(this, queue));
+		.publishEvent(new MissingQueueEvent(this, queue));
 		}
 	}
 
 	protected final void publishIdleContainerEvent(long idleTime) {
 		if (this.applicationEventPublisher != null) {
 			this.applicationEventPublisher.publishEvent(
-					new ListenerContainerIdleEvent(this, idleTime, getListenerId(), getQueueNames()));
+		new ListenerContainerIdleEvent(this, idleTime, getListenerId(), getQueueNames()));
 		}
 	}
 
@@ -1765,21 +1766,21 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 		ApplicationContext applicationContext = getApplicationContext();
 		if (this.amqpAdmin == null && applicationContext != null) {
 			Map<String, AmqpAdmin> admins =
-					BeanFactoryUtils.beansOfTypeIncludingAncestors(applicationContext, AmqpAdmin.class,
-							false, false);
+		BeanFactoryUtils.beansOfTypeIncludingAncestors(applicationContext, AmqpAdmin.class,
+	false, false);
 			if (admins.size() == 1) {
 				this.amqpAdmin = admins.values().iterator().next();
 			}
 			else {
 				if ((isAutoDeclare() || isMismatchedQueuesFatal()) && this.logger.isDebugEnabled()) {
 					logger.debug("For 'autoDeclare' and 'mismatchedQueuesFatal' to work, there must be exactly one "
-							+ "AmqpAdmin in the context or you must inject one into this container; found: "
-							+ admins.size() + " for container " + toString());
+				+ "AmqpAdmin in the context or you must inject one into this container; found: "
+				+ admins.size() + " for container " + toString());
 				}
 				if (isMismatchedQueuesFatal()) {
 					throw new IllegalStateException("When 'mismatchedQueuesFatal' is 'true', there must be exactly "
-							+ "one AmqpAdmin in the context or you must inject one into this container; found: "
-							+ admins.size() + " for container " + toString());
+				+ "one AmqpAdmin in the context or you must inject one into this container; found: "
+				+ admins.size() + " for container " + toString());
 				}
 			}
 		}
@@ -1820,16 +1821,16 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 		if (this.mismatchedQueuesFatal) {
 			if (this.missingQueuesFatal) {
 				logger.warn("'mismatchedQueuesFatal' and 'missingQueuesFatal' are ignored during the initial start(), "
-						+ "for lazily loaded containers");
+			+ "for lazily loaded containers");
 			}
 			else {
 				logger.warn("'mismatchedQueuesFatal' is ignored during the initial start(), "
-						+ "for lazily loaded containers");
+			+ "for lazily loaded containers");
 			}
 		}
 		else if (this.missingQueuesFatal) {
 			logger.warn("'missingQueuesFatal' is ignored during the initial start(), "
-					+ "for lazily loaded containers");
+		+ "for lazily loaded containers");
 		}
 		this.lazyLoad = true;
 	}
@@ -1877,18 +1878,18 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 		if (context != null) {
 			Set<String> queueNames = getQueueNamesAsSet();
 			Collection<Queue> queues = new LinkedHashSet<>(
-					context.getBeansOfType(Queue.class, false, false).values());
+		context.getBeansOfType(Queue.class, false, false).values());
 			Map<String, Declarables> declarables = context.getBeansOfType(Declarables.class, false, false);
 			declarables.values().forEach(dec -> queues.addAll(dec.getDeclarablesByType(Queue.class)));
 			admin.getManualDeclarables()
-					.values()
-					.stream()
-					.filter(Queue.class::isInstance)
-					.map(Queue.class::cast)
-					.forEach(queues::add);
+		.values()
+		.stream()
+		.filter(Queue.class::isInstance)
+		.map(Queue.class::cast)
+		.forEach(queues::add);
 			for (Queue queue : queues) {
 				if (isMismatchedQueuesFatal() || (queueNames.contains(queue.getName()) &&
-						admin.getQueueProperties(queue.getName()) == null)) {
+			admin.getQueueProperties(queue.getName()) == null)) {
 					if (logger.isDebugEnabled()) {
 						logger.debug("Redeclaring context exchanges, queues, bindings.");
 					}
@@ -1934,7 +1935,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	protected void prepareHolderForRollback(RabbitResourceHolder resourceHolder, RuntimeException exception) {
 		if (resourceHolder != null) {
 			resourceHolder.setRequeueOnRollback(isAlwaysRequeueWithTxManagerRollback() ||
-					ContainerUtils.shouldRequeue(isDefaultRequeueRejected(), exception, logger));
+		ContainerUtils.shouldRequeue(isDefaultRequeueRejected(), exception, logger));
 		}
 	}
 
@@ -1968,10 +1969,10 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 				if (context != null) {
 					Properties properties = context.getBean("spring.amqp.global.properties", Properties.class);
 					String possibleAuthenticationFailureFatalProperty =
-							properties.getProperty("mlc.possible.authentication.failure.fatal");
+				properties.getProperty("mlc.possible.authentication.failure.fatal");
 					if (StringUtils.hasText(possibleAuthenticationFailureFatalProperty)) {
 						setPossibleAuthenticationFailureFatal(
-								Boolean.parseBoolean(possibleAuthenticationFailureFatalProperty));
+					Boolean.parseBoolean(possibleAuthenticationFailureFatalProperty));
 					}
 				}
 			}
@@ -1984,7 +1985,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	@Nullable
 	protected List<Message> debatch(Message message) {
 		if (this.isBatchListener && isDeBatchingEnabled()
-				&& getBatchingStrategy().canDebatch(message.getMessageProperties())) {
+	&& getBatchingStrategy().canDebatch(message.getMessageProperties())) {
 			final List<Message> messageList = new ArrayList<>();
 			getBatchingStrategy().deBatch(message, fragment -> messageList.add(fragment));
 			return messageList;

@@ -23,8 +23,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
  * @since 2.0.2
  *
  */
-public class RabbitTemplateDirectReplyToContainerIntegrationPubCFTests
-		extends RabbitTemplateDirectReplyToContainerIntegrationTests {
+public class RabbitTemplateDirectReplyToContainerIntegrationPubCFTestsextends RabbitTemplateDirectReplyToContainerIntegrationTests {
 
 	@Override
 	protected RabbitTemplate createSendAndReceiveRabbitTemplate(ConnectionFactory connectionFactory) {

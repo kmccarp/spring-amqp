@@ -54,50 +54,50 @@ import com.rabbitmq.client.Channel;
  *
  */
 @SpringJUnitConfig
-@RabbitAvailable(queues = { "async1", "async2" })
+@RabbitAvailable(queues = {"async1", "async2"})
 public class AsyncReplyToTests {
 
 	@Test
 	void ackSingleWhenFatalSMLC(@Autowired Config config, @Autowired RabbitListenerEndpointRegistry registry,
-			@Autowired RabbitTemplate template, @Autowired RabbitAdmin admin) throws IOException, InterruptedException {
+@Autowired RabbitTemplate template, @Autowired RabbitAdmin admin) throws IOException, InterruptedException {
 
 		template.send("async1", MessageBuilder.withBody("\"foo\"".getBytes()).andProperties(
-				MessagePropertiesBuilder.newInstance()
-						.setContentType("application/json")
-						.setReplyTo("nowhere")
-						.build())
-				.build());
+	MessagePropertiesBuilder.newInstance()
+.setContentType("application/json")
+.setReplyTo("nowhere")
+.build())
+	.build());
 		template.send("async1", MessageBuilder.withBody("junk".getBytes()).andProperties(
-				MessagePropertiesBuilder.newInstance()
-						.setContentType("application/json")
-						.setReplyTo("nowhere")
-						.build())
-				.build());
+	MessagePropertiesBuilder.newInstance()
+.setContentType("application/json")
+.setReplyTo("nowhere")
+.build())
+	.build());
 		assertThat(config.smlcLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		registry.getListenerContainer("smlc").stop();
 		assertThat(admin.getQueueInfo("async1").getMessageCount()).isEqualTo(1);
 	}
 
-	 @Test
-	 void ackSingleWhenFatalDMLC(@Autowired Config config, @Autowired RabbitListenerEndpointRegistry registry,
-			@Autowired RabbitTemplate template, @Autowired RabbitAdmin admin) throws IOException, InterruptedException {
+	@Test
+	void ackSingleWhenFatalDMLC(@Autowired Config config, @Autowired RabbitListenerEndpointRegistry registry,
+@Autowired RabbitTemplate template, @Autowired RabbitAdmin admin) throws IOException, InterruptedException {
 
 		template.send("async2", MessageBuilder.withBody("\"foo\"".getBytes()).andProperties(
-				MessagePropertiesBuilder.newInstance()
-						.setContentType("application/json")
-						.setReplyTo("nowhere")
-						.build())
-				.build());
+	MessagePropertiesBuilder.newInstance()
+.setContentType("application/json")
+.setReplyTo("nowhere")
+.build())
+	.build());
 		template.send("async2", MessageBuilder.withBody("junk".getBytes()).andProperties(
-				MessagePropertiesBuilder.newInstance()
-						.setContentType("application/json")
-						.setReplyTo("nowhere")
-						.build())
-				.build());
+	MessagePropertiesBuilder.newInstance()
+.setContentType("application/json")
+.setReplyTo("nowhere")
+.build())
+	.build());
 		assertThat(config.dmlcLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		registry.getListenerContainer("dmlc").stop();
 		assertThat(admin.getQueueInfo("async2").getMessageCount()).isEqualTo(0);
-	 }
+	}
 
 	@Configuration
 	@EnableRabbit

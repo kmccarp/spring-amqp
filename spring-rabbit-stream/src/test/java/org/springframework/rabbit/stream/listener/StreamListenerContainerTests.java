@@ -52,9 +52,9 @@ public class StreamListenerContainerTests {
 		given(env.consumerBuilder()).willReturn(builder);
 		AtomicReference<MessageHandler> handler = new AtomicReference<>();
 		willAnswer(inv -> {
-			handler.set(inv.getArgument(0));
-			return null;
-		}
+		handler.set(inv.getArgument(0));
+		return null;
+	}
 		).given(builder).messageHandler(any());
 		AtomicBoolean advised = new AtomicBoolean();
 		MethodInterceptor advice = (inv) -> {

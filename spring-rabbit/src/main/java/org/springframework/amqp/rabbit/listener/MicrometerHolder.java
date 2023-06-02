@@ -62,7 +62,7 @@ public final class MicrometerHolder {
 		}
 		else {
 			throw new IllegalStateException("No micrometer registry present (or more than one and "
-					+ "there is not exactly one marked with @Primary)");
+		+ "there is not exactly one marked with @Primary)");
 		}
 	}
 
@@ -89,11 +89,11 @@ public final class MicrometerHolder {
 	private Timer buildTimer(String aListenerId, String result, String queue, String exception) {
 
 		Builder builder = Timer.builder("spring.rabbitmq.listener")
-				.description("Spring RabbitMQ Listener")
-				.tag("listener.id", aListenerId)
-				.tag("queue", queue)
-				.tag("result", result)
-				.tag("exception", exception);
+	.description("Spring RabbitMQ Listener")
+	.tag("listener.id", aListenerId)
+	.tag("queue", queue)
+	.tag("result", result)
+	.tag("exception", exception);
 		if (this.tags != null && !this.tags.isEmpty()) {
 			this.tags.forEach((key, value) -> builder.tag(key, value));
 		}

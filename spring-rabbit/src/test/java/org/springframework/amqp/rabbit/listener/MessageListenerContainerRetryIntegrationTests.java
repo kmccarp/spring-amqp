@@ -59,9 +59,7 @@ import org.springframework.retry.support.RetryTemplate;
  *
  */
 @RabbitAvailable(queues = MessageListenerContainerRetryIntegrationTests.TEST_QUEUE)
-@LogLevels(level = "ERROR", classes = {
-		RabbitTemplate.class, SimpleMessageListenerContainer.class, BlockingQueueConsumer.class,
-		StatefulRetryOperationsInterceptorFactoryBean.class, MessageListenerContainerRetryIntegrationTests.class })
+@LogLevels(level = "ERROR", classes = {RabbitTemplate.class, SimpleMessageListenerContainer.class, BlockingQueueConsumer.class,StatefulRetryOperationsInterceptorFactoryBean.class, MessageListenerContainerRetryIntegrationTests.class})
 public class MessageListenerContainerRetryIntegrationTests {
 
 	public static final String TEST_QUEUE = "test.queue.MessageListenerContainerRetryIntegrationTests";
@@ -106,7 +104,7 @@ public class MessageListenerContainerRetryIntegrationTests {
 		template.convertAndSend(queue.getName(), "bar");
 
 		final SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(
-				template.getConnectionFactory());
+	template.getConnectionFactory());
 		container.setMessageListener((BatchMessageListener) messages -> {
 			throw new RuntimeException("intended");
 		});
@@ -116,7 +114,7 @@ public class MessageListenerContainerRetryIntegrationTests {
 		container.setBatchSize(2);
 
 		final CountDownLatch latch = new CountDownLatch(1);
-		container.setAdviceChain(new Advice[] { createRetryInterceptor(latch, stateful, true) });
+		container.setAdviceChain(new Advice[]{createRetryInterceptor(latch, stateful, true)});
 
 		container.setQueueNames(queue.getName());
 		container.setReceiveTimeout(50);
@@ -165,8 +163,8 @@ public class MessageListenerContainerRetryIntegrationTests {
 		this.retryTemplate.setRetryContextCache(new MapRetryContextCache(1));
 		// The container should have shutdown, so there are now no active consumers
 		assertThatThrownBy(() -> doTestStatefulRetry(messageCount, txSize, failFrequency, concurrentConsumers))
-			.hasMessageContaining("expected: 1")
-			.hasMessageContaining("but was: 0");
+	.hasMessageContaining("expected: 1")
+	.hasMessageContaining("but was: 0");
 	}
 
 	@RepeatedTest(10)
@@ -196,7 +194,7 @@ public class MessageListenerContainerRetryIntegrationTests {
 	}
 
 	private Advice createRetryInterceptor(final CountDownLatch latch, boolean stateful, boolean listRecoverer)
-			throws Exception {
+throws Exception {
 
 		AbstractRetryOperationsInterceptorFactoryBean factory;
 		if (stateful) {
@@ -223,17 +221,17 @@ public class MessageListenerContainerRetryIntegrationTests {
 	}
 
 	private void doTestStatefulRetry(int messageCount, int txSize, int failFrequency, int concurrentConsumers)
-			throws Exception {
+throws Exception {
 		doTestRetry(messageCount, txSize, failFrequency, concurrentConsumers, true);
 	}
 
 	private void doTestStatelessRetry(int messageCount, int txSize, int failFrequency, int concurrentConsumers)
-			throws Exception {
+throws Exception {
 		doTestRetry(messageCount, txSize, failFrequency, concurrentConsumers, false);
 	}
 
 	private void doTestRetry(int messageCount, int txSize, int failFrequency, int concurrentConsumers, boolean stateful)
-			throws Exception {
+throws Exception {
 
 		int failedMessageCount = messageCount / failFrequency + (messageCount % failFrequency == 0 ? 0 : 1);
 
@@ -243,7 +241,7 @@ public class MessageListenerContainerRetryIntegrationTests {
 		}
 
 		final SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(
-				template.getConnectionFactory());
+	template.getConnectionFactory());
 		PojoListener listener = new PojoListener(failFrequency);
 		container.setMessageListener(new MessageListenerAdapter(listener));
 		container.setAcknowledgeMode(AcknowledgeMode.AUTO);
@@ -252,7 +250,7 @@ public class MessageListenerContainerRetryIntegrationTests {
 		container.setConcurrentConsumers(concurrentConsumers);
 
 		final CountDownLatch latch = new CountDownLatch(failedMessageCount);
-		container.setAdviceChain(new Advice[] { createRetryInterceptor(latch, stateful) });
+		container.setAdviceChain(new Advice[]{createRetryInterceptor(latch, stateful)});
 
 		container.setQueueNames(queue.getName());
 		container.setReceiveTimeout(50);

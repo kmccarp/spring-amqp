@@ -52,7 +52,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
  */
 @SpringJUnitConfig
 @DirtiesContext
-@RabbitAvailable(queues = { "json.batch.1", "json.batch.2" })
+@RabbitAvailable(queues = {"json.batch.1", "json.batch.2"})
 public class EnableRabbitBatchJsonIntegrationTests {
 
 	@Autowired
@@ -103,7 +103,7 @@ public class EnableRabbitBatchJsonIntegrationTests {
 		@Bean
 		public BatchingRabbitTemplate template() {
 			BatchingRabbitTemplate batchTemplate = new BatchingRabbitTemplate(connectionFactory(),
-					new SimpleBatchingStrategy(2, 10_000, 10_000L), scheduler());
+		new SimpleBatchingStrategy(2, 10_000, 10_000L), scheduler());
 			batchTemplate.setMessageConverter(converter());
 			return batchTemplate;
 		}

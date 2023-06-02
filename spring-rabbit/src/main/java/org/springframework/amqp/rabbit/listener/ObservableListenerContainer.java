@@ -32,11 +32,10 @@ import org.springframework.util.ClassUtils;
  * @since 3.0.5
  *
  */
-public abstract class ObservableListenerContainer extends RabbitAccessor
-		implements MessageListenerContainer, ApplicationContextAware, BeanNameAware, DisposableBean {
+public abstract class ObservableListenerContainer extends RabbitAccessorimplements MessageListenerContainer, ApplicationContextAware, BeanNameAware, DisposableBean {
 
 	private static final boolean MICROMETER_PRESENT = ClassUtils.isPresent(
-				"io.micrometer.core.instrument.MeterRegistry", AbstractMessageListenerContainer.class.getClassLoader());
+"io.micrometer.core.instrument.MeterRegistry", AbstractMessageListenerContainer.class.getClassLoader());
 
 	private ApplicationContext applicationContext;
 
@@ -102,10 +101,10 @@ public abstract class ObservableListenerContainer extends RabbitAccessor
 	protected void checkMicrometer() {
 		try {
 			if (this.micrometerHolder == null && MICROMETER_PRESENT && this.micrometerEnabled
-					&& !this.observationEnabled && this.applicationContext != null) {
+		&& !this.observationEnabled && this.applicationContext != null) {
 
 				this.micrometerHolder = new MicrometerHolder(this.applicationContext, getListenerId(),
-						this.micrometerTags);
+			this.micrometerTags);
 			}
 		}
 		catch (IllegalStateException e) {

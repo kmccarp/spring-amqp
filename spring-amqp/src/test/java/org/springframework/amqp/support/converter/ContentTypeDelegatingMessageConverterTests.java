@@ -39,7 +39,7 @@ public class ContentTypeDelegatingMessageConverterTests {
 	public void testDelegationOutbound() {
 		ContentTypeDelegatingMessageConverter converter = new ContentTypeDelegatingMessageConverter();
 		Jackson2JsonMessageConverter messageConverter =
-				new Jackson2JsonMessageConverter(ContentTypeDelegatingMessageConverterTests.class.getPackage().getName());
+	new Jackson2JsonMessageConverter(ContentTypeDelegatingMessageConverterTests.class.getPackage().getName());
 		converter.addDelegate("foo/bar", messageConverter);
 		converter.addDelegate(MessageProperties.CONTENT_TYPE_JSON, messageConverter);
 		MessageProperties props = new MessageProperties();

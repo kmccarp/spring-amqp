@@ -40,7 +40,7 @@ public class AnnotationDrivenNamespaceTests extends AbstractRabbitAnnotationDriv
 	@Test
 	public void sampleConfiguration() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"annotation-driven-sample-config.xml", getClass());
+	"annotation-driven-sample-config.xml", getClass());
 		testSampleConfiguration(context, 1);
 	}
 
@@ -48,7 +48,7 @@ public class AnnotationDrivenNamespaceTests extends AbstractRabbitAnnotationDriv
 	@Test
 	public void fullConfiguration() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"annotation-driven-full-config.xml", getClass());
+	"annotation-driven-full-config.xml", getClass());
 		testFullConfiguration(context);
 	}
 
@@ -56,24 +56,24 @@ public class AnnotationDrivenNamespaceTests extends AbstractRabbitAnnotationDriv
 	@Test
 	public void fullConfigurableConfiguration() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"annotation-driven-full-configurable-config.xml", getClass());
+	"annotation-driven-full-configurable-config.xml", getClass());
 		testFullConfiguration(context);
 	}
 
 	@Override
 	public void noRabbitAdminConfiguration() {
 		assertThatThrownBy(
-				() -> new ClassPathXmlApplicationContext("annotation-driven-no-rabbit-admin-config.xml", getClass())
-					.close())
-			.isExactlyInstanceOf(BeanCreationException.class)
-			.withFailMessage("'rabbitAdmin'");
+	() -> new ClassPathXmlApplicationContext("annotation-driven-no-rabbit-admin-config.xml", getClass())
+.close())
+	.isExactlyInstanceOf(BeanCreationException.class)
+	.withFailMessage("'rabbitAdmin'");
 	}
 
 	@Override
 	@Test
 	public void customConfiguration() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"annotation-driven-custom-registry.xml", getClass());
+	"annotation-driven-custom-registry.xml", getClass());
 		testCustomConfiguration(context);
 	}
 
@@ -81,25 +81,25 @@ public class AnnotationDrivenNamespaceTests extends AbstractRabbitAnnotationDriv
 	@Test
 	public void explicitContainerFactory() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"annotation-driven-custom-container-factory.xml", getClass());
+	"annotation-driven-custom-container-factory.xml", getClass());
 		testExplicitContainerFactoryConfiguration(context);
 	}
 
 	@Override
 	public void defaultContainerFactory() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"annotation-driven-default-container-factory.xml", getClass());
+	"annotation-driven-default-container-factory.xml", getClass());
 		testDefaultContainerFactoryConfiguration(context);
 	}
 
 	@Override
 	public void rabbitHandlerMethodFactoryConfiguration() throws Exception {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"annotation-driven-custom-handler-method-factory.xml", getClass());
+	"annotation-driven-custom-handler-method-factory.xml", getClass());
 
 		assertThatThrownBy(() -> testRabbitHandlerMethodFactoryConfiguration(context))
-			.isExactlyInstanceOf(ListenerExecutionFailedException.class)
-			.hasCauseExactlyInstanceOf(MethodArgumentNotValidException.class);
+	.isExactlyInstanceOf(ListenerExecutionFailedException.class)
+	.hasCauseExactlyInstanceOf(MethodArgumentNotValidException.class);
 
 	}
 
@@ -107,7 +107,7 @@ public class AnnotationDrivenNamespaceTests extends AbstractRabbitAnnotationDriv
 	@Test
 	public void rabbitListeners() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"annotation-driven-no-rabbit-admin-listeners-config.xml", getClass());
+	"annotation-driven-no-rabbit-admin-listeners-config.xml", getClass());
 		testRabbitListenerRepeatable(context);
 	}
 

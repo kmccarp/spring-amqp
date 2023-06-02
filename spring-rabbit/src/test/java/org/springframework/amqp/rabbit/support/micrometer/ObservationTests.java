@@ -70,21 +70,21 @@ import io.micrometer.tracing.test.simple.SimpleTracer;
  *
  */
 @SpringJUnitConfig
-@RabbitAvailable(queues = { "observation.testQ1", "observation.testQ2" })
+@RabbitAvailable(queues = {"observation.testQ1", "observation.testQ2"})
 public class ObservationTests {
 
 	@Test
 	void endToEnd(@Autowired Listener listener, @Autowired RabbitTemplate template,
-			@Autowired SimpleTracer tracer, @Autowired RabbitListenerEndpointRegistry rler,
-			@Autowired MeterRegistry meterRegistry)
-					throws InterruptedException {
+@Autowired SimpleTracer tracer, @Autowired RabbitListenerEndpointRegistry rler,
+@Autowired MeterRegistry meterRegistry)
+throws InterruptedException {
 
 		template.convertAndSend("observation.testQ1", "test");
 		assertThat(listener.latch1.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(listener.message)
-				.extracting(msg -> msg.getMessageProperties().getHeaders())
-				.hasFieldOrPropertyWithValue("foo", "some foo value")
-				.hasFieldOrPropertyWithValue("bar", "some bar value");
+	.extracting(msg -> msg.getMessageProperties().getHeaders())
+	.hasFieldOrPropertyWithValue("foo", "some foo value")
+	.hasFieldOrPropertyWithValue("bar", "some bar value");
 		Deque<SimpleSpan> spans = tracer.getSpans();
 		await().until(() -> spans.size() == 4);
 		SimpleSpan span = spans.poll();
@@ -93,8 +93,8 @@ public class ObservationTests {
 		await().until(() -> spans.peekFirst().getTags().size() == 3);
 		span = spans.poll();
 		assertThat(span.getTags())
-				.containsAllEntriesOf(
-						Map.of("spring.rabbit.listener.id", "obs1", "foo", "some foo value", "bar", "some bar value"));
+	.containsAllEntriesOf(
+Map.of("spring.rabbit.listener.id", "obs1", "foo", "some foo value", "bar", "some bar value"));
 		assertThat(span.getName()).isEqualTo("observation.testQ1 receive");
 		await().until(() -> spans.peekFirst().getTags().size() == 1);
 		span = spans.poll();
@@ -103,8 +103,8 @@ public class ObservationTests {
 		await().until(() -> spans.peekFirst().getTags().size() == 3);
 		span = spans.poll();
 		assertThat(span.getTags())
-				.containsAllEntriesOf(
-						Map.of("spring.rabbit.listener.id", "obs2", "foo", "some foo value", "bar", "some bar value"));
+	.containsAllEntriesOf(
+Map.of("spring.rabbit.listener.id", "obs2", "foo", "some foo value", "bar", "some bar value"));
 		assertThat(span.getName()).isEqualTo("observation.testQ2 receive");
 		template.setObservationConvention(new DefaultRabbitTemplateObservationConvention() {
 
@@ -115,22 +115,22 @@ public class ObservationTests {
 
 		});
 		((AbstractMessageListenerContainer) rler.getListenerContainer("obs1")).setObservationConvention(
-				new DefaultRabbitListenerObservationConvention() {
+	new DefaultRabbitListenerObservationConvention() {
 
-					@Override
-					public KeyValues getLowCardinalityKeyValues(RabbitMessageReceiverContext context) {
-						return super.getLowCardinalityKeyValues(context).and("baz", "qux");
-					}
+		@Override
+		public KeyValues getLowCardinalityKeyValues(RabbitMessageReceiverContext context) {
+			return super.getLowCardinalityKeyValues(context).and("baz", "qux");
+		}
 
-				});
+	});
 		rler.getListenerContainer("obs1").stop();
 		rler.getListenerContainer("obs1").start();
 		template.convertAndSend("observation.testQ1", "test");
 		assertThat(listener.latch2.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(listener.message)
-				.extracting(msg -> msg.getMessageProperties().getHeaders())
-				.hasFieldOrPropertyWithValue("foo", "some foo value")
-				.hasFieldOrPropertyWithValue("bar", "some bar value");
+	.extracting(msg -> msg.getMessageProperties().getHeaders())
+	.hasFieldOrPropertyWithValue("foo", "some foo value")
+	.hasFieldOrPropertyWithValue("bar", "some bar value");
 		assertThat(spans).hasSize(4);
 		span = spans.poll();
 		assertThat(span.getTags()).containsEntry("spring.rabbit.template.name", "template");
@@ -139,8 +139,8 @@ public class ObservationTests {
 		await().until(() -> spans.peekFirst().getTags().size() == 4);
 		span = spans.poll();
 		assertThat(span.getTags())
-				.containsAllEntriesOf(Map.of("spring.rabbit.listener.id", "obs1", "foo", "some foo value", "bar",
-						"some bar value", "baz", "qux"));
+	.containsAllEntriesOf(Map.of("spring.rabbit.listener.id", "obs1", "foo", "some foo value", "bar",
+"some bar value", "baz", "qux"));
 		assertThat(span.getName()).isEqualTo("observation.testQ1 receive");
 		await().until(() -> spans.peekFirst().getTags().size() == 2);
 		span = spans.poll();
@@ -150,19 +150,19 @@ public class ObservationTests {
 		await().until(() -> spans.peekFirst().getTags().size() == 3);
 		span = spans.poll();
 		assertThat(span.getTags())
-				.containsAllEntriesOf(
-						Map.of("spring.rabbit.listener.id", "obs2", "foo", "some foo value", "bar", "some bar value"));
+	.containsAllEntriesOf(
+Map.of("spring.rabbit.listener.id", "obs2", "foo", "some foo value", "bar", "some bar value"));
 		assertThat(span.getTags()).doesNotContainEntry("baz", "qux");
 		assertThat(span.getName()).isEqualTo("observation.testQ2 receive");
 		MeterRegistryAssert.assertThat(meterRegistry)
-				.hasTimerWithNameAndTags("spring.rabbit.template",
-						KeyValues.of("spring.rabbit.template.name", "template"))
-				.hasTimerWithNameAndTags("spring.rabbit.template",
-						KeyValues.of("spring.rabbit.template.name", "template", "foo", "bar"))
-				.hasTimerWithNameAndTags("spring.rabbit.listener", KeyValues.of("spring.rabbit.listener.id", "obs1"))
-				.hasTimerWithNameAndTags("spring.rabbit.listener",
-						KeyValues.of("spring.rabbit.listener.id", "obs1", "baz", "qux"))
-				.hasTimerWithNameAndTags("spring.rabbit.listener", KeyValues.of("spring.rabbit.listener.id", "obs2"));
+	.hasTimerWithNameAndTags("spring.rabbit.template",
+KeyValues.of("spring.rabbit.template.name", "template"))
+	.hasTimerWithNameAndTags("spring.rabbit.template",
+KeyValues.of("spring.rabbit.template.name", "template", "foo", "bar"))
+	.hasTimerWithNameAndTags("spring.rabbit.listener", KeyValues.of("spring.rabbit.listener.id", "obs1"))
+	.hasTimerWithNameAndTags("spring.rabbit.listener",
+KeyValues.of("spring.rabbit.listener.id", "obs1", "baz", "qux"))
+	.hasTimerWithNameAndTags("spring.rabbit.listener", KeyValues.of("spring.rabbit.listener.id", "obs2"));
 	}
 
 	@Configuration
@@ -203,15 +203,15 @@ public class ObservationTests {
 		ObservationRegistry observationRegistry(Tracer tracer, Propagator propagator, MeterRegistry meterRegistry) {
 			TestObservationRegistry observationRegistry = TestObservationRegistry.create();
 			observationRegistry.observationConfig().observationHandler(
-					// Composite will pick the first matching handler
-					new ObservationHandler.FirstMatchingCompositeObservationHandler(
-							// This is responsible for creating a child span on the sender side
-							new PropagatingSenderTracingObservationHandler<>(tracer, propagator),
-							// This is responsible for creating a span on the receiver side
-							new PropagatingReceiverTracingObservationHandler<>(tracer, propagator),
-							// This is responsible for creating a default span
-							new DefaultTracingObservationHandler(tracer)))
-					.observationHandler(new DefaultMeterObservationHandler(meterRegistry));
+		// Composite will pick the first matching handler
+		new ObservationHandler.FirstMatchingCompositeObservationHandler(
+	// This is responsible for creating a child span on the sender side
+	new PropagatingSenderTracingObservationHandler<>(tracer, propagator),
+	// This is responsible for creating a span on the receiver side
+	new PropagatingReceiverTracingObservationHandler<>(tracer, propagator),
+	// This is responsible for creating a default span
+	new DefaultTracingObservationHandler(tracer)))
+		.observationHandler(new DefaultMeterObservationHandler(meterRegistry));
 			return observationRegistry;
 		}
 

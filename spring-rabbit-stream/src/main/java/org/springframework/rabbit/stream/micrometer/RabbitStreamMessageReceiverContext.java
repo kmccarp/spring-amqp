@@ -84,12 +84,12 @@ public class RabbitStreamMessageReceiverContext extends ReceiverContext<Message>
 		 * A singleton instance of the convention.
 		 */
 		public static final DefaultRabbitListenerObservationConvention INSTANCE =
-				new DefaultRabbitListenerObservationConvention();
+	new DefaultRabbitListenerObservationConvention();
 
 		@Override
 		public KeyValues getLowCardinalityKeyValues(RabbitMessageReceiverContext context) {
 			return KeyValues.of(RabbitListenerObservation.ListenerLowCardinalityTags.LISTENER_ID.asString(),
-							context.getListenerId());
+		context.getListenerId());
 		}
 
 		@Override

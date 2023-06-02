@@ -64,8 +64,8 @@ public class AmqpMessageReturnedException extends AmqpException {
 	@Override
 	public String toString() {
 		return "AmqpMessageReturnedException: "
-				+ getMessage()
-				+ ", " + this.returned.toString();
+	+ getMessage()
+	+ ", " + this.returned.toString();
 	}
 
 }

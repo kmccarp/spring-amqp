@@ -138,14 +138,14 @@ public class ConditionalRejectingErrorHandler implements ErrorHandler {
 					List<Map<String, ?>> xDeath = failed.getMessageProperties().getXDeathHeader();
 					if (xDeath != null && xDeath.size() > 0) {
 						this.logger.error("x-death header detected on a message with a fatal exception; "
-								+ "perhaps requeued from a DLQ? - discarding: " + failed);
+					+ "perhaps requeued from a DLQ? - discarding: " + failed);
 						handleDiscarded(failed);
 						throw new ImmediateAcknowledgeAmqpException("Fatal and x-death present");
 					}
 				}
 			}
 			throw new AmqpRejectAndDontRequeueException("Error Handler converted exception to fatal", this.rejectManual,
-					t);
+		t);
 		}
 	}
 
@@ -202,7 +202,7 @@ public class ConditionalRejectingErrorHandler implements ErrorHandler {
 		public boolean isFatal(Throwable t) {
 			Throwable cause = t.getCause();
 			while ((cause instanceof MessagingException || cause instanceof  UndeclaredThrowableException)
-					&& !isCauseFatal(cause)) {
+		&& !isCauseFatal(cause)) {
 
 				cause = cause.getCause();
 			}
@@ -215,11 +215,11 @@ public class ConditionalRejectingErrorHandler implements ErrorHandler {
 
 		private boolean isCauseFatal(Throwable cause) {
 			return cause instanceof MessageConversionException // NOSONAR boolean complexity
-					|| cause instanceof org.springframework.messaging.converter.MessageConversionException
-					|| cause instanceof MethodArgumentResolutionException
-					|| cause instanceof NoSuchMethodException
-					|| cause instanceof ClassCastException
-					|| isUserCauseFatal(cause);
+		|| cause instanceof org.springframework.messaging.converter.MessageConversionException
+		|| cause instanceof MethodArgumentResolutionException
+		|| cause instanceof NoSuchMethodException
+		|| cause instanceof ClassCastException
+		|| isUserCauseFatal(cause);
 		}
 
 		/**
@@ -232,9 +232,9 @@ public class ConditionalRejectingErrorHandler implements ErrorHandler {
 		protected void logFatalException(ListenerExecutionFailedException t, Throwable cause) {
 			if (this.logger.isWarnEnabled()) {
 				this.logger.warn(
-						"Fatal message conversion error; message rejected; "
-								+ "it will be dropped or routed to a dead letter exchange, if so configured: "
-								+ t.getFailedMessage());
+			"Fatal message conversion error; message rejected; "
+		+ "it will be dropped or routed to a dead letter exchange, if so configured: "
+		+ t.getFailedMessage());
 			}
 		}
 

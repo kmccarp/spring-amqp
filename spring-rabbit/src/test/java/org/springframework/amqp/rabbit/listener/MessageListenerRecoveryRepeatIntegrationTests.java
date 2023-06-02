@@ -57,10 +57,7 @@ import com.rabbitmq.client.Channel;
  *
  */
 @RabbitAvailable(queues = MessageListenerRecoveryRepeatIntegrationTests.TEST_QUEUE, purgeAfterEach = false)
-@LogLevels(level = "ERROR", classes = { RabbitTemplate.class,
-		ConditionalRejectingErrorHandler.class,
-		SimpleMessageListenerContainer.class, BlockingQueueConsumer.class,
-		MessageListenerRecoveryRepeatIntegrationTests.class })
+@LogLevels(level = "ERROR", classes = {RabbitTemplate.class,ConditionalRejectingErrorHandler.class,SimpleMessageListenerContainer.class, BlockingQueueConsumer.class,MessageListenerRecoveryRepeatIntegrationTests.class})
 @TestInstance(Lifecycle.PER_CLASS)
 public class MessageListenerRecoveryRepeatIntegrationTests {
 
@@ -145,7 +142,7 @@ public class MessageListenerRecoveryRepeatIntegrationTests {
 	}
 
 	private SimpleMessageListenerContainer createContainer(String queueName, Object listener,
-			ConnectionFactory connectionFactory) {
+ConnectionFactory connectionFactory) {
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
 		container.setMessageListener(new MessageListenerAdapter(listener));
 		container.setQueueNames(queueName);

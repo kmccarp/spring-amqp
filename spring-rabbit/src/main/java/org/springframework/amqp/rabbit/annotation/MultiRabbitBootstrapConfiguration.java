@@ -45,19 +45,19 @@ public class MultiRabbitBootstrapConfiguration implements ImportBeanDefinitionRe
 
 	@Override
 	public void registerBeanDefinitions(@Nullable AnnotationMetadata importingClassMetadata,
-			BeanDefinitionRegistry registry) {
+BeanDefinitionRegistry registry) {
 
 		if (isMultiRabbitEnabled() && !registry.containsBeanDefinition(
-				RabbitListenerConfigUtils.RABBIT_LISTENER_ANNOTATION_PROCESSOR_BEAN_NAME)) {
+	RabbitListenerConfigUtils.RABBIT_LISTENER_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 
 			registry.registerBeanDefinition(RabbitListenerConfigUtils.RABBIT_LISTENER_ANNOTATION_PROCESSOR_BEAN_NAME,
-					new RootBeanDefinition(MultiRabbitListenerAnnotationBeanPostProcessor.class));
+		new RootBeanDefinition(MultiRabbitListenerAnnotationBeanPostProcessor.class));
 		}
 	}
 
 	private boolean isMultiRabbitEnabled() {
-		final String isMultiEnabledStr =  this.environment.getProperty(
-				RabbitListenerConfigUtils.MULTI_RABBIT_ENABLED_PROPERTY);
+		final String isMultiEnabledStr = this.environment.getProperty(
+	RabbitListenerConfigUtils.MULTI_RABBIT_ENABLED_PROPERTY);
 		return Boolean.parseBoolean(isMultiEnabledStr);
 	}
 

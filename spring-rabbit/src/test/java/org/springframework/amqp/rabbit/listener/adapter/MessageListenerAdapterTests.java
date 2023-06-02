@@ -78,7 +78,7 @@ public class MessageListenerAdapterTests {
 
 			@Override
 			protected Object[] buildListenerArguments(Object extractedMessage, Channel channel, Message message) {
-				return new Object[] { extractedMessage, channel, message };
+				return new Object[]{extractedMessage, channel, message};
 			}
 
 		}
@@ -206,7 +206,7 @@ public class MessageListenerAdapterTests {
 		Channel channel = mock(Channel.class);
 		RuntimeException ex = new RuntimeException();
 		willThrow(ex).given(channel)
-				.basicPublish(eq("foo"), eq("bar"), eq(Boolean.FALSE), any(), any());
+	.basicPublish(eq("foo"), eq("bar"), eq(Boolean.FALSE), any(), any());
 		Message message = new Message("foo".getBytes(), this.messageProperties);
 		this.adapter.onMessage(message, channel);
 		assertThat(this.simpleService.called).isEqualTo("handle");

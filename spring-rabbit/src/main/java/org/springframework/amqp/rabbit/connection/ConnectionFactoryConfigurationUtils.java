@@ -38,14 +38,14 @@ public final class ConnectionFactoryConfigurationUtils {
 	 * @param clientConnectionProperties the properties.
 	 */
 	public static void updateClientConnectionProperties(AbstractConnectionFactory connectionFactory,
-			String clientConnectionProperties) {
+String clientConnectionProperties) {
 
 		if (clientConnectionProperties != null) {
 			String[] props = clientConnectionProperties.split(",");
 			if (props.length > 0) {
 				Map<String, Object> clientProps =
-						connectionFactory.getRabbitConnectionFactory()
-								.getClientProperties();
+			connectionFactory.getRabbitConnectionFactory()
+		.getClientProperties();
 
 				for (String prop : props) {
 					String[] aProp = prop.split(":");

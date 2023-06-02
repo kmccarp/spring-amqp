@@ -41,8 +41,7 @@ import com.rabbitmq.client.Envelope;
  * @since 1.6
  *
  */
-@RabbitAvailable(queues = { RabbitTemplatePublisherCallbacksIntegrationTests2.ROUTE,
-		RabbitTemplatePublisherCallbacksIntegrationTests2.ROUTE2 })
+@RabbitAvailable(queues = {RabbitTemplatePublisherCallbacksIntegrationTests2.ROUTE,RabbitTemplatePublisherCallbacksIntegrationTests2.ROUTE2})
 public class RabbitTemplatePublisherCallbacksIntegrationTests2 {
 
 	public static final String ROUTE = "test.queue.RabbitTemplatePublisherCallbacksIntegrationTests2";
@@ -134,9 +133,9 @@ public class RabbitTemplatePublisherCallbacksIntegrationTests2 {
 		rcf.setDefaultTargetConnectionFactory(this.connectionFactoryWithConfirmsEnabled);
 		this.templateWithConfirmsEnabled.setConnectionFactory(rcf);
 		assertThat(this.templateWithConfirmsEnabled.<Boolean>invoke(template -> {
-				template.convertAndSend("", ROUTE2, "foo");
-				template.waitForConfirmsOrDie(10_000);
-				return true;
+			template.convertAndSend("", ROUTE2, "foo");
+			template.waitForConfirmsOrDie(10_000);
+			return true;
 		})).isTrue();
 	}
 

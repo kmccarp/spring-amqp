@@ -148,8 +148,8 @@ public class CorrelationData implements Correlation {
 		@Override
 		public String toString() {
 			return "Confirm [ack=" + this.ack
-					+ (this.reason != null ? ", reason=" + this.reason : "")
-					+ "]";
+		+ (this.reason != null ? ", reason=" + this.reason : "")
+		+ "]";
 		}
 
 	}

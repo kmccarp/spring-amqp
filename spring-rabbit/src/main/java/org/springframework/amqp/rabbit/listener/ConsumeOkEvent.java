@@ -69,7 +69,7 @@ public class ConsumeOkEvent extends AmqpEvent {
 	@Override
 	public String toString() {
 		return "ConsumeOkEvent [queue=" + this.queue + ", consumerTag=" + this.consumerTag
-				+ ", consumer=" + getSource() + "]";
+	+ ", consumer=" + getSource() + "]";
 	}
 
 }
