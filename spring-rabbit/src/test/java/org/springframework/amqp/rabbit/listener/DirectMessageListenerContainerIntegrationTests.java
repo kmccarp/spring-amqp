@@ -49,7 +49,6 @@ import org.mockito.ArgumentCaptor;
 
 import org.springframework.amqp.AmqpAuthenticationException;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageListener;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.Connection;
@@ -138,7 +137,7 @@ public class DirectMessageListenerContainerIntegrationTests {
 		cf.setUsername("junk");
 		DirectMessageListenerContainer dmlc = new DirectMessageListenerContainer(cf);
 		dmlc.setPossibleAuthenticationFailureFatal(true);
-		assertThatExceptionOfType(AmqpAuthenticationException.class).isThrownBy(() -> dmlc.start());
+		assertThatExceptionOfType(AmqpAuthenticationException.class).isThrownBy(dmlc::start);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -733,10 +732,7 @@ public class DirectMessageListenerContainerIntegrationTests {
 		final AtomicReference<Throwable> ackCause = new AtomicReference<>();
 		final CountDownLatch latch = new CountDownLatch(1);
 		container.setQueueNames(Q1);
-		container.setMessageListener(new MessageListener() {
-			@Override
-			public void onMessage(Message message) {
-			}
+		container.setMessageListener(message -> {
 		});
 		container.setMessageAckListener((success, deliveryTag, cause) -> {
 			calledTimes.incrementAndGet();
@@ -769,11 +765,8 @@ public class DirectMessageListenerContainerIntegrationTests {
 		final AtomicReference<Throwable> ackCause = new AtomicReference<>();
 		final CountDownLatch latch = new CountDownLatch(1);
 		container.setQueueNames(Q1);
-		container.setMessageListener(new MessageListener() {
-			@Override
-			public void onMessage(Message message) {
-				cf.resetConnection();
-			}
+		container.setMessageListener(message -> {
+			cf.resetConnection();
 		});
 		container.setMessageAckListener((success, deliveryTag, cause) -> {
 			called.set(true);

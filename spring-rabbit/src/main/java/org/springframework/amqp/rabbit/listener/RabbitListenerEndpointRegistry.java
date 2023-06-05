@@ -68,7 +68,7 @@ public class RabbitListenerEndpointRegistry implements DisposableBean, SmartLife
 	protected final Log logger = LogFactory.getLog(getClass()); // NOSONAR protected
 
 	private final Map<String, MessageListenerContainer> listenerContainers =
-			new ConcurrentHashMap<String, MessageListenerContainer>();
+			new ConcurrentHashMap<>();
 
 	private int phase = Integer.MAX_VALUE;
 
@@ -157,7 +157,7 @@ public class RabbitListenerEndpointRegistry implements DisposableBean, SmartLife
 					containerGroup = this.applicationContext.getBean(endpoint.getGroup(), List.class);
 				}
 				else {
-					containerGroup = new ArrayList<MessageListenerContainer>();
+					containerGroup = new ArrayList<>();
 					this.applicationContext.getBeanFactory().registerSingleton(endpoint.getGroup(), containerGroup);
 				}
 				containerGroup.add(container);
@@ -250,7 +250,7 @@ public class RabbitListenerEndpointRegistry implements DisposableBean, SmartLife
 	@Override
 	public void stop(Runnable callback) {
 		Collection<MessageListenerContainer> containers = getListenerContainers();
-		if (containers.size() > 0) {
+		if (!containers.isEmpty()) {
 			AggregatingCallback aggregatingCallback = new AggregatingCallback(containers.size(), callback);
 			for (MessageListenerContainer listenerContainer : containers) {
 				try {

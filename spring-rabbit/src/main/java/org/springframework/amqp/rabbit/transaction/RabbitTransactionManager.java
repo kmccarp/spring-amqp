@@ -67,6 +67,8 @@ import org.springframework.util.Assert;
 public class RabbitTransactionManager extends AbstractPlatformTransactionManager
 		implements ResourceTransactionManager, InitializingBean {
 
+	private static final long serialVersionUID = 1;
+
 	private ConnectionFactory connectionFactory;
 
 	/**
@@ -132,7 +134,7 @@ public class RabbitTransactionManager extends AbstractPlatformTransactionManager
 	@Override
 	protected boolean isExistingTransaction(Object transaction) {
 		RabbitTransactionObject txObject = (RabbitTransactionObject) transaction;
-		return (txObject.getResourceHolder() != null);
+		return txObject.getResourceHolder() != null;
 	}
 
 	@Override

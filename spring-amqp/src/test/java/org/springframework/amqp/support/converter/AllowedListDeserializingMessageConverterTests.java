@@ -68,6 +68,8 @@ public class AllowedListDeserializingMessageConverterTests {
 	@SuppressWarnings("serial")
 	protected static class TestBean implements Serializable {
 
+		private static final long serialVersionUID = 1;
+
 		private final String text;
 
 		protected TestBean(String text) {
@@ -77,7 +79,7 @@ public class AllowedListDeserializingMessageConverterTests {
 
 		@Override
 		public boolean equals(Object other) {
-			return (other instanceof TestBean && this.text.equals(((TestBean) other).text));
+			return other instanceof TestBean && this.text.equals(((TestBean) other).text);
 		}
 
 		@Override

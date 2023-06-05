@@ -34,6 +34,8 @@ import org.springframework.lang.Nullable;
 @SuppressWarnings("serial")
 public class ListenerContainerIdleEvent extends AmqpEvent {
 
+	private static final long serialVersionUID = 1;
+
 	private final long idleTime;
 
 	@Nullable

@@ -31,6 +31,8 @@ import org.springframework.transaction.interceptor.RuleBasedTransactionAttribute
 @SuppressWarnings("serial")
 public class ListenerFailedRuleBasedTransactionAttribute extends RuleBasedTransactionAttribute {
 
+	private static final long serialVersionUID = 1;
+
 	@Override
 	public boolean rollbackOn(Throwable ex) {
 		if (ex instanceof ListenerExecutionFailedException) {

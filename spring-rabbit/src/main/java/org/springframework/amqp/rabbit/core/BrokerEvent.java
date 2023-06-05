@@ -33,6 +33,8 @@ import org.springframework.util.Assert;
 @SuppressWarnings("serial")
 public class BrokerEvent extends AmqpEvent {
 
+	private static final long serialVersionUID = 1;
+
 	private final MessageProperties properties;
 
 	/**
