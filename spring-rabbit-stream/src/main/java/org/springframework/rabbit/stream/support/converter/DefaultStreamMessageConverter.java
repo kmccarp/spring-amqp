@@ -54,7 +54,7 @@ public class DefaultStreamMessageConverter implements StreamMessageConverter {
 	 * Construct an instance using a {@link WrapperMessageBuilder}.
 	 */
 	public DefaultStreamMessageConverter() {
-		this.builderSupplier = () -> new WrapperMessageBuilder();
+		this.builderSupplier = WrapperMessageBuilder::new;
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class DefaultStreamMessageConverter implements StreamMessageConverter {
 	 * @param codec the codec.
 	 */
 	public DefaultStreamMessageConverter(@Nullable Codec codec) {
-		this.builderSupplier = () -> codec.messageBuilder();
+		this.builderSupplier = codec::messageBuilder;
 	}
 
 	/**

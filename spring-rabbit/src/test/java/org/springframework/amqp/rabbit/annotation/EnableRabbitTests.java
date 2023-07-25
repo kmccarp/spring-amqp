@@ -90,7 +90,7 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 	@Override
 	public void noRabbitAdminConfiguration() {
 		assertThatThrownBy(
-				() -> new AnnotationConfigApplicationContext(EnableRabbitSampleConfig.class, FullBean.class).close())
+				new AnnotationConfigApplicationContext(EnableRabbitSampleConfig.class, FullBean.class)::close)
 			.isExactlyInstanceOf(BeanCreationException.class)
 			.withFailMessage("'rabbitAdmin'");
 	}
@@ -133,7 +133,7 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 	@Test
 	public void unknownFactory() {
 		assertThatThrownBy(
-				() -> new AnnotationConfigApplicationContext(EnableRabbitSampleConfig.class, CustomBean.class).close())
+				new AnnotationConfigApplicationContext(EnableRabbitSampleConfig.class, CustomBean.class)::close)
 			.isExactlyInstanceOf(BeanCreationException.class)
 			.withFailMessage("customFactory");
 	}
@@ -141,8 +141,7 @@ public class EnableRabbitTests extends AbstractRabbitAnnotationDrivenTests {
 	@Test
 	public void invalidPriorityConfiguration() {
 		assertThatThrownBy(
-				() -> new AnnotationConfigApplicationContext(EnableRabbitSampleConfig.class, InvalidPriorityBean.class)
-					.close())
+				new AnnotationConfigApplicationContext(EnableRabbitSampleConfig.class, InvalidPriorityBean.class)::close)
 			.isExactlyInstanceOf(BeanCreationException.class)
 			.withFailMessage("NotANumber");
 	}

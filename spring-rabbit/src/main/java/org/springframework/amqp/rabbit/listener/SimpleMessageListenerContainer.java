@@ -552,7 +552,7 @@ public class SimpleMessageListenerContainer extends AbstractMessageListenerConta
 				}
 				return;
 			}
-			Set<AsyncMessageProcessingConsumer> processors = new HashSet<AsyncMessageProcessingConsumer>();
+			Set<AsyncMessageProcessingConsumer> processors = new HashSet<>();
 			for (BlockingQueueConsumer consumer : this.consumers) {
 				AsyncMessageProcessingConsumer processor = new AsyncMessageProcessingConsumer(consumer);
 				processors.add(processor);
@@ -699,7 +699,7 @@ public class SimpleMessageListenerContainer extends AbstractMessageListenerConta
 		synchronized (this.consumersMonitor) {
 			if (this.consumers == null) {
 				this.cancellationLock.reset();
-				this.consumers = new HashSet<BlockingQueueConsumer>(this.concurrentConsumers);
+				this.consumers = new HashSet<>(this.concurrentConsumers);
 				for (int i = 1; i <= this.concurrentConsumers; i++) {
 					BlockingQueueConsumer consumer = createBlockingQueueConsumer();
 					if (getConsumeDelay() > 0) {
@@ -978,7 +978,7 @@ public class SimpleMessageListenerContainer extends AbstractMessageListenerConta
 					}
 					if (isDeBatchingEnabled() && getBatchingStrategy().canDebatch(message.getMessageProperties())) {
 						final List<Message> messageList = messages;
-						getBatchingStrategy().deBatch(message, fragment -> messageList.add(fragment));
+						getBatchingStrategy().deBatch(message, messageList::add);
 					}
 					else {
 						messages.add(message);

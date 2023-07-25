@@ -143,7 +143,7 @@ public class DirectMessageListenerContainerIntegrationTests {
 		cf.setUsername("junk");
 		DirectMessageListenerContainer dmlc = new DirectMessageListenerContainer(cf);
 		dmlc.setPossibleAuthenticationFailureFatal(true);
-		assertThatExceptionOfType(AmqpAuthenticationException.class).isThrownBy(() -> dmlc.start());
+		assertThatExceptionOfType(AmqpAuthenticationException.class).isThrownBy(dmlc::start);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -831,9 +831,7 @@ public class DirectMessageListenerContainerIntegrationTests {
 			});
 			CountDownLatch latch2 = new CountDownLatch(1);
 			long t1 = System.currentTimeMillis();
-			container.stop(() -> {
-				latch2.countDown();
-			});
+			container.stop(latch2::countDown);
 			latch1.countDown();
 			assertThat(System.currentTimeMillis() - t1).isLessThan(5_000L);
 			await().untilAsserted(() -> {

@@ -130,7 +130,7 @@ public class DefaultClassMapperTests {
 	}
 
 	private Map<String, Class<?>> map(String string, Class<?> class1) {
-		Map<String, Class<?>> map = new HashMap<String, Class<?>>();
+		Map<String, Class<?>> map = new HashMap<>();
 		map.put(string, class1);
 		return map;
 	}
