@@ -50,6 +50,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
@@ -811,7 +812,7 @@ public class SimpleMessageListenerContainerTests {
 		with().pollInterval(Duration.ofMillis(10)).atMost(Duration.ofSeconds(10))
 				.until(() -> consumers.stream()
 						.map(consumer -> TestUtils.getPropertyValue(consumer, "consumer"))
-						.allMatch(c -> c == null));
+						.allMatch(Objects::isNull));
 	}
 
 	@SuppressWarnings("serial")
@@ -841,9 +842,9 @@ public class SimpleMessageListenerContainerTests {
 
 		private final SimpleMessageListenerContainer simpleMessageListenerContainer;
 
-		private int shutdownCount = 0;
+		private int shutdownCount;
 
-		private Runnable lastTask = null;
+		private Runnable lastTask;
 
 		private TestExecutor(SimpleMessageListenerContainer simpleMessageListenerContainer) {
 			this.simpleMessageListenerContainer = simpleMessageListenerContainer;
