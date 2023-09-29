@@ -115,7 +115,7 @@ public class RabbitStreamTemplate implements RabbitStreamOperations, Application
 			this.producer = builder.build();
 			if (!this.streamConverterSet) {
 				((DefaultStreamMessageConverter) this.streamConverter).setBuilderSupplier(
-						() ->  this.producer.messageBuilder());
+						this.producer::messageBuilder);
 			}
 		}
 		return this.producer;

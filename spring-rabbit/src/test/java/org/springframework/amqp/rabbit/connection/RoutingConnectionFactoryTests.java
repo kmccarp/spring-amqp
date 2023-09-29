@@ -61,7 +61,7 @@ public class RoutingConnectionFactoryTests {
 	public void testAbstractRoutingConnectionFactory() {
 		ConnectionFactory connectionFactory1 = Mockito.mock(ConnectionFactory.class);
 		ConnectionFactory connectionFactory2 = Mockito.mock(ConnectionFactory.class);
-		Map<Object, ConnectionFactory> factories = new HashMap<Object, ConnectionFactory>(2);
+		Map<Object, ConnectionFactory> factories = new HashMap<>(2);
 		factories.put(Boolean.TRUE, connectionFactory1);
 		factories.put(Boolean.FALSE, connectionFactory2);
 		ConnectionFactory defaultConnectionFactory = Mockito.mock(ConnectionFactory.class);
@@ -93,7 +93,7 @@ public class RoutingConnectionFactoryTests {
 	public void testSimpleRoutingConnectionFactory() throws InterruptedException {
 		ConnectionFactory connectionFactory1 = Mockito.mock(ConnectionFactory.class);
 		ConnectionFactory connectionFactory2 = Mockito.mock(ConnectionFactory.class);
-		Map<Object, ConnectionFactory> factories = new HashMap<Object, ConnectionFactory>(2);
+		Map<Object, ConnectionFactory> factories = new HashMap<>(2);
 		factories.put("foo", connectionFactory1);
 		factories.put("bar", connectionFactory2);
 
@@ -167,7 +167,7 @@ public class RoutingConnectionFactoryTests {
 	public void testAbstractRoutingConnectionFactoryWithListenerContainer() {
 		ConnectionFactory connectionFactory1 = mock(ConnectionFactory.class);
 		ConnectionFactory connectionFactory2 = mock(ConnectionFactory.class);
-		Map<Object, ConnectionFactory> factories = new HashMap<Object, ConnectionFactory>(2);
+		Map<Object, ConnectionFactory> factories = new HashMap<>(2);
 		factories.put("[baz]", connectionFactory1);
 		factories.put("[foo,bar]", connectionFactory2);
 		ConnectionFactory defaultConnectionFactory = mock(ConnectionFactory.class);
@@ -204,7 +204,7 @@ public class RoutingConnectionFactoryTests {
 	@Test
 	public void testWithSMLCAndConnectionListener() throws Exception {
 		ConnectionFactory connectionFactory1 = mock(ConnectionFactory.class);
-		Map<Object, ConnectionFactory> factories = new HashMap<Object, ConnectionFactory>(2);
+		Map<Object, ConnectionFactory> factories = new HashMap<>(2);
 		factories.put("xxx[foo]", connectionFactory1);
 
 		final SimpleRoutingConnectionFactory connectionFactory = new SimpleRoutingConnectionFactory();
@@ -243,7 +243,7 @@ public class RoutingConnectionFactoryTests {
 	@Test
 	public void testWithDMLCAndConnectionListener() throws Exception {
 		ConnectionFactory connectionFactory1 = mock(ConnectionFactory.class);
-		Map<Object, ConnectionFactory> factories = new HashMap<Object, ConnectionFactory>(2);
+		Map<Object, ConnectionFactory> factories = new HashMap<>(2);
 		factories.put("xxx[foo]", connectionFactory1);
 
 		final SimpleRoutingConnectionFactory connectionFactory = new SimpleRoutingConnectionFactory();
@@ -283,7 +283,7 @@ public class RoutingConnectionFactoryTests {
 	@Test
 	public void testWithDRTDMLCAndConnectionListenerExistingRFK() throws Exception {
 		ConnectionFactory connectionFactory1 = mock(ConnectionFactory.class);
-		Map<Object, ConnectionFactory> factories = new HashMap<Object, ConnectionFactory>(2);
+		Map<Object, ConnectionFactory> factories = new HashMap<>(2);
 		factories.put("xxx[foo]", connectionFactory1);
 		factories.put("xxx[amq.rabbitmq.reply-to]", connectionFactory1);
 

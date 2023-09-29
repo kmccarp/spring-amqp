@@ -139,7 +139,7 @@ public class MessageListenerTxSizeIntegrationTests {
 
 	public class TestListener implements ChannelAwareMessageListener {
 
-		private final ThreadLocal<Integer> count = new ThreadLocal<Integer>();
+		private final ThreadLocal<Integer> count = new ThreadLocal<>();
 
 		private final CountDownLatch latch;
 

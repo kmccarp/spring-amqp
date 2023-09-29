@@ -52,7 +52,7 @@ public class SimpleMessageConverter extends AllowedListDeserializingMessageConve
 	 * @param defaultCharset The default charset.
 	 */
 	public void setDefaultCharset(String defaultCharset) {
-		this.defaultCharset = (defaultCharset != null) ? defaultCharset : DEFAULT_CHARSET;
+		this.defaultCharset = defaultCharset != null ? defaultCharset : DEFAULT_CHARSET;
 	}
 
 	/**

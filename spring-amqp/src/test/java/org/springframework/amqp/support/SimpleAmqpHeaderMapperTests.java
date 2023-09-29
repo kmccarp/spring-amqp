@@ -43,7 +43,7 @@ public class SimpleAmqpHeaderMapperTests {
 	@Test
 	public void fromHeaders() {
 		SimpleAmqpHeaderMapper headerMapper = new SimpleAmqpHeaderMapper();
-		Map<String, Object> headerMap = new HashMap<String, Object>();
+		Map<String, Object> headerMap = new HashMap<>();
 		headerMap.put(AmqpHeaders.APP_ID, "test.appId");
 		headerMap.put(AmqpHeaders.CLUSTER_ID, "test.clusterId");
 		headerMap.put(AmqpHeaders.CONTENT_ENCODING, "test.contentEncoding");
@@ -98,7 +98,7 @@ public class SimpleAmqpHeaderMapperTests {
 	@Test
 	public void fromHeadersWithContentTypeAsMediaType() {
 		SimpleAmqpHeaderMapper headerMapper = new SimpleAmqpHeaderMapper();
-		Map<String, Object> headerMap = new HashMap<String, Object>();
+		Map<String, Object> headerMap = new HashMap<>();
 
 		headerMap.put(AmqpHeaders.CONTENT_TYPE, MimeTypeUtils.TEXT_HTML);
 
@@ -170,7 +170,7 @@ public class SimpleAmqpHeaderMapperTests {
 		Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
 		MessageProperties amqpProperties = new MessageProperties();
 		converter.toMessage("123", amqpProperties);
-		Map<String, Object> headerMap = new HashMap<String, Object>();
+		Map<String, Object> headerMap = new HashMap<>();
 		headerMap.put("__TypeId__", "java.lang.Integer");
 		MessageHeaders messageHeaders = new MessageHeaders(headerMap);
 		headerMapper.fromHeaders(messageHeaders, amqpProperties);
