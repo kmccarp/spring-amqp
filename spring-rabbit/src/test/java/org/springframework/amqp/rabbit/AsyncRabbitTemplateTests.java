@@ -383,17 +383,17 @@ public class AsyncRabbitTemplateTests {
 	@Test
 	void ctorCoverage() {
 		AsyncRabbitTemplate template = new AsyncRabbitTemplate(mock(ConnectionFactory.class), "ex", "rk");
-		assertThat(template).extracting(t -> t.getRabbitTemplate())
+		assertThat(template).extracting(AsyncRabbitTemplate::getRabbitTemplate)
 				.extracting("exchange")
 				.isEqualTo("ex");
-		assertThat(template).extracting(t -> t.getRabbitTemplate())
+		assertThat(template).extracting(AsyncRabbitTemplate::getRabbitTemplate)
 				.extracting("routingKey")
 				.isEqualTo("rk");
 		template = new AsyncRabbitTemplate(mock(ConnectionFactory.class), "ex", "rk", "rq");
-		assertThat(template).extracting(t -> t.getRabbitTemplate())
+		assertThat(template).extracting(AsyncRabbitTemplate::getRabbitTemplate)
 				.extracting("exchange")
 				.isEqualTo("ex");
-		assertThat(template).extracting(t -> t.getRabbitTemplate())
+		assertThat(template).extracting(AsyncRabbitTemplate::getRabbitTemplate)
 				.extracting("routingKey")
 				.isEqualTo("rk");
 		assertThat(template)
@@ -403,10 +403,10 @@ public class AsyncRabbitTemplateTests {
 				.extracting("queueNames")
 				.isEqualTo(new String[] { "rq" });
 		template = new AsyncRabbitTemplate(mock(ConnectionFactory.class), "ex", "rk", "rq", "ra");
-		assertThat(template).extracting(t -> t.getRabbitTemplate())
+		assertThat(template).extracting(AsyncRabbitTemplate::getRabbitTemplate)
 				.extracting("exchange")
 				.isEqualTo("ex");
-		assertThat(template).extracting(t -> t.getRabbitTemplate())
+		assertThat(template).extracting(AsyncRabbitTemplate::getRabbitTemplate)
 				.extracting("routingKey")
 				.isEqualTo("rk");
 		assertThat(template)

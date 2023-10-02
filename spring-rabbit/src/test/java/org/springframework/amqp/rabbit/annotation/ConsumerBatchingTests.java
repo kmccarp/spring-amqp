@@ -24,12 +24,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
 
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -81,7 +83,7 @@ public class ConsumerBatchingTests {
 		assertThat(this.listener.foosLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.foos).hasSize(8);
 		assertThat(this.listener.foos)
-			.extracting(foo -> foo.getBar())
+			.extracting(org.springframework.amqp.rabbit.annotation.ConsumerBatchingTests.Foo::getBar)
 			.contains("foo", "bar", "baz", "qux", "foo", "bar", "baz", "qux");
 		Timer timer = await().until(() -> {
 			try {
@@ -96,7 +98,7 @@ public class ConsumerBatchingTests {
 			catch (@SuppressWarnings("unused") Exception e) {
 				return null;
 			}
-		}, tim -> tim != null);
+		}, Objects::nonNull);
 		assertThat(timer).isNotNull();
 		assertThat(timer.count()).isEqualTo(1L);
 		timer = this.meterRegistry.get("spring.rabbitmq.listener")
@@ -132,7 +134,7 @@ public class ConsumerBatchingTests {
 		assertThat(this.listener.dlqLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.dlqd).hasSize(4);
 		assertThat(this.listener.dlqd)
-			.extracting(foo -> foo.getBar())
+			.extracting(org.springframework.amqp.rabbit.annotation.ConsumerBatchingTests.Foo::getBar)
 			.contains("foo", "bar", "baz", "qux");
 	}
 
@@ -145,7 +147,7 @@ public class ConsumerBatchingTests {
 		assertThat(this.listener.dlqHalfLatch.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.dlqHalf).hasSize(2);
 		assertThat(this.listener.dlqHalf)
-			.extracting(foo -> foo.getBar())
+			.extracting(org.springframework.amqp.rabbit.annotation.ConsumerBatchingTests.Foo::getBar)
 			.contains("baz", "qux");
 	}
 
@@ -162,7 +164,7 @@ public class ConsumerBatchingTests {
 			.contains("foo", "bar", "baz", "qux", "foo", "baz", "qux");
 		assertThat(this.listener.dlqOneRejectedLatch2.await(10, TimeUnit.SECONDS)).isTrue();
 		assertThat(this.listener.dlqOneRejected)
-			.extracting(foo -> foo.getBar())
+			.extracting(org.springframework.amqp.rabbit.annotation.ConsumerBatchingTests.Foo::getBar)
 			.contains("bar");
 	}
 
@@ -213,7 +215,7 @@ public class ConsumerBatchingTests {
 		}
 
 		@Bean
-		public org.springframework.amqp.core.Queue batch3() {
+		public Queue batch3() {
 			return QueueBuilder.nonDurable("c.batch.3")
 					.autoDelete()
 					.deadLetterExchange("")
@@ -222,14 +224,14 @@ public class ConsumerBatchingTests {
 		}
 
 		@Bean
-		public org.springframework.amqp.core.Queue batch3Dlq() {
+		public Queue batch3Dlq() {
 			return QueueBuilder.nonDurable("c.batch.3.dlq")
 					.autoDelete()
 					.build();
 		}
 
 		@Bean
-		public org.springframework.amqp.core.Queue batch4() {
+		public Queue batch4() {
 			return QueueBuilder.nonDurable("c.batch.4")
 					.autoDelete()
 					.deadLetterExchange("")
@@ -238,14 +240,14 @@ public class ConsumerBatchingTests {
 		}
 
 		@Bean
-		public org.springframework.amqp.core.Queue batch4Dlq() {
+		public Queue batch4Dlq() {
 			return QueueBuilder.nonDurable("c.batch.4.dlq")
 					.autoDelete()
 					.build();
 		}
 
 		@Bean
-		public org.springframework.amqp.core.Queue batch5() {
+		public Queue batch5() {
 			return QueueBuilder.nonDurable("c.batch.5")
 					.autoDelete()
 					.deadLetterExchange("")
@@ -254,7 +256,7 @@ public class ConsumerBatchingTests {
 		}
 
 		@Bean
-		public org.springframework.amqp.core.Queue batch5Dlq() {
+		public Queue batch5Dlq() {
 			return QueueBuilder.nonDurable("c.batch.5.dlq")
 					.autoDelete()
 					.build();
