@@ -589,7 +589,7 @@ public class ListenerContainerFactoryBean extends AbstractFactoryBean<AbstractMe
 
 	@Override
 	public int getPhase() {
-		return (this.listenerContainer != null) ? this.listenerContainer.getPhase() : 0;
+		return this.listenerContainer != null ? this.listenerContainer.getPhase() : 0;
 	}
 
 	@Override

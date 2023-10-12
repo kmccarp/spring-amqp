@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -126,6 +127,7 @@ import org.springframework.data.web.JsonPath;
 import org.springframework.lang.NonNull;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.converter.GenericMessageConverter;
+import org.springframework.messaging.converter.MessageConversionException;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -528,7 +530,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 		assertThat(throwable).isNotNull();
 		assertThat(throwable).isInstanceOf(AmqpRejectAndDontRequeueException.class);
 		assertThat(throwable.getCause()).isInstanceOf(ListenerExecutionFailedException.class);
-		assertThat(throwable.getCause().getCause()).isInstanceOf(org.springframework.messaging.converter.MessageConversionException.class);
+		assertThat(throwable.getCause().getCause()).isInstanceOf(MessageConversionException.class);
 		assertThat(throwable.getCause().getCause().getMessage()).contains("Failed to convert message payload 'bar' to 'java.util.Date'");
 	}
 
@@ -846,7 +848,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 		this.rabbitTemplate.convertAndSend("amqp656", "foo");
 		assertThat(this.rabbitTemplate.receiveAndConvert("amqp656dlq", 10000)).isEqualTo("foo");
 		try {
-			Map<String, Object> amqp656 = await().until(() -> queueInfo("amqp656"), q -> q != null);
+			Map<String, Object> amqp656 = await().until(() -> queueInfo("amqp656"), Objects::nonNull);
 			if (amqp656 != null) {
 				assertThat(arguments(amqp656).get("test-empty")).isEqualTo("");
 				assertThat(arguments(amqp656).get("test-null")).isEqualTo("undefined");
@@ -961,7 +963,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 			catch (@SuppressWarnings("unused") Exception e) {
 				return null;
 			}
-		}, tim -> tim != null);
+		}, Objects::nonNull);
 		assertThat(timer.count()).isEqualTo(1L);
 	}
 
@@ -1545,12 +1547,12 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 		@Override
 		public Object invoke(MethodInvocation invocation) throws Throwable {
 			String methodName = invocation.getMethod().getName();
-			if (methodName.equals("listen") && invocation.getArguments().length == 1 &&
+			if ("listen".equals(methodName) && invocation.getArguments().length == 1 &&
 					invocation.getArguments()[0].equals("intercept this")) {
 				this.oneWayLatch.countDown();
 				return invocation.proceed();
 			}
-			else if (methodName.equals("listenAndReply") && invocation.getArguments().length == 1 &&
+			else if ("listenAndReply".equals(methodName) && invocation.getArguments().length == 1 &&
 					invocation.getArguments()[0].equals("intercept this")) {
 				Object result = invocation.proceed();
 				if (result.equals("INTERCEPT THIS")) {
@@ -1865,7 +1867,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 
 		@Bean
 		public AtomicReference<Throwable> errorHandlerError() {
-			return new AtomicReference<Throwable>();
+			return new AtomicReference<>();
 		}
 
 		@Bean
@@ -1878,7 +1880,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 				catch (Throwable e) {
 					errorHandlerError().set(e);
 					Throwable cause = e.getCause().getCause();
-					if (cause instanceof org.springframework.messaging.converter.MessageConversionException) {
+					if (cause instanceof MessageConversionException) {
 						errorHandlerLatch1().countDown();
 					}
 					else if (cause instanceof MethodArgumentNotValidException) {
@@ -2070,7 +2072,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 		@RabbitHandler
 		@SendTo("${foo.bar:#{sendToRepliesBean}}")
 		public String bar(@NonNull Bar bar) {
-			if (bar.field.equals("crash")) {
+			if ("crash".equals(bar.field)) {
 				throw new RuntimeException("Test reply from error handler");
 			}
 			return "BAR: " + bar.field;
@@ -2289,7 +2291,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 
 		@Bean
 		public Converter<Foo1, Foo2> foo1To2Converter() {
-			return new Converter<Foo1, Foo2>() {
+			return new Converter<>() {
 
 				@SuppressWarnings("unused")
 				private boolean converted;
@@ -2376,7 +2378,7 @@ public class EnableRabbitIntegrationTests extends NeedsManagementTests {
 
 		@Bean
 		public Converter<Foo1, Foo2> foo1To2Converter() {
-			return new Converter<Foo1, Foo2>() {
+			return new Converter<>() {
 
 				@SuppressWarnings("unused")
 				private boolean converted;

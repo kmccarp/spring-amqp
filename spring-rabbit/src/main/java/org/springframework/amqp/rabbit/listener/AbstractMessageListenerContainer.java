@@ -170,7 +170,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 
 	private boolean autoDeclare = true;
 
-	private boolean mismatchedQueuesFatal = false;
+	private boolean mismatchedQueuesFatal;
 
 	private long failedDeclarationRetryInterval = DEFAULT_FAILED_DECLARATION_RETRY_INTERVAL;
 
@@ -178,9 +178,9 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 
 	private int phase = Integer.MAX_VALUE;
 
-	private boolean active = false;
+	private boolean active;
 
-	private boolean running = false;
+	private boolean running;
 
 	private ErrorHandler errorHandler = new ConditionalRejectingErrorHandler();
 
@@ -376,7 +376,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	public boolean removeQueueNames(String... queueNames) {
 		Assert.notNull(queueNames, "'queueNames' cannot be null");
 		Assert.noNullElements(queueNames, "'queueNames' cannot contain null elements");
-		if (this.queues.size() > 0) {
+		if (!this.queues.isEmpty()) {
 			Set<String> toRemove = new HashSet<>(Arrays.asList(queueNames));
 			return this.queues.removeIf(
 					q -> toRemove.contains(q.getActualName()));
@@ -1435,7 +1435,7 @@ public abstract class AbstractMessageListenerContainer extends ObservableListene
 	@Override
 	public final boolean isRunning() {
 		synchronized (this.lifecycleMonitor) {
-			return (this.running);
+			return this.running;
 		}
 	}
 

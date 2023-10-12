@@ -68,7 +68,7 @@ public class MessageListenerManualAckIntegrationTests {
 
 	private final int txSize = 1;
 
-	private boolean transactional = false;
+	private boolean transactional;
 
 	private SimpleMessageListenerContainer container;
 
