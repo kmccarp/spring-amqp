@@ -193,7 +193,7 @@ public class CachingConnectionFactory extends AbstractConnectionFactory
 
 	private final AtomicBoolean running = new AtomicBoolean();
 
-	private long channelCheckoutTimeout = 0;
+	private long channelCheckoutTimeout;
 
 	private CacheMode cacheMode = CacheMode.CHANNEL;
 
@@ -741,10 +741,10 @@ public class CachingConnectionFactory extends AbstractConnectionFactory
 				logger.debug("Adding new connection '" + cachedConnection + "'");
 			}
 			this.allocatedConnections.add(cachedConnection);
-			this.allocatedConnectionNonTransactionalChannels.put(cachedConnection, new LinkedList<ChannelProxy>());
+			this.allocatedConnectionNonTransactionalChannels.put(cachedConnection, new LinkedList<>());
 			this.channelHighWaterMarks.put(ObjectUtils.getIdentityHexString(
 					this.allocatedConnectionNonTransactionalChannels.get(cachedConnection)), new AtomicInteger());
-			this.allocatedConnectionTransactionalChannels.put(cachedConnection, new LinkedList<ChannelProxy>());
+			this.allocatedConnectionTransactionalChannels.put(cachedConnection, new LinkedList<>());
 			this.channelHighWaterMarks.put(
 					ObjectUtils
 							.getIdentityHexString(this.allocatedConnectionTransactionalChannels.get(cachedConnection)),
@@ -881,7 +881,7 @@ public class CachingConnectionFactory extends AbstractConnectionFactory
 			if (this.connection.target != null) {
 				this.connection.destroy();
 			}
-			this.allocatedConnections.forEach(c -> c.destroy());
+			this.allocatedConnections.forEach(org.springframework.amqp.rabbit.connection.CachingConnectionFactory.ChannelCachingConnectionProxy::destroy);
 			this.channelHighWaterMarks.values().forEach(count -> count.set(0));
 			this.connectionHighWaterMark.set(0);
 		}
@@ -1089,8 +1089,8 @@ public class CachingConnectionFactory extends AbstractConnectionFactory
 
 		@Override // NOSONAR complexity
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable { // NOSONAR NCSS lines
-			if (logger.isTraceEnabled() && !method.getName().equals("toString")
-					&& !method.getName().equals("hashCode") && !method.getName().equals("equals")) {
+			if (logger.isTraceEnabled() && !"toString".equals(method.getName())
+					&& !"hashCode".equals(method.getName()) && !"equals".equals(method.getName())) {
 				try {
 					logger.trace(this.target + " channel." + method.getName() + "("
 							+ (args != null ? Arrays.toString(args) : "") + ")");
@@ -1100,21 +1100,21 @@ public class CachingConnectionFactory extends AbstractConnectionFactory
 				}
 			}
 			String methodName = method.getName();
-			if (methodName.equals("txSelect") && !this.transactional) {
+			if ("txSelect".equals(methodName) && !this.transactional) {
 				throw new UnsupportedOperationException("Cannot start transaction on non-transactional channel");
 			}
-			if (methodName.equals("equals")) {
+			if ("equals".equals(methodName)) {
 				// Only consider equal when proxies are identical.
-				return (proxy == args[0]); // NOSONAR
+				return proxy == args[0]; // NOSONAR
 			}
-			else if (methodName.equals("hashCode")) {
+			else if ("hashCode".equals(methodName)) {
 				// Use hashCode of Channel proxy.
 				return System.identityHashCode(proxy);
 			}
-			else if (methodName.equals("toString")) {
+			else if ("toString".equals(methodName)) {
 				return "Cached Rabbit Channel: " + this.target + ", conn: " + this.theConnection;
 			}
-			else if (methodName.equals("close")) {
+			else if ("close".equals(methodName)) {
 				// Handle close method: don't pass the call on.
 				if (CachingConnectionFactory.this.active && !RabbitUtils.isPhysicalCloseRequired()) {
 					logicalClose((ChannelProxy) proxy);
@@ -1125,21 +1125,21 @@ public class CachingConnectionFactory extends AbstractConnectionFactory
 					return null;
 				}
 			}
-			else if (methodName.equals("getTargetChannel")) {
+			else if ("getTargetChannel".equals(methodName)) {
 				// Handle getTargetChannel method: return underlying Channel.
 				return this.target;
 			}
-			else if (methodName.equals("isOpen")) {
+			else if ("isOpen".equals(methodName)) {
 				// Handle isOpen method: we are closed if the target is closed
 				return this.target != null && this.target.isOpen();
 			}
-			else if (methodName.equals("isTransactional")) {
+			else if ("isTransactional".equals(methodName)) {
 				return this.transactional;
 			}
-			else if (methodName.equals("isConfirmSelected")) {
+			else if ("isConfirmSelected".equals(methodName)) {
 				return this.confirmSelected;
 			}
-			else if (methodName.equals("isPublisherConfirms")) {
+			else if ("isPublisherConfirms".equals(methodName)) {
 				return this.publisherConfirms;
 			}
 			try {
